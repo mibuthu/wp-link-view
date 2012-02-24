@@ -1,4 +1,4 @@
-﻿=== MWPP Link-List ===
+﻿=== Link View - Wordpress Plugin ===
 Contributors: mibuthu
 Tags: link, links, list, images, pictures, integrated, page, categories, banner, slideshow, sponsor, widget
 Requires at least: 3.0
