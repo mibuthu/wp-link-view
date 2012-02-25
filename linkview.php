@@ -24,7 +24,7 @@ License at http://www.gnu.org/copyleft/gpl.html
 */
 
 
-// add admin pages into admin menu
+// add admin pages in admin menu
 add_action('admin_menu', 'on_lv_admin');
 
 function on_lv_admin() {
@@ -33,11 +33,11 @@ function on_lv_admin() {
 }
 
 
-// add shortcode linkview
+// add shortcode [linkview]
 add_shortcode('linkview', 'on_lv_sc_linkview');
 
-function on_lv_sc_linkview() {
+function on_lv_sc_linkview( $atts ) {
 	require_once( 'php/sc_linkview.php' );
-	sc_linkview::show_html();
+	return sc_linkview::show_html( $atts );
 }
 ?>
