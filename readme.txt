@@ -1,9 +1,9 @@
-﻿=== Link View - Wordpress Plugin ===
+﻿=== Link View ===
 Contributors: mibuthu
 Tags: link, view, linkview, list, images, pictures, integrated, page, categories
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: trunk
+Stable tag: 0.1.0
 
 Display a link-list in a post or page by using a shortcode.
 
