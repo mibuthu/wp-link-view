@@ -7,8 +7,8 @@ class sc_linkview {
 		'cat_name' 	=> array(	'val'		=> 'Name',
 								'std_val'	=> '',
 								'desc'		=> 'This attribute specifies what categories should be shown by name. If you leave the attribute empty all categories are shown.<br />
-												For example <code>[linkview catname=Sponsors]</code>. If the catname has spaces, simply wrap the name in quotes.<br />
-												Example: <code>[linkview catname="Social Media"]</code>' ),
+												For example <code>[linkview cat_name=Sponsors]</code>. If the cat_name has spaces, simply wrap the name in quotes.<br />
+												Example: <code>[linkview cat_name="Social Media"]</code>' ),
 		'show_img'	=> array(	'val'		=> '0 ... false<br />1 ... true',
 								'std_val'	=> '0',
 								'desc'		=> 'This attribute specifies if the image is displayed instead of the name. This attribute is only considered for links where an image was set.' )
