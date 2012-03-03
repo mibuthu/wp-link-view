@@ -3,7 +3,7 @@
 Plugin Name: Link View 
 Plugin URI: http://wordpress.org/extend/plugins/linkview/
 Description: Display a link-list in a post or page by using a shortcode.
-Version: 0.1.0
+Version: 0.1.1
 Author: Michael Burtscher
 
 A plugin for the blogging MySQL/PHP-based WordPress.

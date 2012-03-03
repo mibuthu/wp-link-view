@@ -3,7 +3,7 @@ Contributors: mibuthu
 Tags: link, view, linkview, list, images, pictures, integrated, page, categories
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 
 Display a link-list in a post or page by using a shortcode.
 
@@ -25,11 +25,17 @@ not available yet, will be added in a later release
 
 == Screenshots ==
 
-not available yet, will be added in a later release
+1. Admin page with a description of the usage and the available attributes
+2. Simple example page with a link list
 
 == Changelog ==
 
-= 0.1.0 =
+= 0.1.1 (2011-03-03) =
+
+* Modified html-output of link list (use own function to render output for more flexibility) 
+* Added attributes "show_cat_name" and "target"
+
+= 0.1.0 (2012-02-27) =
 
 * Initial release
 
