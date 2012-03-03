@@ -20,8 +20,9 @@ class admin {
 				<p>The following is the basic form of the Link View shortcode:</p>
 				<p><code>[linkview]</code></p>
 				<p></p>
-				<p>To facilitate customization of shortcodes, attributes are used. The <code>[linkview]</code> shortcode including the attribute called "cat_name" looks like this:</p>
-				<p><code>[linkview cat_name=Sponsors]</code></p>
+				<p>To facilitate customization of shortcodes, attributes are used. To get the correct result you can combine as much attributes as you want.<br />
+				The <code>[linkview]</code> shortcode including the attributes "cat_name" and "show_img" looks like this:</p>
+				<p><code>[linkview cat_name=Sponsors show_img=1]</code></p>
 				<p>Below is a list of all the supported attributes with their descriptions and available options:</p>
 				<style type="text/css">
 					<!--
@@ -49,7 +50,7 @@ class admin {
 		}
 		$out .= '
 				</table>
-				<p>In this early version there are only these 2 attributes available. More attributes will be added in a later release.</p>
+				<p>This is an early version of this plugin. More attributes will be added in later releases.</p>
 			</div>';
 		echo $out;
 	}
