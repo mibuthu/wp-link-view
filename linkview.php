@@ -23,9 +23,6 @@ You can view a copy of the HTML version of the GNU General Public
 License at http://www.gnu.org/copyleft/gpl.html
 */
 
-// general definitions
-define( 'LV_URL', plugin_dir_url( __FILE__ ) );
-
 
 // add admin pages in admin menu
 add_action('admin_menu', 'on_lv_admin');
