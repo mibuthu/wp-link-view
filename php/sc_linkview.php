@@ -6,6 +6,11 @@ class sc_linkview {
 	// All available attributes
 	public static $attr = array(
 
+		'view_type'		=> array(	'val'		=> 'list<br />slider',
+									'std_val'	=> 'list',
+									'desc'		=> 'This attribute specifies how the links are displayed. The standard is to show the links in a list.<br />
+													The second option is to show the links in a slider. This normally only make sense if you show the images, but it is also possible to show the link name with this option.'),
+
 		'cat_name' 		=> array(	'val'		=> 'Name',
 									'std_val'	=> '',
 									'desc'		=> 'This attribute specifies what category should be shown. If you leave the attribute empty all categories are shown.<br />
@@ -47,13 +52,14 @@ class sc_linkview {
 			$links = get_bookmarks( $args );
 
 			// generate output
-			$out .= '';
 			if( !empty( $links ) ) {
-				$out .= sc_linkview::html_category_begin( $cat, $a );
-				foreach( $links as $link ) {
-					$out .= sc_linkview::html_link( $link, $a );
+				$out .= sc_linkview::html_category( $cat, $a );
+				if( $a['view_type'] == 'slider' ) {
+					$out .= sc_linkview::html_link_slider( $links, $a );
 				}
-				$out .= sc_linkview::html_category_end();
+				else {
+					$out .= sc_linkview::html_link_list( $links, $a );
+				}
 			}
 		}
 		return $out;
@@ -68,26 +74,81 @@ class sc_linkview {
 		}
 	}
 
-	public static function html_category_begin( $cat, $a ) {
+	public static function img_width( $a ) {
+		return 500;
+	}
+
+	public static function img_height( $a ) {
+		return 300;
+	}
+
+	public static function html_category( $cat, $a ) {
 		$out = '';
 		if( $a['show_cat_name'] > 0 ) {
 			$out .= '
 					<h2>'.$cat->name.'</h2>';
 		}
-		$out .= '
-				<ul>';
 		return $out;
 	}
 
-	public static function html_category_end() {
+	public static function html_link_list( $links, $a ) {
 		$out .= '
-				</ul>';
+			<ul>';
+		foreach( $links as $link ) {
+			$out .= '<li'.sc_linkview::html_link( $link, $a ).'</li>';
+		}
+		$out .= '
+			</ul>';
+		return $out;
+	}
+
+	public static function html_link_slider( $links, $a ) {
+		// javascript
+		$out = '
+			<script type="text/javascript" src="'.LV_URL.'js/jquery.js"></script>
+			<script type="text/javascript" src="'.LV_URL.'js/easySlider.js"></script>
+			<script type="text/javascript">
+				$(document).ready(function(){	
+					$("#slider").easySlider({
+						auto: true,
+						speed: 1000,
+						pause: 5000,
+						continuous: true,
+						controlsShow: false
+					});
+				});	
+			</script>';
+		// styles
+		$out .= '
+			<style>
+				#slider ul, #slider li {
+					margin:0;
+					padding:0;
+					list-style:none;
+				}
+				#slider li { 
+					width:'.sc_linkview::img_width( $a ).'px;
+					height:'.sc_linkview::img_height( $a ).'px;
+					overflow:hidden; 
+				}
+			</style>';
+		// html
+		$out .= '
+			<div id="slider">
+				<ul>';
+		// links
+		foreach( $links as $link ) {
+			$out .= '<li>'.sc_linkview::html_link( $link, $a ).'</li>';
+		}
+		$out .= '	
+				</ul>
+			</div>';
 		return $out;
 	}
 
 	public static function html_link( $l, $a ) {
 		$out = '
-					<li><a href="'.$l->link_url;
+					<a href="'.$l->link_url;
 		
 		switch( $a['target'] ) {
 			case 'blank':
@@ -105,13 +166,13 @@ class sc_linkview {
 		$out .= '" target="'.$target.'">';
 
 		if( $a['show_img'] > 0 && $l->link_image != null ) {
-			$out .= '<img src="'.$l->link_image.'" alt="'.$l->link_name.'" />';
+			$out .= '<img src="'.$l->link_image./*'" width="'.sc_linkview::img_width( $a ).'px" height="'.sc_linkview::img_height( $a ).'px"*/'" alt="'.$l->link_name.'" />';
 		}
 		else {
 			$out .= $l->link_name;
 		}
 
-		$out .= '</a></li>';
+		$out .= '</a>';
 	return $out;
 	}
 }
