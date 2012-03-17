@@ -27,7 +27,18 @@ class sc_linkview {
 
 		'target'		=> array(	'val'		=> 'blank<br />top<br />none',
 									'std_val'	=> '',
-									'desc'		=> 'Enter "blank", "top" or "none" to overwrite the standard value which was set for the link. Leave this field empty if you don´t want to overwrite the standard.')
+									'desc'		=> 'Enter "blank", "top" or "none" to overwrite the standard value which was set for the link.<br />
+													Leave this field empty if you don´t want to overwrite the standard.'),
+
+		'slider_width'	=> array(	'val'		=> 'number',
+									'std_val'	=> '0',
+									'desc'		=> 'This attribute sets the fixed width of the slider. If the attribute is set to 0 the width will be calculated automatically due to the given image sizes.<br />
+													This attribute is only considered if the view type "slider" is selected.'),
+
+		'slider_height'	=> array(	'val'		=> 'number',
+									'std_val'	=> '0',
+									'desc'		=> 'This attribute sets the fixed height of the slider. If the attribute is set to 0 the height will be calculated automatically due to the given image sizes.<br />
+													This attribute is only considered if the view type "slider" is selected.')
 		);
 
 	// main function to show the rendered HTML output
@@ -74,12 +85,38 @@ class sc_linkview {
 		}
 	}
 
-	public static function img_width( $a ) {
-		return 500;
+	public static function slider_size( $a, $links ) {
+		if(	$a['slider_width'] <= 0 || $a['slider_height'] <= 0 ) {
+			$img_width = 0;
+			$img_height = 0;
+			foreach( $links as $link ) {
+				list( $w, $h ) = getimagesize( $link->link_image );
+				$img_width = max( $img_width, $w );
+				$img_height = max( $img_height, $h );
+			}
+		}
+		if( $a['slider_width'] > 0 ) {
+			$width = $a['slider_width'];
+		}
+		else {
+			$width = $img_width;
+		}
+		if( $a['slider_height'] > 0 ) {
+			$height = $a['slider_height'];
+		}
+		else {
+			$height = $img_height;
+		}
+		return array( $width, $height );
 	}
 
-	public static function img_height( $a ) {
-		return 300;
+	public static function slider_height( $a ) {
+		if( $a['slider_height'] > 0 ) {
+			return $a['slider_height'];
+		}
+		else {
+			return 250;
+		}
 	}
 
 	public static function html_category( $cat, $a ) {
@@ -95,7 +132,8 @@ class sc_linkview {
 		$out .= '
 			<ul>';
 		foreach( $links as $link ) {
-			$out .= '<li'.sc_linkview::html_link( $link, $a ).'</li>';
+			$out .= '
+				<li>'.sc_linkview::html_link( $link, $a ).'</li>';
 		}
 		$out .= '
 			</ul>';
@@ -103,6 +141,7 @@ class sc_linkview {
 	}
 
 	public static function html_link_slider( $links, $a ) {
+		list( $slider_width, $slider_height ) = sc_linkview::slider_size( $a, $links );
 		// javascript
 		$out = '
 			<script type="text/javascript" src="'.LV_URL.'js/jquery.js"></script>
@@ -127,9 +166,15 @@ class sc_linkview {
 					list-style:none;
 				}
 				#slider li { 
-					width:'.sc_linkview::img_width( $a ).'px;
-					height:'.sc_linkview::img_height( $a ).'px;
-					overflow:hidden; 
+					width: '.$slider_width.'px;
+					height: '.$slider_height.'px;
+					background: #EEE;
+					overflow: hidden; 
+					text-align: center;
+					vertical-align: middle;
+				}
+				#slider img {
+					max-width: 100%;
 				}
 			</style>';
 		// html
@@ -138,7 +183,8 @@ class sc_linkview {
 				<ul>';
 		// links
 		foreach( $links as $link ) {
-			$out .= '<li>'.sc_linkview::html_link( $link, $a ).'</li>';
+			$out .= '
+					<li>'.sc_linkview::html_link( $link, $a, $slider_width, $slider_height ).'</li>';
 		}
 		$out .= '	
 				</ul>
@@ -146,9 +192,8 @@ class sc_linkview {
 		return $out;
 	}
 
-	public static function html_link( $l, $a ) {
-		$out = '
-					<a href="'.$l->link_url;
+	public static function html_link( $l, $a, $slider_width=0, $slider_height=0 ) {
+		$out = '<a href="'.$l->link_url;
 		
 		switch( $a['target'] ) {
 			case 'blank':
@@ -166,7 +211,7 @@ class sc_linkview {
 		$out .= '" target="'.$target.'">';
 
 		if( $a['show_img'] > 0 && $l->link_image != null ) {
-			$out .= '<img src="'.$l->link_image./*'" width="'.sc_linkview::img_width( $a ).'px" height="'.sc_linkview::img_height( $a ).'px"*/'" alt="'.$l->link_name.'" />';
+			$out .= '<img src="'.$l->link_image.'"'.sc_linkview::html_img_size( $l->link_image, $slider_width, $slider_height ).'alt="'.$l->link_name.'" />';
 		}
 		else {
 			$out .= $l->link_name;
@@ -174,6 +219,19 @@ class sc_linkview {
 
 		$out .= '</a>';
 	return $out;
+	}
+
+	public static function html_img_size( $image, $slider_width, $slider_height ) {
+		$slider_ratio = $slider_width / $slider_height;
+		list( $img_width, $img_height ) = getimagesize( $image );
+		$img_ratio = $img_width / $img_height;
+		if( $slider_ratio > $img_ratio ) {
+			$scale = $slider_height / $img_height;
+		}
+		else {
+			$scale = $slider_width / $img_width;
+		}
+		return ' width="'.round($img_width*$scale).'px" height="'.round($img_height*$scale).'px" ';
 	}
 }
 ?>

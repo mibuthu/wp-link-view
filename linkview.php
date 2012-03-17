@@ -43,4 +43,8 @@ function on_lv_sc_linkview( $atts ) {
 	require_once( 'php/sc_linkview.php' );
 	return sc_linkview::show_html( $atts );
 }
+
+// add filter to enable shortcodes in widgets
+// (disabled by default, will be added as an option in a later release)
+// add_filter( 'widget_text', 'do_shortcode' );
 ?>
