@@ -86,37 +86,36 @@ class sc_linkview {
 	}
 
 	public static function slider_size( $a, $links ) {
-		if(	$a['slider_width'] <= 0 || $a['slider_height'] <= 0 ) {
-			$img_width = 0;
-			$img_height = 0;
-			foreach( $links as $link ) {
-				list( $w, $h ) = getimagesize( $link->link_image );
-				$img_width = max( $img_width, $w );
-				$img_height = max( $img_height, $h );
-			}
-		}
-		if( $a['slider_width'] > 0 ) {
+		if(	$a['slider_width'] > 0 && $a['slider_height'] > 0 ) {
 			$width = $a['slider_width'];
-		}
-		else {
-			$width = $img_width;
-		}
-		if( $a['slider_height'] > 0 ) {
 			$height = $a['slider_height'];
 		}
 		else {
-			$height = $img_height;
+			$width = 0;
+			$height = 0;			
+			foreach( $links as $link ) {
+				if( $a['show_img'] > 0 && $link->link_image != null ) {
+					list( $w, $h ) = getimagesize( $link->link_image );
+					$width = max( $width, $w );
+					$height = max( $height, $h );
+				}
+			}
+			$ratio = 1;
+			if( $a['slider_width'] > 0 ) {
+				$ratio = $a['slider_width'] / $width;
+			}
+			else if( $a['slider_height'] > 0 ) {
+				$ratio = $a['slider_height'] / $height;
+			}
+			$width = $width * $ratio;
+			$height = $height * $ratio;
+			// If no image was in all links, set manual size
+			if( !$width )
+				$width = 300;
+			if( !$height )
+				$height = 30; 
 		}
 		return array( $width, $height );
-	}
-
-	public static function slider_height( $a ) {
-		if( $a['slider_height'] > 0 ) {
-			return $a['slider_height'];
-		}
-		else {
-			return 250;
-		}
 	}
 
 	public static function html_category( $cat, $a ) {
@@ -151,7 +150,7 @@ class sc_linkview {
 					$("#slider").easySlider({
 						auto: true,
 						speed: 1000,
-						pause: 5000,
+						pause: 6000,
 						continuous: true,
 						controlsShow: false
 					});
@@ -168,7 +167,6 @@ class sc_linkview {
 				#slider li { 
 					width: '.$slider_width.'px;
 					height: '.$slider_height.'px;
-					background: #EEE;
 					overflow: hidden; 
 					text-align: center;
 					vertical-align: middle;
