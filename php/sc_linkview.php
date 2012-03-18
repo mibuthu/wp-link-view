@@ -107,8 +107,8 @@ class sc_linkview {
 			else if( $a['slider_height'] > 0 ) {
 				$ratio = $a['slider_height'] / $height;
 			}
-			$width = $width * $ratio;
-			$height = $height * $ratio;
+			$width = round( $width * $ratio );
+			$height = round( $height * $ratio );
 			// If no image was in all links, set manual size
 			if( !$width )
 				$width = 300;
