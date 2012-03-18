@@ -107,8 +107,8 @@ class sc_linkview {
 			else if( $a['slider_height'] > 0 ) {
 				$ratio = $a['slider_height'] / $height;
 			}
-			$width = $width * $ratio;
-			$height = $height * $ratio;
+			$width = round( $width * $ratio );
+			$height = round( $height * $ratio );
 			// If no image was in all links, set manual size
 			if( !$width )
 				$width = 300;
@@ -209,7 +209,7 @@ class sc_linkview {
 		$out .= '" target="'.$target.'">';
 
 		if( $a['show_img'] > 0 && $l->link_image != null ) {
-			$out .= '<img src="'.$l->link_image.'"'.sc_linkview::html_img_size( $l->link_image, $slider_width, $slider_height ).'alt="'.$l->link_name.'" />';
+			$out .= '<img src="'.$l->link_image.'"'.sc_linkview::html_img_size( $l->link_image, $slider_width, $slider_height ).' alt="'.$l->link_name.'" />';
 		}
 		else {
 			$out .= $l->link_name;
@@ -219,17 +219,22 @@ class sc_linkview {
 	return $out;
 	}
 
-	public static function html_img_size( $image, $slider_width, $slider_height ) {
-		$slider_ratio = $slider_width / $slider_height;
-		list( $img_width, $img_height ) = getimagesize( $image );
-		$img_ratio = $img_width / $img_height;
-		if( $slider_ratio > $img_ratio ) {
-			$scale = $slider_height / $img_height;
+	public static function html_img_size( $image, $slider_width=0, $slider_height=0 ) {
+		if( $slider_width <= 0 || $slider_height <= 0 ) {
+			return '';
 		}
 		else {
-			$scale = $slider_width / $img_width;
+			$slider_ratio = $slider_width / $slider_height;
+			list( $img_width, $img_height ) = getimagesize( $image );
+			$img_ratio = $img_width / $img_height;
+			if( $slider_ratio > $img_ratio ) {
+				$scale = $slider_height / $img_height;
+			}
+			else {
+				$scale = $slider_width / $img_width;
+			}
+			return ' width="'.round($img_width*$scale).'px" height="'.round($img_height*$scale).'px"';
 		}
-		return ' width="'.round($img_width*$scale).'px" height="'.round($img_height*$scale).'px" ';
 	}
 }
 ?>
