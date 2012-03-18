@@ -45,6 +45,10 @@ No, in the actual release it is only possible to have one slider working on scre
 
 == Changelog ==
 
+= 0.2.1 (2012-03-18) =
+
+* Fixed bug to show correct image size in image list
+
 = 0.2.0 (2012-03-17) =
 
 * Initial support to show the links in a slider
