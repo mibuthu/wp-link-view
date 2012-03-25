@@ -38,6 +38,16 @@ class sc_linkview {
 		'slider_height'	=> array(	'val'		=> 'number',
 									'std_val'	=> '0',
 									'desc'		=> 'This attribute sets the fixed height of the slider. If the attribute is set to 0 the height will be calculated automatically due to the given image sizes.<br />
+													This attribute is only considered if the view type "slider" is selected.'),
+
+		'slider_pause'	=> array(	'val'		=> 'number',
+									'std_val'	=> '6000',
+									'desc'		=> 'This attribute sets the duration between the the slides in milliseconds. This is the time where you can see the link standing still before the next slide starts.<br />
+													This attribute is only considered if the view type "slider" is selected.'),
+
+		'slider_speed'	=> array(	'val'		=> 'number',
+									'std_val'	=> '1000',
+									'desc'		=> 'This attribute sets the animation speed of the slider in milliseconds. This is the time used to slide from one link to the next one.<br />
 													This attribute is only considered if the view type "slider" is selected.')
 		);
 
@@ -149,8 +159,8 @@ class sc_linkview {
 				$(document).ready(function(){	
 					$("#slider").easySlider({
 						auto: true,
-						speed: 1000,
-						pause: 6000,
+						pause: '.$a['slider_pause'].',
+						speed: '.$a['slider_speed'].',
 						continuous: true,
 						controlsShow: false
 					});
