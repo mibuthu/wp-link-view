@@ -13,7 +13,7 @@ Display a link-list or link-slider in a post or page by using a shortcode.
 The purpose of this plugin is to to show the wordpress integrated links in a list or a slider by using a shortcode.
 It is also possible to include the images. Use the shortcode [linkview] to add the Links/Blogroll in your site.
 A detailed description of all available attributes to modify the output can be found on the admin page under Links -> Link View.
-An option page with all available attributes is available in the admin menu.
+An option page with all available attributes is available on this admin page.
 
 
 == Installation ==
@@ -48,7 +48,7 @@ No, in the actual release it is only possible to have one slider working on scre
 
 = 0.2.2 (2012-03-25) =
 
-* Added attrubutes "slider_pause" and "slider_speed"
+* Added attributes "slider_pause" and "slider_speed"
 
 = 0.2.1 (2012-03-18) =
 
