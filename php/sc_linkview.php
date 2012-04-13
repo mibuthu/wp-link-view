@@ -9,7 +9,7 @@ class sc_linkview {
 		'view_type'		=> array(	'val'		=> 'list<br />slider',
 									'std_val'	=> 'list',
 									'desc'		=> 'This attribute specifies how the links are displayed. The standard is to show the links in a list.<br />
-													The second option is to show the links in a slider. This normally only make sense if you show the images, but it is also possible to show the link name with this option.'),
+													The second option is to show the links in a slider. This normally only make sense if you show the images, but it is also possible to show the link name with this option.' ),
 
 		'cat_name' 		=> array(	'val'		=> 'Name',
 									'std_val'	=> '',
@@ -23,32 +23,42 @@ class sc_linkview {
 
 		'show_cat_name'	=> array(	'val'		=> '0 ... false<br />1 ... true',
 									'std_val'	=> '1',
-									'desc'		=> 'This attribute specifies if the category name is shown as a headline.'),
+									'desc'		=> 'This attribute specifies if the category name is shown as a headline.' ),
+		
+		'vertcal_align'	=> array(	'val'		=> 'std<br />baseline<br />top<br />bottom<br />middle',
+									'std_val'	=> 'std',
+									'desc'		=> 'This attribute specifies the vertical alignment of the links. Changing this attribute normally only make sense if the link-images are displayed.<br />
+													If you change this value you can for example modify the vertical alignment of the list symbol relativ the the image or the vertical alignment of images with different size in a slider.' ),
 
 		'target'		=> array(	'val'		=> 'blank<br />top<br />none',
 									'std_val'	=> '',
 									'desc'		=> 'Enter "blank", "top" or "none" to overwrite the standard value which was set for the link.<br />
-													Leave this field empty if you don´t want to overwrite the standard.'),
+													Leave this field empty if you don´t want to overwrite the standard.' ),
+													
+		'list_symbol'	=> array(	'val'		=> 'std<br />none<br />circle<br />square<br />disc',
+									'std_val'	=> 'std',
+									'desc'		=> 'This attribute sets the style type of the list symbol.<br />
+													The standard value is "std", this means the standard type which is set in your theme will be used. Set one of the other values to overwrite this standard.' ),
 
-		'slider_width'	=> array(	'val'		=> 'number',
+		'slider_width'	=> array(	'val'		=> 'Number',
 									'std_val'	=> '0',
 									'desc'		=> 'This attribute sets the fixed width of the slider. If the attribute is set to 0 the width will be calculated automatically due to the given image sizes.<br />
-													This attribute is only considered if the view type "slider" is selected.'),
+													This attribute is only considered if the view type "slider" is selected.' ),
 
-		'slider_height'	=> array(	'val'		=> 'number',
+		'slider_height'	=> array(	'val'		=> 'Number',
 									'std_val'	=> '0',
 									'desc'		=> 'This attribute sets the fixed height of the slider. If the attribute is set to 0 the height will be calculated automatically due to the given image sizes.<br />
-													This attribute is only considered if the view type "slider" is selected.'),
+													This attribute is only considered if the view type "slider" is selected.' ),
 
-		'slider_pause'	=> array(	'val'		=> 'number',
+		'slider_pause'	=> array(	'val'		=> 'Number',
 									'std_val'	=> '6000',
 									'desc'		=> 'This attribute sets the duration between the the slides in milliseconds. This is the time where you can see the link standing still before the next slide starts.<br />
-													This attribute is only considered if the view type "slider" is selected.'),
+													This attribute is only considered if the view type "slider" is selected.' ),
 
-		'slider_speed'	=> array(	'val'		=> 'number',
+		'slider_speed'	=> array(	'val'		=> 'Number',
 									'std_val'	=> '1000',
 									'desc'		=> 'This attribute sets the animation speed of the slider in milliseconds. This is the time used to slide from one link to the next one.<br />
-													This attribute is only considered if the view type "slider" is selected.')
+													This attribute is only considered if the view type "slider" is selected.' )
 		);
 
 	// main function to show the rendered HTML output
@@ -138,14 +148,20 @@ class sc_linkview {
 	}
 
 	public static function html_link_list( $links, $a ) {
-		$out .= '
-			<ul>';
+		if( $a['list_symbol'] == 'none' || $a['list_symbol'] == 'circle' || $a['list_symbol'] == 'square' || $a['list_symbol'] == 'disc' ) {
+			$out .= '
+				<ul style="list-style-type:'.$a['list_symbol'].';">';
+		}
+		else {
+			$out .= '
+				<ul>';
+		}
 		foreach( $links as $link ) {
 			$out .= '
-				<li>'.sc_linkview::html_link( $link, $a ).'</li>';
+					<li>'.sc_linkview::html_link( $link, $a ).'</li>';
 		}
 		$out .= '
-			</ul>';
+				</ul>';
 		return $out;
 	}
 
