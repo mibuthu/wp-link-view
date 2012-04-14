@@ -27,8 +27,8 @@ class admin {
 				<style type="text/css">
 					<!--
 					#lvadmintable {border:1px solid #aaa;border-collapse:collapse}
-					#lvadmintable th {border:1px solid #aaa;padding:3px 4px;background:#eeeeee;}
-					#lvadmintable td {border:1px solid #aaa;padding:4px 5px;vertical-align: top}
+					#lvadmintable th {border:1px solid #aaa;padding:3px 4px !important;background:#eeeeee;}
+					#lvadmintable td {border:1px solid #aaa;padding:2px 5px !important;vertical-align:top}
 					-->
 				</style>
 				<table id="lvadmintable">
@@ -50,7 +50,6 @@ class admin {
 		}
 		$out .= '
 				</table>
-				<p>This is an early version of this plugin. More attributes will be added in later releases.</p>
 			</div>';
 		echo $out;
 	}

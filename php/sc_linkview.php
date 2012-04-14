@@ -9,7 +9,7 @@ class sc_linkview {
 		'view_type'		=> array(	'val'		=> 'list<br />slider',
 									'std_val'	=> 'list',
 									'desc'		=> 'This attribute specifies how the links are displayed. The standard is to show the links in a list.<br />
-													The second option is to show the links in a slider. This normally only make sense if you show the images, but it is also possible to show the link name with this option.'),
+													The second option is to show the links in a slider. This normally only make sense if you show the images, but it is also possible to show the link name with this option.' ),
 
 		'cat_name' 		=> array(	'val'		=> 'Name',
 									'std_val'	=> '',
@@ -23,33 +23,44 @@ class sc_linkview {
 
 		'show_cat_name'	=> array(	'val'		=> '0 ... false<br />1 ... true',
 									'std_val'	=> '1',
-									'desc'		=> 'This attribute specifies if the category name is shown as a headline.'),
+									'desc'		=> 'This attribute specifies if the category name is shown as a headline.' ),
+		
+		'vertical_align'=> array(	'val'		=> 'std<br />top<br />bottom<br />middle',
+									'std_val'	=> 'std',
+									'desc'		=> 'This attribute specifies the vertical alignment of the links. Changing this attribute normally only make sense if the link-images are displayed.<br />
+													If you change this value you can for example modify the vertical alignment of the list symbol relativ to the image or the vertical alignment of images with different size in a slider.' ),
 
-		'target'		=> array(	'val'		=> 'blank<br />top<br />none',
-									'std_val'	=> '',
-									'desc'		=> 'Enter "blank", "top" or "none" to overwrite the standard value which was set for the link.<br />
-													Leave this field empty if you don´t want to overwrite the standard.'),
+		'target'		=> array(	'val'		=> 'std<br />blank<br />top<br />none',
+									'std_val'	=> 'std',
+									'desc'		=> 'Set one of the given values to overwrite the standard value which was set for the link.<br />
+													Set the attribute to "std" if you don´t want to overwrite the standard.' ),
+													
+		'list_symbol'	=> array(	'val'		=> 'std<br />none<br />circle<br />square<br />disc',
+									'std_val'	=> 'std',
+									'desc'		=> 'This attribute sets the style type of the list symbol.<br />
+													The standard value is "std", this means the standard type which is set in your theme will be used. Set one of the other values to overwrite this standard.<br />
+													A good example for the usage is to set the value to "none" for an image link list. The list symbols will be hidden which often looks better when images are used.' ),
 
-		'slider_width'	=> array(	'val'		=> 'number',
+		'slider_width'	=> array(	'val'		=> 'Number',
 									'std_val'	=> '0',
 									'desc'		=> 'This attribute sets the fixed width of the slider. If the attribute is set to 0 the width will be calculated automatically due to the given image sizes.<br />
-													This attribute is only considered if the view type "slider" is selected.'),
+													This attribute is only considered if the view type "slider" is selected.' ),
 
-		'slider_height'	=> array(	'val'		=> 'number',
+		'slider_height'	=> array(	'val'		=> 'Number',
 									'std_val'	=> '0',
 									'desc'		=> 'This attribute sets the fixed height of the slider. If the attribute is set to 0 the height will be calculated automatically due to the given image sizes.<br />
-													This attribute is only considered if the view type "slider" is selected.'),
+													This attribute is only considered if the view type "slider" is selected.' ),
 
-		'slider_pause'	=> array(	'val'		=> 'number',
+		'slider_pause'	=> array(	'val'		=> 'Number',
 									'std_val'	=> '6000',
 									'desc'		=> 'This attribute sets the duration between the the slides in milliseconds. This is the time where you can see the link standing still before the next slide starts.<br />
-													This attribute is only considered if the view type "slider" is selected.'),
+													This attribute is only considered if the view type "slider" is selected.' ),
 
-		'slider_speed'	=> array(	'val'		=> 'number',
+		'slider_speed'	=> array(	'val'		=> 'Number',
 									'std_val'	=> '1000',
 									'desc'		=> 'This attribute sets the animation speed of the slider in milliseconds. This is the time used to slide from one link to the next one.<br />
-													This attribute is only considered if the view type "slider" is selected.')
-		);
+													This attribute is only considered if the view type "slider" is selected.' )
+	);
 
 	// main function to show the rendered HTML output
 	public static function show_html( $atts ) {
@@ -138,14 +149,26 @@ class sc_linkview {
 	}
 
 	public static function html_link_list( $links, $a ) {
-		$out .= '
-			<ul>';
+		if( $a['list_symbol'] == 'none' || $a['list_symbol'] == 'circle' || $a['list_symbol'] == 'square' || $a['list_symbol'] == 'disc' ) {
+			$out = '
+				<ul style="list-style-type:'.$a['list_symbol'].';">';
+		}
+		else {
+			$out = '
+				<ul>';
+		}
 		foreach( $links as $link ) {
 			$out .= '
-				<li>'.sc_linkview::html_link( $link, $a ).'</li>';
+					<li><span';
+			if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
+				$out .= ' style="display:inline-block; vertical-align:'.$a['vertical_align'].';"';
+			}
+			$out .= '>';
+			$out .= sc_linkview::html_link( $link, $a );
+			$out .= '</span></li>';
 		}
 		$out .= '
-			</ul>';
+				</ul>';
 		return $out;
 	}
 
@@ -177,13 +200,28 @@ class sc_linkview {
 				#slider li { 
 					width: '.$slider_width.'px;
 					height: '.$slider_height.'px;
-					overflow: hidden; 
+					overflow: hidden;
 					text-align: center;
-					vertical-align: middle;
 				}
 				#slider img {
 					max-width: 100%;
+				}';
+		if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
+			$out .= '
+				#lvspan {
+					display: table-cell;
+					text-align: center;
+					vertical-align: '.$a['vertical_align'].';
 				}
+				#lvspan * {
+					vertical-align: '.$a['vertical_align'].';
+				}
+				#lvspan {
+					width: '.$slider_width.'px;
+					height: '.$slider_height.'px;
+				}';
+		}
+		$out .= '
 			</style>';
 		// html
 		$out .= '
@@ -192,7 +230,13 @@ class sc_linkview {
 		// links
 		foreach( $links as $link ) {
 			$out .= '
-					<li>'.sc_linkview::html_link( $link, $a, $slider_width, $slider_height ).'</li>';
+					<li><span';
+			if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
+				$out .= ' id="lvspan"';
+			}
+			$out .= '>';
+			$out .= sc_linkview::html_link( $link, $a, $slider_width, $slider_height );
+			$out .= '</span></li>';
 		}
 		$out .= '	
 				</ul>
@@ -201,20 +245,16 @@ class sc_linkview {
 	}
 
 	public static function html_link( $l, $a, $slider_width=0, $slider_height=0 ) {
-		$out = '<a href="'.$l->link_url;
+		$out .= '<a href="'.$l->link_url;
 		
-		switch( $a['target'] ) {
-			case 'blank':
-				$target = '_blank';
-				break;
-			case 'top':
-				$target = '_top';
-				break;
-			case 'none':
+		if( $a['target'] == 'blank' || $a['target'] == 'top' || $a['target'] == 'none' ) {
+			$target = '_'.$a['target'];
+		}
+		else {
+			$target = $l->link_target;
+			// set target to _none if an empty string was returned
+			if( $target == '' )
 				$target = '_none';
-				break;
-			default:
-				$target = $l->link_target;
 		}
 		$out .= '" target="'.$target.'">';
 
@@ -224,9 +264,8 @@ class sc_linkview {
 		else {
 			$out .= $l->link_name;
 		}
-
 		$out .= '</a>';
-	return $out;
+		return $out;
 	}
 
 	public static function html_img_size( $image, $slider_width=0, $slider_height=0 ) {

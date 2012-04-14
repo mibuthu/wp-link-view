@@ -3,7 +3,7 @@
 Plugin Name: Link View 
 Plugin URI: http://wordpress.org/extend/plugins/link-view/
 Description: Display a link-list or link-slider in a post or page by using a shortcode.
-Version: 0.2.2
+Version: 0.2.3
 Author: Michael Burtscher
 Author URI: http://wordpress.org/extend/plugins/link-view/
 
@@ -28,24 +28,25 @@ License at http://www.gnu.org/copyleft/gpl.html
 define( 'LV_URL', plugin_dir_url( __FILE__ ) );
 
 
-// add admin pages in admin menu
-add_action('admin_menu', 'on_lv_admin');
+// ADMIN PAGE:
+if ( is_admin() ) {
+   add_action('admin_menu', 'on_lv_admin'); // add admin pages in admin menu
+}
+// FRONT PAGE:
+else {
+   add_shortcode('linkview', 'on_lv_sc_linkview'); // add shortcode [linkview]
+   //// add filter to enable shortcodes in widgets
+   //// (disabled by default, will be added as an option in a later release)
+   // add_filter( 'widget_text', 'do_shortcode' );
+}
 
 function on_lv_admin() {
 	require_once( 'php/admin.php' );
 	add_submenu_page( 'link-manager.php', 'Link View', 'Link View', 'edit_posts', 'lv_admin_main', array( admin, 'show_main' ) );
 }
 
-
-// add shortcode [linkview]
-add_shortcode('linkview', 'on_lv_sc_linkview');
-
 function on_lv_sc_linkview( $atts ) {
 	require_once( 'php/sc_linkview.php' );
 	return sc_linkview::show_html( $atts );
 }
-
-// add filter to enable shortcodes in widgets
-// (disabled by default, will be added as an option in a later release)
-// add_filter( 'widget_text', 'do_shortcode' );
 ?>

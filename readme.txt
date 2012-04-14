@@ -1,9 +1,9 @@
 ﻿=== Link View ===
 Contributors: mibuthu
-Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, categories, admin, attribute
+Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, attribute
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 0.2.2
+Stable tag: 0.2.3
 
 Display a link-list or link-slider in a post or page by using a shortcode.
 
@@ -12,8 +12,7 @@ Display a link-list or link-slider in a post or page by using a shortcode.
 
 The purpose of this plugin is to to show the wordpress integrated links in a list or a slider by using a shortcode.
 It is also possible to include the images. Use the shortcode [linkview] to add the Links/Blogroll in your site.
-A detailed description of all available attributes to modify the output can be found on the admin page under Links -> Link View.
-An option page with all available attributes is available in the admin menu.
+A detailed description of all available shortcode-attributes to modify the output can be found on the admin page under Links -> Link View.
 
 
 == Installation ==
@@ -40,15 +39,19 @@ No, in the actual release it is only possible to have one slider working on scre
 
 == Screenshots ==
 
-1. Admin page with a description of the usage and the available attributes (plugin version 0.2.1)
+1. Admin page with a description of the usage and the available attributes (plugin version 0.2.3)
 2. Simple example page with a link list
 
 
 == Changelog ==
 
+= 0.2.3 (2012-04-14) =
+
+* Added attributes "vertical_align" and "list_symbol"
+
 = 0.2.2 (2012-03-25) =
 
-* Added attrubutes "slider_pause" and "slider_speed"
+* Added attributes "slider_pause" and "slider_speed"
 
 = 0.2.1 (2012-03-18) =
 
