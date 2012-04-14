@@ -25,20 +25,21 @@ class sc_linkview {
 									'std_val'	=> '1',
 									'desc'		=> 'This attribute specifies if the category name is shown as a headline.' ),
 		
-		'vertcal_align'	=> array(	'val'		=> 'std<br />baseline<br />top<br />bottom<br />middle',
+		'vertical_align'=> array(	'val'		=> 'std<br />top<br />bottom<br />middle',
 									'std_val'	=> 'std',
 									'desc'		=> 'This attribute specifies the vertical alignment of the links. Changing this attribute normally only make sense if the link-images are displayed.<br />
 													If you change this value you can for example modify the vertical alignment of the list symbol relativ the the image or the vertical alignment of images with different size in a slider.' ),
 
-		'target'		=> array(	'val'		=> 'blank<br />top<br />none',
-									'std_val'	=> '',
+		'target'		=> array(	'val'		=> 'std<br />blank<br />top<br />none',
+									'std_val'	=> 'std',
 									'desc'		=> 'Enter "blank", "top" or "none" to overwrite the standard value which was set for the link.<br />
-													Leave this field empty if you don´t want to overwrite the standard.' ),
+													Set the attribute to "std" if you don´t want to overwrite the standard.' ),
 													
 		'list_symbol'	=> array(	'val'		=> 'std<br />none<br />circle<br />square<br />disc',
 									'std_val'	=> 'std',
 									'desc'		=> 'This attribute sets the style type of the list symbol.<br />
-													The standard value is "std", this means the standard type which is set in your theme will be used. Set one of the other values to overwrite this standard.' ),
+													The standard value is "std", this means the standard type which is set in your theme will be used. Set one of the other values to overwrite this standard.
+													A good example for the usage of this attribute is to set the value to "none" if the images of the links are displayed. This will hide the list symbols which often looks better when images are used.' ),
 
 		'slider_width'	=> array(	'val'		=> 'Number',
 									'std_val'	=> '0',
@@ -59,7 +60,7 @@ class sc_linkview {
 									'std_val'	=> '1000',
 									'desc'		=> 'This attribute sets the animation speed of the slider in milliseconds. This is the time used to slide from one link to the next one.<br />
 													This attribute is only considered if the view type "slider" is selected.' )
-		);
+	);
 
 	// main function to show the rendered HTML output
 	public static function show_html( $atts ) {
@@ -149,16 +150,15 @@ class sc_linkview {
 
 	public static function html_link_list( $links, $a ) {
 		if( $a['list_symbol'] == 'none' || $a['list_symbol'] == 'circle' || $a['list_symbol'] == 'square' || $a['list_symbol'] == 'disc' ) {
-			$out .= '
+			$out = '
 				<ul style="list-style-type:'.$a['list_symbol'].';">';
 		}
 		else {
-			$out .= '
+			$out = '
 				<ul>';
 		}
 		foreach( $links as $link ) {
-			$out .= '
-					<li>'.sc_linkview::html_link( $link, $a ).'</li>';
+			$out .= sc_linkview::html_link( $link, $a );
 		}
 		$out .= '
 				</ul>';
@@ -193,7 +193,7 @@ class sc_linkview {
 				#slider li { 
 					width: '.$slider_width.'px;
 					height: '.$slider_height.'px;
-					overflow: hidden; 
+					overflow: hidden;
 					text-align: center;
 					vertical-align: middle;
 				}
@@ -207,8 +207,7 @@ class sc_linkview {
 				<ul>';
 		// links
 		foreach( $links as $link ) {
-			$out .= '
-					<li>'.sc_linkview::html_link( $link, $a, $slider_width, $slider_height ).'</li>';
+			$out .= sc_linkview::html_link( $link, $a, $slider_width, $slider_height );
 		}
 		$out .= '	
 				</ul>
@@ -217,20 +216,21 @@ class sc_linkview {
 	}
 
 	public static function html_link( $l, $a, $slider_width=0, $slider_height=0 ) {
-		$out = '<a href="'.$l->link_url;
+		$out = '
+					<li><span style="display:inline-block;';
+		if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
+			$out .= ' vertical-align:'.$a['vertical_align'].';';
+		}
+		$out .= '"><a href="'.$l->link_url;
 		
-		switch( $a['target'] ) {
-			case 'blank':
-				$target = '_blank';
-				break;
-			case 'top':
-				$target = '_top';
-				break;
-			case 'none':
+		if( $a['target'] == 'blank' || $a['target'] == 'top' || $a['target'] == 'none' ) {
+			$target = '_'.$a['target'];
+		}
+		else {
+			$target = $l->link_target;
+			// set target to _none if an empty string was returned
+			if( $target == '' )
 				$target = '_none';
-				break;
-			default:
-				$target = $l->link_target;
 		}
 		$out .= '" target="'.$target.'">';
 
@@ -240,8 +240,7 @@ class sc_linkview {
 		else {
 			$out .= $l->link_name;
 		}
-
-		$out .= '</a>';
+		$out .= '</a></span></li>';
 	return $out;
 	}
 
