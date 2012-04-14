@@ -28,18 +28,18 @@ class sc_linkview {
 		'vertical_align'=> array(	'val'		=> 'std<br />top<br />bottom<br />middle',
 									'std_val'	=> 'std',
 									'desc'		=> 'This attribute specifies the vertical alignment of the links. Changing this attribute normally only make sense if the link-images are displayed.<br />
-													If you change this value you can for example modify the vertical alignment of the list symbol relativ the the image or the vertical alignment of images with different size in a slider.' ),
+													If you change this value you can for example modify the vertical alignment of the list symbol relativ to the image or the vertical alignment of images with different size in a slider.' ),
 
 		'target'		=> array(	'val'		=> 'std<br />blank<br />top<br />none',
 									'std_val'	=> 'std',
-									'desc'		=> 'Enter "blank", "top" or "none" to overwrite the standard value which was set for the link.<br />
+									'desc'		=> 'Set one of the given values to overwrite the standard value which was set for the link.<br />
 													Set the attribute to "std" if you don´t want to overwrite the standard.' ),
 													
 		'list_symbol'	=> array(	'val'		=> 'std<br />none<br />circle<br />square<br />disc',
 									'std_val'	=> 'std',
 									'desc'		=> 'This attribute sets the style type of the list symbol.<br />
-													The standard value is "std", this means the standard type which is set in your theme will be used. Set one of the other values to overwrite this standard.
-													A good example for the usage of this attribute is to set the value to "none" if the images of the links are displayed. This will hide the list symbols which often looks better when images are used.' ),
+													The standard value is "std", this means the standard type which is set in your theme will be used. Set one of the other values to overwrite this standard.<br />
+													A good example for the usage is to set the value to "none" for an image link list. The list symbols will be hidden which often looks better when images are used.' ),
 
 		'slider_width'	=> array(	'val'		=> 'Number',
 									'std_val'	=> '0',
