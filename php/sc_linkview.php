@@ -158,7 +158,14 @@ class sc_linkview {
 				<ul>';
 		}
 		foreach( $links as $link ) {
+			$out .= '
+					<li><span';
+			if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
+				$out .= ' style="display:inline-block; vertical-align:'.$a['vertical_align'].';"';
+			}
+			$out .= '>';
 			$out .= sc_linkview::html_link( $link, $a );
+			$out .= '</span></li>';
 		}
 		$out .= '
 				</ul>';
@@ -195,11 +202,26 @@ class sc_linkview {
 					height: '.$slider_height.'px;
 					overflow: hidden;
 					text-align: center;
-					vertical-align: middle;
 				}
 				#slider img {
 					max-width: 100%;
+				}';
+		if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
+			$out .= '
+				#lvspan {
+					display: table-cell;
+					text-align: center;
+					vertical-align: '.$a['vertical_align'].';
 				}
+				#lvspan * {
+					vertical-align: '.$a['vertical_align'].';
+				}
+				#lvspan {
+					width: '.$slider_width.'px;
+					height: '.$slider_height.'px;
+				}';
+		}
+		$out .= '
 			</style>';
 		// html
 		$out .= '
@@ -207,7 +229,14 @@ class sc_linkview {
 				<ul>';
 		// links
 		foreach( $links as $link ) {
+			$out .= '
+					<li><span';
+			if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
+				$out .= ' id="lvspan"';
+			}
+			$out .= '>';
 			$out .= sc_linkview::html_link( $link, $a, $slider_width, $slider_height );
+			$out .= '</span></li>';
 		}
 		$out .= '	
 				</ul>
@@ -216,12 +245,7 @@ class sc_linkview {
 	}
 
 	public static function html_link( $l, $a, $slider_width=0, $slider_height=0 ) {
-		$out = '
-					<li><span style="display:inline-block;';
-		if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
-			$out .= ' vertical-align:'.$a['vertical_align'].';';
-		}
-		$out .= '"><a href="'.$l->link_url;
+		$out .= '<a href="'.$l->link_url;
 		
 		if( $a['target'] == 'blank' || $a['target'] == 'top' || $a['target'] == 'none' ) {
 			$target = '_'.$a['target'];
@@ -240,8 +264,8 @@ class sc_linkview {
 		else {
 			$out .= $l->link_name;
 		}
-		$out .= '</a></span></li>';
-	return $out;
+		$out .= '</a>';
+		return $out;
 	}
 
 	public static function html_img_size( $image, $slider_width=0, $slider_height=0 ) {
