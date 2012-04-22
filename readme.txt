@@ -2,8 +2,8 @@
 Contributors: mibuthu
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, attribute
 Requires at least: 3.0
-Tested up to: 3.3.1
-Stable tag: 0.2.3
+Tested up to: 3.3.2
+Stable tag: 0.2.4
 
 Display a link-list or link-slider in a post or page by using a shortcode.
 
@@ -44,6 +44,10 @@ No, in the actual release it is only possible to have one slider working on scre
 
 
 == Changelog ==
+
+= 0.2.4 (2012-04-22) =
+
+* Show link name and link description in tooltip text, when the mouse is over the link
 
 = 0.2.3 (2012-04-14) =
 

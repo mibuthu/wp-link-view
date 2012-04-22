@@ -256,7 +256,11 @@ class sc_linkview {
 			if( $target == '' )
 				$target = '_none';
 		}
-		$out .= '" target="'.$target.'">';
+		$out .= '" target="'.$target.'" title="'.$l->link_name;
+		if( $l->link_description != "" ) {
+			$out .= ' ('.$l->link_description.')';
+		}
+		$out .= '">';
 
 		if( $a['show_img'] > 0 && $l->link_image != null ) {
 			$out .= '<img src="'.$l->link_image.'"'.sc_linkview::html_img_size( $l->link_image, $slider_width, $slider_height ).' alt="'.$l->link_name.'" />';
