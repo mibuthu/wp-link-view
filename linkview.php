@@ -42,7 +42,7 @@ else {
 
 function on_lv_admin() {
 	require_once( 'php/admin.php' );
-	add_submenu_page( 'link-manager.php', 'Link View', 'Link View', 'edit_posts', 'lv_admin_main', array( admin, 'show_main' ) );
+	add_submenu_page( 'link-manager.php', 'Link View', 'Link View', 'edit_posts', 'lv_admin_main', array( lv_admin, 'show_main' ) );
 }
 
 function on_lv_sc_linkview( $atts ) {
