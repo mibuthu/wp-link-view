@@ -11,11 +11,13 @@ class sc_linkview {
 									'desc'		=> 'This attribute specifies how the links are displayed. The standard is to show the links in a list.<br />
 													The second option is to show the links in a slider. This normally only make sense if you show the images, but it is also possible to show the link name with this option.' ),
 
-		'cat_name' 		=> array(	'val'		=> 'Name',
+		'cat_name' 		=> array(	'val'		=> 'Cat 1,Cat 2,...',
 									'std_val'	=> '',
 									'desc'		=> 'This attribute specifies what category should be shown. If you leave the attribute empty all categories are shown.<br />
 													If the cat_name has spaces, simply wrap the name in quotes.<br />
-													Example: <code>[linkview cat_name="Social Media"]</code>' ),
+													Example: <code>[linkview cat_name="Social Media"]</code><br />
+													If you want to define multiple categories you can give them in a list splitted by the delimiter ","<br />
+													Example: <code>[linkview cat_name="Blogroll,Social Media"]</code>' ),
 
 		'show_img'		=> array(	'val'		=> '0 ... false<br />1 ... true',
 									'std_val'	=> '0',
@@ -102,7 +104,12 @@ class sc_linkview {
 			return get_terms('link_category', 'orderby=count&hide_empty=0');
 		}
 		else {
-			return array( get_term_by( 'name', $a['cat_name'], 'link_category', 'orderby=count&hide_empty=0' ) );
+			$catnames = array_map( 'trim', explode( ",", $a['cat_name'] ));
+			$catarray = array();
+			foreach( $catnames as $catname ) {
+				 array_push( $catarray, get_term_by( 'name', $catname, 'link_category', 'orderby=count&hide_empty=0' ) );
+			}
+			return $catarray;
 		}
 	}
 
