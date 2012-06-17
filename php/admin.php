@@ -1,7 +1,7 @@
 <?php
 
 // This class handles all available admin pages
-class admin {
+class lv_admin {
 
 	// show the main admin page as a submenu of "Links"
 	public static function show_main() {
