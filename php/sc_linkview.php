@@ -100,17 +100,17 @@ class sc_linkview {
 	}
 
 	public static function categories( $a ) {
+		$catarray = array();
 		if( empty( $a['cat_name'] ) ) {
-			return get_terms('link_category', 'orderby=count&hide_empty=0');
+			$catarray = get_terms('link_category', 'orderby=name');
 		}
 		else {
 			$catnames = array_map( 'trim', explode( ",", $a['cat_name'] ));
-			$catarray = array();
 			foreach( $catnames as $catname ) {
-				 array_push( $catarray, get_term_by( 'name', $catname, 'link_category', 'orderby=count&hide_empty=0' ) );
+				 array_push( $catarray, get_term_by( 'name', $catname, 'link_category' ) );
 			}
-			return $catarray;
 		}
+		return $catarray;
 	}
 
 	public static function slider_size( $a, $links ) {
