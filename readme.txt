@@ -2,8 +2,8 @@
 Contributors: mibuthu
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, attribute
 Requires at least: 3.0
-Tested up to: 3.3.2
-Stable tag: 0.2.4
+Tested up to: 3.4.0
+Stable tag: 0.2.5
 
 Display a link-list or link-slider in a post or page by using a shortcode.
 
@@ -44,6 +44,12 @@ No, in the actual release it is only possible to have one slider working on scre
 
 
 == Changelog ==
+
+= 0.2.5 (2012-06-17) =
+
+* Renamed admin class to avoid conflicts with other plugins
+* Added possibility to set multiple categories in attribute "cat_name"
+* Changed sorting of categories to alphabetic order, if no cat_name is given
 
 = 0.2.4 (2012-04-22) =
 
