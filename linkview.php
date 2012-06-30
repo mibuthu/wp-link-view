@@ -28,16 +28,24 @@ License at http://www.gnu.org/copyleft/gpl.html
 define( 'LV_URL', plugin_dir_url( __FILE__ ) );
 
 
-// ADMIN PAGE:
+// ADD ACTIONS AND SHORTCODES:
+// for admin and frontpage:
+add_action( 'widgets_init', 'on_lv_widgets' );
+// for admin page only:
 if ( is_admin() ) {
-   add_action('admin_menu', 'on_lv_admin'); // add admin pages in admin menu
+   add_action( 'admin_menu', 'on_lv_admin' ); // add admin pages in admin menu
 }
-// FRONT PAGE:
+// for frontpage only:
 else {
-   add_shortcode('linkview', 'on_lv_sc_linkview'); // add shortcode [linkview]
+   add_shortcode( 'linkview', 'on_lv_sc_linkview' ); // add shortcode [linkview]
    //// add filter to enable shortcodes in widgets
    //// (disabled by default, will be added as an option in a later release)
    // add_filter( 'widget_text', 'do_shortcode' );
+}
+
+function on_lv_widgets() {
+	require_once( 'php/linkview_widget.php' );
+	return register_widget( 'linkview_widget' );
 }
 
 function on_lv_admin() {
