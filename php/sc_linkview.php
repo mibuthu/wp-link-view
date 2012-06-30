@@ -102,12 +102,15 @@ class sc_linkview {
 	public static function categories( $a ) {
 		$catarray = array();
 		if( empty( $a['cat_name'] ) ) {
-			$catarray = get_terms('link_category', 'orderby=name');
+			$catarray = get_terms( 'link_category', 'orderby=name' );
 		}
 		else {
 			$catnames = array_map( 'trim', explode( ",", $a['cat_name'] ));
 			foreach( $catnames as $catname ) {
-				 array_push( $catarray, get_term_by( 'name', $catname, 'link_category' ) );
+				if( get_term_by( 'name', $catname, 'link_category') != false )
+				{
+					array_push( $catarray, get_term_by( 'name', $catname, 'link_category' ) );
+				}
 			}
 		}
 		return $catarray;
