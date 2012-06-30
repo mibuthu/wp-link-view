@@ -59,25 +59,25 @@
 		var options = $.extend(defaults, options);  
 				
 		this.each(function() {  
-			var obj = $(this); 				
-			var s = $("li", obj).length;
-			var w = $("li", obj).width(); 
-			var h = $("li", obj).height(); 
+			var obj = jQuery(this); 				
+			var s = jQuery("li", obj).length;
+			var w = jQuery("li", obj).width(); 
+			var h = jQuery("li", obj).height(); 
 			var clickable = true;
 			obj.width(w); 
 			obj.height(h); 
 			obj.css("overflow","hidden");
 			var ts = s-1;
 			var t = 0;
-			$("ul", obj).css('width',s*w);			
+			jQuery("ul", obj).css('width',s*w);			
 			
 			if(options.continuous){
-				$("ul", obj).prepend($("ul li:last-child", obj).clone().css("margin-left","-"+ w +"px"));
-				$("ul", obj).append($("ul li:nth-child(2)", obj).clone());
-				$("ul", obj).css('width',(s+1)*w);
+				jQuery("ul", obj).prepend(jQuery("ul li:last-child", obj).clone().css("margin-left","-"+ w +"px"));
+				jQuery("ul", obj).append(jQuery("ul li:nth-child(2)", obj).clone());
+				jQuery("ul", obj).css('width',(s+1)*w);
 			};				
 			
-			if(!options.vertical) $("li", obj).css('float','left');
+			if(!options.vertical) jQuery("li", obj).css('float','left');
 								
 			if(options.controlsShow){
 				var html = options.controlsBefore;				
@@ -91,47 +91,47 @@
 				};
 				
 				html += options.controlsAfter;						
-				$(obj).after(html);										
+				jQuery(obj).after(html);										
 			};
 			
 			if(options.numeric){									
 				for(var i=0;i<s;i++){						
-					$(document.createElement("li"))
+					jQuery(document.createElement("li"))
 						.attr('id',options.numericId + (i+1))
 						.html('<a rel='+ i +' href=\"javascript:void(0);\">'+ (i+1) +'</a>')
-						.appendTo($("#"+ options.numericId))
+						.appendTo(jQuery("#"+ options.numericId))
 						.click(function(){							
-							animate($("a",$(this)).attr('rel'),true);
+							animate(jQuery("a",jQuery(this)).attr('rel'),true);
 						}); 												
 				};							
 			} else {
-				$("a","#"+options.nextId).click(function(){		
+				jQuery("a","#"+options.nextId).click(function(){		
 					animate("next",true);
 				});
-				$("a","#"+options.prevId).click(function(){		
+				jQuery("a","#"+options.prevId).click(function(){		
 					animate("prev",true);				
 				});	
-				$("a","#"+options.firstId).click(function(){		
+				jQuery("a","#"+options.firstId).click(function(){		
 					animate("first",true);
 				});				
-				$("a","#"+options.lastId).click(function(){		
+				jQuery("a","#"+options.lastId).click(function(){		
 					animate("last",true);				
 				});				
 			};
 			
 			function setCurrent(i){
 				i = parseInt(i)+1;
-				$("li", "#" + options.numericId).removeClass("current");
-				$("li#" + options.numericId + i).addClass("current");
+				jQuery("li", "#" + options.numericId).removeClass("current");
+				jQuery("li#" + options.numericId + i).addClass("current");
 			};
 			
 			function adjust(){
 				if(t>ts) t=0;		
 				if(t<0) t=ts;	
 				if(!options.vertical) {
-					$("ul",obj).css("margin-left",(t*w*-1));
+					jQuery("ul",obj).css("margin-left",(t*w*-1));
 				} else {
-					$("ul",obj).css("margin-left",(t*h*-1));
+					jQuery("ul",obj).css("margin-left",(t*h*-1));
 				}
 				clickable = true;
 				if(options.numeric) setCurrent(t);
@@ -162,13 +162,13 @@
 					var speed = diff*options.speed;						
 					if(!options.vertical) {
 						p = (t*w*-1);
-						$("ul",obj).animate(
+						jQuery("ul",obj).animate(
 							{ marginLeft: p }, 
 							{ queue:false, duration:speed, complete:adjust }
 						);				
 					} else {
 						p = (t*h*-1);
-						$("ul",obj).animate(
+						jQuery("ul",obj).animate(
 							{ marginTop: p }, 
 							{ queue:false, duration:speed, complete:adjust }
 						);					
@@ -176,18 +176,18 @@
 					
 					if(!options.continuous && options.controlsFade){					
 						if(t==ts){
-							$("a","#"+options.nextId).hide();
-							$("a","#"+options.lastId).hide();
+							jQuery("a","#"+options.nextId).hide();
+							jQuery("a","#"+options.lastId).hide();
 						} else {
-							$("a","#"+options.nextId).show();
-							$("a","#"+options.lastId).show();					
+							jQuery("a","#"+options.nextId).show();
+							jQuery("a","#"+options.lastId).show();					
 						};
 						if(t==0){
-							$("a","#"+options.prevId).hide();
-							$("a","#"+options.firstId).hide();
+							jQuery("a","#"+options.prevId).hide();
+							jQuery("a","#"+options.firstId).hide();
 						} else {
-							$("a","#"+options.prevId).show();
-							$("a","#"+options.firstId).show();
+							jQuery("a","#"+options.prevId).show();
+							jQuery("a","#"+options.firstId).show();
 						};					
 					};				
 					
@@ -212,8 +212,8 @@
 			if(options.numeric) setCurrent(0);
 		
 			if(!options.continuous && options.controlsFade){					
-				$("a","#"+options.prevId).hide();
-				$("a","#"+options.firstId).hide();				
+				jQuery("a","#"+options.prevId).hide();
+				jQuery("a","#"+options.firstId).hide();				
 			};				
 			
 		});
@@ -221,6 +221,3 @@
 	};
 
 })(jQuery);
-
-
-
