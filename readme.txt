@@ -1,9 +1,12 @@
 ﻿=== Link View ===
 Contributors: mibuthu
-Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, attribute
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2
+Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, attribute, widget, sidebar
 Requires at least: 3.0
-Tested up to: 3.4.0
-Stable tag: 0.2.5
+Tested up to: 3.4.1
+Stable tag: 0.3.0
+Licence: GPLv2
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Display a link-list or link-slider in a post or page by using a shortcode.
 
@@ -13,6 +16,9 @@ Display a link-list or link-slider in a post or page by using a shortcode.
 The purpose of this plugin is to to show the wordpress integrated links in a list or a slider by using a shortcode.
 It is also possible to include the images. Use the shortcode [linkview] to add the Links/Blogroll in your site.
 A detailed description of all available shortcode-attributes to modify the output can be found on the admin page under Links -> Link View.
+There is also a widget available where all attributes of the linkview shortcode can be set.
+
+If you want to follow the development status have a look at the [git-repository on github](https://github.com/mibuthu/wp-linkview "wp-linkview git-repository").
 
 
 == Installation ==
@@ -26,15 +32,11 @@ If you want to install the plugin manually download the zip-file and extract the
 
 = Is it possible to use the shortcode in a widget? =
 
-Yes, but normally you have to enable a filter, that generally allows to use shortcodes in widgets. Depending on which theme you use, this filter is probably already enabled. But for example in the Twenty Eleven theme shortcodes doesn't work without enabling the filter. The required filter is already included in linkview.php, but is deactivated. If you want the enable the filter uncomment the line:
-
-add_filter( 'widget_text', 'do_shortcode' );
-
-In a later release an option will be added to allow enableing the filter via admin page.
+Yes, a widget especially for the use of the [linkview] shortcode is included in this plugin. Insert the widget LinkView in your sidebar and set all attributes you want to change in the appropriate field.
 
 = Is it possible to add multiple slider on one site? =
 
-No, in the actual release it is only possible to have one slider working on screen. This will be fixed in a later release.
+Yes, since version 0.3.0 you can use as much sliders as you want on one site.
 
 
 == Screenshots ==
@@ -44,6 +46,12 @@ No, in the actual release it is only possible to have one slider working on scre
 
 
 == Changelog ==
+
+= 0.3.0 (2012-07-01) =
+
+* Added widget to show shortcode with all options in a sidebar
+* It is possible to have multiple slider on one site now
+* Wordpress internal jquery script is used, the plugins jquery script is removed
 
 = 0.2.5 (2012-06-17) =
 
