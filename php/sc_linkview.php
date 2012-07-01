@@ -102,12 +102,15 @@ class sc_linkview {
 	public static function categories( $a ) {
 		$catarray = array();
 		if( empty( $a['cat_name'] ) ) {
-			$catarray = get_terms('link_category', 'orderby=name');
+			$catarray = get_terms( 'link_category', 'orderby=name' );
 		}
 		else {
 			$catnames = array_map( 'trim', explode( ",", $a['cat_name'] ));
 			foreach( $catnames as $catname ) {
-				 array_push( $catarray, get_term_by( 'name', $catname, 'link_category' ) );
+				if( get_term_by( 'name', $catname, 'link_category') != false )
+				{
+					array_push( $catarray, get_term_by( 'name', $catname, 'link_category' ) );
+				}
 			}
 		}
 		return $catarray;
@@ -180,14 +183,15 @@ class sc_linkview {
 	}
 
 	public static function html_link_slider( $links, $a ) {
+		$slider_id = sc_linkview::create_random_slider_id();
 		list( $slider_width, $slider_height ) = sc_linkview::slider_size( $a, $links );
 		// javascript
 		$out = '
-			<script type="text/javascript" src="'.LV_URL.'js/jquery.js"></script>
+			<script type="text/javascript" src="wp-includes/js/jquery/jquery.js"></script>
 			<script type="text/javascript" src="'.LV_URL.'js/easySlider.js"></script>
 			<script type="text/javascript">
-				$(document).ready(function(){	
-					$("#slider").easySlider({
+				jQuery(document).ready(function(){
+					jQuery("#'.$slider_id.'").easySlider({
 						auto: true,
 						pause: '.$a['slider_pause'].',
 						speed: '.$a['slider_speed'].',
@@ -199,18 +203,18 @@ class sc_linkview {
 		// styles
 		$out .= '
 			<style>
-				#slider ul, #slider li {
+				#'.$slider_id.' ul, #'.$slider_id.' li {
 					margin:0;
 					padding:0;
 					list-style:none;
 				}
-				#slider li { 
+				#'.$slider_id.' li { 
 					width: '.$slider_width.'px;
 					height: '.$slider_height.'px;
 					overflow: hidden;
 					text-align: center;
 				}
-				#slider img {
+				#'.$slider_id.' img {
 					max-width: 100%;
 				}';
 		if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
@@ -232,7 +236,7 @@ class sc_linkview {
 			</style>';
 		// html
 		$out .= '
-			<div id="slider">
+			<div id="'.$slider_id.'">
 				<ul>';
 		// links
 		foreach( $links as $link ) {
@@ -295,6 +299,11 @@ class sc_linkview {
 			}
 			return ' width="'.round($img_width*$scale).'px" height="'.round($img_height*$scale).'px"';
 		}
+	}
+	
+	private static function create_random_slider_id() {
+		$slider_id = mt_rand( 10000, 99999 );
+		return 'slider'.$slider_id;
 	}
 }
 ?>
