@@ -77,6 +77,7 @@ class sc_linkview {
 		// set categories
 		$categories = sc_linkview::categories( $a );
 		
+		$out = '';
 		foreach( $categories as $cat ) {
 			// get links
 			$args = array(
@@ -87,7 +88,7 @@ class sc_linkview {
 
 			// generate output
 			if( !empty( $links ) ) {
-				$out .= sc_linkview::html_category( $cat, $a );
+				$out = sc_linkview::html_category( $cat, $a );
 				if( $a['view_type'] == 'slider' ) {
 					$out .= sc_linkview::html_link_slider( $links, $a );
 				}
@@ -256,7 +257,7 @@ class sc_linkview {
 	}
 
 	public static function html_link( $l, $a, $slider_width=0, $slider_height=0 ) {
-		$out .= '<a href="'.$l->link_url;
+		$out = '<a href="'.$l->link_url;
 		
 		if( $a['target'] == 'blank' || $a['target'] == 'top' || $a['target'] == 'none' ) {
 			$target = '_'.$a['target'];
