@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, attribute, widget, sidebar
 Requires at least: 3.0
 Tested up to: 3.4.1
-Stable tag: 0.3.0
+Stable tag: 0.3.1
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,7 +25,7 @@ If you want to follow the development status have a look at the [git-repository 
 
 The easiest version of installing is to go to the admin page. There you can install new plugins in the menu Plugins -> Add new. Search for "Link View" and press "Install now".
 
-If you want to install the plugin manually download the zip-file and extract the files in your wp-content/plugins folder.
+If you want to install the plugin manually download the zip-file and extract the files into your wp-content/plugins folder.
 
 
 == Frequently Asked Questions ==
@@ -46,6 +46,12 @@ Yes, since version 0.3.0 you can use as much sliders as you want on one site.
 
 
 == Changelog ==
+
+= 0.3.1 (2012-07-28) =
+
+* Fixed all php-warnings
+* Added attribute "exclude_cat"
+* Added help text for LinkView widget
 
 = 0.3.0 (2012-07-01) =
 
@@ -88,7 +94,3 @@ Yes, since version 0.3.0 you can use as much sliders as you want on one site.
 = 0.1.0 (2012-02-27) =
 
 * Initial release
-
-== Upgrade Notice ==
-
-not available yet, will be added in a later release

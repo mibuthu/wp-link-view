@@ -13,11 +13,18 @@ class sc_linkview {
 
 		'cat_name' 		=> array(	'val'		=> 'Cat 1,Cat 2,...',
 									'std_val'	=> '',
-									'desc'		=> 'This attribute specifies what category should be shown. If you leave the attribute empty all categories are shown.<br />
+									'desc'		=> 'This attribute specifies which categories should be shown. If you leave the attribute empty all categories are shown.<br />
 													If the cat_name has spaces, simply wrap the name in quotes.<br />
 													Example: <code>[linkview cat_name="Social Media"]</code><br />
 													If you want to define multiple categories you can give them in a list splitted by the delimiter ","<br />
 													Example: <code>[linkview cat_name="Blogroll,Social Media"]</code>' ),
+													
+		'exclude_cat'   => array(	'val'		=> 'Cat 1,Cat 2,...',
+									'std_val'	=> '',
+									'desc'		=> 'This attribute specifies which categories should be excluded. This attribute is only considered if the attribute "cat_name" is not set.<br />
+													If the cat_name has spaces, simply wrap the name in quotes.<br />
+													If you want to define multiple categories you can give them in a list splitted by the delimiter ","<br />
+													Example: <code>[linkview exclude_cat="Blogroll,Social Media"]</code>' ),
 
 		'show_img'		=> array(	'val'		=> '0 ... false<br />1 ... true',
 									'std_val'	=> '0',
@@ -77,6 +84,7 @@ class sc_linkview {
 		// set categories
 		$categories = sc_linkview::categories( $a );
 		
+		$out = '';
 		foreach( $categories as $cat ) {
 			// get links
 			$args = array(
@@ -103,6 +111,17 @@ class sc_linkview {
 		$catarray = array();
 		if( empty( $a['cat_name'] ) ) {
 			$catarray = get_terms( 'link_category', 'orderby=name' );
+			if( $a['exclude_cat'] != '' ) {
+				$excludecat = array_map( 'trim', explode( ",", $a['exclude_cat'] ));
+				$diff = Array();
+				foreach( $catarray as $cat ) {
+					if( array_search( $cat->name, $excludecat ) === false ) {
+						array_push( $diff, $cat );
+					}
+				}
+				$catarray = $diff;
+				unset( $diff );
+			}
 		}
 		else {
 			$catnames = array_map( 'trim', explode( ",", $a['cat_name'] ));
@@ -256,7 +275,7 @@ class sc_linkview {
 	}
 
 	public static function html_link( $l, $a, $slider_width=0, $slider_height=0 ) {
-		$out .= '<a href="'.$l->link_url;
+		$out = '<a href="'.$l->link_url;
 		
 		if( $a['target'] == 'blank' || $a['target'] == 'top' || $a['target'] == 'none' ) {
 			$target = '_'.$a['target'];
