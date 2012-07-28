@@ -15,7 +15,7 @@ class lv_admin {
 			<div id="icon-link-manager" class="icon32"><br /></div><h2>Link View</h2>
 			</div>
 			<h4>Usage of the <code>[linkview]</code> shortcode</h4>
-			<div style="padding:0 15px">
+			<div style="padding:0px 0px 10px 15px">
 				<p>Link View works using a "shortcode". Shortcodes are snippets of pseudo code that are placed in blog posts or pages to easily render HTML output.</p>
 				<p>The following is the basic form of the Link View shortcode:</p>
 				<p><code>[linkview]</code></p>
@@ -50,6 +50,13 @@ class lv_admin {
 		}
 		$out .= '
 				</table>
+			</div>
+			<h4>LinkView Widget</h4>
+			<div style="padding:0px 0px 10px 15px">
+				There is also a Widget available which allows you to use the shortcode in sidebars.<br />
+				Goto Appearance -> Widgets and add the "LinkView"-Widget in one of your Sidebars.<br />
+				The Widget allows you to enter a title. Additionally you can add all the required shortcode attributes in the "Shortcode attributes" field.<br />
+				Press "Save" to enable the changes.
 			</div>';
 		echo $out;
 	}
