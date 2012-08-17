@@ -5,10 +5,10 @@ class lv_admin {
 
 	// show the main admin page as a submenu of "Links"
 	public static function show_main() {
-		if (!current_user_can('edit_posts'))  {
-			wp_die( __('You do not have sufficient permissions to access this page.') );
+		if( !current_user_can('edit_posts' ) ) {
+			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
-		require_once('sc_linkview.php');
+		require_once( 'sc_linkview.php' );
 
 		$out ='
 			<div class="wrap nosubsub" style="padding-bottom:15px">

@@ -6,69 +6,69 @@ class sc_linkview {
 	// All available attributes
 	public static $attr = array(
 
-		'view_type'		=> array(	'val'		=> 'list<br />slider',
-									'std_val'	=> 'list',
-									'desc'		=> 'This attribute specifies how the links are displayed. The standard is to show the links in a list.<br />
-													The second option is to show the links in a slider. This normally only make sense if you show the images, but it is also possible to show the link name with this option.' ),
+		'view_type'      => array( 'val'     => 'list<br />slider',
+		                           'std_val' => 'list',
+		                           'desc'    => 'This attribute specifies how the links are displayed. The standard is to show the links in a list.<br />
+		                                         The second option is to show the links in a slider. This normally only make sense if you show the images, but it is also possible to show the link name with this option.' ),
 
-		'cat_name' 		=> array(	'val'		=> 'Cat 1,Cat 2,...',
-									'std_val'	=> '',
-									'desc'		=> 'This attribute specifies which categories should be shown. If you leave the attribute empty all categories are shown.<br />
-													If the cat_name has spaces, simply wrap the name in quotes.<br />
-													Example: <code>[linkview cat_name="Social Media"]</code><br />
-													If you want to define multiple categories you can give them in a list splitted by the delimiter ","<br />
-													Example: <code>[linkview cat_name="Blogroll,Social Media"]</code>' ),
-													
-		'exclude_cat'   => array(	'val'		=> 'Cat 1,Cat 2,...',
-									'std_val'	=> '',
-									'desc'		=> 'This attribute specifies which categories should be excluded. This attribute is only considered if the attribute "cat_name" is not set.<br />
-													If the cat_name has spaces, simply wrap the name in quotes.<br />
-													If you want to define multiple categories you can give them in a list splitted by the delimiter ","<br />
-													Example: <code>[linkview exclude_cat="Blogroll,Social Media"]</code>' ),
+		'cat_name'       => array( 'val'     => 'Cat 1,Cat 2,...',
+		                           'std_val' => '',
+		                           'desc'    => 'This attribute specifies which categories should be shown. If you leave the attribute empty all categories are shown.<br />
+		                                         If the cat_name has spaces, simply wrap the name in quotes.<br />
+		                                         Example: <code>[linkview cat_name="Social Media"]</code><br />
+		                                         If you want to define multiple categories you can give them in a list splitted by the delimiter ","<br />
+		                                         Example: <code>[linkview cat_name="Blogroll,Social Media"]</code>' ),
 
-		'show_img'		=> array(	'val'		=> '0 ... false<br />1 ... true',
-									'std_val'	=> '0',
-									'desc'		=> 'This attribute specifies if the image is displayed instead of the name. This attribute is only considered for links where an image was set.' ),
+		'exclude_cat'    => array( 'val'     => 'Cat 1,Cat 2,...',
+		                           'std_val' => '',
+		                           'desc'    => 'This attribute specifies which categories should be excluded. This attribute is only considered if the attribute "cat_name" is not set.<br />
+		                                         If the cat_name has spaces, simply wrap the name in quotes.<br />
+		                                         If you want to define multiple categories you can give them in a list splitted by the delimiter ","<br />
+		                                         Example: <code>[linkview exclude_cat="Blogroll,Social Media"]</code>' ),
 
-		'show_cat_name'	=> array(	'val'		=> '0 ... false<br />1 ... true',
-									'std_val'	=> '1',
-									'desc'		=> 'This attribute specifies if the category name is shown as a headline.' ),
+		'show_img'       => array( 'val'     => '0 ... false<br />1 ... true',
+		                           'std_val' => '0',
+		                           'desc'    => 'This attribute specifies if the image is displayed instead of the name. This attribute is only considered for links where an image was set.' ),
+
+		'show_cat_name'  => array( 'val'     => '0 ... false<br />1 ... true',
+		                           'std_val' => '1',
+		                           'desc'    => 'This attribute specifies if the category name is shown as a headline.' ),
 		
-		'vertical_align'=> array(	'val'		=> 'std<br />top<br />bottom<br />middle',
-									'std_val'	=> 'std',
-									'desc'		=> 'This attribute specifies the vertical alignment of the links. Changing this attribute normally only make sense if the link-images are displayed.<br />
-													If you change this value you can for example modify the vertical alignment of the list symbol relativ to the image or the vertical alignment of images with different size in a slider.' ),
+		'vertical_align' => array( 'val'     => 'std<br />top<br />bottom<br />middle',
+		                           'std_val' => 'std',
+		                           'desc'    => 'This attribute specifies the vertical alignment of the links. Changing this attribute normally only make sense if the link-images are displayed.<br />
+		                                         If you change this value you can for example modify the vertical alignment of the list symbol relativ to the image or the vertical alignment of images with different size in a slider.' ),
 
-		'target'		=> array(	'val'		=> 'std<br />blank<br />top<br />none',
-									'std_val'	=> 'std',
-									'desc'		=> 'Set one of the given values to overwrite the standard value which was set for the link.<br />
-													Set the attribute to "std" if you don´t want to overwrite the standard.' ),
-													
-		'list_symbol'	=> array(	'val'		=> 'std<br />none<br />circle<br />square<br />disc',
-									'std_val'	=> 'std',
-									'desc'		=> 'This attribute sets the style type of the list symbol.<br />
-													The standard value is "std", this means the standard type which is set in your theme will be used. Set one of the other values to overwrite this standard.<br />
-													A good example for the usage is to set the value to "none" for an image link list. The list symbols will be hidden which often looks better when images are used.' ),
+		'target'         => array( 'val'     => 'std<br />blank<br />top<br />none',
+		                           'std_val' => 'std',
+		                           'desc'    => 'Set one of the given values to overwrite the standard value which was set for the link.<br />
+		                                         Set the attribute to "std" if you don´t want to overwrite the standard.' ),
 
-		'slider_width'	=> array(	'val'		=> 'Number',
-									'std_val'	=> '0',
-									'desc'		=> 'This attribute sets the fixed width of the slider. If the attribute is set to 0 the width will be calculated automatically due to the given image sizes.<br />
-													This attribute is only considered if the view type "slider" is selected.' ),
+		'list_symbol'    => array( 'val'     => 'std<br />none<br />circle<br />square<br />disc',
+		                           'std_val' => 'std',
+		                           'desc'    => 'This attribute sets the style type of the list symbol.<br />
+		                                         The standard value is "std", this means the standard type which is set in your theme will be used. Set one of the other values to overwrite this standard.<br />
+		                                         A good example for the usage is to set the value to "none" for an image link list. The list symbols will be hidden which often looks better when images are used.' ),
 
-		'slider_height'	=> array(	'val'		=> 'Number',
-									'std_val'	=> '0',
-									'desc'		=> 'This attribute sets the fixed height of the slider. If the attribute is set to 0 the height will be calculated automatically due to the given image sizes.<br />
-													This attribute is only considered if the view type "slider" is selected.' ),
+		'slider_width'   => array( 'val'     => 'Number',
+		                           'std_val' => '0',
+		                           'desc'    => 'This attribute sets the fixed width of the slider. If the attribute is set to 0 the width will be calculated automatically due to the given image sizes.<br />
+		                                         This attribute is only considered if the view type "slider" is selected.' ),
 
-		'slider_pause'	=> array(	'val'		=> 'Number',
-									'std_val'	=> '6000',
-									'desc'		=> 'This attribute sets the duration between the the slides in milliseconds. This is the time where you can see the link standing still before the next slide starts.<br />
-													This attribute is only considered if the view type "slider" is selected.' ),
+		'slider_height'  => array( 'val'     => 'Number',
+		                           'std_val' => '0',
+		                           'desc'    => 'This attribute sets the fixed height of the slider. If the attribute is set to 0 the height will be calculated automatically due to the given image sizes.<br />
+		                                         This attribute is only considered if the view type "slider" is selected.' ),
 
-		'slider_speed'	=> array(	'val'		=> 'Number',
-									'std_val'	=> '1000',
-									'desc'		=> 'This attribute sets the animation speed of the slider in milliseconds. This is the time used to slide from one link to the next one.<br />
-													This attribute is only considered if the view type "slider" is selected.' )
+		'slider_pause'   => array( 'val'     => 'Number',
+		                           'std_val' => '6000',
+		                           'desc'    => 'This attribute sets the duration between the the slides in milliseconds. This is the time where you can see the link standing still before the next slide starts.<br />
+		                                         This attribute is only considered if the view type "slider" is selected.' ),
+
+		'slider_speed'   => array( 'val'     => 'Number',
+		                           'std_val' => '1000',
+		                           'desc'    => 'This attribute sets the animation speed of the slider in milliseconds. This is the time used to slide from one link to the next one.<br />
+		                                         This attribute is only considered if the view type "slider" is selected.' )
 	);
 
 	// main function to show the rendered HTML output
@@ -319,7 +319,7 @@ class sc_linkview {
 			return ' width="'.round($img_width*$scale).'px" height="'.round($img_height*$scale).'px"';
 		}
 	}
-	
+
 	private static function create_random_slider_id() {
 		$slider_id = mt_rand( 10000, 99999 );
 		return 'slider'.$slider_id;

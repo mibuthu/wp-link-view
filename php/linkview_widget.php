@@ -8,7 +8,7 @@ class linkview_widget extends WP_Widget {
 	 * Register widget with WordPress.
 	 */
 	public function __construct() {
-   	    //parent::__construct( 'baseID', 'name' );
+		//parent::__construct( 'baseID', 'name' );
 		parent::__construct(
 	 		'linkview_widget', // Base ID
 			'LinkView', // Name

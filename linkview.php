@@ -33,12 +33,12 @@ define( 'LV_URL', plugin_dir_url( __FILE__ ) );
 // for admin and frontpage:
 add_action( 'widgets_init', 'on_lv_widgets' );
 // for admin page only:
-if ( is_admin() ) {
-   add_action( 'admin_menu', 'on_lv_admin' ); // add admin pages in admin menu
+if( is_admin() ) {
+	add_action( 'admin_menu', 'on_lv_admin' ); // add admin pages in admin menu
 }
 // for frontpage only:
 else {
-   add_shortcode( 'linkview', 'on_lv_sc_linkview' ); // add shortcode [linkview]
+	add_shortcode( 'linkview', 'on_lv_sc_linkview' ); // add shortcode [linkview]
 }
 
 function on_lv_widgets() {
