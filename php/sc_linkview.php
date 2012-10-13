@@ -33,7 +33,7 @@ class sc_linkview {
 		'show_cat_name'  => array( 'val'     => '0 ... false<br />1 ... true',
 		                           'std_val' => '1',
 		                           'desc'    => 'This attribute specifies if the category name is shown as a headline.' ),
-		
+
 		'vertical_align' => array( 'val'     => 'std<br />top<br />bottom<br />middle',
 		                           'std_val' => 'std',
 		                           'desc'    => 'This attribute specifies the vertical alignment of the links. Changing this attribute normally only make sense if the link-images are displayed.<br />
@@ -73,7 +73,7 @@ class sc_linkview {
 
 	// main function to show the rendered HTML output
 	public static function show_html( $atts ) {
-		
+
 		// check attributes
 		$std_values = array();
 		foreach( sc_linkview::$attr as $aname => $attribute ) {
@@ -83,7 +83,7 @@ class sc_linkview {
 
 		// set categories
 		$categories = sc_linkview::categories( $a );
-		
+
 		$out = '';
 		foreach( $categories as $cat ) {
 			// get links
@@ -142,7 +142,7 @@ class sc_linkview {
 		}
 		else {
 			$width = 0;
-			$height = 0;			
+			$height = 0;
 			foreach( $links as $link ) {
 				if( $a['show_img'] > 0 && $link->link_image != null ) {
 					list( $w, $h ) = getimagesize( $link->link_image );
@@ -163,7 +163,7 @@ class sc_linkview {
 			if( !$width )
 				$width = 300;
 			if( !$height )
-				$height = 30; 
+				$height = 30;
 		}
 		return array( $width, $height );
 	}
@@ -204,9 +204,13 @@ class sc_linkview {
 	public static function html_link_slider( $links, $a ) {
 		$slider_id = sc_linkview::create_random_slider_id();
 		list( $slider_width, $slider_height ) = sc_linkview::slider_size( $a, $links );
+		$out = '';
 		// javascript
-		$out = '
-			<script type="text/javascript" src="wp-includes/js/jquery/jquery.js"></script>
+		if( !wp_script_is( 'jquery' ) ) {  // include jquery if it wasn't already added
+			$out .= '
+				<script type="text/javascript" src="'.includes_url().'js/jquery/jquery.js"></script>';
+		}
+		$out .= '
 			<script type="text/javascript" src="'.LV_URL.'js/easySlider.js"></script>
 			<script type="text/javascript">
 				jQuery(document).ready(function(){
@@ -217,7 +221,7 @@ class sc_linkview {
 						continuous: true,
 						controlsShow: false
 					});
-				});	
+				});
 			</script>';
 		// styles
 		$out .= '
@@ -227,7 +231,7 @@ class sc_linkview {
 					padding:0;
 					list-style:none;
 				}
-				#'.$slider_id.' li { 
+				#'.$slider_id.' li {
 					width: '.$slider_width.'px;
 					height: '.$slider_height.'px;
 					overflow: hidden;
@@ -268,7 +272,7 @@ class sc_linkview {
 			$out .= sc_linkview::html_link( $link, $a, $slider_width, $slider_height );
 			$out .= '</span></li>';
 		}
-		$out .= '	
+		$out .= '
 				</ul>
 			</div>';
 		return $out;
@@ -276,7 +280,7 @@ class sc_linkview {
 
 	public static function html_link( $l, $a, $slider_width=0, $slider_height=0 ) {
 		$out = '<a href="'.$l->link_url;
-		
+
 		if( $a['target'] == 'blank' || $a['target'] == 'top' || $a['target'] == 'none' ) {
 			$target = '_'.$a['target'];
 		}
