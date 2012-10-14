@@ -54,7 +54,7 @@
 			continuous:		false, 
 			numeric: 		false,
 			numericId: 		'controls'
-		}; 
+		};
 		
 		var options = $.extend(defaults, options);  
 				
