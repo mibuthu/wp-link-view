@@ -70,19 +70,22 @@ class sc_linkview {
 		                           'desc'    => 'This attribute sets the animation speed of the slider in milliseconds. This is the time used to slide from one link to the next one.<br />
 		                                         This attribute is only considered if the view type "slider" is selected.' )
 	);
+	public static $slider_ids = NULL;
+	private static $slider_parameters = NULL;
+
 
 	// main function to show the rendered HTML output
 	public static function show_html( $atts ) {
 
 		// check attributes
 		$std_values = array();
-		foreach( sc_linkview::$attr as $aname => $attribute ) {
+		foreach( self::$attr as $aname => $attribute ) {
 			$std_values[$aname] = $attribute['std_val'];
 		}
 		$a = shortcode_atts( $std_values, $atts );
 
 		// set categories
-		$categories = sc_linkview::categories( $a );
+		$categories = self::categories( $a );
 
 		$out = '';
 		foreach( $categories as $cat ) {
@@ -95,12 +98,12 @@ class sc_linkview {
 
 			// generate output
 			if( !empty( $links ) ) {
-				$out .= sc_linkview::html_category( $cat, $a );
+				$out .= self::html_category( $cat, $a );
 				if( $a['view_type'] == 'slider' ) {
-					$out .= sc_linkview::html_link_slider( $links, $a );
+					$out .= self::html_link_slider( $links, $a );
 				}
 				else {
-					$out .= sc_linkview::html_link_list( $links, $a );
+					$out .= self::html_link_list( $links, $a );
 				}
 			}
 		}
@@ -193,7 +196,7 @@ class sc_linkview {
 				$out .= ' style="display:inline-block; vertical-align:'.$a['vertical_align'].';"';
 			}
 			$out .= '>';
-			$out .= sc_linkview::html_link( $link, $a );
+			$out .= self::html_link( $link, $a );
 			$out .= '</span></li>';
 		}
 		$out .= '
@@ -202,29 +205,16 @@ class sc_linkview {
 	}
 
 	public static function html_link_slider( $links, $a ) {
-		$slider_id = sc_linkview::create_random_slider_id();
-		list( $slider_width, $slider_height ) = sc_linkview::slider_size( $a, $links );
-		$out = '';
-		// javascript
-		if( !wp_script_is( 'jquery' ) ) {  // include jquery if it wasn't already added
-			$out .= '
-				<script type="text/javascript" src="'.includes_url().'js/jquery/jquery.js"></script>';
-		}
-		$out .= '
-			<script type="text/javascript" src="'.LV_URL.'js/easySlider.js"></script>
-			<script type="text/javascript">
-				jQuery(document).ready(function(){
-					jQuery("#'.$slider_id.'").easySlider({
-						auto: true,
-						pause: '.$a['slider_pause'].',
-						speed: '.$a['slider_speed'].',
-						continuous: true,
-						controlsShow: false
-					});
-				});
-			</script>';
+		$slider_id = self::create_random_slider_id();
+		list( $slider_width, $slider_height ) = self::slider_size( $a, $links );
+		// prepare slider parameters which is used in footer script
+		self::$slider_parameters[$slider_id] = array( 'auto' => 'true',
+		                                              'pause' => $a['slider_pause'],
+		                                              'speed' => $a['slider_speed'],
+		                                              'continuous' => 'true',
+		                                              'controlsShow' => 'false' );
 		// styles
-		$out .= '
+		$out = '
 			<style>
 				#'.$slider_id.' ul, #'.$slider_id.' li {
 					margin:0;
@@ -269,7 +259,7 @@ class sc_linkview {
 				$out .= ' id="lvspan"';
 			}
 			$out .= '>';
-			$out .= sc_linkview::html_link( $link, $a, $slider_width, $slider_height );
+			$out .= self::html_link( $link, $a, $slider_width, $slider_height );
 			$out .= '</span></li>';
 		}
 		$out .= '
@@ -297,7 +287,7 @@ class sc_linkview {
 		$out .= '">';
 
 		if( $a['show_img'] > 0 && $l->link_image != null ) {
-			$out .= '<img src="'.$l->link_image.'"'.sc_linkview::html_img_size( $l->link_image, $slider_width, $slider_height ).' alt="'.$l->link_name.'" />';
+			$out .= '<img src="'.$l->link_image.'"'.self::html_img_size( $l->link_image, $slider_width, $slider_height ).' alt="'.$l->link_name.'" />';
 		}
 		else {
 			$out .= $l->link_name;
@@ -326,7 +316,28 @@ class sc_linkview {
 
 	private static function create_random_slider_id() {
 		$slider_id = mt_rand( 10000, 99999 );
-		return 'slider'.$slider_id;
+		$slider_id = 'slider'.$slider_id;
+		self::$slider_ids[] = $slider_id;
+		return $slider_id;
+	}
+
+	public static function print_slider_script() {
+		$out = '<script type="text/javascript">
+				jQuery(document).ready(function(){';
+		foreach( self::$slider_ids as $id ) {
+			$out .= '
+					jQuery("#'.$id.'").easySlider({';
+			foreach( self::$slider_parameters[$id] as $param => $value ) {
+				$out .= '
+						'.$param.': '.$value.',';
+			}
+			$out .= '
+					});';
+		}
+		$out .= '
+				});
+			</script>';
+		echo $out;
 	}
 }
 ?>

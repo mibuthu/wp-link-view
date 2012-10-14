@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Link View 
+Plugin Name: Link View
 Plugin URI: http://wordpress.org/extend/plugins/link-view/
 Description: Display a link-list or link-slider in a post or page by using a shortcode.
 Version: 0.3.1
@@ -39,6 +39,8 @@ if( is_admin() ) {
 // for frontpage only:
 else {
 	add_shortcode( 'linkview', 'on_lv_sc_linkview' ); // add shortcode [linkview]
+	add_action( 'init', 'on_lv_frontpage_init' );
+	add_action( 'wp_footer', 'on_lv_frontpage_footer' );
 }
 
 function on_lv_widgets() {
@@ -54,5 +56,17 @@ function on_lv_admin() {
 function on_lv_sc_linkview( $atts ) {
 	require_once( 'php/sc_linkview.php' );
 	return sc_linkview::show_html( $atts );
+}
+
+function on_lv_frontpage_init() {
+	wp_register_script( 'lv_easySlider', LV_URL.'js/easySlider.js', array( 'jquery' ), true );
+}
+
+function on_lv_frontpage_footer() {
+	require_once( 'php/sc_linkview.php' );
+	if( NULL != sc_linkview::$slider_ids ) {
+		wp_print_scripts( 'lv_easySlider' );
+		sc_linkview::print_slider_script();
+	}
 }
 ?>
