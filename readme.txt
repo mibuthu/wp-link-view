@@ -2,9 +2,9 @@
 Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, attribute, widget, sidebar
-Requires at least: 3.0
-Tested up to: 3.4.1
-Stable tag: 0.3.1
+Requires at least: 3.3
+Tested up to: 3.4.2
+Stable tag: 0.3.2
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,10 @@ Yes, since version 0.3.0 you can use as much sliders as you want on one site.
 
 
 == Changelog ==
+
+= 0.3.2 (2012-10-14) =
+
+* Fixed queue of jquery which is required for the slider (in the old version the bad inclusion can cause issues with themes or other plugins that uses jquery)
 
 = 0.3.1 (2012-07-28) =
 
