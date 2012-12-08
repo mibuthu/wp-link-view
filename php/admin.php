@@ -13,7 +13,8 @@ class lv_admin {
 	 * Add and register all admin pages in the admin menu
 	 */
 	public function register_pages() {
-		add_submenu_page( 'link-manager.php', 'Link View', 'Link View', 'edit_posts', 'lv_admin_main', array( &$this, 'show_main' ) );
+		$page = add_submenu_page( 'link-manager.php', 'Link View', 'Link View', 'edit_posts', 'lv_admin_main', array( &$this, 'show_main' ) );
+		add_action( 'admin_print_scripts-'.$page, array( &$this, 'embed_admin_main_scripts' ) );
 	}
 
 	// show the main admin page as a submenu of "Links"
@@ -36,13 +37,6 @@ class lv_admin {
 				The <code>[linkview]</code> shortcode including the attributes "cat_name" and "show_img" looks like this:</p>
 				<p><code>[linkview cat_name=Sponsors show_img=1]</code></p>
 				<p>Below is a list of all the supported attributes with their descriptions and available options:</p>
-				<style type="text/css">
-					<!--
-					#lvadmintable {border:1px solid #aaa;border-collapse:collapse}
-					#lvadmintable th {border:1px solid #aaa;padding:3px 4px !important;background:#eeeeee;}
-					#lvadmintable td {border:1px solid #aaa;padding:2px 5px !important;vertical-align:top}
-					-->
-				</style>
 				<table id="lvadmintable">
 					<tr>
 						<th>Attribute name</th>
@@ -71,6 +65,10 @@ class lv_admin {
 				Press "Save" to enable the changes.
 			</div>';
 		echo $out;
+	}
+
+	public function embed_admin_main_scripts() {
+		wp_enqueue_style( 'linkview_admin_main_css', LV_URL.'css/admin_main.css' );
 	}
 } // end class lv_admin
 ?>

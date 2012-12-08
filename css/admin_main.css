@@ -1,0 +1,15 @@
+#lvadmintable {
+	border: 1px solid #aaa;
+	border-collapse: collapse;
+	float: left;
+}
+#lvadmintable th {
+	border: 1px solid #aaa;
+	padding: 3px 4px !important;
+	background: #eeeeee;
+}
+#lvadmintable td {
+	border: 1px solid #aaa;
+	padding: 2px 5px !important;
+	vertical-align: top;
+}
