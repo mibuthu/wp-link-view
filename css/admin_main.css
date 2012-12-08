@@ -1,15 +1,23 @@
-#lvadmintable {
+.lvadmintable {
 	border: 1px solid #aaa;
 	border-collapse: collapse;
 	float: left;
 }
-#lvadmintable th {
+.lvadmintable th {
 	border: 1px solid #aaa;
 	padding: 3px 4px !important;
 	background: #eeeeee;
 }
-#lvadmintable td {
+.lvadmintable td {
 	border: 1px solid #aaa;
 	padding: 2px 5px !important;
 	vertical-align: top;
+}
+
+.wrap {
+	padding-bottom: 15px;
+}
+
+.lvcontent {
+	padding: 0px 0px 10px 15px
 }
