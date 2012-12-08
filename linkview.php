@@ -64,7 +64,7 @@ class linkview {
 	} // end constructor
 
 	public function shortcode_linkview( $atts ) {
-		if( NULL != $this->shortcode ) {
+		if( NULL == $this->shortcode ) {
 			require_once( 'php/sc_linkview.php' );
 			$this->shortcode = sc_linkview::get_instance();
 		}
