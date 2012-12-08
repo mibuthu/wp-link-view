@@ -3,8 +3,15 @@
 // This class handles all available admin pages
 class lv_admin {
 
+	/**
+	 * Add and register all admin pages in the admin menu
+	 */
+	public function register_pages() {
+		add_submenu_page( 'link-manager.php', 'Link View', 'Link View', 'edit_posts', 'lv_admin_main', array( &$this, 'show_main' ) );
+	}
+
 	// show the main admin page as a submenu of "Links"
-	public static function show_main() {
+	public function show_main() {
 		if( !current_user_can('edit_posts' ) ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
@@ -35,7 +42,7 @@ class lv_admin {
 					<tr>
 						<th>Attribute name</th>
 						<th>Value options</th>
-						<th>Default value</th> 
+						<th>Default value</th>
 						<th>Description</th>
 					</tr>';
 

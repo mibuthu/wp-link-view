@@ -25,48 +25,68 @@ You can view a copy of the HTML version of the GNU General Public
 License at http://www.gnu.org/copyleft/gpl.html
 */
 
-// general definitions
+// GENERAL DEFINITIONS
 define( 'LV_URL', plugin_dir_url( __FILE__ ) );
 
 
-// ADD ACTIONS AND SHORTCODES:
-// for admin and frontpage:
-add_action( 'widgets_init', 'on_lv_widgets' );
-// for admin page only:
-if( is_admin() ) {
-	add_action( 'admin_menu', 'on_lv_admin' ); // add admin pages in admin menu
-}
-// for frontpage only:
-else {
-	add_shortcode( 'linkview', 'on_lv_sc_linkview' ); // add shortcode [linkview]
-	add_action( 'init', 'on_lv_frontpage_init' );
-	add_action( 'wp_footer', 'on_lv_frontpage_footer' );
-}
+// MAIN PLUGIN CLASS
+class linkview {
+	private $shortcode;
 
-function on_lv_widgets() {
-	require_once( 'php/linkview_widget.php' );
-	return register_widget( 'linkview_widget' );
-}
+	/**
+	 * Constructor:
+	 * Initializes the plugin.
+	 */
+	public function __construct() {
+		$this->shortcode = NULL;
 
-function on_lv_admin() {
-	require_once( 'php/admin.php' );
-	add_submenu_page( 'link-manager.php', 'Link View', 'Link View', 'edit_posts', 'lv_admin_main', array( 'lv_admin', 'show_main' ) );
-}
+		// ALWAYS:
+		// Register shortcodes
+		add_shortcode( 'linkview', array( &$this, 'shortcode_linkview' ) );
+		// Register widgets
+		add_action( 'widgets_init', array( &$this, 'widget_linkview' ) );
 
-function on_lv_sc_linkview( $atts ) {
-	require_once( 'php/sc_linkview.php' );
-	return sc_linkview::show_html( $atts );
-}
+		// ADMIN PAGE:
+		if ( is_admin() ) {
+			// Include required php-files and initialize required objects
+			require_once( 'php/admin.php' );
+			$admin = new lv_admin();
+			// Register actions
+			add_action( 'admin_menu', array( &$admin, 'register_pages' ) );
+		}
 
-function on_lv_frontpage_init() {
-	wp_register_script( 'lv_easySlider', LV_URL.'js/easySlider.js', array( 'jquery' ), true );
-}
+		// FRONT PAGE:
+		else {
+			// Register actions
+			add_action( 'init', array( &$this, 'frontpage_init' ) );
+			add_action( 'wp_footer', array( &$this, 'frontpage_footer' ) );
+		}
+	} // end constructor
 
-function on_lv_frontpage_footer() {
-	require_once( 'php/sc_linkview.php' );
-	if( NULL != sc_linkview::$slider_ids ) {
-		wp_print_scripts( 'lv_easySlider' );
-		sc_linkview::print_slider_script();
+	public function shortcode_linkview( $atts ) {
+		require_once( 'php/sc_linkview.php' );
+		$this->shortcode = new sc_linkview();
+		return $this->shortcode->show_html( $atts );
 	}
-}
+
+	public function widget_linkview() {
+		require_once( 'php/linkview_widget.php' );
+		return register_widget( 'linkview_widget' );
+	}
+
+	public function frontpage_init() {
+		wp_register_script( 'lv_easySlider', LV_URL.'js/easySlider.js', array( 'jquery' ), true );
+	}
+
+	public function frontpage_footer() {
+		if( NULL != $this->shortcode && NULL != sc_linkview::$slider_ids ) {
+			wp_print_scripts( 'lv_easySlider' );
+			$this->shortcode->print_slider_script();
+		}
+	}
+} // end class
+
+
+// create a class instance
+$lv = new linkview();
 ?>

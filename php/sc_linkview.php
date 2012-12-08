@@ -75,7 +75,7 @@ class sc_linkview {
 
 
 	// main function to show the rendered HTML output
-	public static function show_html( $atts ) {
+	public function show_html( $atts ) {
 
 		// check attributes
 		$std_values = array();
@@ -85,7 +85,7 @@ class sc_linkview {
 		$a = shortcode_atts( $std_values, $atts );
 
 		// set categories
-		$categories = self::categories( $a );
+		$categories = $this->categories( $a );
 
 		$out = '';
 		foreach( $categories as $cat ) {
@@ -98,19 +98,19 @@ class sc_linkview {
 
 			// generate output
 			if( !empty( $links ) ) {
-				$out .= self::html_category( $cat, $a );
+				$out .= $this->html_category( $cat, $a );
 				if( $a['view_type'] == 'slider' ) {
-					$out .= self::html_link_slider( $links, $a );
+					$out .= $this->html_link_slider( $links, $a );
 				}
 				else {
-					$out .= self::html_link_list( $links, $a );
+					$out .= $this->html_link_list( $links, $a );
 				}
 			}
 		}
 		return $out;
 	}
 
-	public static function categories( $a ) {
+	private function categories( $a ) {
 		$catarray = array();
 		if( empty( $a['cat_name'] ) ) {
 			$catarray = get_terms( 'link_category', 'orderby=name' );
@@ -138,7 +138,7 @@ class sc_linkview {
 		return $catarray;
 	}
 
-	public static function slider_size( $a, $links ) {
+	private function slider_size( $a, $links ) {
 		if(	$a['slider_width'] > 0 && $a['slider_height'] > 0 ) {
 			$width = $a['slider_width'];
 			$height = $a['slider_height'];
@@ -171,7 +171,7 @@ class sc_linkview {
 		return array( $width, $height );
 	}
 
-	public static function html_category( $cat, $a ) {
+	private function html_category( $cat, $a ) {
 		$out = '';
 		if( $a['show_cat_name'] > 0 ) {
 			$out .= '
@@ -180,7 +180,7 @@ class sc_linkview {
 		return $out;
 	}
 
-	public static function html_link_list( $links, $a ) {
+	private function html_link_list( $links, $a ) {
 		if( $a['list_symbol'] == 'none' || $a['list_symbol'] == 'circle' || $a['list_symbol'] == 'square' || $a['list_symbol'] == 'disc' ) {
 			$out = '
 				<ul style="list-style-type:'.$a['list_symbol'].';">';
@@ -196,7 +196,7 @@ class sc_linkview {
 				$out .= ' style="display:inline-block; vertical-align:'.$a['vertical_align'].';"';
 			}
 			$out .= '>';
-			$out .= self::html_link( $link, $a );
+			$out .= $this->html_link( $link, $a );
 			$out .= '</span></li>';
 		}
 		$out .= '
@@ -204,9 +204,9 @@ class sc_linkview {
 		return $out;
 	}
 
-	public static function html_link_slider( $links, $a ) {
-		$slider_id = self::create_random_slider_id();
-		list( $slider_width, $slider_height ) = self::slider_size( $a, $links );
+	private function html_link_slider( $links, $a ) {
+		$slider_id = $this->create_random_slider_id();
+		list( $slider_width, $slider_height ) = $this->slider_size( $a, $links );
 		// prepare slider parameters which is used in footer script
 		self::$slider_parameters[$slider_id] = array( 'auto' => 'true',
 		                                              'pause' => $a['slider_pause'],
@@ -259,7 +259,7 @@ class sc_linkview {
 				$out .= ' id="lvspan"';
 			}
 			$out .= '>';
-			$out .= self::html_link( $link, $a, $slider_width, $slider_height );
+			$out .= $this->html_link( $link, $a, $slider_width, $slider_height );
 			$out .= '</span></li>';
 		}
 		$out .= '
@@ -268,7 +268,7 @@ class sc_linkview {
 		return $out;
 	}
 
-	public static function html_link( $l, $a, $slider_width=0, $slider_height=0 ) {
+	private function html_link( $l, $a, $slider_width=0, $slider_height=0 ) {
 		$out = '<a href="'.$l->link_url;
 
 		if( $a['target'] == 'blank' || $a['target'] == 'top' || $a['target'] == 'none' ) {
@@ -287,7 +287,7 @@ class sc_linkview {
 		$out .= '">';
 
 		if( $a['show_img'] > 0 && $l->link_image != null ) {
-			$out .= '<img src="'.$l->link_image.'"'.self::html_img_size( $l->link_image, $slider_width, $slider_height ).' alt="'.$l->link_name.'" />';
+			$out .= '<img src="'.$l->link_image.'"'.$this->html_img_size( $l->link_image, $slider_width, $slider_height ).' alt="'.$l->link_name.'" />';
 		}
 		else {
 			$out .= $l->link_name;
@@ -296,7 +296,7 @@ class sc_linkview {
 		return $out;
 	}
 
-	public static function html_img_size( $image, $slider_width=0, $slider_height=0 ) {
+	private function html_img_size( $image, $slider_width=0, $slider_height=0 ) {
 		if( $slider_width <= 0 || $slider_height <= 0 ) {
 			return '';
 		}
@@ -314,14 +314,14 @@ class sc_linkview {
 		}
 	}
 
-	private static function create_random_slider_id() {
+	private function create_random_slider_id() {
 		$slider_id = mt_rand( 10000, 99999 );
 		$slider_id = 'slider'.$slider_id;
 		self::$slider_ids[] = $slider_id;
 		return $slider_id;
 	}
 
-	public static function print_slider_script() {
+	public function print_slider_script() {
 		$out = '<script type="text/javascript">
 				jQuery(document).ready(function(){';
 		foreach( self::$slider_ids as $id ) {
