@@ -28,20 +28,26 @@ class lv_admin {
 			<div id="icon-link-manager" class="icon32"><br /></div><h2>Link View</h2>
 			</div>
 			<h3>Usage</h3>
-			<div><h4>LinkView Shortcode:</h4></div>
-			<div class="lvcontent">
-				<p>With the shortcode <code>[linkview]</code> you can use LinkView in posts or pages.<br />
-				Shortcodes are snippets of pseudo code that are placed in blog posts or pages to easily render HTML output.<br />
-				Attributes are used to modify the shortcode. The available attributes for <code>[linkview]</code> are listed below.</p>
-			</div>
-			<div><h4>LinkView Widget:</h4></div>
-			<div class="lvcontent">
-				<p>With the LinkView Widget you can use LinkView in sidebars.<br />
-				Goto Appearance -> Widgets and add the "LinkView"-Widget in one of your sidebars.<br />
-				You can enter a title for the widget and add all the required attributes in the "Shortcode attributes" field.<br />
-				You can use all available attributes from the shortcode for the widget too.<br />
-				Press "Save" to enable the changes.</p>
-			</div>
+			<table>
+			<tr>
+				<td class="lvcaption"><h4>LinkView Shortcode:</h4></td>
+				<td class="lvcontent">
+					With the shortcode <code>[linkview]</code> you can use LinkView in posts or pages.<br />
+					Shortcodes are snippets of pseudo code that are placed in blog posts or pages to easily render HTML output.<br />
+					Attributes are used to modify the shortcode. The available attributes for <code>[linkview]</code> are listed below.
+				</td>
+			</tr>
+			<tr>
+				<td class="lvcaption"><h4>LinkView Widget:</h4></td>
+				<td class="lvcontent">
+					With the LinkView Widget you can use LinkView in sidebars.<br />
+					Goto Appearance -> Widgets and add the "LinkView"-Widget in one of your sidebars.<br />
+					You can enter a title for the widget and add all the required attributes in the "Shortcode attributes" field.<br />
+					You can use all available attributes from the shortcode for the widget too.<br />
+					Press "Save" to enable the changes.
+				</td>
+			</tr>
+			</table>
 			<h3>Available Attributes</h3>
 			<div>
 				 To get the correct result you can combine as much attributes as you want.<br />

@@ -14,10 +14,19 @@
 	vertical-align: top;
 }
 
+.lvcaption {
+	width: 180px;
+	vertical-align: top;
+}
+
 .lvcontent {
-	padding: 0px 0px 10px 15px
+	padding-bottom: 1em;
 }
 
 h3 {
 	padding-top: 1em;
+}
+
+h4 {
+	margin-top: 0px;
 }
