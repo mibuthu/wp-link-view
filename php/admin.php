@@ -27,13 +27,24 @@ class lv_admin {
 			<div class="wrap nosubsub">
 			<div id="icon-link-manager" class="icon32"><br /></div><h2>Link View</h2>
 			</div>
-			<h4>Usage of the <code>[linkview]</code> shortcode</h4>
+			<h3>Usage</h3>
+			<div><h4>LinkView Shortcode:</h4></div>
 			<div class="lvcontent">
-				<p>Link View works using a "shortcode". Shortcodes are snippets of pseudo code that are placed in blog posts or pages to easily render HTML output.</p>
-				<p>The following is the basic form of the Link View shortcode:</p>
-				<p><code>[linkview]</code></p>
-				<p></p>
-				<p>To facilitate customization of shortcodes, attributes are used. To get the correct result you can combine as much attributes as you want.<br />
+				<p>With the shortcode <code>[linkview]</code> you can use LinkView in posts or pages.<br />
+				Shortcodes are snippets of pseudo code that are placed in blog posts or pages to easily render HTML output.<br />
+				Attributes are used to modify the shortcode. The available attributes for <code>[linkview]</code> are listed below.</p>
+			</div>
+			<div><h4>LinkView Widget:</h4></div>
+			<div class="lvcontent">
+				<p>With the LinkView Widget you can use LinkView in sidebars.<br />
+				Goto Appearance -> Widgets and add the "LinkView"-Widget in one of your sidebars.<br />
+				You can enter a title for the widget and add all the required attributes in the "Shortcode attributes" field.<br />
+				You can use all available attributes from the shortcode for the widget too.<br />
+				Press "Save" to enable the changes.</p>
+			</div>
+			<h3>Available Attributes</h3>
+			<div>
+				 To get the correct result you can combine as much attributes as you want.<br />
 				The <code>[linkview]</code> shortcode including the attributes "cat_name" and "show_img" looks like this:</p>
 				<p><code>[linkview cat_name=Sponsors show_img=1]</code></p>
 				<p>Below is a list of all the supported attributes with their descriptions and available options:</p>
@@ -56,13 +67,6 @@ class lv_admin {
 		}
 		$out .= '
 				</table>
-			</div>
-			<h4>LinkView Widget</h4>
-			<div class="lvcontent">
-				There is also a Widget available which allows you to use the shortcode in sidebars.<br />
-				Goto Appearance -> Widgets and add the "LinkView"-Widget in one of your Sidebars.<br />
-				The Widget allows you to enter a title. Additionally you can add all the required shortcode attributes in the "Shortcode attributes" field.<br />
-				Press "Save" to enable the changes.
 			</div>';
 		echo $out;
 	}

@@ -14,10 +14,10 @@
 	vertical-align: top;
 }
 
-.wrap {
-	padding-bottom: 15px;
-}
-
 .lvcontent {
 	padding: 0px 0px 10px 15px
+}
+
+h3 {
+	padding-top: 1em;
 }
