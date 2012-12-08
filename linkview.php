@@ -64,8 +64,10 @@ class linkview {
 	} // end constructor
 
 	public function shortcode_linkview( $atts ) {
-		require_once( 'php/sc_linkview.php' );
-		$this->shortcode = new sc_linkview();
+		if( NULL != $this->shortcode ) {
+			require_once( 'php/sc_linkview.php' );
+			$this->shortcode = sc_linkview::get_instance();
+		}
 		return $this->shortcode->show_html( $atts );
 	}
 
@@ -79,12 +81,12 @@ class linkview {
 	}
 
 	public function frontpage_footer() {
-		if( NULL != $this->shortcode && NULL != sc_linkview::$slider_ids ) {
+		if( NULL != $this->shortcode && NULL != $this->shortcode->slider_ids ) {
 			wp_print_scripts( 'lv_easySlider' );
 			$this->shortcode->print_slider_script();
 		}
 	}
-} // end class
+} // end class linkview
 
 
 // create a class instance

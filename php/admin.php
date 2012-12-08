@@ -2,6 +2,12 @@
 
 // This class handles all available admin pages
 class lv_admin {
+	private $shortcode;
+
+	public function __construct() {
+		require_once( 'sc_linkview.php' );
+		$this->shortcode = sc_linkview::get_instance();
+	}
 
 	/**
 	 * Add and register all admin pages in the admin menu
@@ -15,7 +21,6 @@ class lv_admin {
 		if( !current_user_can('edit_posts' ) ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
-		require_once( 'sc_linkview.php' );
 
 		$out ='
 			<div class="wrap nosubsub" style="padding-bottom:15px">
@@ -46,7 +51,7 @@ class lv_admin {
 						<th>Description</th>
 					</tr>';
 
-		foreach( sc_linkview::$attr as $aname => $a ) {
+		foreach( $this->shortcode->attr as $aname => $a ) {
 			$out .= '
 					<tr>
 						<td>'.$aname.'</td>
@@ -67,5 +72,5 @@ class lv_admin {
 			</div>';
 		echo $out;
 	}
-}
+} // end class lv_admin
 ?>
