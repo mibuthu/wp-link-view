@@ -4,7 +4,7 @@
 class sc_linkview {
 	private static $instance;
 	private $atts;
-	public $slider_ids;
+	private $slider_ids;
 	private $slider_parameters;
 
 	public static function &get_instance() {
@@ -148,6 +148,10 @@ class sc_linkview {
 			}
 			return $atts;
 		}
+	}
+
+	public function get_slider_ids() {
+		return $this->slider_ids;
 	}
 
 	private function categories( $a ) {

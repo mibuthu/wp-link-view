@@ -81,7 +81,7 @@ class linkview {
 	}
 
 	public function frontpage_footer() {
-		if( NULL != $this->shortcode && NULL != $this->shortcode->slider_ids ) {
+		if( NULL != $this->shortcode && NULL != $this->shortcode->get_slider_ids() ) {
 			wp_print_scripts( 'lv_easySlider' );
 			$this->shortcode->print_slider_script();
 		}
