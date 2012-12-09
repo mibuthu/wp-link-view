@@ -53,7 +53,15 @@ class lv_admin {
 				 To get the correct result you can combine as much attributes as you want.<br />
 				The <code>[linkview]</code> shortcode including the attributes "cat_name" and "show_img" looks like this:</p>
 				<p><code>[linkview cat_name=Sponsors show_img=1]</code></p>
-				<p>Below is a list of all the supported attributes with their descriptions and available options:</p>
+				<p>Below is a list of all the supported attributes with their descriptions and available options:</p>';
+		$out .= $this->html_atts_table( NULL );
+		$out .= '
+			</div>';
+		echo $out;
+	}
+
+	private function html_atts_table( $section ) {
+		$out = '
 				<table class="lvadmintable">
 					<tr>
 						<th>Attribute name</th>
@@ -61,8 +69,7 @@ class lv_admin {
 						<th>Default value</th>
 						<th>Description</th>
 					</tr>';
-
-		$atts = $this->shortcode->get_atts();
+		$atts = $this->shortcode->get_atts( $section );
 		foreach( $atts as $aname => $a ) {
 			$out .= '
 					<tr>
@@ -73,9 +80,8 @@ class lv_admin {
 					</tr>';
 		}
 		$out .= '
-				</table>
-			</div>';
-		echo $out;
+				</table>';
+		return $out;
 	}
 
 	public function embed_admin_main_scripts() {
