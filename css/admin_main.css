@@ -1,24 +1,23 @@
-h3 {
+.lv-headline {
 	padding-top: 1em;
 }
 
-h4 {
+.lv-usage-caption h4 {
 	margin-top: 0px;
 }
 
-.lv-caption {
+.lv-usage-caption {
 	width: 180px;
 	vertical-align: top;
 }
 
-.lv-content {
+.lv-usage-content {
 	padding-bottom: 1em;
 }
 
 .lv-atts-table {
 	border: 1px solid #aaa;
 	border-collapse: collapse;
-	float: left;
 	width: 95%;
 }
 .lv-atts-table th {

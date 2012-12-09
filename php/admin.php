@@ -27,19 +27,19 @@ class lv_admin {
 			<div class="wrap nosubsub">
 			<div id="icon-link-manager" class="icon32"><br /></div><h2>Link View</h2>
 			</div>
-			<h3>Usage</h3>
+			<h3 class="lv-headline">Usage</h3>
 			<table>
 			<tr>
-				<td class="lv-caption"><h4>LinkView Shortcode:</h4></td>
-				<td class="lv-content">
+				<td class="lv-usage-caption"><h4>LinkView Shortcode:</h4></td>
+				<td class="lv-usage-content">
 					With the shortcode <code>[linkview]</code> you can use LinkView in posts or pages.<br />
 					Shortcodes are snippets of pseudo code that are placed in blog posts or pages to easily render HTML output.<br />
 					Attributes are used to modify the shortcode. The available attributes for <code>[linkview]</code> are listed below.
 				</td>
 			</tr>
 			<tr>
-				<td class="lv-caption"><h4>LinkView Widget:</h4></td>
-				<td class="lv-content">
+				<td class="lv-usage-caption"><h4>LinkView Widget:</h4></td>
+				<td class="lv-usage-content">
 					With the LinkView Widget you can use LinkView in sidebars.<br />
 					Goto Appearance -> Widgets and add the "LinkView"-Widget in one of your sidebars.<br />
 					You can enter a title for the widget and add all the required attributes in the "Shortcode attributes" field.<br />
@@ -48,7 +48,7 @@ class lv_admin {
 				</td>
 			</tr>
 			</table>
-			<h3>Available Attributes</h3>
+			<h3 class="lv-headline">Available Attributes</h3>
 			<div>
 				 To get the correct result you can combine as much attributes as you want.<br />
 				The <code>[linkview]</code> shortcode including the attributes "cat_name" and "show_img" looks like this:</p>
