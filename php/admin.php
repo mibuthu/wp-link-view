@@ -54,7 +54,12 @@ class lv_admin {
 				The <code>[linkview]</code> shortcode including the attributes "cat_name" and "show_img" looks like this:</p>
 				<p><code>[linkview cat_name=Sponsors show_img=1]</code></p>
 				<p>Below is a list of all the supported attributes with their descriptions and available options:</p>';
-		$out .= $this->html_atts_table( NULL );
+		$out .= '<h4 class="lv-section-caption">General:</h4>';
+		$out .= $this->html_atts_table( 'general' );
+		$out .= '<h4 class="lv-section-caption">Link List:</h4>';
+		$out .= $this->html_atts_table( 'list' );
+		$out .= '<h4 class="lv-section-caption">Link Slider:</h4>';
+		$out .= $this->html_atts_table( 'slider' );
 		$out .= '
 			</div>';
 		echo $out;

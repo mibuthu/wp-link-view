@@ -15,6 +15,11 @@
 	padding-bottom: 1em;
 }
 
+.lv-section-caption {
+	margin-top: 1.2em;
+	margin-bottom: 0.4em;
+}
+
 .lv-atts-table {
 	border: 1px solid #aaa;
 	border-collapse: collapse;
