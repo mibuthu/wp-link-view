@@ -42,15 +42,22 @@ class sc_linkview {
 			                                         If you want to define multiple categories you can give them in a list splitted by the delimiter ","<br />
 			                                         Example: <code>[linkview exclude_cat="Blogroll,Social Media"]</code>' ),
 
+			'show_cat_name'  => array( 'section' => 'general',
+			                           'val'     => '0 ... false<br />1 ... true',
+			                           'std_val' => '1',
+			                           'desc'    => 'This attribute specifies if the category name is shown as a headline.' ),
+
 			'show_img'       => array( 'section' => 'general',
 			                           'val'     => '0 ... false<br />1 ... true',
 			                           'std_val' => '0',
 			                           'desc'    => 'This attribute specifies if the image is displayed instead of the name. This attribute is only considered for links where an image was set.' ),
 
-			'show_cat_name'  => array( 'section' => 'general',
-			                           'val'     => '0 ... false<br />1 ... true',
-			                           'std_val' => '1',
-			                           'desc'    => 'This attribute specifies if the category name is shown as a headline.' ),
+			'link_items'     => array( 'section' => 'general',
+			                           'val'     => 'name<br />address<br />description<br />image<br />rss<br />notes<br />rating',
+			                           'std_val' => '',
+			                           'desc'    => 'The standard is to leave this option emtpy. Then only the link name or the link image (see attribute "show_img") is shown.<br />
+			                                         If you enter one or more of the available items here you overwrite that standard-settings and you have the ability to modify the items and their order to your wishes.
+			                                         Multiple items must be seperated by a semicolon, the items will be showed in the order you give them.' ),
 
 			'vertical_align' => array( 'section' => 'general',
 			                           'val'     => 'std<br />top<br />bottom<br />middle',
@@ -63,6 +70,12 @@ class sc_linkview {
 			                           'std_val' => 'std',
 			                           'desc'    => 'Set one of the given values to overwrite the standard value which was set for the link.<br />
 			                                         Set the attribute to "std" if you don´t want to overwrite the standard.' ),
+
+			'css_suffix'     => array( 'section' => 'general',
+			                           'val'     => 'string',
+			                           'std_val' => '',
+			                           'desc'    => 'This attribute sets the class suffix to allow different css settings for different link lists or sliders on the same site.<br />
+			                                         The standard is an empty string which specifies that no specific suffix will be used.' ),
 
 			'list_symbol'    => array( 'section' => 'list',
 			                           'val'     => 'std<br />none<br />circle<br />square<br />disc',
@@ -226,7 +239,7 @@ class sc_linkview {
 	private function html_link_list( $links, $a ) {
 		if( $a['list_symbol'] == 'none' || $a['list_symbol'] == 'circle' || $a['list_symbol'] == 'square' || $a['list_symbol'] == 'disc' ) {
 			$out = '
-				<ul style="list-style-type:'.$a['list_symbol'].';">';
+				<ul class="lv-link-list" style="list-style-type:'.$a['list_symbol'].';">';
 		}
 		else {
 			$out = '
@@ -234,7 +247,7 @@ class sc_linkview {
 		}
 		foreach( $links as $link ) {
 			$out .= '
-					<li><span';
+					<li><span class="lv-link"';
 			if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
 				$out .= ' style="display:inline-block; vertical-align:'.$a['vertical_align'].';"';
 			}
@@ -293,7 +306,7 @@ class sc_linkview {
 		// html
 		$out .= '
 			<div id="'.$slider_id.'">
-				<ul>';
+				<ul class="lv-link-slider">';
 		// links
 		foreach( $links as $link ) {
 			$out .= '
@@ -312,7 +325,7 @@ class sc_linkview {
 	}
 
 	private function html_link( $l, $a, $slider_width=0, $slider_height=0 ) {
-		$out = '<a href="'.$l->link_url;
+		$out = '<a class="lv-anchor" href="'.$l->link_url;
 
 		if( $a['target'] == 'blank' || $a['target'] == 'top' || $a['target'] == 'none' ) {
 			$target = '_'.$a['target'];
@@ -329,13 +342,54 @@ class sc_linkview {
 		}
 		$out .= '">';
 
-		if( $a['show_img'] > 0 && $l->link_image != null ) {
-			$out .= '<img src="'.$l->link_image.'"'.$this->html_img_size( $l->link_image, $slider_width, $slider_height ).' alt="'.$l->link_name.'" />';
+		if( '' === $a['link_items'] ) {
+			// simple style (name or image)
+			if( $a['show_img'] > 0 && $l->link_image != null ) {
+				// image
+				$out .= $this->html_link_item($l, 'image', $slider_width, $slider_height );
+			}
+			else {
+				// name
+				$out .= $this->html_link_item($l, 'name', $slider_width, $slider_height );
+			}
 		}
 		else {
-			$out .= $l->link_name;
+			// enhanced style (all items given in link_items attribute)
+			$items = explode( ',', $a['link_items'] );
+			foreach( $items as $item ) {
+				$out .= $this->html_link_item($l, $item, $slider_width, $slider_height );
+			}
 		}
 		$out .= '</a>';
+		return $out;
+	}
+
+	private function html_link_item( $l, $item, $slider_width=0, $slider_height=0 ) {
+		$out = '<div class="lv-item-'.$item.'">';
+		switch( $item ) {
+			case 'address':
+				$out .= $l->link_url;
+				break;
+			case 'description':
+				$out .= $l->link_description;
+				break;
+			case 'image':
+				$out .= '<img src="'.$l->link_image.'"'.$this->html_img_size( $l->link_image, $slider_width, $slider_height ).' alt="'.$l->link_name.'" />';
+				break;
+			case 'rss':
+				$out .= $l->link_rss;
+				break;
+			case 'notes':
+				$out .= $l->link_notes;
+				break;
+			case 'rating':
+				$out .= $l->link_rating;
+				break;
+			default: // 'name'
+				$out .= $l->link_name;
+				break;
+		}
+		$out .= '</div>';
 		return $out;
 	}
 
