@@ -62,7 +62,8 @@ class lv_admin {
 						<th>Description</th>
 					</tr>';
 
-		foreach( $this->shortcode->attr as $aname => $a ) {
+		$atts = $this->shortcode->get_atts();
+		foreach( $atts as $aname => $a ) {
 			$out .= '
 					<tr>
 						<td>'.$aname.'</td>
