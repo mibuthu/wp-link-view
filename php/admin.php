@@ -30,16 +30,16 @@ class lv_admin {
 			<h3>Usage</h3>
 			<table>
 			<tr>
-				<td class="lvcaption"><h4>LinkView Shortcode:</h4></td>
-				<td class="lvcontent">
+				<td class="lv-caption"><h4>LinkView Shortcode:</h4></td>
+				<td class="lv-content">
 					With the shortcode <code>[linkview]</code> you can use LinkView in posts or pages.<br />
 					Shortcodes are snippets of pseudo code that are placed in blog posts or pages to easily render HTML output.<br />
 					Attributes are used to modify the shortcode. The available attributes for <code>[linkview]</code> are listed below.
 				</td>
 			</tr>
 			<tr>
-				<td class="lvcaption"><h4>LinkView Widget:</h4></td>
-				<td class="lvcontent">
+				<td class="lv-caption"><h4>LinkView Widget:</h4></td>
+				<td class="lv-content">
 					With the LinkView Widget you can use LinkView in sidebars.<br />
 					Goto Appearance -> Widgets and add the "LinkView"-Widget in one of your sidebars.<br />
 					You can enter a title for the widget and add all the required attributes in the "Shortcode attributes" field.<br />
@@ -62,12 +62,12 @@ class lv_admin {
 
 	private function html_atts_table( $section ) {
 		$out = '
-				<table class="lvadmintable">
+				<table class="lv-atts-table">
 					<tr>
-						<th>Attribute name</th>
-						<th>Value options</th>
-						<th>Default value</th>
-						<th>Description</th>
+						<th class="lv-atts-table-name">Attribute name</th>
+						<th class="lv-atts-table-options">Value options</th>
+						<th class="lv-atts-table-default">Default value</th>
+						<th class="lv-atts-table-desc">Description</th>
 					</tr>';
 		$atts = $this->shortcode->get_atts( $section );
 		foreach( $atts as $aname => $a ) {

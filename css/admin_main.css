@@ -1,32 +1,45 @@
-.lvadmintable {
-	border: 1px solid #aaa;
-	border-collapse: collapse;
-	float: left;
-}
-.lvadmintable th {
-	border: 1px solid #aaa;
-	padding: 3px 4px !important;
-	background: #eeeeee;
-}
-.lvadmintable td {
-	border: 1px solid #aaa;
-	padding: 2px 5px !important;
-	vertical-align: top;
-}
-
-.lvcaption {
-	width: 180px;
-	vertical-align: top;
-}
-
-.lvcontent {
-	padding-bottom: 1em;
-}
-
 h3 {
 	padding-top: 1em;
 }
 
 h4 {
 	margin-top: 0px;
+}
+
+.lv-caption {
+	width: 180px;
+	vertical-align: top;
+}
+
+.lv-content {
+	padding-bottom: 1em;
+}
+
+.lv-atts-table {
+	border: 1px solid #aaa;
+	border-collapse: collapse;
+	float: left;
+	width: 95%;
+}
+.lv-atts-table th {
+	border: 1px solid #aaa;
+	padding: 3px 4px !important;
+	background: #eeeeee;
+}
+.lv-atts-table td {
+	border: 1px solid #aaa;
+	padding: 2px 5px !important;
+	vertical-align: top;
+}
+
+.lv-atts-table-name {
+	width: 110px;
+}
+
+.lv-atts-table-options {
+	width: 110px;
+}
+
+.lv-atts-table-default {
+	width: 110px;
 }
