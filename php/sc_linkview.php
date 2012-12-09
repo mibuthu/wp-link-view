@@ -101,7 +101,6 @@ class sc_linkview {
 
 	// main function to show the rendered HTML output
 	public function show_html( $atts ) {
-
 		// check attributes
 		$std_values = array();
 		foreach( $this->atts as $aname => $attribute ) {
@@ -141,9 +140,9 @@ class sc_linkview {
 		}
 		else {
 			$atts = NULL;
-			foreach( $this->atts as $attr ) {
+			foreach( $this->atts as $aname => $attr ) {
 				if( $attr['section'] === $section ) {
-					$atts[] = $attr;
+					$atts[$aname] = $attr;
 				}
 			}
 			return $atts;
