@@ -252,7 +252,7 @@ class sc_linkview {
 					<div id="'.$list_id.'">
 					<ul class="lv-link-list'.$a['class_suffix'].'"';
 		if( $a['list_symbol'] == 'none' || $a['list_symbol'] == 'circle' || $a['list_symbol'] == 'square' || $a['list_symbol'] == 'disc' ) {
-			$out .= ' style="list-style-type:'.$a['list_symbol'].';"';
+			$out .= ' style="list-style-type: '.$a['list_symbol'].';"';
 		}
 		$out .= '>';
 		foreach( $links as $link ) {
@@ -275,39 +275,34 @@ class sc_linkview {
 		list( $slider_width, $slider_height ) = $slider_size;
 		// prepare slider parameters which is used in footer script
 		$this->slider_parameters[$list_id] = array( 'auto' => 'true',
-		                                              'pause' => $a['slider_pause'],
-		                                              'speed' => $a['slider_speed'],
-		                                              'continuous' => 'true',
-		                                              'controlsShow' => 'false' );
+		                                            'pause' => $a['slider_pause'],
+		                                            'speed' => $a['slider_speed'],
+		                                            'continuous' => 'true',
+		                                            'controlsShow' => 'false' );
 		// styles
 		$out = '
 			<style>
-				#'.$list_id.' ul, #'.$list_id.' li {
-					margin:0;
-					padding:0;
-					list-style:none;
-				}
-				#'.$list_id.' li {
-					width: '.$slider_width.'px;
-					height: '.$slider_height.'px;
-					overflow: hidden;
-					text-align: center;
-				}
-				#'.$list_id.' img {
-					max-width: 100%;
-				}';
+				#'.$list_id.' ul, #'.$list_id.' li { '.
+					'margin:0; '.
+					'padding:0; '.
+					'list-style:none; }
+				#'.$list_id.' li { '.
+					'width:'.$slider_width.'px; '.
+					'height:'.$slider_height.'px; '.
+					'overflow:hidden; '.
+					'text-align:center; }
+				#'.$list_id.' img { '.
+					'max-width:100%; }';
 		if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
 			$out .= '
-				#'.$list_id.' .lv-link'.$a['class_suffix'].' {
-					display: table-cell;
-					text-align: center;
-					vertical-align: '.$a['vertical_align'].';
-					width: '.$slider_width.'px;
-					height: '.$slider_height.'px;
-				}
-				#'.$list_id.' .lv-link'.$a['class_suffix'].' * {
-					vertical-align: '.$a['vertical_align'].';
-				}';
+				#'.$list_id.' .lv-link'.$a['class_suffix'].' { '.
+					'display:table-cell; '.
+					'text-align:center; '.
+					'vertical-align:'.$a['vertical_align'].'; '.
+					'width:'.$slider_width.'px; '.
+					'height:'.$slider_height.'px; }
+				#'.$list_id.' .lv-link'.$a['class_suffix'].' * { '.
+					'vertical-align:'.$a['vertical_align'].'; }';
 		}
 		$out .= '
 			</style>';
