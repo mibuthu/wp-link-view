@@ -71,7 +71,7 @@ class sc_linkview {
 			                           'desc'    => 'Set one of the given values to overwrite the standard value which was set for the link.<br />
 			                                         Set the attribute to "std" if you don´t want to overwrite the standard.' ),
 
-			'css_suffix'     => array( 'section' => 'general',
+			'class_suffix'   => array( 'section' => 'general',
 			                           'val'     => 'string',
 			                           'std_val' => '',
 			                           'desc'    => 'This attribute sets the class suffix to allow different css settings for different link lists or sliders on the same site.<br />
