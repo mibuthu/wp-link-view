@@ -27,6 +27,7 @@ License at http://www.gnu.org/copyleft/gpl.html
 
 // GENERAL DEFINITIONS
 define( 'LV_URL', plugin_dir_url( __FILE__ ) );
+define( 'LV_PATH', plugin_dir_path( __FILE__ ) );
 
 
 // MAIN PLUGIN CLASS

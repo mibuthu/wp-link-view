@@ -1,12 +1,15 @@
 <?php
+require_once( LV_PATH.'php/sc_linkview.php' );
+require_once( LV_PATH.'php/options.php' );
 
 // This class handles all available admin pages
 class lv_admin {
 	private $shortcode;
+	private $options;
 
 	public function __construct() {
-		require_once( 'sc_linkview.php' );
-		$this->shortcode = sc_linkview::get_instance();
+		$this->shortcode = &sc_linkview::get_instance();
+		$this->options = &lv_options::get_instance();
 	}
 
 	/**
@@ -19,7 +22,7 @@ class lv_admin {
 
 	// show the main admin page as a submenu of "Links"
 	public function show_main() {
-		if( !current_user_can('edit_posts' ) ) {
+		if( !current_user_can( 'edit_posts' ) ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
@@ -47,7 +50,32 @@ class lv_admin {
 					Press "Save" to enable the changes.
 				</td>
 			</tr>
-			</table>
+			</table>';
+		$out .= $this->html_tabs( $_GET['tab'] );
+		switch( $_GET['tab'] ) {
+			case 'css' :
+				$out .= $this->html_css( 'css', 'newline' );
+				break;
+			default : // attributes
+				$out .= $this->html_atts();
+		}
+		echo $out;
+	}
+
+	private function html_tabs( $current = 'attributes' ) {
+		$tabs = array( 'attributes' => 'Attributes',
+		               'css'        => 'CSS-Styles' );
+		$out = '<div style="clear: both;"><h3 class="nav-tab-wrapper">';
+		foreach( $tabs as $tab => $name ){
+			$class = ( $tab == $current ) ? ' nav-tab-active' : '';
+			$out .= "<a class='nav-tab$class' href='?page=lv_admin_main&tab=$tab'>$name</a>";
+		}
+		$out .= '</h3></div>';
+		return $out;
+	}
+
+	private function html_atts() {
+		$out = '
 			<h3 class="lv-headline">Available Attributes</h3>
 			<div>
 				 To get the correct result you can combine as much attributes as you want.<br />
@@ -62,7 +90,7 @@ class lv_admin {
 		$out .= $this->html_atts_table( 'slider' );
 		$out .= '
 			</div>';
-		echo $out;
+		return $out;
 	}
 
 	private function html_atts_table( $section ) {
@@ -86,6 +114,72 @@ class lv_admin {
 		}
 		$out .= '
 				</table>';
+		return $out;
+	}
+
+	private function html_css() {
+		$out = '<div id="posttype-page" class="posttypediv">';
+		$out .= '
+			<form method="post" action="options.php">
+			';
+		ob_start();
+		settings_fields( 'lv_'.$_GET['tab'] );
+		$out .= ob_get_contents();
+		ob_end_clean();
+		$out .= $this->html_options( 'css', 'newline' );
+		ob_start();
+		submit_button();
+		$out .= ob_get_contents();
+		ob_end_clean();
+		$out .='
+				</form>
+			</div>';
+		return $out;
+	}
+
+	private function html_options( $section, $desc_pos='right' ) {
+		$out = '
+				<div style="padding:0 10px">';
+		foreach( $this->options->options as $oname => $o ) {
+			if( $o['section'] == $section ) {
+				$out .= '
+						<tr valign="top">
+							<th scope="row">';
+				if( $o['label'] != '' ) {
+					$out .= '<label for="'.$oname.'">'.$o['label'].':</label>';
+				}
+				$out .= '</th>
+						<td>';
+				switch( $o['type'] ) {
+					case 'textarea':
+						$out .= $this->show_textarea( $oname, $this->options->get( $oname ) );
+						break;
+				}
+				$out .= '
+						</td>';
+				if( $desc_pos == 'newline' ) {
+					$out .= '
+					</tr>
+					<tr>
+						<td></td>';
+				}
+				$out .= '
+						<td class="description">'.$o['desc'].'</td>
+					</tr>';
+				if( $desc_pos == 'newline' ) {
+					$out .= '
+						<tr><td></td></tr>';
+				}
+			}
+		}
+		$out .=
+		'</div>';
+		return $out;
+	}
+
+	private function show_textarea( $name, $value ) {
+		$out = '
+							<textarea name="'.$name.'" id="'.$name.'" rows="20" class="large-text code">'.$value.'</textarea>';
 		return $out;
 	}
 

@@ -1,9 +1,12 @@
 <?php
+require_once( LV_PATH.'php/options.php' );
 
 // This class handles the shortcode [linkview]
 class sc_linkview {
 	private static $instance;
+	private $options;
 	private $atts;
+	private $css_printed;
 	private $slider_ids;
 	private $slider_parameters;
 
@@ -17,6 +20,8 @@ class sc_linkview {
 	}
 
 	private function __construct() {
+		$this->options = &lv_options::get_instance();
+
 		// Define all available attributes
 		$this->atts = array(
 			'view_type'      => array( 'section' => 'general',
@@ -108,6 +113,7 @@ class sc_linkview {
 			                           'desc'    => 'This attribute sets the animation speed of the slider in milliseconds. This is the time used to slide from one link to the next one.<br />
 			                                         This attribute is only considered if the view type "slider" is selected.' )
 		);
+		$this->css_printed = false;
 		$this->slider_ids = NULL;
 		$this->slider_parameters = NULL;
 	}
@@ -130,6 +136,14 @@ class sc_linkview {
 		$categories = $this->categories( $a );
 
 		$out = '';
+		// print custom css (only once, whe the shortcode is included the first time)
+		if( !$this->css_printed ) {
+			$out .= '
+				<style>
+					'.$this->options->get( 'lv_css' ).'
+				</style>';
+			$this->css_printed = true;
+		}
 		foreach( $categories as $cat ) {
 			// get links
 			$args = array(
@@ -137,7 +151,6 @@ class sc_linkview {
 				'limit'          => -1,
 				'category_name'  => $cat->name);
 			$links = get_bookmarks( $args );
-
 			// generate output
 			if( !empty( $links ) ) {
 				$out .='
