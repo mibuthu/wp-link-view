@@ -114,6 +114,11 @@ class sc_linkview {
 
 	// main function to show the rendered HTML output
 	public function show_html( $atts ) {
+		// add leading "-" for css-suffix
+		if( isset( $atts['class_suffix'] ) ) {
+			$atts['class_suffix'] = '-'.$atts['class_suffix'];
+		}
+
 		// check attributes
 		$std_values = array();
 		foreach( $this->atts as $aname => $attribute ) {
@@ -239,7 +244,7 @@ class sc_linkview {
 	private function html_link_list( $links, $a ) {
 		if( $a['list_symbol'] == 'none' || $a['list_symbol'] == 'circle' || $a['list_symbol'] == 'square' || $a['list_symbol'] == 'disc' ) {
 			$out = '
-				<ul class="lv-link-list" style="list-style-type:'.$a['list_symbol'].';">';
+				<ul class="lv-link-list'.$a['class_suffix'].'" style="list-style-type:'.$a['list_symbol'].';">';
 		}
 		else {
 			$out = '
@@ -247,7 +252,7 @@ class sc_linkview {
 		}
 		foreach( $links as $link ) {
 			$out .= '
-					<li><span class="lv-link"';
+					<li><span class="lv-link'.$a['class_suffix'].'"';
 			if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
 				$out .= ' style="display:inline-block; vertical-align:'.$a['vertical_align'].';"';
 			}
@@ -306,7 +311,7 @@ class sc_linkview {
 		// html
 		$out .= '
 			<div id="'.$slider_id.'">
-				<ul class="lv-link-slider">';
+				<ul class="lv-link-slider'.$a['class_suffix'].'">';
 		// links
 		foreach( $links as $link ) {
 			$out .= '
@@ -325,7 +330,7 @@ class sc_linkview {
 	}
 
 	private function html_link( $l, $a, $slider_width=0, $slider_height=0 ) {
-		$out = '<a class="lv-anchor" href="'.$l->link_url;
+		$out = '<a class="lv-anchor'.$a['class_suffix'].'" href="'.$l->link_url;
 
 		if( $a['target'] == 'blank' || $a['target'] == 'top' || $a['target'] == 'none' ) {
 			$target = '_'.$a['target'];
@@ -346,26 +351,26 @@ class sc_linkview {
 			// simple style (name or image)
 			if( $a['show_img'] > 0 && $l->link_image != null ) {
 				// image
-				$out .= $this->html_link_item($l, 'image', $slider_width, $slider_height );
+				$out .= $this->html_link_item($l, 'image', $a, $slider_width, $slider_height );
 			}
 			else {
 				// name
-				$out .= $this->html_link_item($l, 'name', $slider_width, $slider_height );
+				$out .= $this->html_link_item($l, 'name', $a, $slider_width, $slider_height );
 			}
 		}
 		else {
 			// enhanced style (all items given in link_items attribute)
 			$items = explode( ',', $a['link_items'] );
 			foreach( $items as $item ) {
-				$out .= $this->html_link_item($l, $item, $slider_width, $slider_height );
+				$out .= $this->html_link_item($l, $item, $a, $slider_width, $slider_height );
 			}
 		}
 		$out .= '</a>';
 		return $out;
 	}
 
-	private function html_link_item( $l, $item, $slider_width=0, $slider_height=0 ) {
-		$out = '<div class="lv-item-'.$item.'">';
+	private function html_link_item( $l, $item, $a, $slider_width=0, $slider_height=0 ) {
+		$out = '<div class="lv-item-'.$item.$a['class_suffix'].'">';
 		switch( $item ) {
 			case 'address':
 				$out .= $l->link_url;
