@@ -45,6 +45,10 @@ class linkview {
 		add_shortcode( 'linkview', array( &$this, 'shortcode_linkview' ) );
 		// Register widgets
 		add_action( 'widgets_init', array( &$this, 'widget_linkview' ) );
+		// Filters
+		if ( !get_option( 'link_manager_enabled' ) ) {
+			add_filter( 'pre_option_link_manager_enabled', '__return_true' ); // required for Wordpress 3.5
+		}
 
 		// ADMIN PAGE:
 		if ( is_admin() ) {
