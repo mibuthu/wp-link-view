@@ -143,12 +143,14 @@ class sc_linkview {
 				$out .='
 					<div class="lv-category'.$a['class_suffix'].'">';
 				$out .= $this->html_category( $cat, $a );
+				$list_id = $this->create_random_id();
+				$slider_size = array( 0, 0 );
 				if( 'slider' === $a['view_type'] ) {
-					$out .= $this->html_link_slider( $links, $a );
+					$this->slider_ids[] = $list_id;
+					$slider_size = $this->slider_size( $a, $links );
+					$out .= $this->html_slider_styles( $links, $a, $list_id, $slider_size );
 				}
-				else {
-					$out .= $this->html_link_list( $links, $a );
-				}
+				$out .= $this->html_link_list( $links, $a, $list_id, $slider_size );
 				$out .= '
 					</div>';
 			}
@@ -245,8 +247,9 @@ class sc_linkview {
 		return $out;
 	}
 
-	private function html_link_list( $links, $a ) {
+	private function html_link_list( $links, $a, $list_id, $slider_size ) {
 		$out = '
+					<div id="'.$list_id.'">
 					<ul class="lv-link-list'.$a['class_suffix'].'"';
 		if( $a['list_symbol'] == 'none' || $a['list_symbol'] == 'circle' || $a['list_symbol'] == 'square' || $a['list_symbol'] == 'disc' ) {
 			$out .= ' style="list-style-type:'.$a['list_symbol'].';"';
@@ -255,23 +258,23 @@ class sc_linkview {
 		foreach( $links as $link ) {
 			$out .= '
 						<li class="lv-list-item'.$a['class_suffix'].'"><div class="lv-link'.$a['class_suffix'].'"';
-			if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
+			if( 'slider' !== $a['view_type'] && ( 'top' === $a['vertical_align'] || 'middle' === $a['vertical_align'] || 'bottom' === $a['vertical_align'] ) ) {
 				$out .= ' style="display:inline-block; vertical-align:'.$a['vertical_align'].';"';
 			}
 			$out .= '>';
-			$out .= $this->html_link( $link, $a );
+			$out .= $this->html_link( $link, $a, $slider_size );
 			$out .= '</div></li>';
 		}
 		$out .= '
-					</ul>';
+					</ul>
+					</div>';
 		return $out;
 	}
 
-	private function html_link_slider( $links, $a ) {
-		$slider_id = $this->create_random_slider_id();
-		list( $slider_width, $slider_height ) = $this->slider_size( $a, $links );
+	private function html_slider_styles( $links, $a, $list_id, $slider_size ) {
+		list( $slider_width, $slider_height ) = $slider_size;
 		// prepare slider parameters which is used in footer script
-		$this->slider_parameters[$slider_id] = array( 'auto' => 'true',
+		$this->slider_parameters[$list_id] = array( 'auto' => 'true',
 		                                              'pause' => $a['slider_pause'],
 		                                              'speed' => $a['slider_speed'],
 		                                              'continuous' => 'true',
@@ -279,59 +282,39 @@ class sc_linkview {
 		// styles
 		$out = '
 			<style>
-				#'.$slider_id.' ul, #'.$slider_id.' li {
+				#'.$list_id.' ul, #'.$list_id.' li {
 					margin:0;
 					padding:0;
 					list-style:none;
 				}
-				#'.$slider_id.' li {
+				#'.$list_id.' li {
 					width: '.$slider_width.'px;
 					height: '.$slider_height.'px;
 					overflow: hidden;
 					text-align: center;
 				}
-				#'.$slider_id.' img {
+				#'.$list_id.' img {
 					max-width: 100%;
 				}';
 		if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
 			$out .= '
-				#lvspan {
+				#'.$list_id.' .lv-link'.$a['class_suffix'].' {
 					display: table-cell;
 					text-align: center;
 					vertical-align: '.$a['vertical_align'].';
-				}
-				#lvspan * {
-					vertical-align: '.$a['vertical_align'].';
-				}
-				#lvspan {
 					width: '.$slider_width.'px;
 					height: '.$slider_height.'px;
+				}
+				#'.$list_id.' .lv-link'.$a['class_suffix'].' * {
+					vertical-align: '.$a['vertical_align'].';
 				}';
 		}
 		$out .= '
 			</style>';
-		// html
-		$out .= '
-			<div id="'.$slider_id.'">
-				<ul class="lv-link-slider'.$a['class_suffix'].'">';
-		// links
-		foreach( $links as $link ) {
-			$out .= '
-					<li class="lv-list-item'.$a['class_suffix'].'"><div class="lv-link'.$a['class_suffix'].'"';
-			if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
-				$out .= ' id="lvspan"';
-			}
-			$out .= '>';
-			$out .= $this->html_link( $link, $a, $slider_width, $slider_height );
-			$out .= '</div></li>';
-		}
-		$out .= '
-				</ul>
-			</div>';
 		return $out;
 	}
 
-	private function html_link( $l, $a, $slider_width=0, $slider_height=0 ) {
+	private function html_link( $l, $a, $slider_size ) {
 		$out = '<a class="lv-anchor'.$a['class_suffix'].'" href="'.$l->link_url;
 
 		if( $a['target'] == 'blank' || $a['target'] == 'top' || $a['target'] == 'none' ) {
@@ -353,25 +336,25 @@ class sc_linkview {
 			// simple style (name or image)
 			if( $a['show_img'] > 0 && $l->link_image != null ) {
 				// image
-				$out .= $this->html_link_item($l, 'image', $a, $slider_width, $slider_height );
+				$out .= $this->html_link_item($l, 'image', $a, $slider_size );
 			}
 			else {
 				// name
-				$out .= $this->html_link_item($l, 'name', $a, $slider_width, $slider_height );
+				$out .= $this->html_link_item($l, 'name', $a, $slider_size );
 			}
 		}
 		else {
 			// enhanced style (all items given in link_items attribute)
 			$items = explode( ',', $a['link_items'] );
 			foreach( $items as $item ) {
-				$out .= $this->html_link_item($l, $item, $a, $slider_width, $slider_height );
+				$out .= $this->html_link_item($l, $item, $a, $slider_size );
 			}
 		}
 		$out .= '</a>';
 		return $out;
 	}
 
-	private function html_link_item( $l, $item, $a, $slider_width=0, $slider_height=0 ) {
+	private function html_link_item( $l, $item, $a, $slider_size ) {
 		$out = '<div class="lv-item-'.$item.$a['class_suffix'].'">';
 		switch( $item ) {
 			case 'address':
@@ -381,7 +364,7 @@ class sc_linkview {
 				$out .= $l->link_description;
 				break;
 			case 'image':
-				$out .= '<img src="'.$l->link_image.'"'.$this->html_img_size( $l->link_image, $slider_width, $slider_height ).' alt="'.$l->link_name.'" />';
+				$out .= '<img src="'.$l->link_image.'"'.$this->html_img_size( $l->link_image, $slider_size[0], $slider_size[1] ).' alt="'.$l->link_name.'" />';
 				break;
 			case 'rss':
 				$out .= $l->link_rss;
@@ -418,11 +401,10 @@ class sc_linkview {
 		}
 	}
 
-	private function create_random_slider_id() {
-		$slider_id = mt_rand( 10000, 99999 );
-		$slider_id = 'lv-slider-'.$slider_id;
-		$this->slider_ids[] = $slider_id;
-		return $slider_id;
+	private function create_random_id() {
+		$id = mt_rand( 10000, 99999 );
+		$id = 'lv-id-'.$id;
+		return $id;
 	}
 
 	public function print_slider_script() {
