@@ -140,13 +140,17 @@ class sc_linkview {
 
 			// generate output
 			if( !empty( $links ) ) {
+				$out .='
+					<div class="lv-category'.$a['class_suffix'].'">';
 				$out .= $this->html_category( $cat, $a );
-				if( $a['view_type'] == 'slider' ) {
+				if( 'slider' === $a['view_type'] ) {
 					$out .= $this->html_link_slider( $links, $a );
 				}
 				else {
 					$out .= $this->html_link_list( $links, $a );
 				}
+				$out .= '
+					</div>';
 			}
 		}
 		return $out;
@@ -236,32 +240,30 @@ class sc_linkview {
 		$out = '';
 		if( $a['show_cat_name'] > 0 ) {
 			$out .= '
-					<h2>'.$cat->name.'</h2>';
+					<h2 class="lv-cat-name'.$a['class_suffix'].'">'.$cat->name.'</h2>';
 		}
 		return $out;
 	}
 
 	private function html_link_list( $links, $a ) {
+		$out = '
+					<ul class="lv-link-list'.$a['class_suffix'].'"';
 		if( $a['list_symbol'] == 'none' || $a['list_symbol'] == 'circle' || $a['list_symbol'] == 'square' || $a['list_symbol'] == 'disc' ) {
-			$out = '
-				<ul class="lv-link-list'.$a['class_suffix'].'" style="list-style-type:'.$a['list_symbol'].';">';
+			$out .= ' style="list-style-type:'.$a['list_symbol'].';"';
 		}
-		else {
-			$out = '
-				<ul>';
-		}
+		$out .= '>';
 		foreach( $links as $link ) {
 			$out .= '
-					<li><span class="lv-link'.$a['class_suffix'].'"';
+						<li class="lv-list-item'.$a['class_suffix'].'"><div class="lv-link'.$a['class_suffix'].'"';
 			if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
 				$out .= ' style="display:inline-block; vertical-align:'.$a['vertical_align'].';"';
 			}
 			$out .= '>';
 			$out .= $this->html_link( $link, $a );
-			$out .= '</span></li>';
+			$out .= '</div></li>';
 		}
 		$out .= '
-				</ul>';
+					</ul>';
 		return $out;
 	}
 
@@ -315,13 +317,13 @@ class sc_linkview {
 		// links
 		foreach( $links as $link ) {
 			$out .= '
-					<li><span';
+					<li class="lv-list-item'.$a['class_suffix'].'"><div class="lv-link'.$a['class_suffix'].'"';
 			if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
 				$out .= ' id="lvspan"';
 			}
 			$out .= '>';
 			$out .= $this->html_link( $link, $a, $slider_width, $slider_height );
-			$out .= '</span></li>';
+			$out .= '</div></li>';
 		}
 		$out .= '
 				</ul>
@@ -418,7 +420,7 @@ class sc_linkview {
 
 	private function create_random_slider_id() {
 		$slider_id = mt_rand( 10000, 99999 );
-		$slider_id = 'slider'.$slider_id;
+		$slider_id = 'lv-slider-'.$slider_id;
 		$this->slider_ids[] = $slider_id;
 		return $slider_id;
 	}
