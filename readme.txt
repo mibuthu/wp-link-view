@@ -3,8 +3,8 @@ Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, attribute, widget, sidebar
 Requires at least: 3.3
-Tested up to: 3.4.2
-Stable tag: 0.3.2
+Tested up to: 3.5
+Stable tag: 0.3.3
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,11 @@ Yes, since version 0.3.0 you can use as much sliders as you want on one site.
 
 
 == Changelog ==
+
+= 0.3.3 (2012-12-16) =
+
+* Enable link manager (required for Wordpress 3.5)
+* Include Wordpress 3.5 in version information
 
 = 0.3.2 (2012-10-14) =
 
