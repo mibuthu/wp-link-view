@@ -3,7 +3,7 @@
 Plugin Name: Link View
 Plugin URI: http://wordpress.org/extend/plugins/link-view/
 Description: Display a link-list or link-slider in a post or page by using a shortcode.
-Version: 0.3.2
+Version: 0.3.3
 Author: Michael Burtscher
 Author URI: http://wordpress.org/extend/plugins/link-view/
 License: GPLv2
@@ -35,6 +35,9 @@ add_action( 'widgets_init', 'on_lv_widgets' );
 // for admin page only:
 if( is_admin() ) {
 	add_action( 'admin_menu', 'on_lv_admin' ); // add admin pages in admin menu
+	if( !get_option( 'link_manager_enabled' ) ) {
+		add_filter( 'pre_option_link_manager_enabled', '__return_true' ); // required for Wordpress 3.5
+	}
 }
 // for frontpage only:
 else {
