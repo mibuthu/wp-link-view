@@ -35,6 +35,9 @@ add_action( 'widgets_init', 'on_lv_widgets' );
 // for admin page only:
 if( is_admin() ) {
 	add_action( 'admin_menu', 'on_lv_admin' ); // add admin pages in admin menu
+	if( !get_option( 'link_manager_enabled' ) ) {
+		add_filter( 'pre_option_link_manager_enabled', '__return_true' ); // required for Wordpress 3.5
+	}
 }
 // for frontpage only:
 else {
