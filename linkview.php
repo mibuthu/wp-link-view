@@ -68,12 +68,12 @@ class linkview {
 		}
 	} // end constructor
 
-	public function shortcode_linkview( $atts ) {
+	public function shortcode_linkview( $atts, $content='' ) {
 		if( NULL == $this->shortcode ) {
 			require_once( 'php/sc_linkview.php' );
 			$this->shortcode = sc_linkview::get_instance();
 		}
-		return $this->shortcode->show_html( $atts );
+		return $this->shortcode->show_html( $atts, $content );
 	}
 
 	public function widget_linkview() {

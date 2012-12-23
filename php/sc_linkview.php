@@ -114,15 +114,20 @@ class sc_linkview {
 			                                         This attribute is only considered if the view type "slider" is selected.' )
 		);
 		$this->css_printed = false;
-		$this->slider_ids = NULL;
-		$this->slider_parameters = NULL;
+		$this->slider_ids = null;
+		$this->slider_parameters = null;
 	}
 
 	// main function to show the rendered HTML output
-	public function show_html( $atts ) {
+	public function show_html( $atts, $content='' ) {
 		// add leading "-" for css-suffix
 		if( isset( $atts['class_suffix'] ) ) {
 			$atts['class_suffix'] = '-'.$atts['class_suffix'];
+		}
+
+		// set attribute link_items to $content if an enclosing shortcode was used
+		if( '' !== $content ) {
+			$atts['link_items'] = $content;
 		}
 
 		// check attributes
