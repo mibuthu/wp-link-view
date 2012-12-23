@@ -133,9 +133,6 @@ class sc_linkview {
 			// set attribute
 			$atts['link_items'] = $content;
 		}
-		if( isset( $atts['link_items'] ) ) {
-			error_log( 'Link Items: '.$atts['link_items'] );
-		}
 
 		// check attributes
 		$std_values = array();
@@ -335,68 +332,71 @@ class sc_linkview {
 	}
 
 	private function html_link( $l, $a, $slider_size ) {
-		$out = '<a class="lv-anchor'.$a['class_suffix'].'" href="'.$l->link_url;
-
-		if( $a['target'] == 'blank' || $a['target'] == 'top' || $a['target'] == 'none' ) {
-			$target = '_'.$a['target'];
-		}
-		else {
-			$target = $l->link_target;
-			// set target to _none if an empty string was returned
-			if( $target == '' )
-				$target = '_none';
-		}
-		$out .= '" target="'.$target.'" title="'.$l->link_name;
-		if( $l->link_description != "" ) {
-			$out .= ' ('.$l->link_description.')';
-		}
-		$out .= '">';
-
+		$out ='';
 		if( '' === $a['link_items'] ) {
 			// simple style (name or image)
 			if( $a['show_img'] > 0 && $l->link_image != null ) {
 				// image
-				$out .= $this->html_link_item($l, 'image', $a, $slider_size );
+				$out .= $this->html_link_item($l, 'image_l', $a, $slider_size );
 			}
 			else {
 				// name
-				$out .= $this->html_link_item($l, 'name', $a, $slider_size );
+				$out .= $this->html_link_item($l, 'name_l', $a, $slider_size );
 			}
 		}
 		else {
 			// enhanced style (all items given in link_items attribute)
 			$items = json_decode( $a['link_items'], true );
 			if( null !== $items ) {
-				$out .= $this->html_link_section( $l, $items, $a['class_suffix'], $slider_size );
+				$out .= $this->html_link_section( $l, $items, $a, $slider_size );
 			}
 			else {
 				$out .= 'ERROR while json decoding. There must be an error in your "link_items" json syntax.';
 			}
 		}
-		$out .= '</a>';
 		return $out;
 	}
 
-	private function html_link_section( $l, $section, $cl_suffix, $slider_size ) {
+	private function html_link_section( $l, $section, $a, $slider_size ) {
 		$out = '';
 		foreach( $section as $iname => $item ) {
 			if( is_array( $item ) ) {
-				$out .= '<div class="lv-section-'.$iname.$cl_suffix.'">';
-				$out .= $this->html_link_section($l, $item, $cl_suffix, $slider_size);
+				$out .= '<div class="lv-section-'.$iname.$a['class_suffix'].'">';
+				$out .= $this->html_link_section($l, $item, $a, $slider_size);
 				$out .= '</div>';
 			}
 			else {
-				error_log( 'item: '.$item.$iname );
-				$out .= $this->html_link_item($l, $iname, $cl_suffix, $slider_size, $item );
+				$out .= $this->html_link_item($l, $iname, $a, $slider_size, $item );
 			}
 		}
 		return $out;
 	}
 
-	private function html_link_item( $l, $item, $cl_suffix, $slider_size, $caption='' ) {
-		$out = '<div class="lv-item-'.$item.$cl_suffix.'">';
+	private function html_link_item( $l, $item, $a, $slider_size, $caption='' ) {
+		$out = '<div class="lv-item-'.$item.$a['class_suffix'].'">';
 		if( '' !== $caption ) {
-			$out .= '<span class="lv-item-caption'.$cl_suffix.'">'.$caption.'</span>';
+			$out .= '<span class="lv-item-caption'.$a['class_suffix'].'">'.$caption.'</span>';
+		}
+		$link = ( '_l' === substr( $item, -2 ) );
+		if( $link ) {
+			// a link for this item should be created
+			$item = substr( $item, 0, -2 );
+			$out .= '<a class="lv-anchor'.$a['class_suffix'].'" href="'.$l->link_url;
+
+			if( $a['target'] == 'blank' || $a['target'] == 'top' || $a['target'] == 'none' ) {
+				$target = '_'.$a['target'];
+			}
+			else {
+				$target = $l->link_target;
+				// set target to _none if an empty string was returned
+				if( $target == '' )
+					$target = '_none';
+			}
+			$out .= '" target="'.$target.'" title="'.$l->link_name;
+			if( $l->link_description != "" ) {
+				$out .= ' ('.$l->link_description.')';
+			}
+			$out .= '">';
 		}
 		switch( $item ) {
 			case 'address':
@@ -420,6 +420,9 @@ class sc_linkview {
 			default: // 'name'
 				$out .= $l->link_name;
 				break;
+		}
+		if( $link ) {
+			$out .= '</a>';
 		}
 		$out .= '</div>';
 		return $out;
