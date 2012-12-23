@@ -6,10 +6,13 @@ require_once( LV_PATH.'php/options.php' );
 class lv_admin {
 	private $shortcode;
 	private $options;
+	private $tabs;
 
 	public function __construct() {
 		$this->shortcode = &sc_linkview::get_instance();
 		$this->options = &lv_options::get_instance();
+		$this->tabs = array( 'attributes' => 'Attributes',
+		                     'css'        => 'CSS-Styles' );
 	}
 
 	/**
@@ -51,8 +54,9 @@ class lv_admin {
 				</td>
 			</tr>
 			</table>';
-		$out .= $this->html_tabs( $_GET['tab'] );
-		switch( $_GET['tab'] ) {
+		$current_tab = $this->get_current_tab();
+		$out .= $this->html_tabs( $current_tab );
+		switch( $current_tab ) {
 			case 'css' :
 				$out .= $this->html_css( 'css', 'newline' );
 				break;
@@ -62,13 +66,11 @@ class lv_admin {
 		echo $out;
 	}
 
-	private function html_tabs( $current = 'attributes' ) {
-		$tabs = array( 'attributes' => 'Attributes',
-		               'css'        => 'CSS-Styles' );
+	private function html_tabs( $current ) {
 		$out = '<div style="clear: both;"><h3 class="nav-tab-wrapper">';
-		foreach( $tabs as $tab => $name ){
+		foreach( $this->tabs as $tab => $name ){
 			$class = ( $tab == $current ) ? ' nav-tab-active' : '';
-			$out .= "<a class='nav-tab$class' href='?page=lv_admin_main&tab=$tab'>$name</a>";
+			$out .= '<a class="nav-tab'.$class.'" href="?page=lv_admin_main&tab='.$tab.'">'.$name.'</a>';
 		}
 		$out .= '</h3></div>';
 		return $out;
@@ -175,6 +177,15 @@ class lv_admin {
 		$out .=
 		'</div>';
 		return $out;
+	}
+
+	private function get_current_tab() {
+		if( isset( $_GET['tab'] ) && array_key_exists( $_GET['tab'], $this->tabs ) ) {
+			return $_GET['tab'];
+		}
+		else {
+			return 'attributes';
+		}
 	}
 
 	private function show_textarea( $name, $value ) {
