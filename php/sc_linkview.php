@@ -126,8 +126,15 @@ class sc_linkview {
 		}
 
 		// set attribute link_items to $content if an enclosing shortcode was used
-		if( '' !== $content ) {
+		if( '' !== $content && null !== $content ) {
+			// replace quotes html code with real quotes
+			$content = str_replace( '&#8220;', '"', $content );
+			$content = str_replace( '&#8221;', '"', $content );
+			// set attribute
 			$atts['link_items'] = $content;
+		}
+		if( isset( $atts['link_items'] ) ) {
+			error_log( 'Link Items: '.$atts['link_items'] );
 		}
 
 		// check attributes
@@ -358,17 +365,39 @@ class sc_linkview {
 		}
 		else {
 			// enhanced style (all items given in link_items attribute)
-			$items = explode( ',', $a['link_items'] );
-			foreach( $items as $item ) {
-				$out .= $this->html_link_item($l, $item, $a, $slider_size );
+			$items = json_decode( $a['link_items'], true );
+			if( null !== $items ) {
+				$out .= $this->html_link_section( $l, $items, $a['class_suffix'], $slider_size );
+			}
+			else {
+				$out .= 'ERROR while json decoding. There must be an error in your "link_items" json syntax.';
 			}
 		}
 		$out .= '</a>';
 		return $out;
 	}
 
-	private function html_link_item( $l, $item, $a, $slider_size ) {
-		$out = '<div class="lv-item-'.$item.$a['class_suffix'].'">';
+	private function html_link_section( $l, $section, $cl_suffix, $slider_size ) {
+		$out = '';
+		foreach( $section as $iname => $item ) {
+			if( is_array( $item ) ) {
+				$out .= '<div class="lv-section-'.$iname.$cl_suffix.'">';
+				$out .= $this->html_link_section($l, $item, $cl_suffix, $slider_size);
+				$out .= '</div>';
+			}
+			else {
+				error_log( 'item: '.$item.$iname );
+				$out .= $this->html_link_item($l, $iname, $cl_suffix, $slider_size, $item );
+			}
+		}
+		return $out;
+	}
+
+	private function html_link_item( $l, $item, $cl_suffix, $slider_size, $caption='' ) {
+		$out = '<div class="lv-item-'.$item.$cl_suffix.'">';
+		if( '' !== $caption ) {
+			$out .= '<span class="lv-item-caption'.$cl_suffix.'">'.$caption.'</span>';
+		}
 		switch( $item ) {
 			case 'address':
 				$out .= $l->link_url;
