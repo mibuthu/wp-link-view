@@ -47,6 +47,11 @@ Yes, since version 0.3.0 you can use as much sliders as you want on one site.
 
 == Changelog ==
 
+= 0.3.3 (2012-12-16) =
+
+* Enable link manager (required for Wordpress 3.5)
+* Include Wordpress 3.5 in version information
+
 = 0.3.2 (2012-10-14) =
 
 * Fixed queue of jquery which is required for the slider (in the old version the bad inclusion can cause issues with themes or other plugins that uses jquery)
