@@ -373,16 +373,17 @@ class sc_linkview {
 	}
 
 	private function html_link_item( $l, $item, $a, $slider_size, $caption='' ) {
+		$is_link = ( '_l' === substr( $item, -2 ) );
+		if( $is_link ) {
+			$item = substr( $item, 0, -2 );
+		}
 		$out = '<div class="lv-item-'.$item.$a['class_suffix'].'">';
 		if( '' !== $caption ) {
 			$out .= '<span class="lv-item-caption'.$a['class_suffix'].'">'.$caption.'</span>';
 		}
-		$link = ( '_l' === substr( $item, -2 ) );
-		if( $link ) {
+		if( $is_link ) {
 			// a link for this item should be created
-			$item = substr( $item, 0, -2 );
 			$out .= '<a class="lv-anchor'.$a['class_suffix'].'" href="'.$l->link_url;
-
 			if( $a['target'] == 'blank' || $a['target'] == 'top' || $a['target'] == 'none' ) {
 				$target = '_'.$a['target'];
 			}
@@ -421,7 +422,7 @@ class sc_linkview {
 				$out .= $l->link_name;
 				break;
 		}
-		if( $link ) {
+		if( $is_link ) {
 			$out .= '</a>';
 		}
 		$out .= '</div>';
