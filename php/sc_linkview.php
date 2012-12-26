@@ -84,7 +84,7 @@ class sc_linkview {
 			                                         If you change this value you can for example modify the vertical alignment of the list symbol relativ to the image or the vertical alignment of images with different size in a slider.' ),
 
 			'target'         => array( 'section' => 'general',
-			                           'val'     => 'std<br />blank<br />top<br />none',
+			                           'val'     => 'std<br />blank<br />top<br />self',
 			                           'std_val' => 'std',
 			                           'desc'    => 'Set one of the given values to overwrite the standard value which was set for the link.<br />
 			                                         Set the attribute to "std" if you don´t want to overwrite the standard.' ),
@@ -397,14 +397,16 @@ class sc_linkview {
 		if( $is_link ) {
 			// a link for this item should be created
 			$out .= '<a class="lv-anchor'.$a['class_suffix'].'" href="'.$l->link_url;
-			if( $a['target'] == 'blank' || $a['target'] == 'top' || $a['target'] == 'none' ) {
+			if( 'blank' === $a['target'] || 'top' === $a['target'] || 'self' === $a['target'] ) {
 				$target = '_'.$a['target'];
 			}
 			else {
 				$target = $l->link_target;
-				// set target to _none if an empty string was returned
-				if( $target == '' )
-					$target = '_none';
+				// set target to _self if an empty string or _none was returned
+				if( '' === $target || '_none' === $target )
+				{
+					$target = '_self';
+				}
 			}
 			$out .= '" target="'.$target.'" title="'.$l->link_name;
 			if( $l->link_description != "" ) {
