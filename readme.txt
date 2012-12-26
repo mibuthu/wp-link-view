@@ -56,7 +56,7 @@ Yes, since version 0.3.0 you can use as much sliders as you want on one site.
 * Splitted attributes table on admin page into different sections
 * Added attributes "css_suffix" and "link_items"
 * Added option "css for linkview"
-* Fixed target in <a>-tag
+* Fixed target in links
 * Fixed html-code for defining image size
 
 = 0.3.3 (2012-12-16) =
