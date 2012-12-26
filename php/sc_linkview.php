@@ -161,7 +161,7 @@ class sc_linkview {
 		// print custom css (only once, whe the shortcode is included the first time)
 		if( !$this->css_printed ) {
 			$out .= '
-				<style>
+				<style type="text/css">
 					'.$this->options->get( 'lv_css' ).'
 				</style>';
 			$this->css_printed = true;
@@ -316,7 +316,7 @@ class sc_linkview {
 		                                            'controlsShow' => 'false' );
 		// styles
 		$out = '
-			<style>
+			<style type="text/css">
 				#'.$list_id.' ul, #'.$list_id.' li { '.
 					'margin:0; '.
 					'padding:0; '.
