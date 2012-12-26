@@ -32,7 +32,7 @@ class lv_options {
 			                                      e.g. .lv-link-list-suffix, .lv-item-name-suffix.<br /><br />
 			                                      Below you can find some working examples:<br />
 			                                      <code>.lv-link {<br />
-			                                      &nbsp;&nbsp;&nbsp;&nbsp;<spacer type=horizontal size=4>margin-bottom: 15px;<br />
+			                                      &nbsp;&nbsp;&nbsp;&nbsp;margin-bottom: 15px;<br />
 			                                      }<br />
 			                                      .lv-item-image img {<br />
 			                                      &nbsp;&nbsp;&nbsp;&nbsp;-webkit-border-radius: 9px 9px 9px 9px;<br />
