@@ -60,9 +60,22 @@ class sc_linkview {
 			'link_items'     => array( 'section' => 'general',
 			                           'val'     => 'name<br />address<br />description<br />image<br />rss<br />notes<br />rating',
 			                           'std_val' => '',
-			                           'desc'    => 'The standard is to leave this option emtpy. Then only the link name or the link image (see attribute "show_img") is shown.<br />
-			                                         If you enter one or more of the available items here you overwrite that standard-settings and you have the ability to modify the items and their order to your wishes.
-			                                         Multiple items must be seperated by a semicolon, the items will be showed in the order you give them.' ),
+			                           'desc'    => 'This is a more complex but very powerful attribute.
+			                                         The standard is to leave it emtpy. Then only the link name or the link image (see attribute "show_img") is shown.<br />
+			                                         If you use this attribute you can overwrite these settings and you can customize the displayed link items and their arrangement to your special requirements.<br />
+			                                         This attribute is set via a specific JSON data structure.<br />
+			                                         Please use single quotes for defining this attribute because you require the double quotes to define the JSON code.<br />
+			                                         This attribute can also be defined as the content of an enclosed shortcode e.g. <code>[linkview]JSON data[/linkview]</code>.<br />
+			                                         <p>Below you can find some examples with all possible options:</p>
+			                                         <code>{ "name": "", "address": "URL :" }</code><br />
+			                                         Defining a list of JSON Objects ("key": "value" pairs) is the simplest version of usage. The key defines one of the available items (see Value options),
+			                                         the value defines an optional heading for the item. If no heading is required leave the value empty ("").<br />
+			                                         To have valid JSON data the list must be enclosed in curly braces {}. Double quotes must be added around the key and the value.
+			                                         The ":" character separats the key and the value, multiple objects are separated via comma.<br />
+			                                         <p><code>{ "name": "", "image_l": "", "address_l": "URL :" }</code><br />
+			                                         If you want to create an anchor (link) onto the item you have to add a "_l" at the end of the item name.</p>
+			                                         <code>{ "name": "", "left": { image_l": "", "address_l": "URL :" }, "right": { "description": "Description :", "notes": "Notes: " } }</code><br />
+			                                         You can group multiple items by using sub-object. The key of the sub-object defines the name of the group which also will be added as a css-class (e.g. .lv-section-left).' ),
 
 			'vertical_align' => array( 'section' => 'general',
 			                           'val'     => 'std<br />top<br />bottom<br />middle',
