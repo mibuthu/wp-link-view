@@ -1,10 +1,10 @@
 ﻿=== Link View ===
 Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2
-Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, attribute, widget, sidebar
+Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 0.3.3
+Stable tag: 0.4.0
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,11 +41,23 @@ Yes, since version 0.3.0 you can use as much sliders as you want on one site.
 
 == Screenshots ==
 
-1. Admin page with a description of the usage and the available attributes (plugin version 0.2.3)
-2. Simple example page with a link list
+1. Admin page with the description of all available attributes
+2. Admin page: CSS-Styles option
+3. Linkview Widget
+4. Simple example page with a small link list
 
 
 == Changelog ==
+
+= 0.4.0 (2012-12-26) =
+
+* Internal code changes
+* Changed admin page layout and help texts
+* Splitted attributes table on admin page into different sections
+* Added attributes "css_suffix" and "link_items"
+* Added option "css for linkview"
+* Fixed target in <a>-tag
+* Fixed html-code for defining image size
 
 = 0.3.3 (2012-12-16) =
 
