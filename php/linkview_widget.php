@@ -8,7 +8,6 @@ class linkview_widget extends WP_Widget {
 	 * Register widget with WordPress.
 	 */
 	public function __construct() {
-		//parent::__construct( 'baseID', 'name' );
 		parent::__construct(
 	 		'linkview_widget', // Base ID
 			'LinkView', // Name
@@ -67,15 +66,15 @@ class linkview_widget extends WP_Widget {
 		isset( $instance['atts'] ) ? $atts = $instance['atts'] : $atts = '';
 		$out = '
 		<p>
-			<label for="'.$this->get_field_id( 'title' ).'">'.__( 'Title:' ).'</label> 
+			<label for="'.$this->get_field_id( 'title' ).'">'.__( 'Title:' ).'</label>
 			<input class="widefat" id="'.$this->get_field_id( 'title' ).'" name="'.$this->get_field_name( 'title' ).'" type="text" value="'.esc_attr( $title ).'" />
 		</p>
 		<p>
-			<label for="'.$this->get_field_id( 'atts' ).'">'.__( 'Shortcode attributes:' ).'</label> 
+			<label for="'.$this->get_field_id( 'atts' ).'">'.__( 'Shortcode attributes:' ).'</label>
 			<textarea class="widefat" id="'.$this->get_field_id( 'atts' ).'" name="'.$this->get_field_name( 'atts' ).'" rows=6>'.esc_attr( $atts ).'</textarea>
 		</p>';
-		echo $out; 
+		echo $out;
 	}
 
-} // class linkview_widget
+} // end class linkview_widget
 ?>

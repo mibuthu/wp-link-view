@@ -1,0 +1,49 @@
+.lv-headline {
+	padding-top: 1em;
+}
+
+.lv-usage-caption h4 {
+	margin-top: 0px;
+}
+
+.lv-usage-caption {
+	width: 180px;
+	vertical-align: top;
+}
+
+.lv-usage-content {
+	padding-bottom: 1em;
+}
+
+.lv-section-caption {
+	margin-top: 1.2em;
+	margin-bottom: 0.4em;
+}
+
+.lv-atts-table {
+	border: 1px solid #aaa;
+	border-collapse: collapse;
+	width: 95%;
+}
+.lv-atts-table th {
+	border: 1px solid #aaa;
+	padding: 3px 4px !important;
+	background: #eeeeee;
+}
+.lv-atts-table td {
+	border: 1px solid #aaa;
+	padding: 2px 5px !important;
+	vertical-align: top;
+}
+
+.lv-atts-table-name {
+	width: 110px;
+}
+
+.lv-atts-table-options {
+	width: 110px;
+}
+
+.lv-atts-table-default {
+	width: 110px;
+}
