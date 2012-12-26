@@ -67,12 +67,15 @@ class lv_admin {
 	}
 
 	private function html_tabs( $current ) {
-		$out = '<div style="clear: both;"><h3 class="nav-tab-wrapper">';
+		$out = '
+			<div style="clear: both;"><h3 class="nav-tab-wrapper">';
 		foreach( $this->tabs as $tab => $name ){
 			$class = ( $tab == $current ) ? ' nav-tab-active' : '';
-			$out .= '<a class="nav-tab'.$class.'" href="?page=lv_admin_main&tab='.$tab.'">'.$name.'</a>';
+			$out .= '
+				<a class="nav-tab'.$class.'" href="?page=lv_admin_main&amp;tab='.$tab.'">'.$name.'</a>';
 		}
-		$out .= '</h3></div>';
+		$out .= '
+			</h3></div>';
 		return $out;
 	}
 
@@ -80,8 +83,8 @@ class lv_admin {
 		$out = '
 			<h3 class="lv-headline">Available Attributes</h3>
 			<div>
-				 To get the correct result you can combine as much attributes as you want.<br />
-				The <code>[linkview]</code> shortcode including the attributes "cat_name" and "show_img" looks like this:</p>
+				To get the correct result you can combine as much attributes as you want.<br />
+				The <code>[linkview]</code> shortcode including the attributes "cat_name" and "show_img" looks like this:
 				<p><code>[linkview cat_name=Sponsors show_img=1]</code></p>
 				<p>Below is a list of all the supported attributes with their descriptions and available options:</p>';
 		$out .= '<h4 class="lv-section-caption">General:</h4>';
@@ -97,56 +100,60 @@ class lv_admin {
 
 	private function html_atts_table( $section ) {
 		$out = '
-				<table class="lv-atts-table">
-					<tr>
-						<th class="lv-atts-table-name">Attribute name</th>
-						<th class="lv-atts-table-options">Value options</th>
-						<th class="lv-atts-table-default">Default value</th>
-						<th class="lv-atts-table-desc">Description</th>
-					</tr>';
+			<table class="lv-atts-table">
+				<tr>
+					<th class="lv-atts-table-name">Attribute name</th>
+					<th class="lv-atts-table-options">Value options</th>
+					<th class="lv-atts-table-default">Default value</th>
+					<th class="lv-atts-table-desc">Description</th>
+				</tr>';
 		$atts = $this->shortcode->get_atts( $section );
 		foreach( $atts as $aname => $a ) {
 			$out .= '
-					<tr>
-						<td>'.$aname.'</td>
-						<td>'.$a['val'].'</td>
-						<td>'.$a['std_val'].'</td>
-						<td>'.$a['desc'].'</td>
-					</tr>';
+				<tr>
+					<td>'.$aname.'</td>
+					<td>'.$a['val'].'</td>
+					<td>'.$a['std_val'].'</td>
+					<td>'.$a['desc'].'</td>
+				</tr>';
 		}
 		$out .= '
-				</table>';
+			</table>';
 		return $out;
 	}
 
 	private function html_css() {
-		$out = '<div id="posttype-page" class="posttypediv">';
-		$out .= '
+		$out = '
+			<div id="posttype-page" class="posttypediv">
 			<form method="post" action="options.php">
-			';
+				';
 		ob_start();
 		settings_fields( 'lv_'.$_GET['tab'] );
 		$out .= ob_get_contents();
 		ob_end_clean();
+		$out .= '
+			<table class="form-table">';
 		$out .= $this->html_options( 'css', 'newline' );
+		$out .= '
+			</table>
+			';
 		ob_start();
 		submit_button();
 		$out .= ob_get_contents();
 		ob_end_clean();
 		$out .='
-				</form>
+			</form>
 			</div>';
 		return $out;
 	}
 
 	private function html_options( $section, $desc_pos='right' ) {
-		$out = '
-				<div style="padding:0 10px">';
+		$out = '';
 		foreach( $this->options->options as $oname => $o ) {
 			if( $o['section'] == $section ) {
 				$out .= '
-						<tr valign="top">
-							<th scope="row">';
+					<tr>
+						<th>';
 				if( $o['label'] != '' ) {
 					$out .= '<label for="'.$oname.'">'.$o['label'].':</label>';
 				}
@@ -168,14 +175,8 @@ class lv_admin {
 				$out .= '
 						<td class="description">'.$o['desc'].'</td>
 					</tr>';
-				if( $desc_pos == 'newline' ) {
-					$out .= '
-						<tr><td></td></tr>';
-				}
 			}
 		}
-		$out .=
-		'</div>';
 		return $out;
 	}
 
