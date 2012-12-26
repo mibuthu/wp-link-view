@@ -458,7 +458,7 @@ class sc_linkview {
 			else {
 				$scale = $slider_width / $img_width;
 			}
-			return ' width="'.round($img_width*$scale).'px" height="'.round($img_height*$scale).'px"';
+			return ' width='.round($img_width*$scale).' height='.round($img_height*$scale);
 		}
 	}
 
