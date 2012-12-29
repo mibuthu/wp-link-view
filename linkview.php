@@ -45,7 +45,7 @@ class linkview {
 		// Register shortcodes
 		add_shortcode( 'linkview', array( &$this, 'shortcode_linkview' ) );
 		// Register widgets
-		add_action( 'widgets_init', array( &$this, 'widget_linkview' ) );
+		add_action( 'widgets_init', array( &$this, 'widget_init' ) );
 		// Filters
 		if ( !get_option( 'link_manager_enabled' ) ) {
 			add_filter( 'pre_option_link_manager_enabled', '__return_true' ); // required for Wordpress 3.5
@@ -76,7 +76,8 @@ class linkview {
 		return $this->shortcode->show_html( $atts, $content );
 	}
 
-	public function widget_linkview() {
+	public function widget_init() {
+		// Widget "linkview"
 		require_once( 'php/linkview_widget.php' );
 		return register_widget( 'linkview_widget' );
 	}
