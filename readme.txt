@@ -31,12 +31,13 @@ If you want to install the plugin manually download the zip-file and extract the
 == Frequently Asked Questions ==
 
 = Is it possible to use the shortcode in a widget? =
-
 Yes, a widget especially for the use of the [linkview] shortcode is included in this plugin. Insert the widget LinkView in your sidebar and set all attributes you want to change in the appropriate field.
 
 = Is it possible to add multiple slider on one site? =
-
 Yes, since version 0.3.0 you can use as much sliders as you want on one site.
+
+= Can I call the shortcode directly via php e.g. for my own template, theme or plugin? =
+Yes, you can create an instance of the "sc_linkview" class which located in "php/sc_linkview.php" in the plugin folder and call the function show_html($atts).With $atts you can specify all the shortcode attributes you require. Another possibility would be to call the wordpress function "do_shortcode()".
 
 
 == Screenshots ==
