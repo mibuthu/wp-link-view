@@ -470,20 +470,20 @@ class sc_linkview {
 
 	public function print_slider_script() {
 		$out = '<script type="text/javascript">
-				jQuery(document).ready(function(){';
+			jQuery(document).ready(function(){';
 		foreach( $this->slider_ids as $id ) {
 			$out .= '
-					jQuery("#'.$id.'").easySlider({';
+				jQuery("#'.$id.'").easySlider({';
 			foreach( $this->slider_parameters[$id] as $param => $value ) {
-				$out .= '
-						'.$param.': '.$value.',';
+				$out .= $param.': '.$value.',';
 			}
-			$out .= '
-					});';
+			// remove the comma at the end of the output string
+			$out = substr($out, 0, -1);
+			$out .= '});';
 		}
 		$out .= '
-				});
-			</script>';
+			});
+		</script>';
 		echo $out;
 	}
 } // end class sc_linkview
