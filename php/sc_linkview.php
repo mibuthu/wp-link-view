@@ -6,6 +6,7 @@ class sc_linkview {
 	private static $instance;
 	private $options;
 	private $atts;
+	private $num_ids;
 	private $css_printed;
 	private $slider_ids;
 	private $slider_parameters;
@@ -126,6 +127,7 @@ class sc_linkview {
 			                           'desc'    => 'This attribute sets the animation speed of the slider in milliseconds. This is the time used to slide from one link to the next one.<br />
 			                                         This attribute is only considered if the view type "slider" is selected.' )
 		);
+		$this->num_ids = 0;
 		$this->css_printed = false;
 		$this->slider_ids = null;
 		$this->slider_parameters = null;
@@ -181,7 +183,7 @@ class sc_linkview {
 				$out .='
 					<div class="lv-category'.$a['class_suffix'].'">';
 				$out .= $this->html_category( $cat, $a );
-				$list_id = $this->create_random_id();
+				$list_id = $this->get_new_list_id();
 				$slider_size = array( 0, 0 );
 				if( 'slider' === $a['view_type'] ) {
 					$this->slider_ids[] = $list_id;
@@ -458,10 +460,9 @@ class sc_linkview {
 		}
 	}
 
-	private function create_random_id() {
-		$id = mt_rand( 10000, 99999 );
-		$id = 'lv-id-'.$id;
-		return $id;
+	private function get_new_list_id() {
+		$this->num_ids++;
+		return 'lv-id-'.$this->num_ids;
 	}
 
 	public function print_slider_script() {
