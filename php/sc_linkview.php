@@ -331,12 +331,9 @@ class sc_linkview {
 			$out .= '
 				#'.$list_id.' .lv-link'.$a['class_suffix'].' { '.
 					'display:table-cell; '.
-					'text-align:center; '.
 					'vertical-align:'.$a['vertical_align'].'; '.
 					'width:'.$slider_width.'px; '.
-					'height:'.$slider_height.'px; }
-				#'.$list_id.' .lv-link'.$a['class_suffix'].' * { '.
-					'vertical-align:'.$a['vertical_align'].'; }';
+					'height:'.$slider_height.'px; }';
 		}
 		$out .= '
 			</style>';
