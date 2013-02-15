@@ -162,6 +162,9 @@ class sc_linkview {
 		if( !$this->css_printed ) {
 			$out .= '
 				<style type="text/css">
+					.lv-slider ul, .lv-slider li { margin:0; padding:0; list-style:none; }
+					.lv-slider li { overflow:hidden; text-align:center; }
+					.lv-slider img { max-width:100%; }
 					'.$this->options->get( 'lv_css' ).'
 				</style>';
 			$this->css_printed = true;
@@ -284,7 +287,11 @@ class sc_linkview {
 
 	private function html_link_list( $links, $a, $list_id, $slider_size ) {
 		$out = '
-					<div id="'.$list_id.'">
+					<div id="'.$list_id.'"';
+		if( 'slider' === $a['view_type'] ) {
+			$out .= ' class="lv-slider"';
+		}
+		$out .= '>
 					<ul class="lv-link-list'.$a['class_suffix'].'"';
 		if( $a['list_symbol'] == 'none' || $a['list_symbol'] == 'circle' || $a['list_symbol'] == 'square' || $a['list_symbol'] == 'disc' ) {
 			$out .= ' style="list-style-type: '.$a['list_symbol'].';"';
@@ -317,17 +324,9 @@ class sc_linkview {
 		// styles
 		$out = '
 			<style type="text/css">
-				#'.$list_id.' ul, #'.$list_id.' li { '.
-					'margin:0; '.
-					'padding:0; '.
-					'list-style:none; }
 				#'.$list_id.' li { '.
 					'width:'.$slider_width.'px; '.
-					'height:'.$slider_height.'px; '.
-					'overflow:hidden; '.
-					'text-align:center; }
-				#'.$list_id.' img { '.
-					'max-width:100%; }';
+					'height:'.$slider_height.'px; }';
 		if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
 			$out .= '
 				#'.$list_id.' .lv-link'.$a['class_suffix'].' { '.
