@@ -53,6 +53,21 @@ class sc_linkview {
 			                           'std_val' => '1',
 			                           'desc'    => 'This attribute specifies if the category name is shown as a headline.' ),
 
+			'link_orderby'   => array( 'section' => 'general',
+			                           'val'     => 'link_id<br />url<br />name<br />owner<br />rating<br />visible<br />length<br />rand',
+			                           'std_val' => 'name',
+			                           'desc'    => 'This attribute specifies the value to sort the links on for the links in each category.<br />
+			                                         The standard is to sort the links according the links name.<br />
+			                                         You can also create a random order if you specify <code>rand</code>.<br />
+			                                         If you required a more detailed description for the available options visit <a href="http://codex.wordpress.org/Function_Reference/get_bookmarks#Parameters" target="_blank">the wordpress codex</a>.<br />
+			                                         You can also specify the order direction with the attribute "link_order".' ),
+
+			'link_order'     => array( 'section' => 'general',
+			                           'val'     => 'ASC<br />DESC',
+			                           'std_val' => 'ASC',
+			                           'desc'    => 'This attribute sets the order direction for the "link_orderby" attribute.<br />
+			                                         The available options are ascending (standard) or descending.' ),
+
 			'show_img'       => array( 'section' => 'general',
 			                           'val'     => '0 ... false<br />1 ... true',
 			                           'std_val' => '0',
@@ -172,9 +187,18 @@ class sc_linkview {
 			$this->css_printed = true;
 		}
 		foreach( $categories as $cat ) {
+			// set link order
+			if( 'link_id' !== $a['link_orderby'] && 'url' !== $a['link_orderby'] && 'owner' !== $a['link_orderby'] && 'rating' !== $a['link_orderby']
+					&& 'visible' !== $a['link_orderby'] && 'length' !== $a['link_orderby'] && 'rand' !== $a['link_orderby'] ) {
+				$a['link_orderby'] = 'name';
+			}
+			if( 'DESC' !== $a['link_order'] ) {
+				$a['link_order'] = 'ASC';
+			}
 			// get links
 			$args = array(
-				'orderby'        => 'name',
+				'orderby'        => $a['link_orderby'],
+				'order'          => $a['link_order'],
 				'limit'          => -1,
 				'category_name'  => $cat->name);
 			$links = get_bookmarks( $args );
