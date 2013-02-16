@@ -6,6 +6,7 @@ class sc_linkview {
 	private static $instance;
 	private $options;
 	private $atts;
+	private $num_ids;
 	private $css_printed;
 	private $slider_ids;
 	private $slider_parameters;
@@ -51,6 +52,21 @@ class sc_linkview {
 			                           'val'     => '0 ... false<br />1 ... true',
 			                           'std_val' => '1',
 			                           'desc'    => 'This attribute specifies if the category name is shown as a headline.' ),
+
+			'link_orderby'   => array( 'section' => 'general',
+			                           'val'     => 'link_id<br />url<br />name<br />owner<br />rating<br />visible<br />length<br />rand',
+			                           'std_val' => 'name',
+			                           'desc'    => 'This attribute specifies the value to sort the links on for the links in each category.<br />
+			                                         The standard is to sort the links according the links name.<br />
+			                                         You can also create a random order if you specify <code>rand</code>.<br />
+			                                         If you required a more detailed description for the available options visit <a href="http://codex.wordpress.org/Function_Reference/get_bookmarks#Parameters" target="_blank">the wordpress codex</a>.<br />
+			                                         You can also specify the order direction with the attribute "link_order".' ),
+
+			'link_order'     => array( 'section' => 'general',
+			                           'val'     => 'ASC<br />DESC',
+			                           'std_val' => 'ASC',
+			                           'desc'    => 'This attribute sets the order direction for the "link_orderby" attribute.<br />
+			                                         The available options are ascending (standard) or descending.' ),
 
 			'show_img'       => array( 'section' => 'general',
 			                           'val'     => '0 ... false<br />1 ... true',
@@ -126,6 +142,7 @@ class sc_linkview {
 			                           'desc'    => 'This attribute sets the animation speed of the slider in milliseconds. This is the time used to slide from one link to the next one.<br />
 			                                         This attribute is only considered if the view type "slider" is selected.' )
 		);
+		$this->num_ids = 0;
 		$this->css_printed = false;
 		$this->slider_ids = null;
 		$this->slider_parameters = null;
@@ -162,14 +179,26 @@ class sc_linkview {
 		if( !$this->css_printed ) {
 			$out .= '
 				<style type="text/css">
+					.lv-slider ul, .lv-slider li { margin:0; padding:0; list-style:none; }
+					.lv-slider li { overflow:hidden; text-align:center; }
+					.lv-slider img { max-width:100%; }
 					'.$this->options->get( 'lv_css' ).'
 				</style>';
 			$this->css_printed = true;
 		}
 		foreach( $categories as $cat ) {
+			// set link order
+			if( 'link_id' !== $a['link_orderby'] && 'url' !== $a['link_orderby'] && 'owner' !== $a['link_orderby'] && 'rating' !== $a['link_orderby']
+					&& 'visible' !== $a['link_orderby'] && 'length' !== $a['link_orderby'] && 'rand' !== $a['link_orderby'] ) {
+				$a['link_orderby'] = 'name';
+			}
+			if( 'DESC' !== $a['link_order'] ) {
+				$a['link_order'] = 'ASC';
+			}
 			// get links
 			$args = array(
-				'orderby'        => 'name',
+				'orderby'        => $a['link_orderby'],
+				'order'          => $a['link_order'],
 				'limit'          => -1,
 				'category_name'  => $cat->name);
 			$links = get_bookmarks( $args );
@@ -178,7 +207,7 @@ class sc_linkview {
 				$out .='
 					<div class="lv-category'.$a['class_suffix'].'">';
 				$out .= $this->html_category( $cat, $a );
-				$list_id = $this->create_random_id();
+				$list_id = $this->get_new_list_id();
 				$slider_size = array( 0, 0 );
 				if( 'slider' === $a['view_type'] ) {
 					$this->slider_ids[] = $list_id;
@@ -284,7 +313,11 @@ class sc_linkview {
 
 	private function html_link_list( $links, $a, $list_id, $slider_size ) {
 		$out = '
-					<div id="'.$list_id.'">
+					<div id="'.$list_id.'"';
+		if( 'slider' === $a['view_type'] ) {
+			$out .= ' class="lv-slider"';
+		}
+		$out .= '>
 					<ul class="lv-link-list'.$a['class_suffix'].'"';
 		if( $a['list_symbol'] == 'none' || $a['list_symbol'] == 'circle' || $a['list_symbol'] == 'square' || $a['list_symbol'] == 'disc' ) {
 			$out .= ' style="list-style-type: '.$a['list_symbol'].';"';
@@ -317,27 +350,16 @@ class sc_linkview {
 		// styles
 		$out = '
 			<style type="text/css">
-				#'.$list_id.' ul, #'.$list_id.' li { '.
-					'margin:0; '.
-					'padding:0; '.
-					'list-style:none; }
 				#'.$list_id.' li { '.
 					'width:'.$slider_width.'px; '.
-					'height:'.$slider_height.'px; '.
-					'overflow:hidden; '.
-					'text-align:center; }
-				#'.$list_id.' img { '.
-					'max-width:100%; }';
+					'height:'.$slider_height.'px; }';
 		if( $a['vertical_align'] == 'top' || $a['vertical_align'] == 'middle' || $a['vertical_align'] == 'bottom' ) {
 			$out .= '
 				#'.$list_id.' .lv-link'.$a['class_suffix'].' { '.
 					'display:table-cell; '.
-					'text-align:center; '.
 					'vertical-align:'.$a['vertical_align'].'; '.
 					'width:'.$slider_width.'px; '.
-					'height:'.$slider_height.'px; }
-				#'.$list_id.' .lv-link'.$a['class_suffix'].' * { '.
-					'vertical-align:'.$a['vertical_align'].'; }';
+					'height:'.$slider_height.'px; }';
 		}
 		$out .= '
 			</style>';
@@ -462,28 +484,27 @@ class sc_linkview {
 		}
 	}
 
-	private function create_random_id() {
-		$id = mt_rand( 10000, 99999 );
-		$id = 'lv-id-'.$id;
-		return $id;
+	private function get_new_list_id() {
+		$this->num_ids++;
+		return 'lv-id-'.$this->num_ids;
 	}
 
 	public function print_slider_script() {
 		$out = '<script type="text/javascript">
-				jQuery(document).ready(function(){';
+			jQuery(document).ready(function(){';
 		foreach( $this->slider_ids as $id ) {
 			$out .= '
-					jQuery("#'.$id.'").easySlider({';
+				jQuery("#'.$id.'").easySlider({';
 			foreach( $this->slider_parameters[$id] as $param => $value ) {
-				$out .= '
-						'.$param.': '.$value.',';
+				$out .= $param.': '.$value.',';
 			}
-			$out .= '
-					});';
+			// remove the comma at the end of the output string
+			$out = substr($out, 0, -1);
+			$out .= '});';
 		}
 		$out .= '
-				});
-			</script>';
+			});
+		</script>';
 		echo $out;
 	}
 } // end class sc_linkview
