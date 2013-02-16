@@ -3,8 +3,8 @@ Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css
 Requires at least: 3.3
-Tested up to: 3.5
-Stable tag: 0.4.0
+Tested up to: 3.5.1
+Stable tag: 0.4.1
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,13 @@ Yes, you can create an instance of the "sc_linkview" class which located in "php
 
 
 == Changelog ==
+
+= 0.4.1 (2013-02-16) =
+
+* Added new attributes "list_orderby" and "list_order"
+* Fixed an error in the slider javascript which causes problem in IE 6 and 7
+* Reorganized some css styles
+* Use ascending list ids instead of random number
 
 = 0.4.0 (2012-12-26) =
 
