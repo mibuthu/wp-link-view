@@ -437,6 +437,9 @@ class sc_linkview {
 			$out .= '">';
 		}
 		switch( $item ) {
+			case 'name':
+				$out .= $l->link_name;
+				break;
 			case 'address':
 				$out .= $l->link_url;
 				break;
@@ -454,9 +457,6 @@ class sc_linkview {
 				break;
 			case 'rating':
 				$out .= $l->link_rating;
-				break;
-			default: // 'name'
-				$out .= $l->link_name;
 				break;
 		}
 		if( $is_link ) {
