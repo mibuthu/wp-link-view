@@ -3,8 +3,8 @@ Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css
 Requires at least: 3.3
-Tested up to: 3.5.1
-Stable tag: 0.4.1
+Tested up to: 3.5.2
+Stable tag: 0.4.2
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,12 @@ Yes, you can create an instance of the "sc_linkview" class which located in "php
 
 
 == Changelog ==
+
+= 0.4.2 (2013-06-29) =
+
+* added info message after changing the css settings
+* don't use name as link item default when a not available item was choosen
+* added tooltips for widget options on admin page
 
 = 0.4.1 (2013-02-16) =
 
@@ -117,7 +123,7 @@ Yes, you can create an instance of the "sc_linkview" class which located in "php
 
 = 0.1.1 (2012-03-03) =
 
-* Modified html-output of link list (use own function to render output for more flexibility) 
+* Modified html-output of link list (use own function to render output for more flexibility)
 * Added attributes "show_cat_name" and "target"
 
 = 0.1.0 (2012-02-27) =
