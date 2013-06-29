@@ -65,11 +65,11 @@ class linkview_widget extends WP_Widget {
 		isset( $instance['title'] ) ? $title = $instance['title'] : $title = __( 'New title', 'text_domain' );
 		isset( $instance['atts'] ) ? $atts = $instance['atts'] : $atts = '';
 		$out = '
-		<p>
+		<p title="The title for the widget">
 			<label for="'.$this->get_field_id( 'title' ).'">'.__( 'Title:' ).'</label>
 			<input class="widefat" id="'.$this->get_field_id( 'title' ).'" name="'.$this->get_field_name( 'title' ).'" type="text" value="'.esc_attr( $title ).'" />
 		</p>
-		<p>
+		<p title="You can add all attributes which are available for the linkview shortcode">
 			<label for="'.$this->get_field_id( 'atts' ).'">'.__( 'Shortcode attributes:' ).'</label>
 			<textarea class="widefat" id="'.$this->get_field_id( 'atts' ).'" name="'.$this->get_field_name( 'atts' ).'" rows=6>'.esc_attr( $atts ).'</textarea>
 		</p>';
