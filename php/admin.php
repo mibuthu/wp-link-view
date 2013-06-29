@@ -123,7 +123,8 @@ class lv_admin {
 	}
 
 	private function html_css() {
-		$out = '
+		$out = $this->show_messages();
+		$out .= '
 			<div id="posttype-page" class="posttypediv">
 			<form method="post" action="options.php">
 				';
@@ -196,7 +197,17 @@ class lv_admin {
 	}
 
 	public function embed_admin_main_scripts() {
-		wp_enqueue_style( 'linkview_admin_main_css', LV_URL.'css/admin_main.css' );
+		wp_enqueue_style( 'linkview_admin_main', LV_URL.'css/admin_main.css' );
+	}
+
+	private function show_messages() {
+		$out = '';
+		// settings updated
+		if( isset( $_GET['settings-updated'] ) && 'true' === $_GET['settings-updated'] ) {
+			$out .= '
+					<div id="message" class="updated below-h2"><p><strong>Settings saved.</strong></p></div>';
+		}
+		return $out;
 	}
 } // end class lv_admin
 ?>
