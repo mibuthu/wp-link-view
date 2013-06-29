@@ -196,7 +196,7 @@ class lv_admin {
 	}
 
 	public function embed_admin_main_scripts() {
-		wp_enqueue_style( 'linkview_admin_main_css', LV_URL.'css/admin_main.css' );
+		wp_enqueue_style( 'linkview_admin_main', LV_URL.'css/admin_main.css' );
 	}
 } // end class lv_admin
 ?>
