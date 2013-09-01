@@ -68,6 +68,12 @@ class sc_linkview {
 			                           'desc'    => 'This attribute sets the order direction for the "link_orderby" attribute.<br />
 			                                         The available options are ascending (standard) or descending.' ),
 
+			'num_links'      => array( 'section' => 'general',
+			                           'val'     => 'number',
+			                           'std_val' => '-1',
+			                           'desc'    => 'This attribute sets the number of displayed links for each category.<br />
+			                                         Specify a number smaller than 0 to view all links.'),
+
 			'show_img'       => array( 'section' => 'general',
 			                           'val'     => '0 ... false<br />1 ... true',
 			                           'std_val' => '0',
@@ -199,7 +205,7 @@ class sc_linkview {
 			$args = array(
 				'orderby'        => $a['link_orderby'],
 				'order'          => $a['link_order'],
-				'limit'          => -1,
+				'limit'          => $a['num_links'],
 				'category_name'  => $cat->name);
 			$links = get_bookmarks( $args );
 			// generate output
