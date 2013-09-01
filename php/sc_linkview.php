@@ -63,8 +63,8 @@ class sc_linkview {
 			                                         You can also specify the order direction with the attribute "link_order".' ),
 
 			'link_order'     => array( 'section' => 'general',
-			                           'val'     => 'ASC<br />DESC',
-			                           'std_val' => 'ASC',
+			                           'val'     => 'asc<br />desc',
+			                           'std_val' => 'asc',
 			                           'desc'    => 'This attribute sets the order direction for the "link_orderby" attribute.<br />
 			                                         The available options are ascending (standard) or descending.' ),
 
@@ -146,7 +146,7 @@ class sc_linkview {
 			                           'val'     => 'Number',
 			                           'std_val' => '1000',
 			                           'desc'    => 'This attribute sets the animation speed of the slider in milliseconds. This is the time used to slide from one link to the next one.<br />
-			                                         This attribute is only considered if the view type "slider" is selected.' )
+			                                         This attribute is only considered if the view type "slider" is selected.'),
 		);
 		$this->num_ids = 0;
 		$this->css_printed = false;
@@ -198,8 +198,8 @@ class sc_linkview {
 					&& 'visible' !== $a['link_orderby'] && 'length' !== $a['link_orderby'] && 'rand' !== $a['link_orderby'] ) {
 				$a['link_orderby'] = 'name';
 			}
-			if( 'DESC' !== $a['link_order'] ) {
-				$a['link_order'] = 'ASC';
+			if('desc' !== strtolower($a['link_order'])) {
+				$a['link_order'] = 'asc';
 			}
 			// get links
 			$args = array(
