@@ -3,8 +3,9 @@ Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css
 Requires at least: 3.3
-Tested up to: 3.5.2
-Stable tag: 0.4.2
+Tested up to: 3.6
+Stable tag: 0.4.3
+Plugin URI: http://wordpress.org/extend/plugins/link-view
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +50,11 @@ Yes, you can create an instance of the "sc_linkview" class which located in "php
 
 
 == Changelog ==
+
+= 0.4.3 (2013-09-01) =
+
+* added shortcode attribute num_links to limit the number of displayed links
+* changed shortcode attribute link_order to lowercase (using uppercase letters is still working)
 
 = 0.4.2 (2013-06-29) =
 
