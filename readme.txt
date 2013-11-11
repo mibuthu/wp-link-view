@@ -3,8 +3,8 @@ Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css
 Requires at least: 3.3
-Tested up to: 3.6
-Stable tag: 0.4.3
+Tested up to: 3.7.1
+Stable tag: 0.4.4
 Plugin URI: http://wordpress.org/extend/plugins/link-view
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -50,6 +50,10 @@ Yes, you can create an instance of the "sc_linkview" class which located in "php
 
 
 == Changelog ==
+
+= 0.4.4 (2013-11-11) =
+
+* fixed required privilegs to show admin page and to edit css styles
 
 = 0.4.3 (2013-09-01) =
 
