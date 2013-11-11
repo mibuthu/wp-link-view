@@ -25,10 +25,20 @@ class lv_admin {
 
 	// show the main admin page as a submenu of "Links"
 	public function show_main() {
+		$current_tab = $this->get_current_tab();
+
+		// check required privilegs
+		if(!current_user_can('manage_options')) {
+			unset($this->tabs['css']);
+			if('css' == $current_tab) {
+				$current_tab = 'attributes';
+			}
+		}
 		if(!current_user_can('manage_links')) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
+		// create content
 		$out ='
 			<div class="wrap nosubsub">
 			<div id="icon-link-manager" class="icon32"><br /></div><h2>Link View</h2>
@@ -54,7 +64,6 @@ class lv_admin {
 				</td>
 			</tr>
 			</table>';
-		$current_tab = $this->get_current_tab();
 		$out .= $this->html_tabs( $current_tab );
 		switch( $current_tab ) {
 			case 'css' :
