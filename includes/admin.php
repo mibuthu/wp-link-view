@@ -1,6 +1,6 @@
 <?php
-require_once( LV_PATH.'php/sc_linkview.php' );
-require_once( LV_PATH.'php/options.php' );
+require_once(LV_PATH.'includes/sc_linkview.php');
+require_once(LV_PATH.'includes/options.php');
 
 // This class handles all available admin pages
 class lv_admin {

@@ -54,7 +54,7 @@ class linkview {
 		// ADMIN PAGE:
 		if ( is_admin() ) {
 			// Include required php-files and initialize required objects
-			require_once( 'php/admin.php' );
+			require_once('includes/admin.php');
 			$admin = new lv_admin();
 			// Register actions
 			add_action( 'admin_menu', array( &$admin, 'register_pages' ) );
@@ -70,7 +70,7 @@ class linkview {
 
 	public function shortcode_linkview( $atts, $content='' ) {
 		if( NULL == $this->shortcode ) {
-			require_once( 'php/sc_linkview.php' );
+			require_once('includes/sc_linkview.php');
 			$this->shortcode = sc_linkview::get_instance();
 		}
 		return $this->shortcode->show_html( $atts, $content );
@@ -78,8 +78,8 @@ class linkview {
 
 	public function widget_init() {
 		// Widget "linkview"
-		require_once( 'php/linkview_widget.php' );
 		return register_widget( 'linkview_widget' );
+		require_once('includes/linkview_widget.php');
 	}
 
 	public function frontpage_init() {
