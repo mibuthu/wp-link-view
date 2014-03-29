@@ -54,7 +54,7 @@ class linkview {
 		// ADMIN PAGE:
 		if ( is_admin() ) {
 			// Include required php-files and initialize required objects
-			require_once('includes/admin.php');
+			require_once('admin/admin.php');
 			$admin = new lv_admin();
 			// Register actions
 			add_action( 'admin_menu', array( &$admin, 'register_pages' ) );
