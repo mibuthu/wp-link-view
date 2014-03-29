@@ -3,16 +3,30 @@ require_once(LV_PATH.'includes/sc_linkview.php');
 require_once(LV_PATH.'includes/options.php');
 
 // This class handles all available admin pages
-class lv_admin {
-	private $shortcode;
+class LV_Admin {
+	private static $instance;
 	private $options;
+	private $shortcode;
 	private $tabs;
 
-	public function __construct() {
-		$this->shortcode = &sc_linkview::get_instance();
+	private function __construct() {
 		$this->options = &lv_options::get_instance();
-		$this->tabs = array( 'attributes' => 'Attributes',
-		                     'css'        => 'CSS-Styles' );
+		$this->shortcode = &sc_linkview::get_instance();
+		$this->tabs = array('attributes' => 'Attributes',
+		                    'css'        => 'CSS-Styles');
+	}
+
+	public static function &get_instance() {
+		// singleton setup
+		if(!isset(self::$instance)) {
+			self::$instance = new self;
+		}
+		return self::$instance;
+	}
+
+	public function init_admin_page() {
+		// Register actions
+		add_action('admin_menu', array(&$this, 'register_pages'));
 	}
 
 	/**
@@ -20,7 +34,11 @@ class lv_admin {
 	 */
 	public function register_pages() {
 		$page = add_submenu_page('link-manager.php', 'Link View', 'Link View', 'manage_links', 'lv_admin_main', array(&$this, 'show_main'));
-		add_action( 'admin_print_scripts-'.$page, array( &$this, 'embed_admin_main_scripts' ) );
+		add_action('admin_print_scripts-'.$page, array(&$this, 'embed_main_scripts'));
+	}
+
+	public function embed_main_scripts() {
+		wp_enqueue_style('linkview_admin_main', LV_URL.'admin/css/admin_main.css');
 	}
 
 	// show the main admin page as a submenu of "Links"
@@ -203,10 +221,6 @@ class lv_admin {
 		$out = '
 							<textarea name="'.$name.'" id="'.$name.'" rows="20" class="large-text code">'.$value.'</textarea>';
 		return $out;
-	}
-
-	public function embed_admin_main_scripts() {
-		wp_enqueue_style('linkview_admin_main', LV_URL.'admin/css/admin_main.css');
 	}
 
 	private function show_messages() {

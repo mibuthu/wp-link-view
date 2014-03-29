@@ -52,12 +52,10 @@ class linkview {
 		}
 
 		// ADMIN PAGE:
-		if ( is_admin() ) {
+		if(is_admin()) {
 			// Include required php-files and initialize required objects
-			require_once('admin/admin.php');
-			$admin = new lv_admin();
-			// Register actions
-			add_action( 'admin_menu', array( &$admin, 'register_pages' ) );
+			require_once(LV_PATH.'admin/admin.php');
+			LV_Admin::get_instance()->init_admin_page();
 		}
 
 		// FRONT PAGE:
