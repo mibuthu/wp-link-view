@@ -206,7 +206,7 @@ class lv_admin {
 	}
 
 	public function embed_admin_main_scripts() {
-		wp_enqueue_style( 'linkview_admin_main', LV_URL.'css/admin_main.css' );
+		wp_enqueue_style('linkview_admin_main', LV_URL.'admin/css/admin_main.css');
 	}
 
 	private function show_messages() {
