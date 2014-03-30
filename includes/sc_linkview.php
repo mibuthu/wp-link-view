@@ -188,7 +188,7 @@ class SC_Linkview {
 		if(!$this->css_printed) {
 			$out .= '
 				<style type="text/css">
-					.lv-slider ul, .lv-slider li { margin:0; padding:0; list-style:none; }
+					.lv-slider ul, .lv-slider li { margin:0; padding:0; list-style-type:none; list-style-image:none; }
 					.lv-slider li { overflow:hidden; text-align:center; }
 					.lv-slider img { max-width:100%; }
 					'.$this->options->get('lv_css').'
@@ -329,7 +329,7 @@ class SC_Linkview {
 		$out .= '>
 					<ul class="lv-link-list'.$a['class_suffix'].'"';
 		if($a['list_symbol'] == 'none' || $a['list_symbol'] == 'circle' || $a['list_symbol'] == 'square' || $a['list_symbol'] == 'disc') {
-			$out .= ' style="list-style-type: '.$a['list_symbol'].';"';
+			$out .= ' style="list-style-type:'.$a['list_symbol'].';"';
 		}
 		$out .= '>';
 		foreach($links as $link) {
@@ -352,10 +352,10 @@ class SC_Linkview {
 		list($slider_width, $slider_height) = $slider_size;
 		// prepare slider parameters which is used in footer script
 		$this->slider_parameters[$list_id] = array('auto' => 'true',
-		                                            'pause' => $a['slider_pause'],
-		                                            'speed' => $a['slider_speed'],
-		                                            'continuous' => 'true',
-		                                            'controlsShow' => 'false');
+		                                           'pause' => $a['slider_pause'],
+		                                           'speed' => $a['slider_speed'],
+		                                           'continuous' => 'true',
+		                                           'controlsShow' => 'false');
 		// styles
 		$out = '
 			<style type="text/css">
