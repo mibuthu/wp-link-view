@@ -33,11 +33,17 @@ class LV_Admin {
 	public function register_pages() {
 		$page = add_submenu_page('link-manager.php', 'About LinkView', 'About LinkView', 'manage_links', 'lv_admin_about', array(&$this, 'show_about_page'));
 		add_action('admin_print_scripts-'.$page, array(&$this, 'embed_about_scripts'));
+		$page = add_submenu_page('options-general.php', 'LinkView Settings', 'LinkView', 'manage_options', 'lv_admin_options', array(&$this, 'show_settings_page'));
 	}
 
 	public function show_about_page() {
 		require_once(LV_PATH.'admin/includes/admin-about.php');
-		LV_Admin_About::get_instance()->show_about();
+		LV_Admin_About::get_instance()->show_page();
+	}
+
+	public function show_settings_page() {
+		require_once(LV_PATH.'admin/includes/admin-settings.php');
+		LV_Admin_Settings::get_instance()->show_page();
 	}
 
 	public function embed_about_scripts() {

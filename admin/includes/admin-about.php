@@ -28,26 +28,16 @@ class LV_Admin_About {
 		return self::$instance;
 	}
 
-	// show the admin about page as a submenu of "Links"
-	public function show_about() {
-		$current_tab = $this->get_current_tab();
-
+	// show the admin about page
+	public function show_page() {
 		// check required privilegs
-		if(!current_user_can('manage_options')) {
-			unset($this->tabs['css']);
-			if('css' == $current_tab) {
-				$current_tab = 'attributes';
-			}
-		}
 		if(!current_user_can('manage_links')) {
 			wp_die(__('You do not have sufficient permissions to access this page.'));
 		}
-
 		// create content
 		$out ='
 			<div class="wrap nosubsub">
-			<div id="icon-link-manager" class="icon32"><br /></div><h2>About LinkView</h2>
-			</div>
+			<div id="icon-link-manager" class="icon32"><br /></div><h2>About LinkView</h2></div>
 			<h3 class="lv-headline">Usage</h3>
 			<table>
 			<tr>
@@ -69,33 +59,13 @@ class LV_Admin_About {
 				</td>
 			</tr>
 			</table>';
-		$out .= $this->html_tabs($current_tab);
-		switch($current_tab) {
-			case 'css' :
-				$out .= $this->html_css('css', 'newline');
-				break;
-			default : // attributes
-				$out .= $this->html_atts();
-		}
+			$out .= $this->html_atts();
 		echo $out;
-	}
-
-	private function html_tabs($current) {
-		$out = '
-			<div style="clear: both;"><h3 class="nav-tab-wrapper">';
-		foreach($this->tabs as $tab => $name){
-			$class = ($tab == $current) ? ' nav-tab-active' : '';
-			$out .= '
-				<a class="nav-tab'.$class.'" href="?page=lv_admin_about&amp;tab='.$tab.'">'.$name.'</a>';
-		}
-		$out .= '
-			</h3></div>';
-		return $out;
 	}
 
 	private function html_atts() {
 		$out = '
-			<h3 class="lv-headline">Available Attributes</h3>
+			<h3 class="lv-headline">Available Shortcode Attributes</h3>
 			<div>
 				To get the correct result you can combine as much attributes as you want.<br />
 				The <code>[linkview]</code> shortcode including the attributes "cat_name" and "show_img" looks like this:
@@ -133,90 +103,6 @@ class LV_Admin_About {
 		}
 		$out .= '
 			</table>';
-		return $out;
-	}
-
-	private function html_css() {
-		$out = $this->show_messages();
-		$out .= '
-			<div id="posttype-page" class="posttypediv">
-			<form method="post" action="options.php">
-				';
-		ob_start();
-		settings_fields('lv_'.$_GET['tab']);
-		$out .= ob_get_contents();
-		ob_end_clean();
-		$out .= '
-			<table class="form-table">';
-		$out .= $this->html_options('css', 'newline');
-		$out .= '
-			</table>
-			';
-		ob_start();
-		submit_button();
-		$out .= ob_get_contents();
-		ob_end_clean();
-		$out .='
-			</form>
-			</div>';
-		return $out;
-	}
-
-	private function html_options($section, $desc_pos='right') {
-		$out = '';
-		foreach($this->options->options as $oname => $o) {
-			if($o['section'] == $section) {
-				$out .= '
-					<tr>
-						<th>';
-				if($o['label'] != '') {
-					$out .= '<label for="'.$oname.'">'.$o['label'].':</label>';
-				}
-				$out .= '</th>
-						<td>';
-				switch($o['type']) {
-					case 'textarea':
-						$out .= $this->show_textarea($oname, $this->options->get($oname));
-						break;
-				}
-				$out .= '
-						</td>';
-				if($desc_pos == 'newline') {
-					$out .= '
-					</tr>
-					<tr>
-						<td></td>';
-				}
-				$out .= '
-						<td class="description">'.$o['desc'].'</td>
-					</tr>';
-			}
-		}
-		return $out;
-	}
-
-	private function get_current_tab() {
-		if(isset($_GET['tab']) && array_key_exists($_GET['tab'], $this->tabs)) {
-			return $_GET['tab'];
-		}
-		else {
-			return 'attributes';
-		}
-	}
-
-	private function show_textarea($name, $value) {
-		$out = '
-							<textarea name="'.$name.'" id="'.$name.'" rows="20" class="large-text code">'.$value.'</textarea>';
-		return $out;
-	}
-
-	private function show_messages() {
-		$out = '';
-		// settings updated
-		if(isset($_GET['settings-updated']) && 'true' === $_GET['settings-updated']) {
-			$out .= '
-					<div id="message" class="updated below-h2"><p><strong>Settings saved.</strong></p></div>';
-		}
 		return $out;
 	}
 } // end class LV_Admin_About
