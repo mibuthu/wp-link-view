@@ -72,7 +72,7 @@ class LinkView {
 
 	public function shortcode_linkview($atts, $content='') {
 		if(null == $this->shortcode) {
-			require_once('includes/sc_linkview.php');
+			require_once(LV_PATH.'includes/sc_linkview.php');
 			$this->shortcode = SC_Linkview::get_instance();
 		}
 		return $this->shortcode->show_html($atts, $content);
@@ -80,7 +80,7 @@ class LinkView {
 
 	public function widget_init() {
 		// Widget "linkview"
-		require_once('includes/widget.php');
+		require_once(LV_PATH.'includes/widget.php');
 		return register_widget('LV_Widget');
 	}
 
