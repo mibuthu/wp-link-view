@@ -25,13 +25,17 @@ You can view a copy of the HTML version of the GNU General Public
 License at http://www.gnu.org/copyleft/gpl.html
 */
 
+if(!defined('WPINC')) {
+	die;
+}
+
 // GENERAL DEFINITIONS
-define( 'LV_URL', plugin_dir_url( __FILE__ ) );
-define( 'LV_PATH', plugin_dir_path( __FILE__ ) );
+define('LV_URL', plugin_dir_url(__FILE__));
+define('LV_PATH', plugin_dir_path(__FILE__));
 
 
 // MAIN PLUGIN CLASS
-class linkview {
+class LinkView {
 	private $shortcode;
 
 	/**
@@ -39,16 +43,16 @@ class linkview {
 	 * Initializes the plugin.
 	 */
 	public function __construct() {
-		$this->shortcode = NULL;
+		$this->shortcode = null;
 
 		// ALWAYS:
 		// Register shortcodes
-		add_shortcode( 'linkview', array( &$this, 'shortcode_linkview' ) );
+		add_shortcode('linkview', array(&$this, 'shortcode_linkview'));
 		// Register widgets
-		add_action( 'widgets_init', array( &$this, 'widget_init' ) );
+		add_action('widgets_init', array(&$this, 'widget_init'));
 		// Filters
-		if ( !get_option( 'link_manager_enabled' ) ) {
-			add_filter( 'pre_option_link_manager_enabled', '__return_true' ); // required for Wordpress 3.5
+		if(!get_option('link_manager_enabled')) {
+			add_filter('pre_option_link_manager_enabled', '__return_true'); // required for Wordpress 3.5
 		}
 
 		// ADMIN PAGE:
@@ -61,23 +65,23 @@ class linkview {
 		// FRONT PAGE:
 		else {
 			// Register actions
-			add_action( 'init', array( &$this, 'frontpage_init' ) );
-			add_action( 'wp_footer', array( &$this, 'frontpage_footer' ) );
+			add_action('init', array(&$this, 'frontpage_init'));
+			add_action('wp_footer', array(&$this, 'frontpage_footer'));
 		}
 	} // end constructor
 
-	public function shortcode_linkview( $atts, $content='' ) {
-		if( NULL == $this->shortcode ) {
+	public function shortcode_linkview($atts, $content='') {
+		if(null == $this->shortcode) {
 			require_once('includes/sc_linkview.php');
 			$this->shortcode = sc_linkview::get_instance();
 		}
-		return $this->shortcode->show_html( $atts, $content );
+		return $this->shortcode->show_html($atts, $content);
 	}
 
 	public function widget_init() {
 		// Widget "linkview"
-		return register_widget( 'linkview_widget' );
 		require_once('includes/linkview_widget.php');
+		return register_widget('linkview_widget');
 	}
 
 	public function frontpage_init() {
@@ -85,8 +89,8 @@ class linkview {
 	}
 
 	public function frontpage_footer() {
-		if( NULL != $this->shortcode && NULL != $this->shortcode->get_slider_ids() ) {
-			wp_print_scripts( 'lv_easySlider' );
+		if(null != $this->shortcode && null != $this->shortcode->get_slider_ids()) {
+			wp_print_scripts('lv_easySlider');
 			$this->shortcode->print_slider_script();
 		}
 	}
@@ -94,5 +98,5 @@ class linkview {
 
 
 // create a class instance
-$lv = new linkview();
+$lv = new LinkView();
 ?>
