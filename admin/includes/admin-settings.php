@@ -47,7 +47,7 @@ class LV_Admin_Settings {
 		ob_end_clean();
 		$out .= '
 			<table class="form-table">';
-		$out .= $this->html_options('css', 'newline');
+		$out .= $this->html_options('css');
 		$out .= '
 			</table>
 			';
@@ -61,7 +61,7 @@ class LV_Admin_Settings {
 		return $out;
 	}
 
-	private function html_options($section, $desc_pos='right') {
+	private function html_options($section) {
 		$out = '';
 		foreach($this->options->options as $oname => $o) {
 			if($o['section'] == $section) {
@@ -79,14 +79,7 @@ class LV_Admin_Settings {
 						break;
 				}
 				$out .= '
-						</td>';
-				if($desc_pos == 'newline') {
-					$out .= '
-					</tr>
-					<tr>
-						<td></td>';
-				}
-				$out .= '
+						</td>
 						<td class="description">'.$o['desc'].'</td>
 					</tr>';
 			}
@@ -96,7 +89,7 @@ class LV_Admin_Settings {
 
 	private function show_textarea($name, $value) {
 		$out = '
-							<textarea name="'.$name.'" id="'.$name.'" rows="20" class="large-text code">'.$value.'</textarea>';
+							<textarea name="'.$name.'" id="'.$name.'" rows="25" class="large-text code">'.$value.'</textarea>';
 		return $out;
 	}
 } // end class LV_Admin_Settings

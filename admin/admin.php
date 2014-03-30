@@ -34,6 +34,7 @@ class LV_Admin {
 		$page = add_submenu_page('link-manager.php', 'About LinkView', 'About LinkView', 'manage_links', 'lv_admin_about', array(&$this, 'show_about_page'));
 		add_action('admin_print_scripts-'.$page, array(&$this, 'embed_about_scripts'));
 		$page = add_submenu_page('options-general.php', 'LinkView Settings', 'LinkView', 'manage_options', 'lv_admin_options', array(&$this, 'show_settings_page'));
+		add_action('admin_print_scripts-'.$page, array(&$this, 'embed_settings_scripts'));
 	}
 
 	public function show_about_page() {
@@ -48,6 +49,10 @@ class LV_Admin {
 
 	public function embed_about_scripts() {
 		wp_enqueue_style('linkview_admin_about', LV_URL.'admin/css/admin_about.css');
+	}
+
+	public function embed_settings_scripts() {
+		wp_enqueue_style('linkview_admin_settings', LV_URL.'admin/css/admin_settings.css');
 	}
 } // end class LV_Admin
 ?>

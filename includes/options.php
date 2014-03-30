@@ -31,22 +31,22 @@ class LV_Options {
 			                                     e.g. .lv-link-list-suffix, .lv-item-name-suffix.<br /><br />
 			                                     Below you can find some working examples:<br />
 			                                     <code>.lv-link {<br />
-			                                     &nbsp;&nbsp;&nbsp;&nbsp;margin-bottom: 15px;<br />
+			                                     &nbsp;&nbsp;&nbsp;margin-bottom: 15px;<br />
 			                                     }<br />
 			                                     .lv-item-image img {<br />
-			                                     &nbsp;&nbsp;&nbsp;&nbsp;-webkit-border-radius: 9px 9px 9px 9px;<br />
-			                                     &nbsp;&nbsp;&nbsp;&nbsp;-moz-border-radius: 9px 9px 9px 9px;<br />
-			                                     &nbsp;&nbsp;&nbsp;&nbsp;border-radius: 9px 9px 9px 9px;<br />
+			                                     &nbsp;&nbsp;&nbsp;-webkit-border-radius: 9px;<br />
+			                                     &nbsp;&nbsp;&nbsp;-moz-border-radius: 9px;<br />
+			                                     &nbsp;&nbsp;&nbsp;border-radius: 9px;<br />
 			                                     }<br />
 			                                     .lv-item-image-detail img {<br />
-			                                     &nbsp;&nbsp;&nbsp;&nbsp;max-width: 250px;<br />
+			                                     &nbsp;&nbsp;&nbsp;max-width: 250px;<br />
 			                                     }<br />
 			                                     .lv-section-left-detail {<br />
-			                                     &nbsp;&nbsp;&nbsp;&nbsp;float: left;<br />
+			                                     &nbsp;&nbsp;&nbsp;float: left;<br />
 			                                     }<br />
 			                                     .lv-section-right-detail {<br />
-			                                     &nbsp;&nbsp;&nbsp;&nbsp;float: right;<br />
-			                                     &nbsp;&nbsp;&nbsp;&nbsp;margin-left: 15px;<br />
+			                                     &nbsp;&nbsp;&nbsp;float: right;<br />
+			                                     &nbsp;&nbsp;&nbsp;margin-left: 15px;<br />
 			                                     }</code>')
 		);
 	}
