@@ -3,6 +3,7 @@ if(!defined('WPINC')) {
 	die;
 }
 
+require_once(LV_PATH.'includes/sc_linkview.php');
 require_once(LV_PATH.'includes/options.php');
 
 // This class handles all data for the admin about page
@@ -85,7 +86,7 @@ class LV_Admin_About {
 		foreach($this->tabs as $tab => $name){
 			$class = ($tab == $current) ? ' nav-tab-active' : '';
 			$out .= '
-				<a class="nav-tab'.$class.'" href="?page=lv_admin_main&amp;tab='.$tab.'">'.$name.'</a>';
+				<a class="nav-tab'.$class.'" href="?page=lv_admin_about&amp;tab='.$tab.'">'.$name.'</a>';
 		}
 		$out .= '
 			</h3></div>';
@@ -218,5 +219,5 @@ class LV_Admin_About {
 		}
 		return $out;
 	}
-}
+} // end class LV_Admin_About
 ?>

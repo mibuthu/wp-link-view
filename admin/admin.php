@@ -3,7 +3,6 @@ if(!defined('WPINC')) {
 	die;
 }
 
-require_once(LV_PATH.'includes/sc_linkview.php');
 require_once(LV_PATH.'includes/options.php');
 
 // This class handles all available admin pages
@@ -11,7 +10,8 @@ class LV_Admin {
 	private static $instance;
 
 	private function __construct() {
-		// nothing to do
+		// option must be initialized (required for saving changed options in admin-settings)
+		lv_options::get_instance();
 	}
 
 	public static function &get_instance() {
@@ -31,7 +31,7 @@ class LV_Admin {
 	 * Add and register all admin pages in the admin menu
 	 */
 	public function register_pages() {
-		$page = add_submenu_page('link-manager.php', 'About LinkView', 'About LinkView', 'manage_links', 'lv_admin_main', array(&$this, 'show_about_page'));
+		$page = add_submenu_page('link-manager.php', 'About LinkView', 'About LinkView', 'manage_links', 'lv_admin_about', array(&$this, 'show_about_page'));
 		add_action('admin_print_scripts-'.$page, array(&$this, 'embed_about_scripts'));
 	}
 
