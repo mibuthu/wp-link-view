@@ -38,58 +38,64 @@ class LV_Admin_About {
 		$out ='
 			<div class="wrap nosubsub">
 			<div id="icon-link-manager" class="icon32"><br /></div><h2>About LinkView</h2></div>
-			<h3 class="lv-headline">Usage</h3>
-			<table>
-			<tr>
-				<td class="lv-usage-caption"><h4>LinkView Shortcode:</h4></td>
-				<td class="lv-usage-content">
-					With the shortcode <code>[linkview]</code> you can use LinkView in posts or pages.<br />
-					Shortcodes are snippets of pseudo code that are placed in blog posts or pages to easily render HTML output.<br />
-					Attributes are used to modify the shortcode. The available attributes for <code>[linkview]</code> are listed below.
-				</td>
-			</tr>
-			<tr>
-				<td class="lv-usage-caption"><h4>LinkView Widget:</h4></td>
-				<td class="lv-usage-content">
-					With the LinkView Widget you can use LinkView in sidebars.<br />
-					Goto Appearance -> Widgets and add the "LinkView"-Widget in one of your sidebars.<br />
-					You can enter a title for the widget and add all the required attributes in the "Shortcode attributes" field.<br />
-					You can use all available attributes from the shortcode for the widget too.<br />
-					Press "Save" to enable the changes.
-				</td>
-			</tr>
-			</table>';
+			<h3>Help and Instructions</h3>
+			<h4>Create a page or post with links</h4>
+			<div class="help-content"
+				<p>"LinkView" works by using a "shortcode" in a page or post.</p>
+				<p>Shortcodes are snippets of pseudo code that are placed in blog posts or pages to easily render HTML output.<br />
+				To create a link page or post add the shortcode <code>[linkview]</code> in the text field of any page or post.</p>
+				<p>There are many shortcode attributes available which let you change the listed links and their styling.<br />
+				To get the correct result you can combine as much attributes as you want.<br />
+				E.g. the shortcode including the attributes "cat_name" and "show_img" would look like this:<br />
+				<code>[linkview cat_name=Sponsors show_img=1]</code><br />
+				Below you can find a list with all supported attributes, their descriptions and available options.</p>
+			</div>
+			<h4>LinkView Widget</h4>
+			<div class="help-content">
+				With the LinkView Widget you can add links in sidebars and widget areas.<br />
+				Goto <a href="'.admin_url('widgets.php').'">Appearance &rarr; Widgets</a> and add the "LinkView"-Widget in one of your sidebars.<br />
+				You can enter a title for the widget and add all the required shortcode attributes in the appropriate field.<br />
+				You can use all available shortcode attributes of the linkview-shortcode in the widget too.<br />
+				Press "Save" to activate the changes.
+			</div>
+			<h4>Settings</h4>
+			<div class="help-content">
+				In the linkview settings page, available under <a href="'.admin_url('options-general.php?page=lv_admin_options').'">Settings &rarr; LinkView</a>, you can find some options to modify the plugin.
+			</div>
+			<h3>About</h3>
+			<div class="help-content">
+				<p>This plugin is developed by mibuthu, you can find more information about the plugin on the <a href="http://wordpress.org/plugins/link-view">wordpress plugin site</a>.</p>
+				<p>If you like the plugin please give me a good rating on the <a href="http://wordpress.org/support/view/plugin-reviews/link-view">wordpress plugin review site</a>.<br />
+				<p>I would also be happy to get a small <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2" target="_blank">donation</a>.</p>
+			</div>';
 			$out .= $this->html_atts();
 		echo $out;
 	}
 
 	private function html_atts() {
 		$out = '
-			<h3 class="lv-headline">Available Shortcode Attributes</h3>
-			<div>
-				To get the correct result you can combine as much attributes as you want.<br />
-				The <code>[linkview]</code> shortcode including the attributes "cat_name" and "show_img" looks like this:
-				<p><code>[linkview cat_name=Sponsors show_img=1]</code></p>
-				<p>Below is a list of all the supported attributes with their descriptions and available options:</p>';
-		$out .= '<h4 class="lv-section-caption">General:</h4>';
+			<h3>Shortcode Attributes</h3>
+			<div class="help-content">
+				In the following tables you can find all available shortcode attributes for <code>[linkview]</code>:
+				';
+		$out .= '<h4 class="atts-section-title">General:</h4>';
 		$out .= $this->html_atts_table('general');
-		$out .= '<h4 class="lv-section-caption">Link List:</h4>';
+		$out .= '<h4 class="atts-section-title">Link List:</h4>';
 		$out .= $this->html_atts_table('list');
-		$out .= '<h4 class="lv-section-caption">Link Slider:</h4>';
+		$out .= '<h4 class="atts-section-title">Link Slider:</h4>';
 		$out .= $this->html_atts_table('slider');
-		$out .= '
-			</div>';
+		$out .= '</div>';
 		return $out;
 	}
 
 	private function html_atts_table($section) {
 		$out = '
-			<table class="lv-atts-table">
+			<table class="atts-table">
 				<tr>
-					<th class="lv-atts-table-name">Attribute name</th>
-					<th class="lv-atts-table-options">Value options</th>
-					<th class="lv-atts-table-default">Default value</th>
-					<th class="lv-atts-table-desc">Description</th>
+					<th class="atts-table-name">Attribute name</th>
+					<th class="atts-table-options">Value options</th>
+					<th class="atts-table-default">Default value</th>
+					<th class="atts-table-desc">Description</th>
 				</tr>';
 		$atts = $this->shortcode->get_atts($section);
 		foreach($atts as $aname => $a) {
@@ -102,7 +108,8 @@ class LV_Admin_About {
 				</tr>';
 		}
 		$out .= '
-			</table>';
+			</table>
+			';
 		return $out;
 	}
 } // end class LV_Admin_About
