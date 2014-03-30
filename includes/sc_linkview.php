@@ -3,7 +3,6 @@ if(!defined('WPINC')) {
 	die;
 }
 
-
 require_once(LV_PATH.'includes/options.php');
 
 // This class handles the shortcode [linkview]
@@ -232,8 +231,8 @@ class SC_Linkview {
 		return $out;
 	}
 
-	public function get_atts($section=NULL) {
-		if(NULL == $section) {
+	public function get_atts($section=null) {
+		if(null == $section) {
 			return $this->atts;
 		}
 		else {
