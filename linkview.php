@@ -80,8 +80,8 @@ class LinkView {
 
 	public function widget_init() {
 		// Widget "linkview"
-		require_once('includes/linkview_widget.php');
-		return register_widget('linkview_widget');
+		require_once('includes/widget.php');
+		return register_widget('LV_Widget');
 	}
 
 	public function frontpage_init() {
