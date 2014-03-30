@@ -11,7 +11,7 @@ class LV_Admin_Settings {
 	private $options;
 
 	private function __construct() {
-		$this->options = &lv_options::get_instance();
+		$this->options = &LV_Options::get_instance();
 	}
 
 	public static function &get_instance() {

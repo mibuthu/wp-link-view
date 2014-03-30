@@ -11,7 +11,7 @@ class LV_Admin {
 
 	private function __construct() {
 		// option must be initialized (required for saving changed options in admin-settings)
-		lv_options::get_instance();
+		LV_Options::get_instance();
 	}
 
 	public static function &get_instance() {

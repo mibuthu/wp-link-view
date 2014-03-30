@@ -21,7 +21,7 @@ class sc_linkview {
 	}
 
 	private function __construct() {
-		$this->options = &lv_options::get_instance();
+		$this->options = &LV_Options::get_instance();
 
 		// Define all available attributes
 		$this->atts = array(
