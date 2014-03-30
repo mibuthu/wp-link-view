@@ -73,7 +73,7 @@ class LinkView {
 	public function shortcode_linkview($atts, $content='') {
 		if(null == $this->shortcode) {
 			require_once('includes/sc_linkview.php');
-			$this->shortcode = sc_linkview::get_instance();
+			$this->shortcode = SC_Linkview::get_instance();
 		}
 		return $this->shortcode->show_html($atts, $content);
 	}

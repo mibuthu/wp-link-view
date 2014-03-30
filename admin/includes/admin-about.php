@@ -15,7 +15,7 @@ class LV_Admin_About {
 
 	private function __construct() {
 		$this->options = &LV_Options::get_instance();
-		$this->shortcode = &sc_linkview::get_instance();
+		$this->shortcode = &SC_Linkview::get_instance();
 		$this->tabs = array('attributes' => 'Attributes',
 		                    'css'        => 'CSS-Styles');
 	}
