@@ -11,13 +11,10 @@ class LV_Admin_About {
 	private static $instance;
 	private $options;
 	private $shortcode;
-	private $tabs;
 
 	private function __construct() {
 		$this->options = &LV_Options::get_instance();
 		$this->shortcode = &SC_Linkview::get_instance();
-		$this->tabs = array('attributes' => 'Attributes',
-		                    'css'        => 'CSS-Styles');
 	}
 
 	public static function &get_instance() {
