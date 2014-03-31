@@ -43,10 +43,12 @@ Yes, you can create an instance of the "SC_Linkview" class which located in "php
 
 == Screenshots ==
 
-1. Admin page with the description of all available attributes
-2. Admin page: CSS-Styles option
-3. Linkview Widget
-4. Simple example page with a small link list
+1. Admin about page
+2. Available shortcode attributes - Part 1
+3. Available shortcode attributes - Part 2
+4. Admin settings page
+5. Linkview Widget
+6. Simple example page with a small link list
 
 
 == Changelog ==
