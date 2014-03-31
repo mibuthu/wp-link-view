@@ -1,0 +1,16 @@
+.form-table th, .form-table td {
+	vertical-align: top;
+	padding: 15px 10px 15px 0;
+}
+
+#lv_css {
+	min-width: 280px;
+}
+
+textarea {
+	font-size: 12px;
+}
+
+code {
+	font-size: 12px;
+}

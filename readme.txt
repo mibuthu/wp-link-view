@@ -3,8 +3,8 @@ Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css
 Requires at least: 3.3
-Tested up to: 3.7.1
-Stable tag: 0.4.4
+Tested up to: 3.8.1
+Stable tag: 0.5.0
 Plugin URI: http://wordpress.org/extend/plugins/link-view
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -38,18 +38,27 @@ Yes, a widget especially for the use of the [linkview] shortcode is included in 
 Yes, since version 0.3.0 you can use as much sliders as you want on one site.
 
 = Can I call the shortcode directly via php e.g. for my own template, theme or plugin? =
-Yes, you can create an instance of the "sc_linkview" class which located in "php/sc_linkview.php" in the plugin folder and call the function show_html($atts).With $atts you can specify all the shortcode attributes you require. Another possibility would be to call the wordpress function "do_shortcode()".
+Yes, you can create an instance of the "SC_Linkview" class which located in "php/sc_linkview.php" in the plugin folder and call the function show_html($atts).With $atts you can specify all the shortcode attributes you require. Another possibility would be to call the wordpress function "do_shortcode()".
 
 
 == Screenshots ==
 
-1. Admin page with the description of all available attributes
-2. Admin page: CSS-Styles option
-3. Linkview Widget
-4. Simple example page with a small link list
+1. Admin about page
+2. Available shortcode attributes - Part 1
+3. Available shortcode attributes - Part 2
+4. Admin settings page
+5. Linkview Widget
+6. Simple example page with a small link list
 
 
 == Changelog ==
+
+= 0.5.0 (2014-03-31) =
+
+* changed plugin dir structure
+* some internal code changes
+* splitted admin page in about and settings page
+* some css improvements
 
 = 0.4.4 (2013-11-11) =
 
