@@ -42,7 +42,7 @@ class LV_Admin_Settings {
 			<form method="post" action="options.php">
 				';
 		ob_start();
-		settings_fields('lv_css');
+		settings_fields('lv_options');
 		$out .= ob_get_contents();
 		ob_end_clean();
 		$out .= '

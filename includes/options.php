@@ -20,8 +20,7 @@ class LV_Options {
 	private function __construct() {
 		$this->options = array(
 
-			'lv_css'      => array('section' => 'css',
-			                       'type'    => 'textarea',
+			'lv_css'      => array('type'    => 'textarea',
 			                       'std_val' => '',
 			                       'label'   => 'CSS-code for linkview',
 			                       'desc'    => 'With this option you can specify CSS-code for the links displayed by the linkview shortcode or widget.<br />
@@ -57,7 +56,7 @@ class LV_Options {
 
 	public function register() {
 		foreach($this->options as $oname => $o) {
-			register_setting('lv_'.$o['section'], $oname);
+			register_setting('lv_options', $oname);
 		}
 	}
 
