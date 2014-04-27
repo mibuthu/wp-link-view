@@ -28,7 +28,7 @@ class LV_Admin_About {
 	// show the admin about page
 	public function show_page() {
 		// check required privilegs
-		if(!current_user_can('manage_links')) {
+		if(!current_user_can($this->options->get('lv_req_cap'))) {
 			wp_die(__('You do not have sufficient permissions to access this page.'));
 		}
 		// create content

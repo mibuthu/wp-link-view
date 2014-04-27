@@ -73,6 +73,9 @@ class LV_Admin_Settings {
 			$out .= '</th>
 					<td>';
 			switch($o['type']) {
+				case 'radio':
+					$out .= $this->show_radio($oname, $this->options->get('lv_req_cap'), $o['caption']);
+					break;
 				case 'textarea':
 					$out .= $this->show_textarea($oname, $this->options->get($oname));
 					break;
@@ -82,6 +85,23 @@ class LV_Admin_Settings {
 					<td class="description">'.$o['desc'].'</td>
 				</tr>';
 		}
+		return $out;
+	}
+
+	private function show_radio($name, $value, $caption, $disabled=false) {
+		$out = '
+							<fieldset>';
+		foreach($caption as $okey => $ocaption) {
+			$checked = ($value === $okey) ? 'checked="checked" ' : '';
+			$out .= '
+								<label title="'.$ocaption.'">
+									<input type="radio" '.$checked.'value="'.$okey.'" name="'.$name.'">
+									<span>'.$ocaption.'</span>
+								</label>
+								<br />';
+		}
+		$out .= '
+							</fieldset>';
 		return $out;
 	}
 
