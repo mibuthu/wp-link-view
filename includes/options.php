@@ -20,8 +20,14 @@ class LV_Options {
 	private function __construct() {
 		$this->options = array(
 
-			'lv_css'      => array('section' => 'css',
-			                       'type'    => 'textarea',
+			'lv_req_cap' => array('type'    => 'radio',
+			                      'std_val' => 'manage_links',
+			                      'label'   => __('Required capabilities to show LinkView About page'),
+			                      'caption' => array('manage_links' => 'manage_links (Standard)', 'edit_pages' => 'edit_pages', 'edit_posts' => 'edit_posts'),
+			                      'desc'    => __('With this option you can specify the required capabilities to show the LinkView About page.<br />
+			                                       (see <a href="http://codex.wordpress.org/Roles_and_Capabilities">WP Codex</a> for more infos).')),
+
+			'lv_css'      => array('type'    => 'textarea',
 			                       'std_val' => '',
 			                       'label'   => 'CSS-code for linkview',
 			                       'desc'    => 'With this option you can specify CSS-code for the links displayed by the linkview shortcode or widget.<br />
@@ -57,7 +63,7 @@ class LV_Options {
 
 	public function register() {
 		foreach($this->options as $oname => $o) {
-			register_setting('lv_'.$o['section'], $oname);
+			register_setting('lv_options', $oname);
 		}
 	}
 
