@@ -22,9 +22,9 @@ class LV_Options {
 
 			'lv_req_cap' => array('type'    => 'radio',
 			                      'std_val' => 'manage_links',
-			                      'label'   => __('Required capabilities to show linkview about page'),
-			                      'caption' => array('manage_links' => 'manage_links', 'edit_pages' => 'edit_pages', 'edit_posts' => 'edit_posts'),
-			                      'desc'    => __('With this option you can specify the required capabilities to show the linkview about page.<br />
+			                      'label'   => __('Required capabilities to show LinkView About page'),
+			                      'caption' => array('manage_links' => 'manage_links (Standard)', 'edit_pages' => 'edit_pages', 'edit_posts' => 'edit_posts'),
+			                      'desc'    => __('With this option you can specify the required capabilities to show the LinkView About page.<br />
 			                                       (see <a href="http://codex.wordpress.org/Roles_and_Capabilities">WP Codex</a> for more infos).')),
 
 			'lv_css'      => array('type'    => 'textarea',
