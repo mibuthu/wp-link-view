@@ -31,7 +31,7 @@ class LV_Options {
 			                       'std_val' => 'editor',
 			                       'label'   => __('Required role to manage links'),
 			                       'caption' => array('editor' => 'Editor (Wordpress-Standard)', 'author' => 'Author', 'contributor' => 'Contributor', 'subscriber' => 'Subscriber'),
-			                       'desc'    => __('With this option you can overwrite the wordpress default required role to manage links (Capability: "manage_links").<br />
+			                       'desc'    => __('With this option you can overwrite the wordpress default minimum required role to manage links (Capability: "manage_links").<br />
 			                                       (see <a href="http://codex.wordpress.org/Roles_and_Capabilities">WordPress Codex</a> for more infos).<br />
 			                                       Please not that this option also affects the viewing the LinkView About page if the required capabilities are set to "manage_links".<br />')),
 
