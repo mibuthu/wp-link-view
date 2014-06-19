@@ -20,12 +20,20 @@ class LV_Options {
 	private function __construct() {
 		$this->options = array(
 
-			'lv_req_cap' => array('type'    => 'radio',
-			                      'std_val' => 'manage_links',
-			                      'label'   => __('Required capabilities to show LinkView About page'),
-			                      'caption' => array('manage_links' => 'manage_links (Standard)', 'edit_pages' => 'edit_pages', 'edit_posts' => 'edit_posts'),
-			                      'desc'    => __('With this option you can specify the required capabilities to show the LinkView About page.<br />
-			                                       (see <a href="http://codex.wordpress.org/Roles_and_Capabilities">WP Codex</a> for more infos).')),
+			'lv_req_cap'  => array('type'    => 'radio',
+			                       'std_val' => 'manage_links',
+			                       'label'   => __('Required capabilities to show LinkView About page'),
+			                       'caption' => array('manage_links' => 'manage_links (Standard)', 'edit_pages' => 'edit_pages', 'edit_posts' => 'edit_posts'),
+			                       'desc'    => __('With this option you can specify the required capabilities to show the LinkView About page.<br />
+			                                       (see <a href="http://codex.wordpress.org/Roles_and_Capabilities">WordPress Codex</a> for more infos).')),
+
+			'lv_ml_role'  => array('type'    => 'radio',
+			                       'std_val' => 'editor',
+			                       'label'   => __('Required role to manage links'),
+			                       'caption' => array('editor' => 'Editor (Wordpress-Standard)', 'author' => 'Author', 'contributor' => 'Contributor', 'subscriber' => 'Subscriber'),
+			                       'desc'    => __('With this option you can overwrite the wordpress default minimum required role to manage links (Capability: "manage_links").<br />
+			                                       (see <a href="http://codex.wordpress.org/Roles_and_Capabilities">WordPress Codex</a> for more infos).<br />
+			                                       Please not that this option also affects the viewing the LinkView About page if the required capabilities are set to "manage_links".<br />')),
 
 			'lv_css'      => array('type'    => 'textarea',
 			                       'std_val' => '',
@@ -59,6 +67,7 @@ class LV_Options {
 
 	public function init() {
 		add_action('admin_init', array(&$this, 'register'));
+		add_filter('pre_update_option_lv_ml_role', array(&$this, 'update_manage_links_role'));
 	}
 
 	public function register() {
@@ -74,6 +83,29 @@ class LV_Options {
 		else {
 			return null;
 		}
+	}
+
+	public function update_manage_links_role($new_value, $old_value=null) {
+		global $wp_roles;
+		switch($new_value) {
+			case 'subscriber':
+				$wp_roles->add_cap('subscriber', 'manage_links');
+			case 'contributor':
+				$wp_roles->add_cap('contributor', 'manage_links');
+			case 'author':
+				$wp_roles->add_cap('author', 'manage_links');
+				break;
+		}
+		switch($new_value) {
+			case 'editor':
+				$wp_roles->remove_cap('author', 'manage_links');
+			case 'author':
+				$wp_roles->remove_cap('contributor', 'manage_links');
+			case 'contributor':
+				$wp_roles->remove_cap('subscriber', 'manage_links');
+				break;
+		}
+		return $new_value;
 	}
 } // end of class LV_Options
 

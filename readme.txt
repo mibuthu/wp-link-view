@@ -3,8 +3,8 @@ Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css
 Requires at least: 3.3
-Tested up to: 3.9
-Stable tag: 0.5.1
+Tested up to: 3.9.1
+Stable tag: 0.5.2
 Plugin URI: http://wordpress.org/extend/plugins/link-view
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,10 +14,16 @@ Display a link-list or link-slider in a post or page by using a shortcode.
 
 == Description ==
 
-The purpose of this plugin is to to show the wordpress integrated links in a list or a slider by using a shortcode.
-It is also possible to include the images. Use the shortcode [linkview] to add the Links/Blogroll in your site.
-A detailed description of all available shortcode-attributes to modify the output can be found on the admin page under Links -> Link View.
-There is also a widget available where all attributes of the linkview shortcode can be set.
+The purpose of this plugin is to to show the wordpress integrated links in a list or a slider by using a shortcode or a widget.
+
+= Current Features =
+* the shortcode [linkview] can be used to add the links in a post or page
+* the widget "LinkView" can be used to add links in a sidebar
+* the links can be displayed in a list or in a slider
+* there are many options available to adjust the output of the links (see shortcode options in the "About LinkView" page)
+* the image of the link can also be displayed
+* option to set additional css styles for the link-lists and link-sliders
+* the required user roles to edit links can be adjusted in the settings page
 
 If you want to follow the development status have a look at the [git-repository on github](https://github.com/mibuthu/wp-linkview "wp-linkview git-repository").
 
@@ -52,6 +58,9 @@ Yes, you can create an instance of the "SC_Linkview" class which located in "php
 
 
 == Changelog ==
+
+= 0.5.2 (2014-06-19) =
+* added option to set required user role to manage links
 
 = 0.5.1 (2014-04-27) =
 * added option to set required capabilities to view LinkView-About page
