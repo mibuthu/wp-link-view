@@ -59,6 +59,9 @@ Yes, you can create an instance of the "SC_Linkview" class which located in "php
 
 == Changelog ==
 
+= 0.5.2 (2014-06-19) =
+* added option to set required user role to manage links
+
 = 0.5.1 (2014-04-27) =
 * added option to set required capabilities to view LinkView-About page
 * some small changes in option handling
