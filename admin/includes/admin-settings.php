@@ -74,7 +74,7 @@ class LV_Admin_Settings {
 					<td>';
 			switch($o['type']) {
 				case 'radio':
-					$out .= $this->show_radio($oname, $this->options->get('lv_req_cap'), $o['caption']);
+					$out .= $this->show_radio($oname, $this->options->get($oname), $o['caption']);
 					break;
 				case 'textarea':
 					$out .= $this->show_textarea($oname, $this->options->get($oname));
