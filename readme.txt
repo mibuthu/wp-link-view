@@ -3,8 +3,8 @@ Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css
 Requires at least: 3.3
-Tested up to: 3.9.1
-Stable tag: 0.5.2
+Tested up to: 4.0
+Stable tag: 0.6.0
 Plugin URI: http://wordpress.org/extend/plugins/link-view
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -58,6 +58,10 @@ Yes, you can create an instance of the "SC_Linkview" class which located in "php
 
 
 == Changelog ==
+
+= 0.6.0 (2014-10-17) =
+* added shortcode attribute to set multiple columns for categories
+* added wrapper div around full shortcode content
 
 = 0.5.2 (2014-06-19) =
 * added option to set required user role to manage links

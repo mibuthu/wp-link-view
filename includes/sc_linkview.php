@@ -127,6 +127,14 @@ class SC_Linkview {
 			                                        The standard value is "std", this means the standard type which is set in your theme will be used. Set one of the other values to overwrite this standard.<br />
 			                                        A good example for the usage is to set the value to "none" for an image link list. The list symbols will be hidden which often looks better when images are used.'),
 
+			'cat_columns'    => array('section' => 'list',
+			                          'val'     => 'Number',
+			                          'std_val' => '1',
+			                          'desc'    => __('This attribute sets the number of columns for the displayed categories in list view.<br />
+			                                           The standard value is "1" to display 1 column only (a simple list).<br />
+			                                           If you specify a number greater than 1 the categories will be displayed in multiple columns according to the given value.<br />
+			                                           If you have multiple columns it is recommended to define a fixed with for the categories and links. This width must be set manually e.g. via the css entry: <code>.lv-multi-column { width: 32%; }')),
+
 			'slider_width'   => array('section' => 'slider',
 			                          'val'     => 'Number',
 			                          'std_val' => '0',
@@ -188,14 +196,34 @@ class SC_Linkview {
 		if(!$this->css_printed) {
 			$out .= '
 				<style type="text/css">
+					.linkview { overflow:auto; }
 					.lv-slider ul, .lv-slider li { margin:0; padding:0; list-style-type:none; list-style-image:none; }
 					.lv-slider li { overflow:hidden; text-align:center; }
 					.lv-slider img { max-width:100%; }
+					.lv-row { overflow:auto; }
+					.lv-multi-column { float:left; }
 					'.$this->options->get('lv_css').'
 				</style>';
 			$this->css_printed = true;
 		}
+		// wrapper div
+		$out .= '
+				<div class="linkview">';
+		// prepare for multiple columns for categories and column automatic feature
+		$cat_multicolumn = (is_int((int)$a['cat_columns']) && 1 < $a['cat_columns']) ? true : false;
+		$class_cat_multicolumn = $cat_multicolumn ? ' lv-multi-column' : '';
+		$cat_column = 0;
+		// go through each category
 		foreach($categories as $cat) {
+			// cat multicolumn handling
+			if($cat_multicolumn) {
+				$cat_column++;
+				if(1 == $cat_column) {   // first column
+					$out .= '
+					<div class="lv-row">';
+				}
+			}
+
 			// set link order
 			if('link_id' !== $a['link_orderby'] && 'url' !== $a['link_orderby'] && 'owner' !== $a['link_orderby'] && 'rating' !== $a['link_orderby']
 					&& 'visible' !== $a['link_orderby'] && 'length' !== $a['link_orderby'] && 'rand' !== $a['link_orderby']) {
@@ -214,7 +242,7 @@ class SC_Linkview {
 			// generate output
 			if(!empty($links)) {
 				$out .='
-					<div class="lv-category'.$a['class_suffix'].'">';
+					<div class="lv-category'.$a['class_suffix'].$class_cat_multicolumn.'" style="overflow:hidden">';
 				$out .= $this->html_category($cat, $a);
 				$list_id = $this->get_new_list_id();
 				$slider_size = array(0, 0);
@@ -227,7 +255,16 @@ class SC_Linkview {
 				$out .= '
 					</div>';
 			}
+			// cat multicolumn handling
+			if($cat_multicolumn && $cat_column == $a['cat_columns']) {   // last column
+				$cat_column = 0;
+				$out .= '
+					</div>';
+			}
 		}
+		// wrapper div
+		$out .= '
+				</div>';
 		return $out;
 	}
 
