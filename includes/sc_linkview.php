@@ -188,6 +188,7 @@ class SC_Linkview {
 		if(!$this->css_printed) {
 			$out .= '
 				<style type="text/css">
+					.linkview { overflow:auto; }
 					.lv-slider ul, .lv-slider li { margin:0; padding:0; list-style-type:none; list-style-image:none; }
 					.lv-slider li { overflow:hidden; text-align:center; }
 					.lv-slider img { max-width:100%; }
@@ -195,6 +196,9 @@ class SC_Linkview {
 				</style>';
 			$this->css_printed = true;
 		}
+		// wrapper div
+		$out .= '
+				<div class="linkview">';
 		foreach($categories as $cat) {
 			// set link order
 			if('link_id' !== $a['link_orderby'] && 'url' !== $a['link_orderby'] && 'owner' !== $a['link_orderby'] && 'rating' !== $a['link_orderby']
@@ -228,6 +232,9 @@ class SC_Linkview {
 					</div>';
 			}
 		}
+		// wrapper div
+		$out .= '
+				</div>';
 		return $out;
 	}
 
