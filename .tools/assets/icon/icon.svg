@@ -15,9 +15,9 @@
    version="1.1"
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="icon.svg"
-   inkscape:export-filename="/home/zeus/mike/workspace/wp-linkview/.tools/assets/icon/icon-128x128.png"
-   inkscape:export-xdpi="45"
-   inkscape:export-ydpi="45">
+   inkscape:export-filename="/home/zeus/mike/workspace/wp-linkview/.tools/assets/icon/icon-256x256.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -28,7 +28,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
-     inkscape:cx="97.038162"
+     inkscape:cx="27.395305"
      inkscape:cy="122.09328"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -58,66 +58,66 @@
     <rect
        style="fill:#808080;fill-opacity:1;stroke:none"
        id="rect2985"
-       width="34.285713"
-       height="35.008263"
-       x="18.803574"
-       y="822.04071"
-       rx="14" />
+       width="32.750072"
+       height="31.28138"
+       x="7.9107175"
+       y="832.93359"
+       rx="13" />
     <rect
        style="fill:#808080;fill-opacity:1;stroke:none"
        id="rect2985-2"
-       width="34.285713"
-       height="35.008263"
-       x="19.875"
-       y="878.58563"
-       rx="14" />
+       width="32.750072"
+       height="31.28138"
+       x="8.9341545"
+       y="883.45892"
+       rx="13" />
     <rect
        style="fill:#808080;fill-opacity:1;stroke:none"
        id="rect2985-8"
-       width="34.285713"
-       height="35.008263"
-       x="19.875"
-       y="935.13049"
-       rx="14" />
+       width="32.750072"
+       height="31.28138"
+       x="8.9341545"
+       y="933.98413"
+       rx="13" />
     <rect
        style="fill:#808080;fill-opacity:1;stroke:none"
        id="rect2985-9"
-       width="34.285713"
-       height="35.008263"
-       x="19.875"
-       y="991.67535"
-       rx="14" />
+       width="32.750072"
+       height="31.28138"
+       x="8.9341545"
+       y="984.5094"
+       rx="13" />
     <rect
-       style="fill:#808080;fill-opacity:1;stroke:none"
+       style="fill:#919191;fill-opacity:1;stroke:none"
        id="rect2985-4"
-       width="173.21428"
-       height="35.008263"
-       x="62.19643"
-       y="822.04071"
-       rx="11" />
+       width="196.75323"
+       height="31.28138"
+       x="48.690437"
+       y="832.93359"
+       rx="12" />
     <rect
-       style="fill:#808080;fill-opacity:1;stroke:none"
+       style="fill:#919191;fill-opacity:1;stroke:none"
        id="rect2985-4-2"
-       width="173.21428"
-       height="35.008263"
-       x="63.26786"
-       y="991.67535"
-       rx="11" />
+       width="196.75323"
+       height="31.28138"
+       x="49.907475"
+       y="984.5094"
+       rx="12" />
     <rect
-       style="fill:#808080;fill-opacity:1;stroke:none"
+       style="fill:#919191;fill-opacity:1;stroke:none"
        id="rect2985-4-4"
-       width="173.21428"
-       height="35.008263"
-       x="63.26786"
-       y="935.13049"
-       rx="11" />
+       width="196.75323"
+       height="31.28138"
+       x="49.907475"
+       y="933.98413"
+       rx="12" />
     <rect
-       style="fill:#808080;fill-opacity:1;stroke:none"
+       style="fill:#919191;fill-opacity:1;stroke:none"
        id="rect2985-4-3"
-       width="173.21428"
-       height="35.008263"
-       x="63.26786"
-       y="878.58563"
-       rx="11" />
+       width="196.75323"
+       height="31.28138"
+       x="49.907475"
+       y="883.45892"
+       rx="12" />
   </g>
 </svg>
