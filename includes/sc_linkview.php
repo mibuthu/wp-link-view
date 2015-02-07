@@ -34,10 +34,23 @@ class SC_Linkview {
 			                          'desc'    => 'This attribute specifies how the links are displayed. The standard is to show the links in a list.<br />
 			                                        The second option is to show the links in a slider. This normally only make sense if you show the images, but it is also possible to show the link name with this option.'),
 
+			'cat_filter'     => array('section' => 'general',
+			                          'val'     => 'category slugs',
+			                          'std_val' => 'all',
+			                          'desc'    => 'This attribute specifies the link categories of which links are displayed. The standard is "all" or an empty string to show all links.<br />
+			                                        Links defined in categories which doesn´t match cat_filter will not be displayed.<br />
+			                                        The filter is specified via the given category slug. You can specify a single slug to only show links from this category.<br />
+			                                        To show multiple categories you can use OR connection with the delimiter "<strong>&verbar;</strong>" or "<strong>&comma;</strong>".<br />
+			                                        Examples:<br />
+			                                        <code>[linkview cat_filter="social-media"]</code>&hellip; Show all links with category "social-media".<br />
+			                                        <code>[linkview cat_filter="blogroll&comma;social-media"]</code>&hellip; Show all links with category "blogroll" or "social-media".'),
+
 			'cat_name'       => array('section' => 'general',
 			                          'val'     => 'Cat 1,Cat 2,...',
 			                          'std_val' => '',
-			                          'desc'    => 'This attribute specifies which categories should be shown. If you leave the attribute empty all categories are shown.<br />
+			                          'desc'    => 'DEPRECATED! Please do not use this attribute anymore, use "cat_filter" instead. This attribute will be removed in a future version!<br />
+			                                        This attribute is only considered if the attribute "cat_filter" is not set.<br />
+			                                        It specifies which categories should be shown. If you leave the attribute empty all categories are shown.<br />
 			                                        If the cat_name has spaces, simply wrap the name in quotes.<br />
 			                                        Example: <code>[linkview cat_name="Social Media"]</code><br />
 			                                        If you want to define multiple categories you can give them in a list splitted by the delimiter ","<br />
@@ -46,7 +59,7 @@ class SC_Linkview {
 			'exclude_cat'    => array('section' => 'general',
 			                          'val'     => 'Cat 1,Cat 2,...',
 			                          'std_val' => '',
-			                          'desc'    => 'This attribute specifies which categories should be excluded. This attribute is only considered if the attribute "cat_name" is not set.<br />
+			                          'desc'    => 'This attribute specifies which categories should be excluded. This attribute is only considered if the attribute "cat_filter" and "cat_name" is not set.<br />
 			                                        If the cat_name has spaces, simply wrap the name in quotes.<br />
 			                                        If you want to define multiple categories you can give them in a list splitted by the delimiter ","<br />
 			                                        Example: <code>[linkview exclude_cat="Blogroll,Social Media"]</code>'),
@@ -135,6 +148,14 @@ class SC_Linkview {
 			                                           If you specify a number greater than 1 the categories will be displayed in multiple columns according to the given value.<br />
 			                                           If you have multiple columns it is recommended to define a fixed with for the categories and links. This width must be set manually e.g. via the css entry: <code>.lv-multi-column { width: 32%; }')),
 
+			'link_columns'   => array('section' => 'list',
+			                          'val'     => 'Number',
+			                          'std_val' => '1',
+			                          'desc'    => __('This attribute sets the number of columns for the displayed links per category in list view.<br />
+			                                           The standard value is "1" to display 1 column only (a simple list).<br />
+			                                           If you specify a number greater than 1 the categories will be displayed in multiple columns according to the given value.
+			                                           This feature will not work in Microsoft Internet Explorer < version 10.')),
+
 			'slider_width'   => array('section' => 'slider',
 			                          'val'     => 'Number',
 			                          'std_val' => '0',
@@ -209,7 +230,7 @@ class SC_Linkview {
 		// wrapper div
 		$out .= '
 				<div class="linkview">';
-		// prepare for multiple columns for categories and column automatic feature
+		// prepare for category multi columns
 		$cat_multicolumn = (is_int((int)$a['cat_columns']) && 1 < $a['cat_columns']) ? true : false;
 		$class_cat_multicolumn = $cat_multicolumn ? ' lv-multi-column' : '';
 		$cat_column = 0;
@@ -289,7 +310,25 @@ class SC_Linkview {
 
 	private function categories($a) {
 		$catarray = array();
-		if(empty($a['cat_name'])) {
+		if('all' != $a['cat_filter'] || '' == $a['cat_filter']) {
+			str_replace(',', '|', $a['cat_filter']);
+			$catslugs = array_map('trim', explode('|', $a['cat_filter']));
+			foreach($catslugs as $catslug) {
+				if(get_term_by('slug', $catslug, 'link_category')) {
+					$catarray[] = get_term_by('slug', $catslug, 'link_category');
+				}
+			}
+		}
+		elseif(!empty($a['cat_name'])) {   // cat_name is deprecated! Will be removed in one of the next versions.
+			$catnames = array_map('trim', explode(",", $a['cat_name']));
+			foreach($catnames as $catname) {
+				if(get_term_by('name', $catname, 'link_category'))
+				{
+					$catarray[] = get_term_by('name', $catname, 'link_category');
+				}
+			}
+		}
+		else {
 			$catarray = get_terms('link_category', 'orderby=name');
 			if($a['exclude_cat'] != '') {
 				$excludecat = array_map('trim', explode(",", $a['exclude_cat']));
@@ -301,15 +340,6 @@ class SC_Linkview {
 				}
 				$catarray = $diff;
 				unset($diff);
-			}
-		}
-		else {
-			$catnames = array_map('trim', explode(",", $a['cat_name']));
-			foreach($catnames as $catname) {
-				if(get_term_by('name', $catname, 'link_category') != false)
-				{
-					array_push($catarray, get_term_by('name', $catname, 'link_category'));
-				}
 			}
 		}
 		return $catarray;
@@ -358,8 +388,9 @@ class SC_Linkview {
 	}
 
 	private function html_link_list($links, $a, $list_id, $slider_size) {
+		$num_columns = (is_int((int)$a['link_columns']) && 'slider' !== $a['view_type']) ? $a['link_columns'] : 1;
 		$out = '
-					<div id="'.$list_id.'"';
+					<div id="'.$list_id.'" style="column-count:'.$num_columns.'; -moz-column-count:'.$num_columns.'; -webkit-column-count:'.$num_columns.';"';
 		if('slider' === $a['view_type']) {
 			$out .= ' class="lv-slider"';
 		}
