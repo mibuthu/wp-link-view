@@ -3,8 +3,8 @@ Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css
 Requires at least: 3.3
-Tested up to: 4.0
-Stable tag: 0.6.0
+Tested up to: 4.2
+Stable tag: 0.6.1
 Plugin URI: http://wordpress.org/extend/plugins/link-view
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -22,6 +22,7 @@ The purpose of this plugin is to to show the wordpress integrated links in a lis
 * the links can be displayed in a list or in a slider
 * there are many options available to adjust the output of the links (see shortcode options in the "About LinkView" page)
 * the image of the link can also be displayed
+* categories and/or links can be displayed in multicolumn layout
 * option to set additional css styles for the link-lists and link-sliders
 * the required user roles to edit links can be adjusted in the settings page
 
@@ -58,6 +59,11 @@ Yes, you can create an instance of the "SC_Linkview" class which located in "php
 
 
 == Changelog ==
+
+= 0.6.1 (2015-02-07) =
+* added shortcode attribute to set multiple columns for links
+* added shortcode attribute cat_filter which replaces cat_name
+* marked shortcode attribute cat_name as deprecated
 
 = 0.6.0 (2014-10-17) =
 * added shortcode attribute to set multiple columns for categories
