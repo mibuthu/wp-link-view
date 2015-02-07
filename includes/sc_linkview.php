@@ -48,7 +48,7 @@ class SC_Linkview {
 			'cat_name'       => array('section' => 'general',
 			                          'val'     => 'Cat 1,Cat 2,...',
 			                          'std_val' => '',
-			                          'desc'    => 'DEPREACED! Please do not use this attribute anymore, use "cat_filter" instead. This attribute will be removed in a future version!<br />
+			                          'desc'    => 'DEPRECATED! Please do not use this attribute anymore, use "cat_filter" instead. This attribute will be removed in a future version!<br />
 			                                        This attribute is only considered if the attribute "cat_filter" is not set.<br />
 			                                        It specifies which categories should be shown. If you leave the attribute empty all categories are shown.<br />
 			                                        If the cat_name has spaces, simply wrap the name in quotes.<br />
@@ -311,7 +311,7 @@ class SC_Linkview {
 				}
 			}
 		}
-		elseif(!empty($a['cat_name'])) {   // cat_name is depreaced! Will be removed in one of the next versions.
+		elseif(!empty($a['cat_name'])) {   // cat_name is deprecated! Will be removed in one of the next versions.
 			$catnames = array_map('trim', explode(",", $a['cat_name']));
 			foreach($catnames as $catname) {
 				if(get_term_by('name', $catname, 'link_category'))
