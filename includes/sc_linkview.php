@@ -154,7 +154,7 @@ class SC_Linkview {
 			                          'desc'    => __('This attribute sets the number of columns for the displayed links per category in list view.<br />
 			                                           The standard value is "1" to display 1 column only (a simple list).<br />
 			                                           If you specify a number greater than 1 the categories will be displayed in multiple columns according to the given value.
-			                                           This feature will not work for in Microsoft Internet Explorer < version 10.')),
+			                                           This feature will not work in Microsoft Internet Explorer < version 10.')),
 
 			'slider_width'   => array('section' => 'slider',
 			                          'val'     => 'Number',
