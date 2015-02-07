@@ -148,6 +148,14 @@ class SC_Linkview {
 			                                           If you specify a number greater than 1 the categories will be displayed in multiple columns according to the given value.<br />
 			                                           If you have multiple columns it is recommended to define a fixed with for the categories and links. This width must be set manually e.g. via the css entry: <code>.lv-multi-column { width: 32%; }')),
 
+			'link_columns'   => array('section' => 'list',
+			                          'val'     => 'Number',
+			                          'std_val' => '1',
+			                          'desc'    => __('This attribute sets the number of columns for the displayed links per category in list view.<br />
+			                                           The standard value is "1" to display 1 column only (a simple list).<br />
+			                                           If you specify a number greater than 1 the categories will be displayed in multiple columns according to the given value.
+			                                           This feature will not work for in Microsoft Internet Explorer < version 10.')),
+
 			'slider_width'   => array('section' => 'slider',
 			                          'val'     => 'Number',
 			                          'std_val' => '0',
@@ -222,7 +230,7 @@ class SC_Linkview {
 		// wrapper div
 		$out .= '
 				<div class="linkview">';
-		// prepare for multiple columns for categories and column automatic feature
+		// prepare for category multi columns
 		$cat_multicolumn = (is_int((int)$a['cat_columns']) && 1 < $a['cat_columns']) ? true : false;
 		$class_cat_multicolumn = $cat_multicolumn ? ' lv-multi-column' : '';
 		$cat_column = 0;
@@ -380,8 +388,9 @@ class SC_Linkview {
 	}
 
 	private function html_link_list($links, $a, $list_id, $slider_size) {
+		$num_columns = (is_int((int)$a['link_columns']) && 'slider' !== $a['view_type']) ? $a['link_columns'] : 1;
 		$out = '
-					<div id="'.$list_id.'"';
+					<div id="'.$list_id.'" style="column-count:'.$num_columns.'; -moz-column-count:'.$num_columns.'; -webkit-column-count:'.$num_columns.';"';
 		if('slider' === $a['view_type']) {
 			$out .= ' class="lv-slider"';
 		}
