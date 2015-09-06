@@ -1,6 +1,6 @@
 ﻿=== Link View ===
 Contributors: mibuthu
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css
 Requires at least: 3.3
 Tested up to: 4.2

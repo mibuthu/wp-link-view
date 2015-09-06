@@ -63,7 +63,7 @@ class LV_Admin_About {
 			<div class="help-content">
 				<p>This plugin is developed by mibuthu, you can find more information about the plugin on the <a href="http://wordpress.org/plugins/link-view">wordpress plugin site</a>.</p>
 				<p>If you like the plugin please give me a good rating on the <a href="http://wordpress.org/support/view/plugin-reviews/link-view">wordpress plugin review site</a>.<br />
-				<p>I would also be happy to get a small <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W54LNZMWF9KW2" target="_blank">donation</a>.</p>
+				<p>I would also be happy to get a small <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY" target="_blank">donation</a>.</p>
 			</div>';
 			$out .= $this->html_atts();
 		echo $out;
