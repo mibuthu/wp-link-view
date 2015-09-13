@@ -45,3 +45,21 @@ a.donate img {
 .atts-table-default {
 	width: 110px;
 }
+
+.columntype-table {
+	border: 1px solid #aaa;
+	border-collapse: collapse;
+	width: 100%;
+	margin: 0.2em 0 1.2em 0;
+	line-height: 1.6em;
+}
+.columntype-table th {
+	border: 1px solid #aaa;
+	padding: 1px 3px !important;
+	background: #eeeeee;
+}
+.columntype-table td {
+	border: 1px solid #aaa;
+	padding: 1px 4px !important;
+	vertical-align: top;
+}

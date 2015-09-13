@@ -141,12 +141,23 @@ class SC_Linkview {
 			                                        A good example for the usage is to set the value to "none" for an image link list. The list symbols will be hidden which often looks better when images are used.'),
 
 			'cat_columns'    => array('section' => 'list',
+			                          'val'     => 'Number<br />static',
 			                          'val'     => 'Number',
 			                          'std_val' => '1',
-			                          'desc'    => __('This attribute sets the number of columns for the displayed categories in list view.<br />
-			                                           The standard value is "1" to display 1 column only (a simple list).<br />
-			                                           If you specify a number greater than 1 the categories will be displayed in multiple columns according to the given value.<br />
-			                                           If you have multiple columns it is recommended to define a fixed with for the categories and links. This width must be set manually e.g. via the css entry: <code>.lv-multi-column { width: 32%; }')),
+			                          'desc'    => 'This attirbute specifies if and how the categories shall be displayed in multiple columns in list view.<br />
+			                                        There are 3 different types of multiple column layouts available. Each of them has their own advantages and disadvantages.<br />
+			                                        For each type there are options availalbe to adapt the layout to your requirements.<br />
+			                                        Layout types:
+			                                        <small><table class="columntype-table">
+			                                        <tr><th>type</th><th>description</th><th>options</th><th>option values</th><th>default value</th><th>option description</th></tr>
+			                                        <tr><td>Number</td><td>Insert a number to specify a static number of columns. This is a short form of the static type (see below).</td><td>none</td><td></td><td></td></tr>
+			                                        <tr><td>static</td><td>Set a static number of columns. The categories will be arranged in rows.</td><td>num_columns</td><td>number</td><td>3</td><td>Sets the number of columns.</td></tr>
+'
+//			                                        <tr><td>css</td><td>Set a static number of columns. The categories will be arranged in rows.</td><td>num_columns</td><td>number</td><td>3</td><td>Sets the number of columns</td></tr>
+//			                                        <tr><td>masonry</td><td>Set a static number of columns. The categories will be arranged in rows.</td><td colspan="2"><a href="http://masonry.desandro.com/options.html">masonry options</a></td><td></td><td></td></tr>
+.'
+			                                        </table></small>
+			                                        The standard value is "1" to display 1 column only (a simple list).<br />
 
 			'link_columns'   => array('section' => 'list',
 			                          'val'     => 'Number',
@@ -231,15 +242,15 @@ class SC_Linkview {
 		$out .= '
 				<div class="linkview">';
 		// prepare for category multi columns
-		$cat_multicolumn = (is_int((int)$a['cat_columns']) && 1 < $a['cat_columns']) ? true : false;
-		$class_cat_multicolumn = $cat_multicolumn ? ' lv-multi-column' : '';
-		$cat_column = 0;
+		$cat_multicol = $this->get_multicol_settings($a['cat_columns']);
+		$class_cat_multicol = $cat_multicol['enabled'] ? ' lv-multi-column' : '';
+		$cat_col = 0;
 		// go through each category
 		foreach($categories as $cat) {
 			// cat multicolumn handling
-			if($cat_multicolumn) {
-				$cat_column++;
-				if(1 == $cat_column) {   // first column
+			if($cat_multicol['enabled']) {
+				$cat_col++;
+				if(1 == $cat_col) {   // first column
 					$out .= '
 					<div class="lv-row">';
 				}
@@ -263,7 +274,7 @@ class SC_Linkview {
 			// generate output
 			if(!empty($links)) {
 				$out .='
-					<div class="lv-category'.$a['class_suffix'].$class_cat_multicolumn.'" style="overflow:hidden">';
+					<div class="lv-category'.$a['class_suffix'].$class_cat_multicol.'" style="overflow:hidden">';
 				$out .= $this->html_category($cat, $a);
 				$list_id = $this->get_new_list_id();
 				$slider_size = array(0, 0);
@@ -277,8 +288,8 @@ class SC_Linkview {
 					</div>';
 			}
 			// cat multicolumn handling
-			if($cat_multicolumn && $cat_column == $a['cat_columns']) {   // last column
-				$cat_column = 0;
+			if($cat_multicol['enabled'] && $cat_col == $cat_multicol['options']['num_columns']) {   // last column
+				$cat_col = 0;
 				$out .= '
 					</div>';
 			}
@@ -559,6 +570,48 @@ class SC_Linkview {
 			}
 			return ' width='.round($img_width*$scale).' height='.round($img_height*$scale);
 		}
+	}
+
+	private function get_multicol_settings($otext) {
+		// Check if multicolumn is enabled
+		if(1 == $otext) {
+			$ret['enabled'] = false;
+			return $ret;
+		}
+		$ret['enabled'] = true;
+		// Handle special case of giving a number only (short form of static type)
+		if(ctype_digit(strval($otext))) {
+			$ret['type'] = 'static';
+			$ret['options']['num_columns'] = (int)$otext;
+			return $ret;
+		}
+		// Exctract type and options
+		$ret['options'] = array();
+		$oarray = explode("(", $otext);
+		$ret['type'] = $oarray[0];
+		if('static' != $ret['type']) {
+			$ret['type'] = 'static';
+		}
+		if(isset($oarray[1])) {
+			$option_array = explode("|", substr($oarray[1],0,-1));
+			foreach($option_array as $option_text) {
+				$o = explode("=", $option_text);
+				$ret['options'][$o[0]] = $o[1];
+			}
+		}
+		// validate required options and set them if not available
+		switch ($ret['type']) {
+			case 'static':
+				if(!isset($ret['options']['num_columns']) || !ctype_digit(strval($ret['options']['num_columns'])) || 0 >= (int)$ret['options']['num_columns']) {
+					$ret['options']['num_columns'] = 3;
+					// disable multicolumn if num_columns = 1
+					if(1 == (int)$ret['options']['num_columns']) {
+						$ret['enabled'] = false;
+					}
+				}
+				break;
+		}
+		return $ret;
 	}
 
 	private function get_new_list_id() {
