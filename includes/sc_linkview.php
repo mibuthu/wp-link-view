@@ -142,7 +142,6 @@ class SC_Linkview {
 
 			'cat_columns'    => array('section' => 'list',
 			                          'val'     => 'Number<br />static',
-			                          'val'     => 'Number',
 			                          'std_val' => '1',
 			                          'desc'    => 'This attirbute specifies if and how the categories shall be displayed in multiple columns in list view.<br />
 			                                        There are 3 different types of multiple column layouts available. Each of them has their own advantages and disadvantages.<br />
@@ -293,6 +292,11 @@ class SC_Linkview {
 				$out .= '
 					</div>';
 			}
+		}
+		// close last column div if required
+		if(0 != $cat_col) {
+			$out .= '
+					</div>';
 		}
 		// wrapper div
 		$out .= '
