@@ -142,7 +142,7 @@ class SC_Linkview {
 			                                        A good example for the usage is to set the value to "none" for an image link list. The list symbols will be hidden which often looks better when images are used.'),
 
 			'cat_columns'    => array('section' => 'list',
-			                          'val'     => 'Number<br />static',
+			                          'val'     => 'Number<br />static<br />masonry',
 			                          'std_val' => '1',
 			                          'desc'    => 'This attribute specifies if and how the categories shall be displayed in multiple columns in list view.<br />
 			                                        There are 3 different types of multiple column layouts available. Each of them has their own advantages and disadvantages.<br />
@@ -154,8 +154,8 @@ class SC_Linkview {
 			                                        <tr><td>static</td><td>Set a static number of columns. The categories will be arranged in rows.</td><td>num_columns</td><td>number</td><td>3</td><td>Sets the number of columns.</td></tr>
 '
 //			                                        <tr><td>css</td><td>Set a static number of columns. The categories will be arranged in rows.</td><td>num_columns</td><td>number</td><td>3</td><td>Sets the number of columns</td></tr>
-//			                                        <tr><td>masonry</td><td>Set a static number of columns. The categories will be arranged in rows.</td><td colspan="2"><a href="http://masonry.desandro.com/options.html">masonry options</a></td><td></td><td></td></tr>
 .'
+			                                        <tr><td>masonry</td><td>Set a static number of columns. The categories will be arranged in rows.</td><td colspan="2"><a href="http://masonry.desandro.com/options.html">masonry options</a></td><td></td><td></td></tr>
 			                                        </table></small>
 			                                        The standard value is "1" to display 1 column only (a simple list).<br />
 
@@ -244,6 +244,10 @@ class SC_Linkview {
 		$cat_multicol = $this->get_multicol_settings($a['cat_columns']);
 		$class_cat_multicol = $cat_multicol['type'] ? ' lv-multi-column' : '';
 		$cat_col = 0;
+		// prepare for masonry multi columns
+		if('masonry' == $cat_multicol['type']) {
+			$out .= $this->print_mansonry_script($cat_multicol['options']);
+		}
 		// wrapper div
 		$out .= '
 				<div class="linkview" id="lv-sc-id-'.$this->sc_ids.'">';
@@ -595,7 +599,7 @@ class SC_Linkview {
 		$ret['options'] = array();
 		$oarray = explode("(", $otext);
 		$ret['type'] = $oarray[0];
-		if('static' != $ret['type']) {
+		if('static' != $ret['type'] && 'masonry' != $ret['type']) {
 			$ret['type'] = 'static';
 		}
 		if(isset($oarray[1])) {
@@ -615,6 +619,9 @@ class SC_Linkview {
 						$ret['type'] = false;
 					}
 				}
+				break;
+			case 'masonry':
+				// no requirements
 				break;
 		}
 		return $ret;
@@ -642,6 +649,21 @@ class SC_Linkview {
 			});
 		</script>';
 		echo $out;
+	}
+
+	public function print_mansonry_script($option_array) {
+		// prepare options
+		$option_text = 'itemSelector:".lv-category-column",columnWidth:200';
+		foreach($option_array as $oname => $ovalue) {
+			$option_text .= ','.$oname.':'.$ovalue;
+		}
+		return '
+				<script type="text/javascript" src="'.LV_URL.'includes/js/masonry.pkgd.min.js"></script>
+				<script type="text/javascript">
+					jQuery(document).ready( function() {
+						jQuery(".linkview#lv-sc-id-'.$this->sc_ids.'").masonry({'.$option_text.'});
+					});
+				</script>';
 	}
 } // end of class SC_Linkview
 ?>
