@@ -144,7 +144,7 @@ class SC_Linkview {
 			'cat_columns'    => array('section' => 'list',
 			                          'val'     => 'Number<br />static',
 			                          'std_val' => '1',
-			                          'desc'    => 'This attirbute specifies if and how the categories shall be displayed in multiple columns in list view.<br />
+			                          'desc'    => 'This attribute specifies if and how the categories shall be displayed in multiple columns in list view.<br />
 			                                        There are 3 different types of multiple column layouts available. Each of them has their own advantages and disadvantages.<br />
 			                                        For each type there are options availalbe to adapt the layout to your requirements.<br />
 			                                        Layout types:
