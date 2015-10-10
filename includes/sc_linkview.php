@@ -242,12 +242,12 @@ class SC_Linkview {
 				<div class="linkview">';
 		// prepare for category multi columns
 		$cat_multicol = $this->get_multicol_settings($a['cat_columns']);
-		$class_cat_multicol = $cat_multicol['enabled'] ? ' lv-multi-column' : '';
+		$class_cat_multicol = $cat_multicol['type'] ? ' lv-multi-column' : '';
 		$cat_col = 0;
 		// go through each category
 		foreach($categories as $cat) {
 			// cat multicolumn handling
-			if($cat_multicol['enabled']) {
+			if('static' == $cat_multicol['type']) {
 				$cat_col++;
 				if(1 == $cat_col) {   // first column
 					$out .= '
@@ -287,7 +287,7 @@ class SC_Linkview {
 					</div>';
 			}
 			// cat multicolumn handling
-			if($cat_multicol['enabled'] && $cat_col == $cat_multicol['options']['num_columns']) {   // last column
+			if('static' == $cat_multicol['type'] && $cat_col == $cat_multicol['options']['num_columns']) {   // last column
 				$cat_col = 0;
 				$out .= '
 					</div>';
@@ -579,10 +579,9 @@ class SC_Linkview {
 	private function get_multicol_settings($otext) {
 		// Check if multicolumn is enabled
 		if(1 == $otext) {
-			$ret['enabled'] = false;
+			$ret['type'] = false;
 			return $ret;
 		}
-		$ret['enabled'] = true;
 		// Handle special case of giving a number only (short form of static type)
 		if(ctype_digit(strval($otext))) {
 			$ret['type'] = 'static';
@@ -610,7 +609,7 @@ class SC_Linkview {
 					$ret['options']['num_columns'] = 3;
 					// disable multicolumn if num_columns = 1
 					if(1 == (int)$ret['options']['num_columns']) {
-						$ret['enabled'] = false;
+						$ret['type'] = false;
 					}
 				}
 				break;
