@@ -158,6 +158,9 @@ class SC_Linkview {
 			                                        <tr><td>masonry</td><td>Set a static number of columns. The categories will be arranged in rows.</td><td colspan="2"><a href="http://masonry.desandro.com/options.html">masonry options</a></td><td></td><td></td></tr>
 			                                        </table></small>
 			                                        The standard value is "1" to display 1 column only (a simple list).<br />
+			                                        If you have multiple columns it is recommended to define a fixed with for the categories and links. This width must be set manually e.g. via the css entry: <code>.lv-multi-column { width: 32%; }</code><br />
+			                                        <p>The type options must be added in brackets in the format "option_name=value", multiple options can be added seperated by a pipe ("|").<br />
+			                                        Example: <code>[linkview cat_columns="static(num_columns=2)"]</code></p>'),
 
 			'link_columns'   => array('section' => 'list',
 			                          'val'     => 'Number',
