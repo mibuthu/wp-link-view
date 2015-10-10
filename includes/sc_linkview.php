@@ -11,6 +11,7 @@ class SC_Linkview {
 	private $options;
 	private $atts;
 	private $num_ids;
+	private $sc_ids;
 	private $css_printed;
 	private $slider_ids;
 	private $slider_parameters;
@@ -191,6 +192,7 @@ class SC_Linkview {
 			                                        This attribute is only considered if the view type "slider" is selected.'),
 		);
 		$this->num_ids = 0;
+		$this->sc_ids = 0;
 		$this->css_printed = false;
 		$this->slider_ids = null;
 		$this->slider_parameters = null;
@@ -198,6 +200,7 @@ class SC_Linkview {
 
 	// main function to show the rendered HTML output
 	public function show_html($atts, $content='') {
+		$this->sc_ids ++;
 		// add leading "-" for css-suffix
 		if(isset($atts['class_suffix'])) {
 			$atts['class_suffix'] = '-'.$atts['class_suffix'];
@@ -237,13 +240,13 @@ class SC_Linkview {
 				</style>';
 			$this->css_printed = true;
 		}
-		// wrapper div
-		$out .= '
-				<div class="linkview">';
 		// prepare for category multi columns
 		$cat_multicol = $this->get_multicol_settings($a['cat_columns']);
 		$class_cat_multicol = $cat_multicol['type'] ? ' lv-multi-column' : '';
 		$cat_col = 0;
+		// wrapper div
+		$out .= '
+				<div class="linkview" id="lv-sc-id-'.$this->sc_ids.'">';
 		// go through each category
 		foreach($categories as $cat) {
 			// cat multicolumn handling
