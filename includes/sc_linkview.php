@@ -144,19 +144,18 @@ class SC_Linkview {
 
 			'cat_columns'    => array('section' => 'list',
 			                          'val'     => 'Number<br />static<br />masonry',
+			                          'val'     => 'Number<br />static<br />css<br />masonry',
 			                          'std_val' => '1',
 			                          'desc'    => 'This attribute specifies if and how the categories shall be displayed in multiple columns in list view.<br />
 			                                        There are 3 different types of multiple column layouts available. Each of them has their own advantages and disadvantages.<br />
 			                                        For each type there are options availalbe to adapt the layout to your requirements.<br />
 			                                        Layout types:
 			                                        <small><table class="columntype-table">
-			                                        <tr><th>type</th><th>description</th><th>options</th><th>option values</th><th>default value</th><th>option description</th></tr>
-			                                        <tr><td>Number</td><td>Insert a number to specify a static number of columns. This is a short form of the static type (see below).</td><td>none</td><td></td><td></td></tr>
-			                                        <tr><td>static</td><td>Set a static number of columns. The categories will be arranged in rows.</td><td>num_columns</td><td>number</td><td>3</td><td>Sets the number of columns.</td></tr>
-'
-//			                                        <tr><td>css</td><td>Set a static number of columns. The categories will be arranged in rows.</td><td>num_columns</td><td>number</td><td>3</td><td>Sets the number of columns</td></tr>
-.'
-			                                        <tr><td>masonry</td><td>Set a static number of columns. The categories will be arranged in rows.</td><td colspan="2"><a href="http://masonry.desandro.com/options.html">masonry options</a></td><td></td><td></td></tr>
+			                                        <tr><th>type</th><th>description</th><th>options</th><th>option values</th><th>default value</th></tr>
+			                                        <tr><td>Number</td><td>Insert a number to specify a static number of columns. This is a short form of the static type (see below).</td><td>none</td><td></td></tr>
+			                                        <tr><td>static</td><td>Set a static number of columns. The categories will be arranged in rows.</td><td>num_columns</td><td>number</td><td>3</td></tr>
+			                                        <tr><td>css</td><td>This type uses the <a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank">column feature of CSS</a>.</td><td>column_width</td><td><a href="http://www.w3schools.com/cssref/pr_dim_width.asp" target="_blank">css width property</a></td><td>none</td></tr>
+			                                        <tr><td>masonry</td><td>This type uses the <a href="http://masonry.desandro.com/" traget="_blank">masonry grid layout javascript library</a> to arrange the columns.</td><td colspan="2"><a href="http://masonry.desandro.com/options.html" target="_blank">masonry options</a></td><td></td></tr>
 			                                        </table></small>
 			                                        The standard value is "1" to display 1 column only (a simple list).<br />
 			                                        If you have multiple columns it is recommended to define a fixed with for the categories and links. This width must be set manually e.g. via the css entry: <code>.lv-multi-column { width: 32%; }</code><br />
@@ -234,6 +233,8 @@ class SC_Linkview {
 		// prepare for category multi columns
 		$cat_multicol = $this->get_multicol_settings($a['cat_columns']);
 		$class_cat_multicol = $cat_multicol['type'] ? ' lv-multi-column' : '';
+		$class_cat_multicol .= ('css' == $cat_multicol['type']) ? ' lv-css-column' : '';
+		$style_cat_multicol = ('css' == $cat_multicol['type'] && isset($cat_multicol['options']['column_width'])) ? '; width:'.$cat_multicol['options']['column_width'] : '';
 		$cat_col = 0;
 		// prepare for masonry multi columns
 		if('masonry' == $cat_multicol['type']) {
@@ -272,7 +273,7 @@ class SC_Linkview {
 			// generate output
 			if(!empty($links)) {
 				$out .='
-					<div class="lv-category'.$a['class_suffix'].$class_cat_multicol.'" style="overflow:hidden">';
+					<div class="lv-category'.$a['class_suffix'].$class_cat_multicol.'" style="overflow:hidden'.$style_cat_multicol.'">';
 				$out .= $this->html_category($cat, $a);
 				$list_id = $this->get_new_list_id();
 				$slider_size = array(0, 0);
@@ -591,7 +592,7 @@ class SC_Linkview {
 		$ret['options'] = array();
 		$oarray = explode("(", $otext);
 		$ret['type'] = $oarray[0];
-		if('static' != $ret['type'] && 'masonry' != $ret['type']) {
+		if('static' != $ret['type'] && 'css' != $ret['type'] && 'masonry' != $ret['type']) {
 			$ret['type'] = 'static';
 		}
 		if(isset($oarray[1])) {
@@ -612,6 +613,9 @@ class SC_Linkview {
 					}
 				}
 				break;
+			case 'css':
+				// no requirements
+				break;
 			case 'masonry':
 				// no requirements
 				break;
@@ -625,8 +629,15 @@ class SC_Linkview {
 	}
 
 	private function print_css_styles($cat_multicolumn) {
-		$css = '';
 		// print custom css (only once, whe the shortcode is included the first time)
+		$css = '';
+		if($cat_multicolumn && !$this->css_multicol_printed) {
+			$css .= '
+					.lv-multi-column { float:left; }
+					.lv-multi-column li { page-break-inside: avoid; }
+					.lv-css-column { width:48%; break-inside:avoid-column; -webkit-column-break-inside:avoid; -moz-column-break-inside:avoid; -o-column-break-inside:avoid; column-break-inside:avoid; display:table; }';
+			$this->css_multicol_printed = true;
+		}
 		if(!$this->css_printed) {
 			$css .= '
 					.linkview { overflow:auto; }
@@ -636,11 +647,6 @@ class SC_Linkview {
 					.lv-row { overflow:auto; }
 					'.$this->options->get('lv_css');
 			$this->css_printed = true;
-		}
-		if($cat_multicolumn && !$this->css_multicol_printed) {
-			$css .= '
-					.lv-multi-column { float:left; }';
-			$this->css_multicol_printed = true;
 		}
 		if('' == $css) {
 			return '';
