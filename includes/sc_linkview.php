@@ -13,6 +13,7 @@ class SC_Linkview {
 	private $num_ids;
 	private $sc_ids;
 	private $css_printed;
+	private $css_multicol_printed;
 	private $slider_ids;
 	private $slider_parameters;
 
@@ -197,6 +198,7 @@ class SC_Linkview {
 		$this->num_ids = 0;
 		$this->sc_ids = 0;
 		$this->css_printed = false;
+		$this->css_multicol_printed = false;
 		$this->slider_ids = null;
 		$this->slider_parameters = null;
 	}
@@ -227,22 +229,8 @@ class SC_Linkview {
 
 		// set categories
 		$categories = $this->categories($a);
-
 		$out = '';
-		// print custom css (only once, whe the shortcode is included the first time)
-		if(!$this->css_printed) {
-			$out .= '
-				<style type="text/css">
-					.linkview { overflow:auto; }
-					.lv-slider ul, .lv-slider li { margin:0; padding:0; list-style-type:none; list-style-image:none; }
-					.lv-slider li { overflow:hidden; text-align:center; }
-					.lv-slider img { max-width:100%; }
-					.lv-row { overflow:auto; }
-					.lv-multi-column { float:left; }
-					'.$this->options->get('lv_css').'
-				</style>';
-			$this->css_printed = true;
-		}
+
 		// prepare for category multi columns
 		$cat_multicol = $this->get_multicol_settings($a['cat_columns']);
 		$class_cat_multicol = $cat_multicol['type'] ? ' lv-multi-column' : '';
@@ -251,6 +239,7 @@ class SC_Linkview {
 		if('masonry' == $cat_multicol['type']) {
 			$out .= $this->print_mansonry_script($cat_multicol['options']);
 		}
+		$out .= $this->print_css_styles($cat_multicol);
 		// wrapper div
 		$out .= '
 				<div class="linkview" id="lv-sc-id-'.$this->sc_ids.'">';
@@ -633,6 +622,33 @@ class SC_Linkview {
 	private function get_new_list_id() {
 		$this->num_ids++;
 		return 'lv-id-'.$this->num_ids;
+	}
+
+	private function print_css_styles($cat_multicolumn) {
+		$css = '';
+		// print custom css (only once, whe the shortcode is included the first time)
+		if(!$this->css_printed) {
+			$css .= '
+					.linkview { overflow:auto; }
+					.lv-slider ul, .lv-slider li { margin:0; padding:0; list-style-type:none; list-style-image:none; }
+					.lv-slider li { overflow:hidden; text-align:center; }
+					.lv-slider img { max-width:100%; }
+					.lv-row { overflow:auto; }
+					'.$this->options->get('lv_css');
+			$this->css_printed = true;
+		}
+		if($cat_multicolumn && !$this->css_multicol_printed) {
+			$css .= '
+					.lv-multi-column { float:left; }';
+			$this->css_multicol_printed = true;
+		}
+		if('' == $css) {
+			return '';
+		}
+		else {
+			return '<style type="text/css">'.$css.'
+				</style>';
+		}
 	}
 
 	public function print_slider_script() {
