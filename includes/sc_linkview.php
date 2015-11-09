@@ -11,7 +11,9 @@ class SC_Linkview {
 	private $options;
 	private $atts;
 	private $num_ids;
+	private $sc_ids;
 	private $css_printed;
+	private $css_multicol_printed;
 	private $slider_ids;
 	private $slider_parameters;
 
@@ -141,12 +143,24 @@ class SC_Linkview {
 			                                        A good example for the usage is to set the value to "none" for an image link list. The list symbols will be hidden which often looks better when images are used.'),
 
 			'cat_columns'    => array('section' => 'list',
-			                          'val'     => 'Number',
+			                          'val'     => 'Number<br />static<br />masonry',
+			                          'val'     => 'Number<br />static<br />css<br />masonry',
 			                          'std_val' => '1',
-			                          'desc'    => __('This attribute sets the number of columns for the displayed categories in list view.<br />
-			                                           The standard value is "1" to display 1 column only (a simple list).<br />
-			                                           If you specify a number greater than 1 the categories will be displayed in multiple columns according to the given value.<br />
-			                                           If you have multiple columns it is recommended to define a fixed with for the categories and links. This width must be set manually e.g. via the css entry: <code>.lv-multi-column { width: 32%; }')),
+			                          'desc'    => 'This attribute specifies if and how the categories shall be displayed in multiple columns in list view.<br />
+			                                        There are 3 different types of multiple column layouts available. Each of them has their own advantages and disadvantages.<br />
+			                                        For each type there are options availalbe to adapt the layout to your requirements.<br />
+			                                        Layout types:
+			                                        <small><table class="columntype-table">
+			                                        <tr><th>type</th><th>description</th><th>options</th><th>option values</th><th>default value</th></tr>
+			                                        <tr><td>Number</td><td>Insert a number to specify a static number of columns. This is a short form of the static type (see below).</td><td>none</td><td></td></tr>
+			                                        <tr><td>static</td><td>Set a static number of columns. The categories will be arranged in rows.</td><td>num_columns</td><td>number</td><td>3</td></tr>
+			                                        <tr><td>css</td><td>This type uses the <a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank">column feature of CSS</a>.</td><td>column_width</td><td><a href="http://www.w3schools.com/cssref/pr_dim_width.asp" target="_blank">css width property</a></td><td>none</td></tr>
+			                                        <tr><td>masonry</td><td>This type uses the <a href="http://masonry.desandro.com/" traget="_blank">masonry grid layout javascript library</a> to arrange the columns.</td><td colspan="2"><a href="http://masonry.desandro.com/options.html" target="_blank">masonry options</a></td><td></td></tr>
+			                                        </table></small>
+			                                        The standard value is "1" to display 1 column only (a simple list).<br />
+			                                        If you have multiple columns it is recommended to define a fixed with for the categories and links. This width must be set manually e.g. via the css entry: <code>.lv-multi-column { width: 32%; }</code><br />
+			                                        <p>The type options must be added in brackets in the format "option_name=value", multiple options can be added seperated by a pipe ("|").<br />
+			                                        Example: <code>[linkview cat_columns="static(num_columns=2)"]</code></p>'),
 
 			'link_columns'   => array('section' => 'list',
 			                          'val'     => 'Number',
@@ -181,13 +195,16 @@ class SC_Linkview {
 			                                        This attribute is only considered if the view type "slider" is selected.'),
 		);
 		$this->num_ids = 0;
+		$this->sc_ids = 0;
 		$this->css_printed = false;
+		$this->css_multicol_printed = false;
 		$this->slider_ids = null;
 		$this->slider_parameters = null;
 	}
 
 	// main function to show the rendered HTML output
 	public function show_html($atts, $content='') {
+		$this->sc_ids ++;
 		// add leading "-" for css-suffix
 		if(isset($atts['class_suffix'])) {
 			$atts['class_suffix'] = '-'.$atts['class_suffix'];
@@ -211,35 +228,28 @@ class SC_Linkview {
 
 		// set categories
 		$categories = $this->categories($a);
-
 		$out = '';
-		// print custom css (only once, whe the shortcode is included the first time)
-		if(!$this->css_printed) {
-			$out .= '
-				<style type="text/css">
-					.linkview { overflow:auto; }
-					.lv-slider ul, .lv-slider li { margin:0; padding:0; list-style-type:none; list-style-image:none; }
-					.lv-slider li { overflow:hidden; text-align:center; }
-					.lv-slider img { max-width:100%; }
-					.lv-row { overflow:auto; }
-					.lv-multi-column { float:left; }
-					'.$this->options->get('lv_css').'
-				</style>';
-			$this->css_printed = true;
+
+		// prepare for category multi columns
+		$cat_multicol = $this->get_multicol_settings($a['cat_columns']);
+		$class_cat_multicol = $cat_multicol['type'] ? ' lv-multi-column' : '';
+		$class_cat_multicol .= ('css' == $cat_multicol['type']) ? ' lv-css-column' : '';
+		$style_cat_multicol = ('css' == $cat_multicol['type'] && isset($cat_multicol['options']['column_width'])) ? '; width:'.$cat_multicol['options']['column_width'] : '';
+		$cat_col = 0;
+		// prepare for masonry multi columns
+		if('masonry' == $cat_multicol['type']) {
+			$out .= $this->print_mansonry_script($cat_multicol['options']);
 		}
+		$out .= $this->print_css_styles($cat_multicol);
 		// wrapper div
 		$out .= '
-				<div class="linkview">';
-		// prepare for category multi columns
-		$cat_multicolumn = (is_int((int)$a['cat_columns']) && 1 < $a['cat_columns']) ? true : false;
-		$class_cat_multicolumn = $cat_multicolumn ? ' lv-multi-column' : '';
-		$cat_column = 0;
+				<div class="linkview" id="lv-sc-id-'.$this->sc_ids.'">';
 		// go through each category
 		foreach($categories as $cat) {
 			// cat multicolumn handling
-			if($cat_multicolumn) {
-				$cat_column++;
-				if(1 == $cat_column) {   // first column
+			if('static' == $cat_multicol['type']) {
+				$cat_col++;
+				if(1 == $cat_col) {   // first column
 					$out .= '
 					<div class="lv-row">';
 				}
@@ -263,7 +273,7 @@ class SC_Linkview {
 			// generate output
 			if(!empty($links)) {
 				$out .='
-					<div class="lv-category'.$a['class_suffix'].$class_cat_multicolumn.'" style="overflow:hidden">';
+					<div class="lv-category'.$a['class_suffix'].$class_cat_multicol.'" style="overflow:hidden'.$style_cat_multicol.'">';
 				$out .= $this->html_category($cat, $a);
 				$list_id = $this->get_new_list_id();
 				$slider_size = array(0, 0);
@@ -277,11 +287,16 @@ class SC_Linkview {
 					</div>';
 			}
 			// cat multicolumn handling
-			if($cat_multicolumn && $cat_column == $a['cat_columns']) {   // last column
-				$cat_column = 0;
+			if('static' == $cat_multicol['type'] && $cat_col == $cat_multicol['options']['num_columns']) {   // last column
+				$cat_col = 0;
 				$out .= '
 					</div>';
 			}
+		}
+		// close last column div if required
+		if(0 != $cat_col) {
+			$out .= '
+					</div>';
 		}
 		// wrapper div
 		$out .= '
@@ -561,9 +576,85 @@ class SC_Linkview {
 		}
 	}
 
+	private function get_multicol_settings($otext) {
+		// Check if multicolumn is enabled
+		if(1 == $otext) {
+			$ret['type'] = false;
+			return $ret;
+		}
+		// Handle special case of giving a number only (short form of static type)
+		if(ctype_digit(strval($otext))) {
+			$ret['type'] = 'static';
+			$ret['options']['num_columns'] = (int)$otext;
+			return $ret;
+		}
+		// Exctract type and options
+		$ret['options'] = array();
+		$oarray = explode("(", $otext);
+		$ret['type'] = $oarray[0];
+		if('static' != $ret['type'] && 'css' != $ret['type'] && 'masonry' != $ret['type']) {
+			$ret['type'] = 'static';
+		}
+		if(isset($oarray[1])) {
+			$option_array = explode("|", substr($oarray[1],0,-1));
+			foreach($option_array as $option_text) {
+				$o = explode("=", $option_text);
+				$ret['options'][$o[0]] = $o[1];
+			}
+		}
+		// validate required options and set them if not available
+		switch ($ret['type']) {
+			case 'static':
+				if(!isset($ret['options']['num_columns']) || !ctype_digit(strval($ret['options']['num_columns'])) || 0 >= (int)$ret['options']['num_columns']) {
+					$ret['options']['num_columns'] = 3;
+					// disable multicolumn if num_columns = 1
+					if(1 == (int)$ret['options']['num_columns']) {
+						$ret['type'] = false;
+					}
+				}
+				break;
+			case 'css':
+				// no requirements
+				break;
+			case 'masonry':
+				// no requirements
+				break;
+		}
+		return $ret;
+	}
+
 	private function get_new_list_id() {
 		$this->num_ids++;
 		return 'lv-id-'.$this->num_ids;
+	}
+
+	private function print_css_styles($cat_multicolumn) {
+		// print custom css (only once, whe the shortcode is included the first time)
+		$css = '';
+		if($cat_multicolumn && !$this->css_multicol_printed) {
+			$css .= '
+					.lv-multi-column { float:left; }
+					.lv-multi-column li { page-break-inside: avoid; }
+					.lv-css-column { width:48%; break-inside:avoid-column; -webkit-column-break-inside:avoid; -moz-column-break-inside:avoid; -o-column-break-inside:avoid; column-break-inside:avoid; display:table; }';
+			$this->css_multicol_printed = true;
+		}
+		if(!$this->css_printed) {
+			$css .= '
+					.linkview { overflow:auto; }
+					.lv-slider ul, .lv-slider li { margin:0; padding:0; list-style-type:none; list-style-image:none; }
+					.lv-slider li { overflow:hidden; text-align:center; }
+					.lv-slider img { max-width:100%; }
+					.lv-row { overflow:auto; }
+					'.$this->options->get('lv_css');
+			$this->css_printed = true;
+		}
+		if('' == $css) {
+			return '';
+		}
+		else {
+			return '<style type="text/css">'.$css.'
+				</style>';
+		}
 	}
 
 	public function print_slider_script() {
@@ -583,6 +674,21 @@ class SC_Linkview {
 			});
 		</script>';
 		echo $out;
+	}
+
+	public function print_mansonry_script($option_array) {
+		// prepare options
+		$option_text = 'itemSelector:".lv-category-column",columnWidth:200';
+		foreach($option_array as $oname => $ovalue) {
+			$option_text .= ','.$oname.':'.$ovalue;
+		}
+		return '
+				<script type="text/javascript" src="'.LV_URL.'includes/js/masonry.pkgd.min.js"></script>
+				<script type="text/javascript">
+					jQuery(document).ready( function() {
+						jQuery(".linkview#lv-sc-id-'.$this->sc_ids.'").masonry({'.$option_text.'});
+					});
+				</script>';
 	}
 } // end of class SC_Linkview
 ?>
