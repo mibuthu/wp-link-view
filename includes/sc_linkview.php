@@ -47,22 +47,17 @@ class SC_Linkview {
 			                                        <code>[linkview cat_filter="social-media"]</code>&hellip; Show all links with category "social-media".<br />
 			                                        <code>[linkview cat_filter="blogroll&comma;social-media"]</code>&hellip; Show all links with category "blogroll" or "social-media".'),
 
+			// TODO: remove deprecated attribute "cat_name"
 			'cat_name'       => array('section' => 'general',
-			                          'val'     => 'Cat 1,Cat 2,...',
+			                          'val'     => '',
 			                          'std_val' => '',
-			                          'desc'    => 'DEPRECATED! Please do not use this attribute anymore, use "cat_filter" instead. This attribute will be removed in a future version!<br />
-			                                        This attribute is only considered if the attribute "cat_filter" is not set.<br />
-			                                        It specifies which categories should be shown. If you leave the attribute empty all categories are shown.<br />
-			                                        If the cat_name has spaces, simply wrap the name in quotes.<br />
-			                                        Example: <code>[linkview cat_name="Social Media"]</code><br />
-			                                        If you want to define multiple categories you can give them in a list splitted by the delimiter ","<br />
-			                                        Example: <code>[linkview cat_name="Blogroll,Social Media"]</code>'),
+			                          'desc'    => 'Deprecated! Please do not use this attribute anymore, use "cat_filter" instead! This attribute will be removed in a future version!'),
 
 			'exclude_cat'    => array('section' => 'general',
 			                          'val'     => 'Cat 1,Cat 2,...',
 			                          'std_val' => '',
-			                          'desc'    => 'This attribute specifies which categories should be excluded. This attribute is only considered if the attribute "cat_filter" and "cat_name" is not set.<br />
-			                                        If the cat_name has spaces, simply wrap the name in quotes.<br />
+			                          'desc'    => 'This attribute specifies which categories should be excluded. This attribute is only considered if the attribute "cat_filter" is not set.<br />
+			                                        If the category name has spaces, simply wrap the name in quotes.<br />
 			                                        If you want to define multiple categories you can give them in a list splitted by the delimiter ","<br />
 			                                        Example: <code>[linkview exclude_cat="Blogroll,Social Media"]</code>'),
 
@@ -340,7 +335,8 @@ class SC_Linkview {
 				}
 			}
 		}
-		elseif(!empty($a['cat_name'])) {   // cat_name is deprecated! Will be removed in one of the next versions.
+		// TODO: cat_name is deprecated! Will be removed in one of the next versions.
+		elseif(!empty($a['cat_name'])) {
 			$catnames = array_map('trim', explode(",", $a['cat_name']));
 			foreach($catnames as $catname) {
 				if(get_term_by('name', $catname, 'link_category'))
