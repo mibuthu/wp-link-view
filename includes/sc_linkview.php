@@ -31,7 +31,7 @@ class SC_Linkview {
 		// Define all available attributes
 		$this->atts = array(
 			'view_type'      => array('section' => 'general',
-			                          'val'     => 'list<br />slider',
+			                          'val'     => array('list','slider'),
 			                          'std_val' => 'list',
 			                          'desc'    => 'This attribute specifies how the links are displayed. The standard is to show the links in a list.<br />
 			                                        The second option is to show the links in a slider. This normally only make sense if you show the images, but it is also possible to show the link name with this option.'),
@@ -62,12 +62,12 @@ class SC_Linkview {
 			                                        Example: <code>[linkview exclude_cat="Blogroll,Social Media"]</code>'),
 
 			'show_cat_name'  => array('section' => 'general',
-			                          'val'     => '0 ... false<br />1 ... true',
+			                          'val'     => array('0 ... false','1 ... true'),
 			                          'std_val' => '1',
 			                          'desc'    => 'This attribute specifies if the category name is shown as a headline.'),
 
 			'link_orderby'   => array('section' => 'general',
-			                          'val'     => 'link_id<br />url<br />name<br />owner<br />rating<br />visible<br />length<br />rand',
+			                          'val'     => array('link_id','url','name','owner','rating','visible','length','rand'),
 			                          'std_val' => 'name',
 			                          'desc'    => 'This attribute specifies the value to sort the links on for the links in each category.<br />
 			                                        The standard is to sort the links according the links name.<br />
@@ -76,24 +76,24 @@ class SC_Linkview {
 			                                        You can also specify the order direction with the attribute "link_order".'),
 
 			'link_order'     => array('section' => 'general',
-			                          'val'     => 'asc<br />desc',
+			                          'val'     => array('asc','desc'),
 			                          'std_val' => 'asc',
 			                          'desc'    => 'This attribute sets the order direction for the "link_orderby" attribute.<br />
 			                                        The available options are ascending (standard) or descending.'),
 
 			'num_links'      => array('section' => 'general',
-			                          'val'     => 'number',
+			                          'val'     => 'Number',
 			                          'std_val' => '-1',
 			                          'desc'    => 'This attribute sets the number of displayed links for each category.<br />
 			                                        Specify a number smaller than 0 to view all links.'),
 
 			'show_img'       => array('section' => 'general',
-			                          'val'     => '0 ... false<br />1 ... true',
+			                          'val'     => array('0 ... false','1 ... true'),
 			                          'std_val' => '0',
 			                          'desc'    => 'This attribute specifies if the image is displayed instead of the name. This attribute is only considered for links where an image was set.'),
 
 			'link_items'     => array('section' => 'general',
-			                          'val'     => 'name<br />address<br />description<br />image<br />rss<br />notes<br />rating',
+			                          'val'     => array('name','address','description','image','rss','notes','rating'),
 			                          'std_val' => '',
 			                          'desc'    => 'This is a more complex but very powerful attribute.
 			                                        The standard is to leave it emtpy. Then only the link name or the link image (see attribute "show_img") is shown.<br />
@@ -113,7 +113,7 @@ class SC_Linkview {
 			                                        You can group multiple items by using sub-object. The key of the sub-object defines the name of the group which also will be added as a css-class (e.g. .lv-section-left).'),
 
 			'link_target'    => array('section' => 'general',
-			                          'val'     => 'std<br />blank<br />top<br />self',
+			                          'val'     => array('std','blank','top','self'),
 			                          'std_val' => 'std',
 			                          'desc'    => 'Set one of the given values to overwrite the standard value which was set for the link.<br />
 			                                        Set the attribute to "std" if you don´t want to overwrite the standard.'),
@@ -131,21 +131,20 @@ class SC_Linkview {
 			                                        The standard is an empty string which specifies that no specific suffix will be used.'),
 
 			'list_symbol'    => array('section' => 'list',
-			                          'val'     => 'std<br />none<br />circle<br />square<br />disc',
+			                          'val'     => array('std','none','circle','square','disc'),
 			                          'std_val' => 'std',
 			                          'desc'    => 'This attribute sets the style type of the list symbol.<br />
 			                                        The standard value is "std", this means the standard type which is set in your theme will be used. Set one of the other values to overwrite this standard.<br />
 			                                        A good example for the usage is to set the value to "none" for an image link list. The list symbols will be hidden which often looks better when images are used.'),
 
 			'vertical_align' => array('section' => 'general',
-			                          'val'     => 'std<br />top<br />bottom<br />middle',
+			                          'val'     => array('std','top','bottom','middle'),
 			                          'std_val' => 'std',
 			                          'desc'    => 'This attribute specifies the vertical alignment of the links. Changing this attribute normally only make sense if the link-images are displayed.<br />
 			                                        If you change this value you can for example modify the vertical alignment of the list symbol relativ to the image or the vertical alignment of images with different size in a slider.'),
 
 			'cat_columns'    => array('section' => 'list',
-			                          'val'     => 'Number<br />static<br />masonry',
-			                          'val'     => 'Number<br />static<br />css<br />masonry',
+			                          'val'     => array('Number','static','css','masonry'),
 			                          'std_val' => '1',
 			                          'desc'    => 'This attribute specifies if and how the categories shall be displayed in multiple columns in list view.<br />
 			                                        There are 3 different types of multiple column layouts available. Each of them has their own advantages and disadvantages.<br />

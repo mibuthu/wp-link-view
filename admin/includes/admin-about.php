@@ -98,10 +98,11 @@ class LV_Admin_About {
 				</tr>';
 		$atts = $this->shortcode->get_atts($section);
 		foreach($atts as $aname => $a) {
+			$val = is_array($a['val']) ? implode('<br />', $a['val']) : $a['val'];
 			$out .= '
 				<tr>
 					<td>'.$aname.'</td>
-					<td>'.$a['val'].'</td>
+					<td>'.$val.'</td>
 					<td>'.$a['std_val'].'</td>
 					<td>'.$a['desc'].'</td>
 				</tr>';
