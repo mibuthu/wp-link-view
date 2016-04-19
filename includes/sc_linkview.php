@@ -124,6 +124,11 @@ class SC_Linkview {
 			                          'std_val' => '',
 			                          'desc'    => 'This attribute is deprecated and will be removed in a future version! Please use "link_target" instead!'),
 
+			'link_rel'       => array('section' => 'general',
+			                          'val'     => array('alternate','author','bookmark','help','license','next','nofollow','noreferrer','prefetch','prev','search','tag'),
+			                          'std_val' => '',
+			                          'desc'    => 'With this attribute you can set the "rel" attribute for the HTML-links (see <a href="http://www.w3schools.com/tags/att_a_rel.asp" target="_blank">this link</a> for details).'),
+
 			'class_suffix'   => array('section' => 'general',
 			                          'val'     => 'string',
 			                          'std_val' => '',
@@ -530,6 +535,13 @@ class SC_Linkview {
 			$out .= '" target="'.$target.'" title="'.$l->link_name;
 			if($l->link_description != "") {
 				$out .= ' ('.$l->link_description.')';
+			}
+			// handle link rel attribute
+			if('' != $a['link_rel']) {
+				// check value according to allowed values for HTML5 (see http://www.w3schools.com/tags/att_a_rel.asp)
+				if(in_array($a['link_rel'], $this->atts['link_rel']['val'])) {
+					$out .= '" rel="'.$a['link_rel'];
+				}
 			}
 			$out .= '">';
 		}
