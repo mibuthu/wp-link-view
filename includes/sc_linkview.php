@@ -117,17 +117,17 @@ class SC_Linkview {
 			                                        <code>{ "name": "", "left": { image_l": "", "address_l": "URL :" }, "right": { "description": "Description :", "notes": "Notes: " } }</code><br />
 			                                        You can group multiple items by using sub-object. The key of the sub-object defines the name of the group which also will be added as a css-class (e.g. .lv-section-left).'),
 
-			'vertical_align' => array('section' => 'general',
-			                          'val'     => 'std<br />top<br />bottom<br />middle',
-			                          'std_val' => 'std',
-			                          'desc'    => 'This attribute specifies the vertical alignment of the links. Changing this attribute normally only make sense if the link-images are displayed.<br />
-			                                        If you change this value you can for example modify the vertical alignment of the list symbol relativ to the image or the vertical alignment of images with different size in a slider.'),
-
-			'target'         => array('section' => 'general',
+			'link_target'    => array('section' => 'general',
 			                          'val'     => 'std<br />blank<br />top<br />self',
 			                          'std_val' => 'std',
 			                          'desc'    => 'Set one of the given values to overwrite the standard value which was set for the link.<br />
 			                                        Set the attribute to "std" if you don´t want to overwrite the standard.'),
+
+			// TODO: remove deprecated target shortcode attribute
+			'target'         => array('section' => 'general',
+			                          'val'     => '',
+			                          'std_val' => '',
+			                          'desc'    => 'This attribute is deprecated and will be removed in a future version! Please use "link_target" instead!'),
 
 			'class_suffix'   => array('section' => 'general',
 			                          'val'     => 'string',
@@ -141,6 +141,12 @@ class SC_Linkview {
 			                          'desc'    => 'This attribute sets the style type of the list symbol.<br />
 			                                        The standard value is "std", this means the standard type which is set in your theme will be used. Set one of the other values to overwrite this standard.<br />
 			                                        A good example for the usage is to set the value to "none" for an image link list. The list symbols will be hidden which often looks better when images are used.'),
+
+			'vertical_align' => array('section' => 'general',
+			                          'val'     => 'std<br />top<br />bottom<br />middle',
+			                          'std_val' => 'std',
+			                          'desc'    => 'This attribute specifies the vertical alignment of the links. Changing this attribute normally only make sense if the link-images are displayed.<br />
+			                                        If you change this value you can for example modify the vertical alignment of the list symbol relativ to the image or the vertical alignment of images with different size in a slider.'),
 
 			'cat_columns'    => array('section' => 'list',
 			                          'val'     => 'Number<br />static<br />masonry',
@@ -508,17 +514,21 @@ class SC_Linkview {
 		if('' !== $caption) {
 			$out .= '<span class="lv-item-caption'.$a['class_suffix'].'">'.$caption.'</span>';
 		}
+		// if a link for this item should be created
 		if($is_link) {
-			// a link for this item should be created
+			// handle link target
+			// TODO: remove code to handle deprecated "Target" attribute
+			if($a['link_target'] == '' && $a['link_target'] != '') {
+				$a['link_target'] = $a['link_target'];
+			}
 			$out .= '<a class="lv-anchor'.$a['class_suffix'].'" href="'.$l->link_url;
-			if('blank' === $a['target'] || 'top' === $a['target'] || 'self' === $a['target']) {
-				$target = '_'.$a['target'];
+			if('blank' === $a['link_target'] || 'top' === $a['link_target'] || 'self' === $a['link_target']) {
+				$target = '_'.$a['link_target'];
 			}
 			else {
 				$target = $l->link_target;
 				// set target to _self if an empty string or _none was returned
-				if('' === $target || '_none' === $target)
-				{
+				if('' === $target || '_none' === $target) {
 					$target = '_self';
 				}
 			}
