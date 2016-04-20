@@ -3,8 +3,8 @@ Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css
 Requires at least: 3.3
-Tested up to: 4.3
-Stable tag: 0.6.2
+Tested up to: 4.6
+Stable tag: 0.6.3
 Plugin URI: http://wordpress.org/extend/plugins/link-view
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -59,6 +59,14 @@ Yes, you can create an instance of the "SC_Linkview" class which located in "php
 
 
 == Changelog ==
+
+= 0.6.3 (2016-04-20) =
+* added shortcode attribute "link_rel"
+* added shortcode attribute "link_item_img"
+* renamed shortcode attribute "target" to "link_target"
+* added shortcode attribute "target" and marked it as deprecated
+
+Attention: The shortcode attribute "target" is deprecated since this version and will be removed in a future version. So please change your existing shortcodes to the new attribute name "link_target" !
 
 = 0.6.2 (2015-11-09) =
 * added advanced multi-column options for categories
