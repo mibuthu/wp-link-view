@@ -31,7 +31,7 @@ class SC_Linkview {
 		// Define all available attributes
 		$this->atts = array(
 			'view_type'      => array('section' => 'general',
-			                          'val'     => 'list<br />slider',
+			                          'val'     => array('list','slider'),
 			                          'std_val' => 'list',
 			                          'desc'    => 'This attribute specifies how the links are displayed. The standard is to show the links in a list.<br />
 			                                        The second option is to show the links in a slider. This normally only make sense if you show the images, but it is also possible to show the link name with this option.'),
@@ -47,32 +47,27 @@ class SC_Linkview {
 			                                        <code>[linkview cat_filter="social-media"]</code>&hellip; Show all links with category "social-media".<br />
 			                                        <code>[linkview cat_filter="blogroll&comma;social-media"]</code>&hellip; Show all links with category "blogroll" or "social-media".'),
 
+			// TODO: remove deprecated attribute "cat_name"
 			'cat_name'       => array('section' => 'general',
-			                          'val'     => 'Cat 1,Cat 2,...',
+			                          'val'     => '',
 			                          'std_val' => '',
-			                          'desc'    => 'DEPRECATED! Please do not use this attribute anymore, use "cat_filter" instead. This attribute will be removed in a future version!<br />
-			                                        This attribute is only considered if the attribute "cat_filter" is not set.<br />
-			                                        It specifies which categories should be shown. If you leave the attribute empty all categories are shown.<br />
-			                                        If the cat_name has spaces, simply wrap the name in quotes.<br />
-			                                        Example: <code>[linkview cat_name="Social Media"]</code><br />
-			                                        If you want to define multiple categories you can give them in a list splitted by the delimiter ","<br />
-			                                        Example: <code>[linkview cat_name="Blogroll,Social Media"]</code>'),
+			                          'desc'    => 'Deprecated! Please do not use this attribute anymore, use "cat_filter" instead! This attribute will be removed in a future version!'),
 
 			'exclude_cat'    => array('section' => 'general',
 			                          'val'     => 'Cat 1,Cat 2,...',
 			                          'std_val' => '',
-			                          'desc'    => 'This attribute specifies which categories should be excluded. This attribute is only considered if the attribute "cat_filter" and "cat_name" is not set.<br />
-			                                        If the cat_name has spaces, simply wrap the name in quotes.<br />
+			                          'desc'    => 'This attribute specifies which categories should be excluded. This attribute is only considered if the attribute "cat_filter" is not set.<br />
+			                                        If the category name has spaces, simply wrap the name in quotes.<br />
 			                                        If you want to define multiple categories you can give them in a list splitted by the delimiter ","<br />
 			                                        Example: <code>[linkview exclude_cat="Blogroll,Social Media"]</code>'),
 
 			'show_cat_name'  => array('section' => 'general',
-			                          'val'     => '0 ... false<br />1 ... true',
+			                          'val'     => array('0 ... false','1 ... true'),
 			                          'std_val' => '1',
 			                          'desc'    => 'This attribute specifies if the category name is shown as a headline.'),
 
 			'link_orderby'   => array('section' => 'general',
-			                          'val'     => 'link_id<br />url<br />name<br />owner<br />rating<br />visible<br />length<br />rand',
+			                          'val'     => array('link_id','url','name','owner','rating','visible','length','rand'),
 			                          'std_val' => 'name',
 			                          'desc'    => 'This attribute specifies the value to sort the links on for the links in each category.<br />
 			                                        The standard is to sort the links according the links name.<br />
@@ -81,24 +76,24 @@ class SC_Linkview {
 			                                        You can also specify the order direction with the attribute "link_order".'),
 
 			'link_order'     => array('section' => 'general',
-			                          'val'     => 'asc<br />desc',
+			                          'val'     => array('asc','desc'),
 			                          'std_val' => 'asc',
 			                          'desc'    => 'This attribute sets the order direction for the "link_orderby" attribute.<br />
 			                                        The available options are ascending (standard) or descending.'),
 
 			'num_links'      => array('section' => 'general',
-			                          'val'     => 'number',
+			                          'val'     => 'Number',
 			                          'std_val' => '-1',
 			                          'desc'    => 'This attribute sets the number of displayed links for each category.<br />
 			                                        Specify a number smaller than 0 to view all links.'),
 
 			'show_img'       => array('section' => 'general',
-			                          'val'     => '0 ... false<br />1 ... true',
+			                          'val'     => array('0 ... false','1 ... true'),
 			                          'std_val' => '0',
 			                          'desc'    => 'This attribute specifies if the image is displayed instead of the name. This attribute is only considered for links where an image was set.'),
 
 			'link_items'     => array('section' => 'general',
-			                          'val'     => 'name<br />address<br />description<br />image<br />rss<br />notes<br />rating',
+			                          'val'     => array('name','address','description','image','rss','notes','rating'),
 			                          'std_val' => '',
 			                          'desc'    => 'This is a more complex but very powerful attribute.
 			                                        The standard is to leave it emtpy. Then only the link name or the link image (see attribute "show_img") is shown.<br />
@@ -117,17 +112,31 @@ class SC_Linkview {
 			                                        <code>{ "name": "", "left": { image_l": "", "address_l": "URL :" }, "right": { "description": "Description :", "notes": "Notes: " } }</code><br />
 			                                        You can group multiple items by using sub-object. The key of the sub-object defines the name of the group which also will be added as a css-class (e.g. .lv-section-left).'),
 
-			'vertical_align' => array('section' => 'general',
-			                          'val'     => 'std<br />top<br />bottom<br />middle',
-			                          'std_val' => 'std',
-			                          'desc'    => 'This attribute specifies the vertical alignment of the links. Changing this attribute normally only make sense if the link-images are displayed.<br />
-			                                        If you change this value you can for example modify the vertical alignment of the list symbol relativ to the image or the vertical alignment of images with different size in a slider.'),
+			'link_item_img'  => array('section' => 'general',
+			                          'val'     => array('show_img_tag','show_link_name','show_link_description','show_nothing'),
+			                          'std_val' => 'show_img_tag',
+			                          'desc'    => 'With this attribute the display option for link images can be set, if no link image for a specific link is available.<br />
+			                                        This option is only considered if the "link_image" item is used in "link_items".<br />
+			                                        With "show_img_tag" an <code>&lt;img&gt;</code> tag is still added. Due to the empty link address the image name of the alt attribute is displayed then.<br />
+			                                        With "nothing" the complete link item will be removed.<br />
+			                                        With the other options only the <code>&lt;img&gt;</code> tag will be removed and an alternative text (link name or description) will be displayed.'),
 
-			'target'         => array('section' => 'general',
-			                          'val'     => 'std<br />blank<br />top<br />self',
+			'link_target'    => array('section' => 'general',
+			                          'val'     => array('std','blank','top','self'),
 			                          'std_val' => 'std',
 			                          'desc'    => 'Set one of the given values to overwrite the standard value which was set for the link.<br />
 			                                        Set the attribute to "std" if you don´t want to overwrite the standard.'),
+
+			// TODO: remove deprecated target shortcode attribute
+			'target'         => array('section' => 'general',
+			                          'val'     => '',
+			                          'std_val' => '',
+			                          'desc'    => 'This attribute is deprecated and will be removed in a future version! Please use "link_target" instead!'),
+
+			'link_rel'       => array('section' => 'general',
+			                          'val'     => array('alternate','author','bookmark','help','license','next','nofollow','noreferrer','prefetch','prev','search','tag'),
+			                          'std_val' => '',
+			                          'desc'    => 'With this attribute you can set the "rel" attribute for the HTML-links (see <a href="http://www.w3schools.com/tags/att_a_rel.asp" target="_blank">this link</a> for details).'),
 
 			'class_suffix'   => array('section' => 'general',
 			                          'val'     => 'string',
@@ -136,15 +145,20 @@ class SC_Linkview {
 			                                        The standard is an empty string which specifies that no specific suffix will be used.'),
 
 			'list_symbol'    => array('section' => 'list',
-			                          'val'     => 'std<br />none<br />circle<br />square<br />disc',
+			                          'val'     => array('std','none','circle','square','disc'),
 			                          'std_val' => 'std',
 			                          'desc'    => 'This attribute sets the style type of the list symbol.<br />
 			                                        The standard value is "std", this means the standard type which is set in your theme will be used. Set one of the other values to overwrite this standard.<br />
 			                                        A good example for the usage is to set the value to "none" for an image link list. The list symbols will be hidden which often looks better when images are used.'),
 
+			'vertical_align' => array('section' => 'general',
+			                          'val'     => array('std','top','bottom','middle'),
+			                          'std_val' => 'std',
+			                          'desc'    => 'This attribute specifies the vertical alignment of the links. Changing this attribute normally only make sense if the link-images are displayed.<br />
+			                                        If you change this value you can for example modify the vertical alignment of the list symbol relativ to the image or the vertical alignment of images with different size in a slider.'),
+
 			'cat_columns'    => array('section' => 'list',
-			                          'val'     => 'Number<br />static<br />masonry',
-			                          'val'     => 'Number<br />static<br />css<br />masonry',
+			                          'val'     => array('Number','static','css','masonry'),
 			                          'std_val' => '1',
 			                          'desc'    => 'This attribute specifies if and how the categories shall be displayed in multiple columns in list view.<br />
 			                                        There are 3 different types of multiple column layouts available. Each of them has their own advantages and disadvantages.<br />
@@ -334,7 +348,8 @@ class SC_Linkview {
 				}
 			}
 		}
-		elseif(!empty($a['cat_name'])) {   // cat_name is deprecated! Will be removed in one of the next versions.
+		// TODO: cat_name is deprecated! Will be removed in one of the next versions.
+		elseif(!empty($a['cat_name'])) {
 			$catnames = array_map('trim', explode(",", $a['cat_name']));
 			foreach($catnames as $catname) {
 				if(get_term_by('name', $catname, 'link_category'))
@@ -500,31 +515,48 @@ class SC_Linkview {
 	}
 
 	private function html_link_item($l, $item, $a, $slider_size, $caption='') {
+		// check if a hyperlink shall be added
 		$is_link = ('_l' === substr($item, -2));
 		if($is_link) {
 			$item = substr($item, 0, -2);
 		}
+		// handle link_item_img="nothing"
+		if('image' == $item && '' == $l->link_image && 'show_nothing' == $a['link_item_img']) {
+			return '';
+		}
+		// prepare output
 		$out = '<div class="lv-item-'.$item.$a['class_suffix'].'">';
 		if('' !== $caption) {
 			$out .= '<span class="lv-item-caption'.$a['class_suffix'].'">'.$caption.'</span>';
 		}
+		// if a link for this item should be created
 		if($is_link) {
-			// a link for this item should be created
+			// handle link target
+			// TODO: remove code to handle deprecated "Target" attribute
+			if($a['link_target'] == '' && $a['link_target'] != '') {
+				$a['link_target'] = $a['link_target'];
+			}
 			$out .= '<a class="lv-anchor'.$a['class_suffix'].'" href="'.$l->link_url;
-			if('blank' === $a['target'] || 'top' === $a['target'] || 'self' === $a['target']) {
-				$target = '_'.$a['target'];
+			if('blank' === $a['link_target'] || 'top' === $a['link_target'] || 'self' === $a['link_target']) {
+				$target = '_'.$a['link_target'];
 			}
 			else {
 				$target = $l->link_target;
 				// set target to _self if an empty string or _none was returned
-				if('' === $target || '_none' === $target)
-				{
+				if('' === $target || '_none' === $target) {
 					$target = '_self';
 				}
 			}
 			$out .= '" target="'.$target.'" title="'.$l->link_name;
 			if($l->link_description != "") {
 				$out .= ' ('.$l->link_description.')';
+			}
+			// handle link rel attribute
+			if('' != $a['link_rel']) {
+				// check value according to allowed values for HTML5 (see http://www.w3schools.com/tags/att_a_rel.asp)
+				if(in_array($a['link_rel'], $this->atts['link_rel']['val'])) {
+					$out .= '" rel="'.$a['link_rel'];
+				}
 			}
 			$out .= '">';
 		}
@@ -539,7 +571,7 @@ class SC_Linkview {
 				$out .= $l->link_description;
 				break;
 			case 'image':
-				$out .= '<img src="'.$l->link_image.'"'.$this->html_img_size($l->link_image, $slider_size[0], $slider_size[1]).' alt="'.$l->link_name.'" />';
+				$out .= $this->html_img_tag($l, $a, $slider_size);
 				break;
 			case 'rss':
 				$out .= $l->link_rss;
@@ -558,13 +590,27 @@ class SC_Linkview {
 		return $out;
 	}
 
-	private function html_img_size($image, $slider_width=0, $slider_height=0) {
+	private function html_img_tag($l, $a, $slider_size) {
+		// handle links without an image
+		if('' == $l->link_image) {
+			switch($a['link_item_img']) {
+				case 'show_link_name':
+					return $l->link_name;
+				case 'show_link_description':
+					return $l->link_description;
+				// 'show_nothing': is already handled in html_link_item
+				// 'show_img_tag': proceed as normal with the image tag
+			}
+		}
+		// handle image size
+		$slider_width = $slider_size[0];
+		$slider_height = $slider_size[1];
 		if($slider_width <= 0 || $slider_height <= 0) {
-			return '';
+			$size_text = '';
 		}
 		else {
 			$slider_ratio = $slider_width / $slider_height;
-			list($img_width, $img_height) = getimagesize($image);
+			list($img_width, $img_height) = getimagesize($l->link_image);
 			$img_ratio = $img_width / $img_height;
 			if($slider_ratio > $img_ratio) {
 				$scale = $slider_height / $img_height;
@@ -572,8 +618,10 @@ class SC_Linkview {
 			else {
 				$scale = $slider_width / $img_width;
 			}
-			return ' width='.round($img_width*$scale).' height='.round($img_height*$scale);
+			$size_text = ' width='.round($img_width*$scale).' height='.round($img_height*$scale);
 		}
+		// return img tag
+		return '<img src="'.$l->link_image.'"'.$size_text.' alt="'.$l->link_name.'" />';
 	}
 
 	private function get_multicol_settings($otext) {
