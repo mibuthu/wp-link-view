@@ -112,6 +112,15 @@ class SC_Linkview {
 			                                        <code>{ "name": "", "left": { image_l": "", "address_l": "URL :" }, "right": { "description": "Description :", "notes": "Notes: " } }</code><br />
 			                                        You can group multiple items by using sub-object. The key of the sub-object defines the name of the group which also will be added as a css-class (e.g. .lv-section-left).'),
 
+			'link_item_img'  => array('section' => 'general',
+			                          'val'     => array('show_img_tag','show_link_name','show_link_description','show_nothing'),
+			                          'std_val' => 'show_img_tag',
+			                          'desc'    => 'With this attribute the display option for link images can be set, if no link image for a specific link is available.<br />
+			                                        This option is only considered if the "link_image" item is used in "link_items".<br />
+			                                        With "show_img_tag" an <code>&lt;img&gt;</code> tag is still added. Due to the empty link address the image name of the alt attribute is displayed then.<br />
+			                                        With "nothing" the complete link item will be removed.<br />
+			                                        With the other options only the <code>&lt;img&gt;</code> tag will be removed and an alternative text (link name or description) will be displayed.'),
+
 			'link_target'    => array('section' => 'general',
 			                          'val'     => array('std','blank','top','self'),
 			                          'std_val' => 'std',
@@ -506,10 +515,16 @@ class SC_Linkview {
 	}
 
 	private function html_link_item($l, $item, $a, $slider_size, $caption='') {
+		// check if a hyperlink shall be added
 		$is_link = ('_l' === substr($item, -2));
 		if($is_link) {
 			$item = substr($item, 0, -2);
 		}
+		// handle link_item_img="nothing"
+		if('image' == $item && '' == $l->link_image && 'show_nothing' == $a['link_item_img']) {
+			return '';
+		}
+		// prepare output
 		$out = '<div class="lv-item-'.$item.$a['class_suffix'].'">';
 		if('' !== $caption) {
 			$out .= '<span class="lv-item-caption'.$a['class_suffix'].'">'.$caption.'</span>';
@@ -556,7 +571,7 @@ class SC_Linkview {
 				$out .= $l->link_description;
 				break;
 			case 'image':
-				$out .= '<img src="'.$l->link_image.'"'.$this->html_img_size($l->link_image, $slider_size[0], $slider_size[1]).' alt="'.$l->link_name.'" />';
+				$out .= $this->html_img_tag($l, $a, $slider_size);
 				break;
 			case 'rss':
 				$out .= $l->link_rss;
@@ -575,13 +590,27 @@ class SC_Linkview {
 		return $out;
 	}
 
-	private function html_img_size($image, $slider_width=0, $slider_height=0) {
+	private function html_img_tag($l, $a, $slider_size) {
+		// handle links without an image
+		if('' == $l->link_image) {
+			switch($a['link_item_img']) {
+				case 'show_link_name':
+					return $l->link_name;
+				case 'show_link_description':
+					return $l->link_description;
+				// 'show_nothing': is already handled in html_link_item
+				// 'show_img_tag': proceed as normal with the image tag
+			}
+		}
+		// handle image size
+		$slider_width = $slider_size[0];
+		$slider_height = $slider_size[1];
 		if($slider_width <= 0 || $slider_height <= 0) {
-			return '';
+			$size_text = '';
 		}
 		else {
 			$slider_ratio = $slider_width / $slider_height;
-			list($img_width, $img_height) = getimagesize($image);
+			list($img_width, $img_height) = getimagesize($l->link_image);
 			$img_ratio = $img_width / $img_height;
 			if($slider_ratio > $img_ratio) {
 				$scale = $slider_height / $img_height;
@@ -589,8 +618,10 @@ class SC_Linkview {
 			else {
 				$scale = $slider_width / $img_width;
 			}
-			return ' width='.round($img_width*$scale).' height='.round($img_height*$scale);
+			$size_text = ' width='.round($img_width*$scale).' height='.round($img_height*$scale);
 		}
+		// return img tag
+		return '<img src="'.$l->link_image.'"'.$size_text.' alt="'.$l->link_name.'" />';
 	}
 
 	private function get_multicol_settings($otext) {
