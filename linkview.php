@@ -85,7 +85,7 @@ class LinkView {
 	}
 
 	public function frontpage_init() {
-		wp_register_script('lv_easySlider', LV_URL.'includes/js/easySlider.js', array('jquery'), true);
+		wp_register_script('lv_easySlider', LV_URL.'includes/js/easySlider.min.js', array('jquery'), true);
 	}
 
 	public function frontpage_footer() {
