@@ -233,7 +233,7 @@ class SC_Linkview {
 
 		// prepare for category multi columns
 		$cat_multicol = $this->get_multicol_settings($a['cat_columns']);
-		$cat_classes = $cat_multicol['type'] ? ' lv-multi-column lv-'.$cat_multicol['type'].'-column' : '';
+		$cat_classes = $this->get_multicol_classes($cat_multicol);
 		$cat_styles = $this->get_multicol_styles($cat_multicol);
 		$cat_col = 0;
 		// prepare for masonry multi columns
@@ -666,6 +666,14 @@ class SC_Linkview {
 		}
 		if(!isset($ret['opt']['num_columns'])) {
 			$ret['opt']['num_columns'] = 0;
+		}
+		return $ret;
+	}
+
+	private function get_multicol_classes($multicol) {
+		$ret = '';
+		if($multicol['type']) {
+			$ret .= ' lv-multi-column lv-'.$multicol['type'].'-column';
 		}
 		return $ret;
 	}
