@@ -233,9 +233,8 @@ class SC_Linkview {
 
 		// prepare for category multi columns
 		$cat_multicol = $this->get_multicol_settings($a['cat_columns']);
-		$class_cat_multicol = $cat_multicol['type'] ? ' lv-multi-column' : '';
-		$class_cat_multicol .= ('css' == $cat_multicol['type']) ? ' lv-css-column' : '';
-		$style_cat_multicol = ('css' == $cat_multicol['type'] && isset($cat_multicol['options']['column_width'])) ? '; width:'.$cat_multicol['options']['column_width'] : '';
+		$cat_classes = $cat_multicol['type'] ? ' lv-multi-column lv-'.$cat_multicol['type'].'-column' : '';
+		$cat_styles = $this->get_multicol_styles($cat_multicol);
 		$cat_col = 0;
 		// prepare for masonry multi columns
 		if('masonry' == $cat_multicol['type']) {
@@ -274,7 +273,7 @@ class SC_Linkview {
 			// generate output
 			if(!empty($links)) {
 				$out .='
-					<div class="lv-category'.$a['class_suffix'].$class_cat_multicol.'" style="overflow:hidden'.$style_cat_multicol.'">';
+					<div class="lv-category'.$a['class_suffix'].$cat_classes.'" style="overflow:hidden'.$cat_styles.'">';
 				$out .= $this->html_category($cat, $a);
 				$list_id = $this->get_new_list_id();
 				$slider_size = array(0, 0);
@@ -658,6 +657,14 @@ class SC_Linkview {
 		return $ret;
 	}
 
+	private function get_multicol_styles($multicol) {
+		$ret = '';
+		if('css' == $multicol['type'] && isset($multicol['options']['column_width'])) {
+			$ret .= '; width:'.$multicol['options']['column_width'];
+		}
+		return $ret;
+	}
+
 	private function get_new_list_id() {
 		$this->num_ids++;
 		return 'lv-id-'.$this->num_ids;
@@ -670,7 +677,7 @@ class SC_Linkview {
 			$css .= '
 					.lv-multi-column { float:left; }
 					.lv-multi-column li { page-break-inside: avoid; }
-					.lv-css-column { width:48%; break-inside:avoid-column; -webkit-column-break-inside:avoid; -moz-column-break-inside:avoid; -o-column-break-inside:avoid; column-break-inside:avoid; display:table; }';
+					.lv-css-column { break-inside:avoid-column; -webkit-column-break-inside:avoid; -moz-column-break-inside:avoid; -o-column-break-inside:avoid; column-break-inside:avoid; display:table; }';
 			$this->css_multicol_printed = true;
 		}
 		if(!$this->css_printed) {
