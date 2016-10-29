@@ -238,7 +238,7 @@ class SC_Linkview {
 		$cat_col = 0;
 		// prepare for masonry multi columns
 		if('masonry' == $cat_multicol['type']) {
-			$out .= $this->print_mansonry_script($cat_multicol['options']);
+			$out .= $this->print_mansonry_script($cat_multicol['opt']);
 		}
 		$out .= $this->print_css_styles($cat_multicol);
 		// wrapper div
@@ -287,7 +287,7 @@ class SC_Linkview {
 					</div>';
 			}
 			// cat multicolumn handling
-			if('static' == $cat_multicol['type'] && $cat_col == $cat_multicol['options']['num_columns']) {   // last column
+			if('static' == $cat_multicol['type'] && $cat_col == $cat_multicol['opt']['num_columns']) {   // last column
 				$cat_col = 0;
 				$out .= '
 					</div>';
@@ -619,11 +619,11 @@ class SC_Linkview {
 		// Handle special case of giving a number only (short form of static type)
 		if(ctype_digit(strval($otext))) {
 			$ret['type'] = 'static';
-			$ret['options']['num_columns'] = (int)$otext;
+			$ret['opt']['num_columns'] = (int)$otext;
 			return $ret;
 		}
 		// Exctract type and options
-		$ret['options'] = array();
+		$ret['opt'] = array();
 		$oarray = explode("(", $otext);
 		$ret['type'] = $oarray[0];
 		if('static' != $ret['type'] && 'css' != $ret['type'] && 'masonry' != $ret['type']) {
@@ -633,16 +633,16 @@ class SC_Linkview {
 			$option_array = explode("|", substr($oarray[1],0,-1));
 			foreach($option_array as $option_text) {
 				$o = explode("=", $option_text);
-				$ret['options'][$o[0]] = $o[1];
+				$ret['opt'][$o[0]] = $o[1];
 			}
 		}
 		// validate required options and set them if not available
 		switch ($ret['type']) {
 			case 'static':
-				if(!isset($ret['options']['num_columns']) || !ctype_digit(strval($ret['options']['num_columns'])) || 0 >= (int)$ret['options']['num_columns']) {
-					$ret['options']['num_columns'] = 3;
+				if(!isset($ret['opt']['num_columns']) || !ctype_digit(strval($ret['opt']['num_columns'])) || 0 >= (int)$ret['opt']['num_columns']) {
+					$ret['opt']['num_columns'] = 3;
 					// disable multicolumn if num_columns = 1
-					if(1 == (int)$ret['options']['num_columns']) {
+					if(1 == (int)$ret['opt']['num_columns']) {
 						$ret['type'] = false;
 					}
 				}
@@ -659,8 +659,8 @@ class SC_Linkview {
 
 	private function get_multicol_styles($multicol) {
 		$ret = '';
-		if('css' == $multicol['type'] && isset($multicol['options']['column_width'])) {
-			$ret .= '; width:'.$multicol['options']['column_width'];
+		if('css' == $multicol['type'] && isset($multicol['opt']['column_width'])) {
+			$ret .= '; width:'.$multicol['opt']['column_width'];
 		}
 		return $ret;
 	}
@@ -674,6 +674,7 @@ class SC_Linkview {
 		// print custom css (only once, whe the shortcode is included the first time)
 		$css = '';
 		if($cat_multicolumn && !$this->css_multicol_printed) {
+			// some default styles for multi-column layouts
 			$css .= '
 					.lv-multi-column { float:left; }
 					.lv-multi-column li { page-break-inside: avoid; }
