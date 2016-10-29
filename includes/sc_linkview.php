@@ -72,7 +72,7 @@ class SC_Linkview {
 			                          'desc'    => 'This attribute specifies the value to sort the links on for the links in each category.<br />
 			                                        The standard is to sort the links according the links name.<br />
 			                                        You can also create a random order if you specify <code>rand</code>.<br />
-			                                        If you required a more detailed description for the available options visit <a href="http://codex.wordpress.org/Function_Reference/get_bookmarks#Parameters" target="_blank">the wordpress codex</a>.<br />
+			                                        If you required a more detailed description for the available options visit <a href="http://codex.wordpress.org/Function_Reference/get_bookmarks#Parameters" target="_blank" rel="noopener">the wordpress codex</a>.<br />
 			                                        You can also specify the order direction with the attribute "link_order".'),
 
 			'link_order'     => array('section' => 'general',
@@ -134,9 +134,9 @@ class SC_Linkview {
 			                          'desc'    => 'This attribute is deprecated and will be removed in a future version! Please use "link_target" instead!'),
 
 			'link_rel'       => array('section' => 'general',
-			                          'val'     => array('alternate','author','bookmark','help','license','next','nofollow','noreferrer','prefetch','prev','search','tag'),
+			                          'val'     => array('alternate','author','bookmark','external','help','license','next','nofollow','noreferrer','noopener','prev','search','tag'),
 			                          'std_val' => '',
-			                          'desc'    => 'With this attribute you can set the "rel" attribute for the HTML-links (see <a href="http://www.w3schools.com/tags/att_a_rel.asp" target="_blank">this link</a> for details).'),
+			                          'desc'    => 'With this attribute you can set the "rel" attribute for the HTML-links (see <a href="http://www.w3schools.com/tags/att_a_rel.asp" target="_blank" rel="noopener">this link</a> for details).'),
 
 			'class_suffix'   => array('section' => 'general',
 			                          'val'     => 'string',
