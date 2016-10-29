@@ -246,15 +246,8 @@ class SC_Linkview {
 				<div class="linkview" id="lv-sc-id-'.$this->sc_ids.'">';
 		// go through each category
 		foreach($categories as $cat) {
-			// cat multicolumn handling
-			if('static' == $cat_multicol['type']) {
-				$cat_col++;
-				if(1 == $cat_col) {   // first column
-					$out .= '
-					<div class="lv-row">';
-				}
-			}
-
+			// cat multi-column handling
+			$out .= $this->html_multicol_before($cat_multicol['type'], $cat_col);
 			// set link order
 			if('link_id' !== $a['link_orderby'] && 'url' !== $a['link_orderby'] && 'owner' !== $a['link_orderby'] && 'rating' !== $a['link_orderby']
 					&& 'visible' !== $a['link_orderby'] && 'length' !== $a['link_orderby'] && 'rand' !== $a['link_orderby']) {
@@ -286,12 +279,8 @@ class SC_Linkview {
 				$out .= '
 					</div>';
 			}
-			// cat multicolumn handling
-			if('static' == $cat_multicol['type'] && $cat_col == $cat_multicol['opt']['num_columns']) {   // last column
-				$cat_col = 0;
-				$out .= '
-					</div>';
-			}
+			// cat multi-column handling
+			$out .= $this->html_multicol_after($cat_multicol['type'], $cat_col, $cat_multicol['opt']['num_columns']);
 		}
 		// close last column div if required
 		if(0 != $cat_col) {
@@ -610,10 +599,31 @@ class SC_Linkview {
 		return '<img src="'.$l->link_image.'"'.$size_text.' alt="'.$l->link_name.'" />';
 	}
 
+	private function html_multicol_before($type, &$column) {
+		if('static' == $type) {
+			$column++;
+			if(1 == $column) {   // first column
+				return '
+				<div class="lv-row">';
+			}
+		}
+		return '';
+	}
+
+	private function html_multicol_after($type, &$column, $num_columns) {
+		if('static' == $type && $column == $num_columns) {   // last column
+			$column = 0;
+			return '
+				</div>';
+		}
+		return '';
+	}
+
 	private function get_multicol_settings($otext) {
 		// Check if multicolumn is enabled
 		if(1 == $otext) {
 			$ret['type'] = false;
+			$ret['opt']['num_columns'] = 1;
 			return $ret;
 		}
 		// Handle special case of giving a number only (short form of static type)
@@ -653,6 +663,9 @@ class SC_Linkview {
 			case 'masonry':
 				// no requirements
 				break;
+		}
+		if(!isset($ret['opt']['num_columns'])) {
+			$ret['opt']['num_columns'] = 0;
 		}
 		return $ret;
 	}
