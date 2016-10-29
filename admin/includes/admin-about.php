@@ -83,7 +83,34 @@ class LV_Admin_About {
 		$out .= $this->html_atts_table('list');
 		$out .= '<h4 class="atts-section-title">Link Slider:</h4>';
 		$out .= $this->html_atts_table('slider');
-		$out .= '</div>';
+		$out .= '<br />
+				<h4 class="atts-section-title">Multi-column layout types and options:</h4><a name="multicol"></a>
+				There are 3 different types of multiple column layouts available for category or link multi-column view. Each type has some advantages and disadvantages compared to the others.
+				<p>Additionally the available layouts can be modified with their options:</p>
+				<table class="atts-table">
+				<tr><th>layout type</th><th>type description</th></tr>
+				<tr><td>Number</td><td>Use a single number to specify a static number of columns.<br />
+					This is a short form of the static layout type (see below).</td></tr>
+				<tr><td>static</td><td>Set a static number of columns. The categories or links will be arranged in rows.
+					<h5>available options:</h5>
+					<em>num_columns</em>: Provide a single number which specifys the number of columns. If no value is given 3 will be used by default.</td></tr>
+				<tr><td>css</td><td>This type uses the <a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank rel="noopener"">multi-column feature of CSS</a> to arrange the columns.
+					<h5>available options:</h5>
+					You can use all available properties for CSS3 Multi-column Layout (see <a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank rel="noopener">this link</a> for detailed information).<br />
+					The given attributes will be added to the wrapper div element. Also the prefixed browser specific attributes will be added.</td></tr>
+				<tr><td>masonry</td><td>This type uses the <a href="http://masonry.desandro.com/" target="_blank" rel="noopener">Masonry grid layout javascript library</a> to arrange the columns.
+					<h5>available options:</h5>
+					You can use all Options which are available for the Masonry library (see <a href="http://masonry.desandro.com/options.html" target="_blank" rel="noopener">masonry options</a> for detailed information).<br />
+					The given options will be provided to the Masonry javascript library.</td></tr>
+				</table>
+				<div class="help-content">
+					<h5>Usage:</h5>
+					If you want to use a multiple column layout for categories or links it is recommended to define a fixed width for the categories and/or links. This width must be set manually e.g. via the css entry: <code>.lv-multi-column { width: 32%; }</code><br />
+					The type options must be added in brackets in the format "option_name=value", multiple options can be added seperated by a pipe ("|").
+					<h5>Examples:</h5>
+					<code>[linkview link_columns="static(num_columns=2)"]</code>
+				</div>
+			</div>';
 		return $out;
 	}
 

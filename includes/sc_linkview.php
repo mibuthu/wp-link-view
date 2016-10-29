@@ -161,38 +161,14 @@ class SC_Linkview {
 			                          'val'     => array('Number','static','css','masonry'),
 			                          'std_val' => '1',
 			                          'desc'    => 'This attribute specifies if and how the categories shall be displayed in multiple columns in list view.<br />
-			                                        There are 3 different types of multiple column layouts available. Each of them has their own advantages and disadvantages.<br />
-			                                        Each type has different options to modify the output.<br />
-			                                        Layout types and options:
-			                                        <small><table class="columntype-table">
-			                                        <tr><th>type</th><th>description</th><th>options</th><th>option values</th><th>default value</th></tr>
-			                                        <tr><td>Number</td><td>Insert a number to specify a static number of columns. This is a short form of the static type (see below).</td><td>none</td><td></td></tr>
-			                                        <tr><td>static</td><td>Set a static number of columns. The categories will be arranged in rows.</td><td>num_columns</td><td>number</td><td>3</td></tr>
-			                                        <tr><td>css</td><td>This type uses the <a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank">column feature of CSS</a>.</td><td>column_width</td><td><a href="http://www.w3schools.com/cssref/pr_dim_width.asp" target="_blank">css width property</a></td><td>none</td></tr>
-			                                        <tr><td>masonry</td><td>This type uses the <a href="http://masonry.desandro.com/" traget="_blank">masonry grid layout javascript library</a> to arrange the columns.</td><td colspan="2"><a href="http://masonry.desandro.com/options.html" target="_blank">masonry options</a></td><td></td></tr>
-			                                        </table></small>
-			                                        The standard value is "1" to display 1 column only (a simple list).<br />
-			                                        If you have multiple columns it is recommended to define a fixed width for the categories and links. This width must be set manually e.g. via the css entry: <code>.lv-multi-column { width: 32%; }</code><br />
-			                                        <p>The type options must be added in brackets in the format "option_name=value", multiple options can be added seperated by a pipe ("|").<br />
+			                                        There are 3 different types of multiple column layouts available. Find more information regarding the types and options in the chapter <a href="#multicol">Multi-column layout types and options</a>.<br />
 			                                        Example: <code>[linkview cat_columns="static(num_columns=2)"]</code></p>'),
 
 			'link_columns'   => array('section' => 'list',
 			                          'val'     => array('Number','static','css','masonry'),
 			                          'std_val' => '1',
 			                          'desc'    => 'This attribute specifies if and how the links shall be displayed in multiple columns in list view.<br />
-			                                        There are 3 different types of multiple column layouts available. Each of them has their own advantages and disadvantages.<br />
-			                                        Each type has different options to modify the output.<br />
-			                                        Layout types and options:
-			                                        <small><table class="columntype-table">
-			                                        <tr><th>type</th><th>description</th><th>options</th><th>option values</th><th>default value</th></tr>
-			                                        <tr><td>Number</td><td>Insert a number to specify a static number of columns. This is a short form of the static type (see below).</td><td>none</td><td></td></tr>
-			                                        <tr><td>static</td><td>Set a static number of columns. The links will be arranged in rows.</td><td>num_columns</td><td>number</td><td>3</td></tr>
-			                                        <tr><td>css</td><td>This type uses the <a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank">column feature of CSS</a>.</td><td>column_width</td><td><a href="http://www.w3schools.com/cssref/pr_dim_width.asp" target="_blank">css width property</a></td><td>none</td></tr>
-			                                        <tr><td>masonry</td><td>This type uses the <a href="http://masonry.desandro.com/" traget="_blank">masonry grid layout javascript library</a> to arrange the columns.</td><td colspan="2"><a href="http://masonry.desandro.com/options.html" target="_blank">masonry options</a></td><td></td></tr>
-			                                        </table></small>
-			                                        The standard value is "1" to display 1 column only (a simple list).<br />
-			                                        If you have multiple columns it is recommended to define a fixed width for the links. This width must be set manually e.g. via the css entry: <code>.lv-multi-column { width: 32%; }</code><br />
-			                                        <p>The type options must be added in brackets in the format "option_name=value", multiple options can be added seperated by a pipe ("|").<br />
+			                                        There are 3 different types of multiple column layouts available. Find more information regarding the types and options in the chapter "Multi-column layout types and options".<br />
 			                                        Example: <code>[linkview link_columns="static(num_columns=2)"]</code></p>'),
 
 			'slider_width'   => array('section' => 'slider',
