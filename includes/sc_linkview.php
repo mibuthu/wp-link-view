@@ -391,9 +391,18 @@ class SC_Linkview {
 	}
 
 	private function html_link_list($links, $a, $list_id, $slider_size) {
-		$num_columns = (is_int((int)$a['link_columns']) && 'slider' !== $a['view_type']) ? $a['link_columns'] : 1;
-		$out = '
-					<div id="'.$list_id.'" style="column-count:'.$num_columns.'; -moz-column-count:'.$num_columns.'; -webkit-column-count:'.$num_columns.';"';
+		$out = '';
+		// prepare for linklist multi columns
+		$link_multicol = $this->get_multicol_settings($a['link_columns']);
+		$link_classes = $this->get_multicol_classes($link_multicol);
+		$link_styles = $this->get_multicol_styles($link_multicol);
+		$link_col = 0;
+		// print styles and scripts for multi-column support
+		$out .= $this->print_mansonry_script($link_multicol);
+		$out .= $this->print_css_styles($link_multicol);
+ 		// wrapper div and list tag
+		$out .= '
+					<div id="'.$list_id.'" style="';
 		if('slider' === $a['view_type']) {
 			$out .= ' class="lv-slider"';
 		}
@@ -403,7 +412,11 @@ class SC_Linkview {
 			$out .= ' style="list-style-type:'.$a['list_symbol'].';"';
 		}
 		$out .= '>';
+		// go through each link
 		foreach($links as $link) {
+			// link multi-column handling
+			$out .= $this->html_multicol_before($link_multicol['type'], $link_col);
+			// actual link
 			$out .= '
 						<li class="lv-list-item'.$a['class_suffix'].'"><div class="lv-link'.$a['class_suffix'].'"';
 			if('slider' !== $a['view_type'] && ('top' === $a['vertical_align'] || 'middle' === $a['vertical_align'] || 'bottom' === $a['vertical_align'])) {
@@ -412,7 +425,15 @@ class SC_Linkview {
 			$out .= '>';
 			$out .= $this->html_link($link, $a, $slider_size);
 			$out .= '</div></li>';
+			// link multi-column-handling
+			$out .= $this->html_multicol_after($link_multicol['type'], $link_col, $link_multicol['opt']['num_columns']);
 		}
+		// close last column div if required
+		if(0 != $link_col) {
+			$out .= '
+					</div>';
+		}
+		// close list and wrapper div
 		$out .= '
 					</ul>
 					</div>';
