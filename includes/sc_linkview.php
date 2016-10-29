@@ -236,10 +236,8 @@ class SC_Linkview {
 		$cat_classes = $this->get_multicol_classes($cat_multicol);
 		$cat_styles = $this->get_multicol_styles($cat_multicol);
 		$cat_col = 0;
-		// prepare for masonry multi columns
-		if('masonry' == $cat_multicol['type']) {
-			$out .= $this->print_mansonry_script($cat_multicol['opt']);
-		}
+		// print styles and scripts for multi-column support
+		$out .= $this->print_mansonry_script($cat_multicol);
 		$out .= $this->print_css_styles($cat_multicol);
 		// wrapper div
 		$out .= '
@@ -740,10 +738,14 @@ class SC_Linkview {
 		echo $out;
 	}
 
-	public function print_mansonry_script($option_array) {
+	public function print_mansonry_script($multicol) {
+		// check for masonry type, else do nothing
+		if('masonry' != $multicol['type']) {
+			return '';
+		}
 		// prepare options
 		$option_text = 'itemSelector:".lv-category-column",columnWidth:200';
-		foreach($option_array as $oname => $ovalue) {
+		foreach($multicol['opt'] as $oname => $ovalue) {
 			$option_text .= ','.$oname.':'.$ovalue;
 		}
 		return '
