@@ -234,7 +234,7 @@ class SC_Linkview {
 		// prepare for category multi columns
 		$cat_multicol = $this->get_multicol_settings($a['cat_columns']);
 		$cat_classes = $this->get_multicol_classes($cat_multicol);
-		$cat_styles = $this->get_multicol_styles($cat_multicol);
+		$cat_styles = $this->get_multicol_styles($cat_multicol, 'overflow:hidden;');
 		$cat_col = 0;
 		// print styles and scripts for multi-column support
 		$out .= $this->print_mansonry_script($cat_multicol);
@@ -264,7 +264,7 @@ class SC_Linkview {
 			// generate output
 			if(!empty($links)) {
 				$out .='
-					<div class="lv-category'.$a['class_suffix'].$cat_classes.'" style="overflow:hidden'.$cat_styles.'">';
+					<div class="lv-category'.$a['class_suffix'].$cat_classes.'"'.$cat_styles.'>';
 				$out .= $this->html_category($cat, $a);
 				$list_id = $this->get_new_list_id();
 				$slider_size = array(0, 0);
@@ -418,7 +418,7 @@ class SC_Linkview {
 			$out .= $this->html_multicol_before($link_multicol['type'], $link_col);
 			// actual link
 			$out .= '
-						<li class="lv-list-item'.$a['class_suffix'].'"><div class="lv-link'.$a['class_suffix'].'"';
+						<li class="lv-list-item'.$a['class_suffix'].$link_classes.'"'.$link_styles.'><div class="lv-link'.$a['class_suffix'].'"';
 			if('slider' !== $a['view_type'] && ('top' === $a['vertical_align'] || 'middle' === $a['vertical_align'] || 'bottom' === $a['vertical_align'])) {
 				$out .= ' style="display:inline-block; vertical-align:'.$a['vertical_align'].';"';
 			}
@@ -697,12 +697,20 @@ class SC_Linkview {
 		return $ret;
 	}
 
-	private function get_multicol_styles($multicol) {
-		$ret = '';
+	private function get_multicol_styles($multicol, $additional_styles='') {
+		$styles = $additional_styles;
 		if('css' == $multicol['type'] && isset($multicol['opt']['column_width'])) {
-			$ret .= '; width:'.$multicol['opt']['column_width'];
+			if('' != $styles) {
+				$styles .= ' ';
+			}
+			$styles .= 'width:'.$multicol['opt']['column_width'];
 		}
-		return $ret;
+		if('' == $styles) {
+			return '';
+		}
+		else {
+			return ' style="'.$styles.'"';
+		}
 	}
 
 	private function get_new_list_id() {
