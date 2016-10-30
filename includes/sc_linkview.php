@@ -237,7 +237,7 @@ class SC_Linkview {
 		$cat_styles = $this->get_multicol_styles($cat_multicol, 'overflow:hidden;');
 		$cat_col = 0;
 		// print styles and scripts for multi-column support
-		$out .= $this->print_mansonry_script($cat_multicol);
+		$out .= $this->print_mansonry_script($cat_multicol, '.linkview#lv-sc-id-'.$this->sc_ids, '.lv-category-column');
 		$out .= $this->print_css_styles($cat_multicol);
 		// wrapper div
 		$out .= '
@@ -396,13 +396,14 @@ class SC_Linkview {
 		$link_multicol = $this->get_multicol_settings($a['link_columns']);
 		$link_classes = $this->get_multicol_classes($link_multicol);
 		$link_styles = $this->get_multicol_styles($link_multicol);
+
 		$link_col = 0;
 		// print styles and scripts for multi-column support
-		$out .= $this->print_mansonry_script($link_multicol);
+		$out .= $this->print_mansonry_script($link_multicol, '.linkview #'.$list_id, '.lv-list-item-column');
 		$out .= $this->print_css_styles($link_multicol);
  		// wrapper div and list tag
 		$out .= '
-					<div id="'.$list_id.'" style="';
+					<div id="'.$list_id.'"';
 		if('slider' === $a['view_type']) {
 			$out .= ' class="lv-slider"';
 		}
@@ -767,13 +768,13 @@ class SC_Linkview {
 		echo $out;
 	}
 
-	public function print_mansonry_script($multicol) {
+	public function print_mansonry_script($multicol, $parent_selector, $item_selector) {
 		// check for masonry type, else do nothing
 		if('masonry' != $multicol['type']) {
 			return '';
 		}
 		// prepare options
-		$option_text = 'itemSelector:".lv-category-column",columnWidth:200';
+		$option_text = 'itemSelector:"'.$item_selector.'"';
 		foreach($multicol['opt'] as $oname => $ovalue) {
 			$option_text .= ','.$oname.':'.$ovalue;
 		}
@@ -781,7 +782,7 @@ class SC_Linkview {
 				<script type="text/javascript" src="'.LV_URL.'includes/js/masonry.pkgd.min.js"></script>
 				<script type="text/javascript">
 					jQuery(document).ready( function() {
-						jQuery(".linkview#lv-sc-id-'.$this->sc_ids.'").masonry({'.$option_text.'});
+						jQuery("'.$parent_selector.'").masonry({'.$option_text.'});
 					});
 				</script>';
 	}
