@@ -235,7 +235,6 @@ class SC_Linkview {
 		$cat_multicol = $this->get_multicol_settings($a['cat_columns']);
 		$cat_classes = $this->get_multicol_classes($cat_multicol, 'lv-category'.$a['class_suffix']);
 		$cat_wrapper_styles = $this->get_multicol_wrapper_styles($cat_multicol);
-		$cat_styles = $this->get_multicol_styles($cat_multicol, 'overflow:hidden;');
 		$cat_col = 0;
 		// print styles and scripts for multi-column support
 		$out .= $this->print_mansonry_script($cat_multicol, '.linkview#lv-sc-id-'.$this->sc_ids, '.lv-category-column');
@@ -265,7 +264,7 @@ class SC_Linkview {
 			// generate output
 			if(!empty($links)) {
 				$out .='
-					<div'.$cat_classes.$cat_styles.'>';
+					<div'.$cat_classes.'>';
 				$out .= $this->html_category($cat, $a);
 				$list_id = $this->get_new_list_id();
 				$slider_size = array(0, 0);
@@ -397,8 +396,6 @@ class SC_Linkview {
 		$link_multicol = $this->get_multicol_settings($a['link_columns']);
 		$link_classes = $this->get_multicol_classes($link_multicol, 'lv-list-item'.$a['class_suffix']);
 		$link_wrapper_styles = $this->get_multicol_wrapper_styles($link_multicol, ('none'==$a['list_symbol'] || 'circle'==$a['list_symbol'] || 'square'==$a['list_symbol'] || 'disc'==$a['list_symbol']) ? 'list-style-type:'.$a['list_symbol'].';' : '');
-		$link_styles = $this->get_multicol_styles($link_multicol);
-
 		$link_col = 0;
 		// print styles and scripts for multi-column support
 		$out .= $this->print_mansonry_script($link_multicol, '.linkview #'.$list_id, '.lv-list-item-column');
@@ -417,7 +414,7 @@ class SC_Linkview {
 			$out .= $this->html_multicol_before($link_multicol['type'], $link_col);
 			// actual link
 			$out .= '
-						<li'.$link_classes.$link_styles.'><div class="lv-link'.$a['class_suffix'].'"';
+						<li'.$link_classes.'><div class="lv-link'.$a['class_suffix'].'"';
 			if('slider' !== $a['view_type'] && ('top' === $a['vertical_align'] || 'middle' === $a['vertical_align'] || 'bottom' === $a['vertical_align'])) {
 				$out .= ' style="display:inline-block; vertical-align:'.$a['vertical_align'].';"';
 			}
@@ -724,16 +721,6 @@ class SC_Linkview {
 		}
 	}
 
-	private function get_multicol_styles($multicol, $additional_styles='') {
-		$styles = $additional_styles;
-		if('' == $styles) {
-			return '';
-		}
-		else {
-			return ' style="'.$styles.'"';
-		}
-	}
-
 	private function get_new_list_id() {
 		$this->num_ids++;
 		return 'lv-id-'.$this->num_ids;
@@ -754,6 +741,7 @@ class SC_Linkview {
 		if(!$this->css_printed) {
 			$css .= '
 					.linkview { overflow:auto; }
+					.linkview > div { overflow:hidden; }
 					.lv-slider ul, .lv-slider li { margin:0; padding:0; list-style-type:none; list-style-image:none; }
 					.lv-slider li { overflow:hidden; text-align:center; }
 					.lv-slider img { max-width:100%; }
