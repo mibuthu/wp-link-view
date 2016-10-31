@@ -2,3 +2,5 @@
 /.buildpath
 /.settings
 /.directory
+*.phprj
+

@@ -1,10 +1,10 @@
 ﻿=== Link View ===
 Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY
-Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css
+Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css, multi-column
 Requires at least: 3.3
 Tested up to: 4.6
-Stable tag: 0.6.3
+Stable tag: 0.6.4
 Plugin URI: http://wordpress.org/extend/plugins/link-view
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -59,6 +59,15 @@ Yes, you can create an instance of the "SC_Linkview" class which located in "php
 
 
 == Changelog ==
+
+= 0.6.4 (2016-10-31) =
+* added minified version of slider-script
+* consolidate and improve multi-column support for categories and link-lists
+* updated help texts for multi-column support
+* some css changes for multi-column support
+* security improvement for external links
+
+Attention: This version includes some modifications in multi-column layout, which can break existing shortcodes! So if you already use the multi-column feature for categories and/or links please check the output of your link page after the update. If the layout is broken you can find help in the admin page: Links -> About LinkView.
 
 = 0.6.3 (2016-04-20) =
 * added shortcode attribute "link_rel"
