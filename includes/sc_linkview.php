@@ -727,15 +727,16 @@ class SC_Linkview {
 		return 'lv-id-'.$this->num_ids;
 	}
 
-	private function print_css_styles($cat_multicolumn) {
+	private function print_css_styles($multicolumn) {
 		// print custom css (only once, whe the shortcode is included the first time)
 		$css = '';
-		if($cat_multicolumn && !$this->css_multicol_printed) {
+		if($multicolumn && !$this->css_multicol_printed) {
 			// some default styles for multi-column layouts
 			$css .= '
 					.lv-multi-column { float:left; }
 					.lv-multi-column li { page-break-inside: avoid; }
-					.lv-css-column { break-inside:avoid-column; -webkit-column-break-inside:avoid; -moz-column-break-inside:avoid; -o-column-break-inside:avoid; column-break-inside:avoid; display:table; }';
+					.lv-row { overflow:auto; }
+					.lv-css-column { break-inside:avoid-column; column-break-inside:avoid; -webkit-column-break-inside:avoid; overflow:hidden; }';
 			$this->css_multicol_printed = true;
 		}
 		if(!$this->css_printed) {
@@ -744,7 +745,6 @@ class SC_Linkview {
 					.lv-slider ul, .lv-slider li { margin:0; padding:0; list-style-type:none; list-style-image:none; }
 					.lv-slider li { overflow:hidden; text-align:center; }
 					.lv-slider img { max-width:100%; }
-					.lv-row { overflow:auto; }
 					'.$this->options->get('lv_css');
 			$this->css_printed = true;
 		}
