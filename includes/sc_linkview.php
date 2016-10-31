@@ -233,7 +233,7 @@ class SC_Linkview {
 
 		// prepare for category multi columns
 		$cat_multicol = $this->get_multicol_settings($a['cat_columns']);
-		$cat_classes = $this->get_multicol_classes($cat_multicol);
+		$cat_classes = $this->get_multicol_classes($cat_multicol, 'lv-category'.$a['class_suffix']);
 		$cat_styles = $this->get_multicol_styles($cat_multicol, 'overflow:hidden;');
 		$cat_col = 0;
 		// print styles and scripts for multi-column support
@@ -264,7 +264,7 @@ class SC_Linkview {
 			// generate output
 			if(!empty($links)) {
 				$out .='
-					<div class="lv-category'.$a['class_suffix'].$cat_classes.'"'.$cat_styles.'>';
+					<div'.$cat_classes.$cat_styles.'>';
 				$out .= $this->html_category($cat, $a);
 				$list_id = $this->get_new_list_id();
 				$slider_size = array(0, 0);
@@ -394,7 +394,7 @@ class SC_Linkview {
 		$out = '';
 		// prepare for linklist multi columns
 		$link_multicol = $this->get_multicol_settings($a['link_columns']);
-		$link_classes = $this->get_multicol_classes($link_multicol);
+		$link_classes = $this->get_multicol_classes($link_multicol, 'lv-list-item'.$a['class_suffix']);
 		$link_styles = $this->get_multicol_styles($link_multicol);
 
 		$link_col = 0;
@@ -419,7 +419,7 @@ class SC_Linkview {
 			$out .= $this->html_multicol_before($link_multicol['type'], $link_col);
 			// actual link
 			$out .= '
-						<li class="lv-list-item'.$a['class_suffix'].$link_classes.'"'.$link_styles.'><div class="lv-link'.$a['class_suffix'].'"';
+						<li'.$link_classes.$link_styles.'><div class="lv-link'.$a['class_suffix'].'"';
 			if('slider' !== $a['view_type'] && ('top' === $a['vertical_align'] || 'middle' === $a['vertical_align'] || 'bottom' === $a['vertical_align'])) {
 				$out .= ' style="display:inline-block; vertical-align:'.$a['vertical_align'].';"';
 			}
@@ -690,10 +690,18 @@ class SC_Linkview {
 		return $ret;
 	}
 
-	private function get_multicol_classes($multicol) {
-		$ret = '';
+	private function get_multicol_classes($multicol, $additional_classes='') {
+		$classes = $additional_classes;
 		if($multicol['type']) {
-			$ret .= ' lv-multi-column lv-'.$multicol['type'].'-column';
+			$classes .= ' lv-multi-column lv-'.$multicol['type'].'-column';
+		}
+		if('' == $classes) {
+			return '';
+		}
+		else {
+			return ' class="'.$classes.'"';
+		}
+	}
 		}
 		return $ret;
 	}
