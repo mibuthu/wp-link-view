@@ -234,6 +234,7 @@ class SC_Linkview {
 		// prepare for category multi columns
 		$cat_multicol = $this->get_multicol_settings($a['cat_columns']);
 		$cat_classes = $this->get_multicol_classes($cat_multicol, 'lv-category'.$a['class_suffix']);
+		$cat_wrapper_styles = $this->get_multicol_wrapper_styles($cat_multicol);
 		$cat_styles = $this->get_multicol_styles($cat_multicol, 'overflow:hidden;');
 		$cat_col = 0;
 		// print styles and scripts for multi-column support
@@ -241,7 +242,7 @@ class SC_Linkview {
 		$out .= $this->print_css_styles($cat_multicol);
 		// wrapper div
 		$out .= '
-				<div class="linkview" id="lv-sc-id-'.$this->sc_ids.'">';
+				<div class="linkview" id="lv-sc-id-'.$this->sc_ids.'"'.$cat_wrapper_styles.'>';
 		// go through each category
 		foreach($categories as $cat) {
 			// cat multi-column handling
@@ -395,6 +396,7 @@ class SC_Linkview {
 		// prepare for linklist multi columns
 		$link_multicol = $this->get_multicol_settings($a['link_columns']);
 		$link_classes = $this->get_multicol_classes($link_multicol, 'lv-list-item'.$a['class_suffix']);
+		$link_wrapper_styles = $this->get_multicol_wrapper_styles($link_multicol, ('none'==$a['list_symbol'] || 'circle'==$a['list_symbol'] || 'square'==$a['list_symbol'] || 'disc'==$a['list_symbol']) ? 'list-style-type:'.$a['list_symbol'].';' : '');
 		$link_styles = $this->get_multicol_styles($link_multicol);
 
 		$link_col = 0;
@@ -408,11 +410,7 @@ class SC_Linkview {
 			$out .= ' class="lv-slider"';
 		}
 		$out .= '>
-					<ul class="lv-link-list'.$a['class_suffix'].'"';
-		if($a['list_symbol'] == 'none' || $a['list_symbol'] == 'circle' || $a['list_symbol'] == 'square' || $a['list_symbol'] == 'disc') {
-			$out .= ' style="list-style-type:'.$a['list_symbol'].';"';
-		}
-		$out .= '>';
+					<ul class="lv-link-list'.$a['class_suffix'].'"'.$link_wrapper_styles.'>';
 		// go through each link
 		foreach($links as $link) {
 			// link multi-column handling
@@ -702,18 +700,32 @@ class SC_Linkview {
 			return ' class="'.$classes.'"';
 		}
 	}
+
+	private function get_multicol_wrapper_styles($multicol, $additional_styles='') {
+		$styles = $additional_styles;
+		// prepare multi-column css options
+		if('css' == $multicol['type']) {
+			foreach($multicol['opt'] as $oname => $ovalue) {
+				// do not add internal options
+				if('num_columns' == $oname) { continue; }
+				// add attribute
+				$styles .= $oname.':'.$ovalue.';';
+				// add prefixed browser specific attributes
+				if('column' == substr($oname, 0, 6)) {
+					$styles .='-moz-'.$oname.':'.$ovalue.';-webkit-'.$oname.':'.$ovalue.';';
+				}
+			}
 		}
-		return $ret;
+		if('' == $styles) {
+			return '';
+		}
+		else {
+			return ' style="'.$styles.'"';
+		}
 	}
 
 	private function get_multicol_styles($multicol, $additional_styles='') {
 		$styles = $additional_styles;
-		if('css' == $multicol['type'] && isset($multicol['opt']['column_width'])) {
-			if('' != $styles) {
-				$styles .= ' ';
-			}
-			$styles .= 'width:'.$multicol['opt']['column_width'];
-		}
 		if('' == $styles) {
 			return '';
 		}
@@ -748,6 +760,7 @@ class SC_Linkview {
 					'.$this->options->get('lv_css');
 			$this->css_printed = true;
 		}
+
 		if('' == $css) {
 			return '';
 		}
