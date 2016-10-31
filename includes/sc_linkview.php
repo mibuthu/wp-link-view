@@ -161,15 +161,13 @@ class SC_Linkview {
 			                          'val'     => array('Number','static','css','masonry'),
 			                          'std_val' => '1',
 			                          'desc'    => 'This attribute specifies if and how the categories shall be displayed in multiple columns in list view.<br />
-			                                        There are 3 different types of multiple column layouts available. Find more information regarding the types and options in the chapter <a href="#multicol">Multi-column layout types and options</a>.<br />
-			                                        Example: <code>[linkview cat_columns="static(num_columns=2)"]</code></p>'),
+			                                        There are 3 different types of multiple column layouts available. Find more information regarding the types and options in the chapter <a href="#multicol">Multi-column layout types and options</a>.'),
 
 			'link_columns'   => array('section' => 'list',
 			                          'val'     => array('Number','static','css','masonry'),
 			                          'std_val' => '1',
 			                          'desc'    => 'This attribute specifies if and how the links shall be displayed in multiple columns in list view.<br />
-			                                        There are 3 different types of multiple column layouts available. Find more information regarding the types and options in the chapter "Multi-column layout types and options".<br />
-			                                        Example: <code>[linkview link_columns="static(num_columns=2)"]</code></p>'),
+			                                        There are 3 different types of multiple column layouts available. Find more information regarding the types and options in the chapter <a href="#multicol">Multi-column layout types and options</a>.'),
 
 			'slider_width'   => array('section' => 'slider',
 			                          'val'     => 'Number',

@@ -37,7 +37,7 @@ class LV_Admin_About {
 			<div id="icon-link-manager" class="icon32"><br /></div><h2>About LinkView</h2></div>
 			<h3>Help and Instructions</h3>
 			<h4>Create a page or post with links</h4>
-			<div class="help-content"
+			<div class="help-content">
 				<p>"LinkView" works by using a "shortcode" in a page or post.</p>
 				<p>Shortcodes are snippets of pseudo code that are placed in blog posts or pages to easily render HTML output.<br />
 				To create a link page or post add the shortcode <code>[linkview]</code> in the text field of any page or post.</p>
@@ -84,7 +84,7 @@ class LV_Admin_About {
 		$out .= '<h4 class="atts-section-title">Link Slider:</h4>';
 		$out .= $this->html_atts_table('slider');
 		$out .= '<br />
-				<h4 class="atts-section-title">Multi-column layout types and options:</h4><a name="multicol"></a>
+				<h4 class="atts-section-title">Multi-column layout types and options:</h4><a id="multicol"></a>
 				There are 3 different types of multiple column layouts available for category or link multi-column view. Each type has some advantages and disadvantages compared to the others.
 				<p>Additionally the available layouts can be modified with their options:</p>
 				<table class="atts-table">
@@ -94,9 +94,9 @@ class LV_Admin_About {
 				<tr><td>static</td><td>Set a static number of columns. The categories or links will be arranged in rows.
 					<h5>available options:</h5>
 					<em>num_columns</em>: Provide a single number which specifys the number of columns. If no value is given 3 will be used by default.</td></tr>
-				<tr><td>css</td><td>This type uses the <a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank rel="noopener"">multi-column feature of CSS</a> to arrange the columns.
+				<tr><td>css</td><td>This type uses the <a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">multi-column feature of CSS</a> to arrange the columns.
 					<h5>available options:</h5>
-					You can use all available properties for CSS3 Multi-column Layout (see <a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank rel="noopener">this link</a> for detailed information).<br />
+					You can use all available properties for CSS3 Multi-column Layout (see <a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">this link</a> for detailed information).<br />
 					The given attributes will be added to the wrapper div element. Also the prefixed browser specific attributes will be added.</td></tr>
 				<tr><td>masonry</td><td>This type uses the <a href="http://masonry.desandro.com/" target="_blank" rel="noopener">Masonry grid layout javascript library</a> to arrange the columns.
 					<h5>available options:</h5>
@@ -105,10 +105,16 @@ class LV_Admin_About {
 				</table>
 				<div class="help-content">
 					<h5>Usage:</h5>
-					If you want to use a multiple column layout for categories or links it is recommended to define a fixed width for the categories and/or links. This width must be set manually e.g. via the css entry: <code>.lv-multi-column { width: 32%; }</code><br />
-					The type options must be added in brackets in the format "option_name=value", multiple options can be added seperated by a pipe ("|").
+					For the most types and options it is recommended to define a fixed width for the categories and/or links. This width must be set manually e.g. via the css entry: <code>.lv-multi-column { width: 32%; }</code><br />
+					Depending on the type and options there are probably more css modifications required for a correct multi-column layout.<br />
+					There are different ways to add required css code, one method is the link-view setting "CSS-code for linkview" which can be found in <a href="'.admin_url('options-general.php?page=lv_admin_options').'">Settings &rarr; LinkView</a>.<br />
+					The optional type options must be added in brackets in the format "option_name=value", multiple options can be added seperated by a pipe ("|").
 					<h5>Examples:</h5>
-					<code>[linkview link_columns="static(num_columns=2)"]</code>
+					<p><code>[linkview cat_columns=3]</code> &hellip; show the categories in 3 static columns</p>
+					<p><code>[linkview link_columns="static(num_columns=2)"]</code> &hellip; show the link-lists in 2 static columns</p>
+					<p><code>[linkview cat_columns="css(column-width=4)"</code> &hellip; show the categories in columns with the css column properties with a fixed width per category</p>
+					<p><code>[linkview links_columns="css(column-count=4|column-rule=4px outset #ff00ff|column-gap=40px)"</code> &hellip; show the link-lists in 4 columns with multiple css column properties</p>
+					<p><code>[linkview cat_columns="masonry(masonry(isOriginTop=false|isOriginLeft=false)"</code> &hellip; show the categories in columns with the masonry script (with some specific masonry options)</p>
 				</div>
 			</div>';
 		return $out;
