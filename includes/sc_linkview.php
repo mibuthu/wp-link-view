@@ -47,12 +47,6 @@ class SC_Linkview {
 			                                        <code>[linkview cat_filter="social-media"]</code>&hellip; Show all links with category "social-media".<br />
 			                                        <code>[linkview cat_filter="blogroll&comma;social-media"]</code>&hellip; Show all links with category "blogroll" or "social-media".'),
 
-			// TODO: remove deprecated attribute "cat_name"
-			'cat_name'       => array('section' => 'general',
-			                          'val'     => '',
-			                          'std_val' => '',
-			                          'desc'    => 'Deprecated! Please do not use this attribute anymore, use "cat_filter" instead! This attribute will be removed in a future version!'),
-
 			'exclude_cat'    => array('section' => 'general',
 			                          'val'     => 'Cat 1,Cat 2,...',
 			                          'std_val' => '',
@@ -127,11 +121,6 @@ class SC_Linkview {
 			                          'desc'    => 'Set one of the given values to overwrite the standard value which was set for the link.<br />
 			                                        Set the attribute to "std" if you don´t want to overwrite the standard.'),
 
-			// TODO: remove deprecated target shortcode attribute
-			'target'         => array('section' => 'general',
-			                          'val'     => '',
-			                          'std_val' => '',
-			                          'desc'    => 'This attribute is deprecated and will be removed in a future version! Please use "link_target" instead!'),
 
 			'link_rel'       => array('section' => 'general',
 			                          'val'     => array('alternate','author','bookmark','external','help','license','next','nofollow','noreferrer','noopener','prev','search','tag'),
@@ -316,16 +305,6 @@ class SC_Linkview {
 			foreach($catslugs as $catslug) {
 				if(get_term_by('slug', $catslug, 'link_category')) {
 					$catarray[] = get_term_by('slug', $catslug, 'link_category');
-				}
-			}
-		}
-		// TODO: cat_name is deprecated! Will be removed in one of the next versions.
-		elseif(!empty($a['cat_name'])) {
-			$catnames = array_map('trim', explode(",", $a['cat_name']));
-			foreach($catnames as $catname) {
-				if(get_term_by('name', $catname, 'link_category'))
-				{
-					$catarray[] = get_term_by('name', $catname, 'link_category');
 				}
 			}
 		}
@@ -520,10 +499,6 @@ class SC_Linkview {
 		// if a link for this item should be created
 		if($is_link) {
 			// handle link target
-			// TODO: remove code to handle deprecated "Target" attribute
-			if($a['link_target'] == '' && $a['link_target'] != '') {
-				$a['link_target'] = $a['link_target'];
-			}
 			$out .= '<a class="lv-anchor'.$a['class_suffix'].'" href="'.$l->link_url;
 			if('blank' === $a['link_target'] || 'top' === $a['link_target'] || 'self' === $a['link_target']) {
 				$target = '_'.$a['link_target'];
