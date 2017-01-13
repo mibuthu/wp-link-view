@@ -17,11 +17,11 @@ class LV_Widget extends WP_Widget {
 		parent::__construct(
 	 		'linkview_widget', // Base ID
 			'LinkView', // Name
-			array('description' => __('This widget allows you to insert the linkview shortcode in the sidebar. You can set every attribute which is available for the shortcode.', 'text_domain'),) // Args
+			array('description' => __('This widget allows you to insert the linkview shortcode in the sidebar. You can set every attribute which is available for the shortcode.','link-view'),)
 		);
 		// define all available items
 		$this->items = array(
-			'title' => array('std_value' => __('Links', 'text_domain')),
+			'title' => array('std_value' => __('Links', 'link-view')),
 			'atts' =>  array('std_value' => ''),
 		);
 		add_action('admin_init', array(&$this, 'load_widget_items_helptexts'), 2);
