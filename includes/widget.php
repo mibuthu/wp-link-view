@@ -21,19 +21,18 @@ class LV_Widget extends WP_Widget {
 		);
 		// define all available items
 		$this->items = array(
-			'title' => array('type'          => 'text',
-			                 'std_value'     => __('Links', 'text_domain'),
-			                 'caption'       => __('Title:'),
-			                 'tooltip'       => __('The title for the widget'),
-			                 'form_style'    => null),
-
-			'atts' =>  array('type'          => 'textarea',
-			                 'std_value'     => '',
-			                 'caption'       => __('Shortcode attributes:'),
-			                 'tooltip'       => __('You can add all attributes which are available for the linkview shortcode'),
-			                 'form_style'    => null,
-			                 'form_rows'     => 5)
+			'title' => array('std_value' => __('Links', 'text_domain')),
+			'atts' =>  array('std_value' => ''),
 		);
+		add_action('admin_init', array(&$this, 'load_widget_items_helptexts'), 2);
+	}
+
+	public function load_widget_items_helptexts() {
+		require_once(LV_PATH.'includes/widget_helptexts.php');
+		foreach($widget_items_helptexts as $name => $values) {
+			$this->items[$name] += $values;
+		}
+		unset($widget_items_helptexts);
 	}
 
 	/**
