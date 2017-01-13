@@ -1,4 +1,8 @@
 <?php
+if(!defined('WPINC')) {
+	exit;
+}
+
 $widget_items_helptexts = array(
 	'title' => array('type'       => 'text',
 	                 'caption'    => __('Title:'),
