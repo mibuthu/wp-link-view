@@ -3,18 +3,15 @@ if(!defined('WPINC')) {
 	die;
 }
 
-require_once(LV_PATH.'includes/sc_linkview.php');
 require_once(LV_PATH.'includes/options.php');
 
 // This class handles all data for the admin about page
 class LV_Admin_About {
 	private static $instance;
 	private $options;
-	private $shortcode;
 
 	private function __construct() {
 		$this->options = &LV_Options::get_instance();
-		$this->shortcode = &SC_Linkview::get_instance();
 	}
 
 	public static function &get_instance() {
@@ -72,17 +69,20 @@ class LV_Admin_About {
 	}
 
 	private function html_atts() {
+		require_once(LV_PATH.'includes/sc_linkview.php');
+		$shortcode = &SC_Linkview::get_instance();
+		$shortcode->load_sc_linkview_helptexts();
 		$out = '
 			<h3>Shortcode Attributes</h3>
 			<div class="help-content">
 				In the following tables you can find all available shortcode attributes for <code>[linkview]</code>:
 				';
 		$out .= '<h4 class="atts-section-title">General:</h4>';
-		$out .= $this->html_atts_table('general');
+		$out .= $this->html_atts_table($shortcode->get_atts('general'));
 		$out .= '<h4 class="atts-section-title">Link List:</h4>';
-		$out .= $this->html_atts_table('list');
+		$out .= $this->html_atts_table($shortcode->get_atts('list'));
 		$out .= '<h4 class="atts-section-title">Link Slider:</h4>';
-		$out .= $this->html_atts_table('slider');
+		$out .= $this->html_atts_table($shortcode->get_atts('slider'));
 		$out .= '<br />
 				<h4 class="atts-section-title">Multi-column layout types and options:</h4><a id="multicol"></a>
 				There are 3 different types of multiple column layouts available for category or link multi-column view. Each type has some advantages and disadvantages compared to the others.
@@ -120,7 +120,7 @@ class LV_Admin_About {
 		return $out;
 	}
 
-	private function html_atts_table($section) {
+	private function html_atts_table($atts) {
 		$out = '
 			<table class="atts-table">
 				<tr>
@@ -129,7 +129,6 @@ class LV_Admin_About {
 					<th class="atts-table-default">Default value</th>
 					<th class="atts-table-desc">Description</th>
 				</tr>';
-		$atts = $this->shortcode->get_atts($section);
 		foreach($atts as $aname => $a) {
 			$val = is_array($a['val']) ? implode('<br />', $a['val']) : $a['val'];
 			$out .= '
