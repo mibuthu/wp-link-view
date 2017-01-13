@@ -121,7 +121,6 @@ class SC_Linkview {
 			                          'desc'    => 'Set one of the given values to overwrite the standard value which was set for the link.<br />
 			                                        Set the attribute to "std" if you don´t want to overwrite the standard.'),
 
-
 			'link_rel'       => array('section' => 'general',
 			                          'val'     => array('alternate','author','bookmark','external','help','license','next','nofollow','noreferrer','noopener','prev','search','tag'),
 			                          'std_val' => '',
@@ -498,8 +497,8 @@ class SC_Linkview {
 		}
 		// if a link for this item should be created
 		if($is_link) {
-			// handle link target
-			$out .= '<a class="lv-anchor'.$a['class_suffix'].'" href="'.$l->link_url;
+			// prepare link
+			// check target
 			if('blank' === $a['link_target'] || 'top' === $a['link_target'] || 'self' === $a['link_target']) {
 				$target = '_'.$a['link_target'];
 			}
@@ -510,18 +509,20 @@ class SC_Linkview {
 					$target = '_self';
 				}
 			}
-			$out .= '" target="'.$target.'" title="'.$l->link_name;
+			// check description
+			$description = '';
 			if($l->link_description != "") {
-				$out .= ' ('.$l->link_description.')';
+				$description = ' ('.$l->link_description.')';
 			}
-			// handle link rel attribute
+			// check rel attribute
+			$rel = '';
 			if('' != $a['link_rel']) {
 				// check value according to allowed values for HTML5 (see http://www.w3schools.com/tags/att_a_rel.asp)
 				if(in_array($a['link_rel'], $this->atts['link_rel']['val'])) {
-					$out .= '" rel="'.$a['link_rel'];
+					$rel = ' rel="'.$a['link_rel'].'"';
 				}
 			}
-			$out .= '">';
+			$out .= '<a class="lv-anchor'.$a['class_suffix'].'" href="'.$l->link_url.'" target="'.$target.'" title="'.$l->link_name.$description.'"'.$rel.'>';
 		}
 		switch($item) {
 			case 'name':
