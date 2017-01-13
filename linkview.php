@@ -46,6 +46,8 @@ class LinkView {
 		$this->shortcode = null;
 
 		// ALWAYS:
+		// Register translation
+		add_action('plugins_loaded', array(&$this, 'load_textdomain'));;
 		// Register shortcodes
 		add_shortcode('linkview', array(&$this, 'shortcode_linkview'));
 		// Register widgets
@@ -69,6 +71,10 @@ class LinkView {
 			add_action('wp_footer', array(&$this, 'frontpage_footer'));
 		}
 	} // end constructor
+
+	public function load_textdomain() {
+		load_plugin_textdomain('link-view', false, basename(LV_PATH).'/languages');
+	}
 
 	public function shortcode_linkview($atts, $content='') {
 		if(null == $this->shortcode) {
