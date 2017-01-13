@@ -19,50 +19,18 @@ class LV_Options {
 
 	private function __construct() {
 		$this->options = array(
-
-			'lv_req_cap'  => array('type'    => 'radio',
-			                       'std_val' => 'manage_links',
-			                       'label'   => __('Required capabilities to show LinkView About page'),
-			                       'caption' => array('manage_links' => 'manage_links (Standard)', 'edit_pages' => 'edit_pages', 'edit_posts' => 'edit_posts'),
-			                       'desc'    => __('With this option you can specify the required capabilities to show the LinkView About page.<br />
-			                                       (see <a href="http://codex.wordpress.org/Roles_and_Capabilities">WordPress Codex</a> for more infos).')),
-
-			'lv_ml_role'  => array('type'    => 'radio',
-			                       'std_val' => 'editor',
-			                       'label'   => __('Required role to manage links'),
-			                       'caption' => array('editor' => 'Editor (Wordpress-Standard)', 'author' => 'Author', 'contributor' => 'Contributor', 'subscriber' => 'Subscriber'),
-			                       'desc'    => __('With this option you can overwrite the wordpress default minimum required role to manage links (Capability: "manage_links").<br />
-			                                       (see <a href="http://codex.wordpress.org/Roles_and_Capabilities">WordPress Codex</a> for more infos).<br />
-			                                       Please not that this option also affects the viewing the LinkView About page if the required capabilities are set to "manage_links".<br />')),
-
-			'lv_css'      => array('type'    => 'textarea',
-			                       'std_val' => '',
-			                       'label'   => 'CSS-code for linkview',
-			                       'desc'    => 'With this option you can specify CSS-code for the links displayed by the linkview shortcode or widget.<br />
-			                                     You can use the classes which are automatically created by the linkview shortcode or widget e.g. .lv-item-image, .lv-section-name, .lv-cat-name, ...<br />
-			                                     You can find all available classes if you have a look at the sourcecode of your page where the shortcode or widget is included.<br />
-			                                     If you use the shortcode several times you can specify different css styles if you set the attribute "class_suffix" and create CSS-code for these special classes
-			                                     e.g. .lv-link-list-suffix, .lv-item-name-suffix.<br /><br />
-			                                     Below you can find some working examples:<br />
-			                                     <code>.lv-link {<br />
-			                                     &nbsp;&nbsp;&nbsp;margin-bottom: 15px;<br />
-			                                     }<br />
-			                                     .lv-item-image img {<br />
-			                                     &nbsp;&nbsp;&nbsp;-webkit-border-radius: 9px;<br />
-			                                     &nbsp;&nbsp;&nbsp;-moz-border-radius: 9px;<br />
-			                                     &nbsp;&nbsp;&nbsp;border-radius: 9px;<br />
-			                                     }<br />
-			                                     .lv-item-image-detail img {<br />
-			                                     &nbsp;&nbsp;&nbsp;max-width: 250px;<br />
-			                                     }<br />
-			                                     .lv-section-left-detail {<br />
-			                                     &nbsp;&nbsp;&nbsp;float: left;<br />
-			                                     }<br />
-			                                     .lv-section-right-detail {<br />
-			                                     &nbsp;&nbsp;&nbsp;float: right;<br />
-			                                     &nbsp;&nbsp;&nbsp;margin-left: 15px;<br />
-			                                     }</code>')
+			'lv_req_cap'  => array('std_val' => 'manage_links'),
+			'lv_ml_role'  => array('std_val' => 'editor'),
+			'lv_css'      => array('std_val' => ''),
 		);
+	}
+
+	public function load_options_helptexts() {
+		require_once(LV_PATH.'includes/options_helptexts.php');
+		foreach($options_helptexts as $name => $values) {
+			$this->options[$name] += $values;
+		}
+		unset($options_helptexts);
 	}
 
 	public function init() {
