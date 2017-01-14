@@ -53,11 +53,11 @@ class LV_Admin_About {
 			<div class="help-content">
 				'.sprintf(__('In the %1$s settings page, available under %2$s, you can find some options to modify the plugin.','link-view'), 'LinkView', '<a href="'.admin_url('options-general.php?page=lv_admin_options').'">'.__('Settings').' &rarr; LinkView</a>').'
 			</div>
-			<h3>About</h3>
+			<h3>'.__('About','link-view').'</h3>
 			<div class="help-content">
-				<p>This plugin is developed by mibuthu, you can find more information about the plugin on the <a href="http://wordpress.org/plugins/link-view">wordpress plugin site</a>.</p>
-				<p>If you like the plugin please give me a good rating on the <a href="http://wordpress.org/support/view/plugin-reviews/link-view">wordpress plugin review site</a>.<br />
-				<p>If you want to support the plugin I would be happy to get a small donation:<br />
+				<p>'.sprintf(__('This plugin is developed by %1$s, you can find more information about the plugin on the %2$s.','link-view'), 'mibuthu', '<a href="http://wordpress.org/plugins/link-view">'.__('wordpress plugin site','link-view').'</a>').'</p>
+				<p>'.sprintf(__('If you like the plugin please rate it on the %1$s.','link-view'), '<a href="http://wordpress.org/support/view/plugin-reviews/link-view">'.__('wordpress plugin review site','link-view').'</a>').'<br />
+				<p>'.__('If you want to support the plugin I would be happy to get a small donation','link-view').':<br />
 				<a class="donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/paypal_btn_donate.gif" alt="PayPal Donation" title="Donate with PayPal" border="0"></a>
 				<a class="donate" href="https://flattr.com/submit/auto?user_id=mibuthu&url=https%3A%2F%2Fwordpress.org%2Fplugins%2Flink-view" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0"></a></p>
 			</div>';
@@ -70,15 +70,15 @@ class LV_Admin_About {
 		$shortcode = &SC_Linkview::get_instance();
 		$shortcode->load_sc_linkview_helptexts();
 		$out = '
-			<h3>Shortcode Attributes</h3>
+			<h3>'.__('Shortcode Attributes','link-view').'</h3>
 			<div class="help-content">
-				In the following tables you can find all available shortcode attributes for <code>[linkview]</code>:
+				'.sprintf(__('In the following tables you can find all available shortcode attributes for %1$s','link-view'), '<code>[linkview]</code>').':
 				';
-		$out .= '<h4 class="atts-section-title">General:</h4>';
+		$out .= '<h4 class="atts-section-title">'.__('General','link-view').':</h4>';
 		$out .= $this->html_atts_table($shortcode->get_atts('general'));
-		$out .= '<h4 class="atts-section-title">Link List:</h4>';
+		$out .= '<h4 class="atts-section-title">'.__('Link List','link-view').':</h4>';
 		$out .= $this->html_atts_table($shortcode->get_atts('list'));
-		$out .= '<h4 class="atts-section-title">Link Slider:</h4>';
+		$out .= '<h4 class="atts-section-title">'.__('Link Slider','link-view').':</h4>';
 		$out .= $this->html_atts_table($shortcode->get_atts('slider'));
 		$out .= '<br />
 				<h4 class="atts-section-title">Multi-column layout types and options:</h4><a id="multicol"></a>
@@ -121,10 +121,10 @@ class LV_Admin_About {
 		$out = '
 			<table class="atts-table">
 				<tr>
-					<th class="atts-table-name">Attribute name</th>
-					<th class="atts-table-options">Value options</th>
-					<th class="atts-table-default">Default value</th>
-					<th class="atts-table-desc">Description</th>
+					<th class="atts-table-name">'.__('Attribute name','link-view').'</th>
+					<th class="atts-table-options">'.__('Value options','link-view').'</th>
+					<th class="atts-table-default">'.__('Default value','link-view').'</th>
+					<th class="atts-table-desc">'.__('Description','link-view').'</th>
 				</tr>';
 		foreach($atts as $aname => $a) {
 			$val = is_array($a['val']) ? implode('<br />', $a['val']) : $a['val'];
