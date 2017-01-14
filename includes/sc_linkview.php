@@ -41,7 +41,7 @@ class SC_Linkview {
 			'link_items'     => array('std_val' => ''),
 			'link_item_img'  => array('std_val' => 'show_img_tag'),
 			'link_target'    => array('std_val' => 'std'),
-			'link_rel'       => array('std_val' => '', 'val' => array('alternate','author','bookmark','external','help','license','next','nofollow','noreferrer','noopener','prev','search','tag')),
+			'link_rel'       => array('std_val' => 'noopener', 'val' => array('alternate','author','bookmark','external','help','license','next','nofollow','noreferrer','noopener','prev','search','tag')),
 			'class_suffix'   => array('std_val' => ''),
 			'list_symbol'    => array('std_val' => 'std'),
 			'vertical_align' => array('std_val' => 'std'),

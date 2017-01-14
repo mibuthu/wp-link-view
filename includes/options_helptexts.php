@@ -8,13 +8,13 @@ $options_helptexts = array(
 	                      'label'   => sprintf(__('Required capabilities to show the %1$s page','link-view'), '"'.__('About','link-view').' LinkView"'),
 	                      'caption' => array('manage_links' => 'manage_links ('.__('Default','link-view').')', 'edit_pages' => 'edit_pages', 'edit_posts' => 'edit_posts'),
 	                      'desc'    => sprintf(__('With this option you can specify the required capabilities to show the %1$s page.','link-view'), '"'.__('About','link-view').' LinkView"').'<br />
-	                                   '.sprintf(__('More information can be found in the %1$s.','link-view'), '<a href="http://codex.wordpress.org/Roles_and_Capabilities">WordPress Codex</a>')),
+	                                   '.sprintf(__('More information can be found in the %1$s.','link-view'), '<a href="http://codex.wordpress.org/Roles_and_Capabilities" target="_blank" rel="noopener">WordPress Codex</a>')),
 
 	'lv_ml_role' => array('type'    => 'radio',
 	                      'label'   => __('Required role to manage links','link-view'),
 	                      'caption' => array('editor' => __('Editor').' (WordPress-'.__('Default','link-view').')', 'author' => __('Author'), 'contributor' => __('Contributor'), 'subscriber' => __('Subscriber')),
 	                      'desc'    => __('With this option minimum required role to manage links can be set','link-view').' ('.__('Capability','link-view').': "manage_links").<br />
-	                                   '.sprintf(__('More information can be found in the %1$s.','link-view'), '<a href="http://codex.wordpress.org/Roles_and_Capabilities">WordPress Codex</a>').'<br />
+	                                   '.sprintf(__('More information can be found in the %1$s.','link-view'), '<a href="http://codex.wordpress.org/Roles_and_Capabilities" target="_blank" rel="noopener">WordPress Codex</a>').'<br />
 	                                   '.sprintf(__('Please note that this option also affects the access to the %1$s page if the required capabilities are set to %2$s.','link-view'), '"'.__('About','link-view').' LinkView"', '"manage_links"')),
 
 	'lv_css'     => array('type'    => 'textarea',
