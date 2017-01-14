@@ -81,7 +81,7 @@ class LV_Admin_About {
 		$out .= '<h4 class="atts-section-title">'.__('Link Slider','link-view').':</h4>';
 		$out .= $this->html_atts_table($shortcode->get_atts('slider'));
 		$out .= '<br />
-				<h4 class="atts-section-title">Multi-column layout types and options:</h4><a id="multicol"></a>
+				<h4 class="atts-section-title">'.__('Multi-column layout types and options','link-view').':</h4><a id="multicol"></a>
 				There are 3 different types of multiple column layouts available for category or link multi-column view. Each type has some advantages and disadvantages compared to the others.
 				<p>Additionally the available layouts can be modified with their options:</p>
 				<table class="atts-table">

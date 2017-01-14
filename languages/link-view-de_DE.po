@@ -1,15 +1,12 @@
-# This is the translation template file for Link View
-# Copyright (C) 2017 Michael Burtscher
-# This file is distributed under the same license as the plugin.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Translation file for the 'Link View' WordPress plugin
+# Copyright (C) 2017 by mibuthu
+# This file is distributed under the same license as the corresponding wordpress plugin.
 # 
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-14 13:53+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/link-view/\n"
+"POT-Creation-Date: 2017-01-14 22:36+0100\n"
 "Last-Translator: mibuthu <mike@mbnet.at>, 2017\n"
 "Language-Team: German (Germany) (https://www.transifex.com/mibuthu/teams/70724/de_DE/)\n"
 "MIME-Version: 1.0\n"
@@ -28,10 +25,6 @@ msgstr "Über %1$s"
 #, php-format
 msgid "%1$s Settings"
 msgstr "%1$s Einstellungen"
-
-#: admin/includes/admin-about.php:29 admin/includes/admin-settings.php:30
-msgid "You do not have sufficient permissions to access this page."
-msgstr ""
 
 #: admin/includes/admin-about.php:35
 msgid "Help and Instructions"
@@ -100,14 +93,6 @@ msgstr ""
 "Gehe zu %1$s und ziehe das %2$s-Widget in einen Seitenleisten- oder Widget-"
 "Bereich."
 
-#: admin/includes/admin-about.php:48
-msgid "Appearance"
-msgstr ""
-
-#: admin/includes/admin-about.php:48
-msgid "Widgets"
-msgstr ""
-
 #: admin/includes/admin-about.php:49
 #, php-format
 msgid ""
@@ -133,11 +118,8 @@ msgstr ""
 "In der %1$s Einstellungsseite, verfügbar unter %2$s, sind einige Optionen "
 "zur Anpassung des Plugins zu finden."
 
-#: admin/includes/admin-about.php:54
-msgid "Settings"
-msgstr ""
-
-#: admin/includes/admin-about.php:56
+#: admin/includes/admin-about.php:56 includes/options_helptexts.php:8
+#: includes/options_helptexts.php:10 includes/options_helptexts.php:18
 msgid "About"
 msgstr "Über"
 
@@ -195,6 +177,10 @@ msgstr "Link Liste"
 msgid "Link Slider"
 msgstr "Link Slider"
 
+#: admin/includes/admin-about.php:84
+msgid "Multi-column layout types and options"
+msgstr "Mehr-Spalten-Layout Typen und Optionen"
+
 #: admin/includes/admin-about.php:124
 msgid "Attribute name"
 msgstr "Name"
@@ -212,52 +198,126 @@ msgid "Description"
 msgstr "Beschreibung"
 
 #: includes/options_helptexts.php:8
-msgid "Required capabilities to show LinkView About page"
-msgstr ""
+#, php-format
+msgid "Required capabilities to show the %1$s page"
+msgstr "Erforderliche Rechte zur Anzeige der %1$s Seite"
+
+#: includes/options_helptexts.php:9 includes/options_helptexts.php:15
+msgid "Default"
+msgstr "Standard"
 
 #: includes/options_helptexts.php:10
+#, php-format
 msgid ""
-"With this option you can specify the required capabilities to show the LinkView About page.<br />\n"
-"\t                                       (see <a href=\"http://codex.wordpress.org/Roles_and_Capabilities\">WordPress Codex</a> for more infos)."
+"With this option you can specify the required capabilities to show the %1$s "
+"page."
 msgstr ""
+"Mit dieser Option können die erforderlichen Rechte zur Anzeige der %1$s "
+"Seite festgelegt werden."
+
+#: includes/options_helptexts.php:11 includes/options_helptexts.php:17
+#, php-format
+msgid "More information can be found in the %1$s."
+msgstr "Weitere Informationen sind im %1$s zu finden."
 
 #: includes/options_helptexts.php:14
 msgid "Required role to manage links"
-msgstr ""
+msgstr "Erforderliche Rolle für das Link-Management"
 
 #: includes/options_helptexts.php:16
-msgid ""
-"With this option you can overwrite the wordpress default minimum required role to manage links (Capability: \"manage_links\").<br />\n"
-"\t                                       (see <a href=\"http://codex.wordpress.org/Roles_and_Capabilities\">WordPress Codex</a> for more infos).<br />\n"
-"\t                                       Please not that this option also affects the viewing the LinkView About page if the required capabilities are set to \"manage_links\"."
+msgid "With this option minimum required role to manage links can be set"
 msgstr ""
+"Mit dieser Option kann die minimal erforderlich Rolle definiert werden, die "
+"für das Link-Management erforderlich ist"
+
+#: includes/options_helptexts.php:16
+msgid "Capability"
+msgstr "Capability"
+
+#: includes/options_helptexts.php:18
+#, php-format
+msgid ""
+"Please note that this option also affects the access to the %1$s page if the"
+" required capabilities are set to %2$s."
+msgstr ""
+"Bitte beachte, dass diese Option auch Auswirkungen auf den Zugriff der %1$s "
+"Seite hat, wenn die Rechte auf %2$s gesetzt sind."
 
 #: includes/options_helptexts.php:21
-msgid "CSS-code for linkview"
-msgstr "CSS-Code für Linkview"
+#, php-format
+msgid "CSS-code for %1$s"
+msgstr "CSS-Code für %1$s"
+
+#: includes/options_helptexts.php:22
+#, php-format
+msgid ""
+"With this option you can specify CSS-code for the links displayed by the "
+"%1$s shortcode."
+msgstr ""
+"Mit dieser Option kann spezifischer CSS-Code für die mit dem %1$s Shortcode "
+"angezeigten Links definiert werden."
+
+#: includes/options_helptexts.php:23
+#, php-format
+msgid ""
+"There are a lot of CSS classes available which are automatically added by "
+"the %1$s shortcode"
+msgstr ""
+"Es stehen einige CSS-Klassen zur Verfügung, die automatisch durch den %1$s "
+"Shortcode hinzugefügt werden"
+
+#: includes/options_helptexts.php:23 includes/options_helptexts.php:26
+msgid "e.g."
+msgstr "z.B."
+
+#: includes/options_helptexts.php:24
+msgid ""
+"All available classes can be found in the sourcecode of a post or page where"
+" the shortcode is included."
+msgstr ""
+"Alle verfügbaren Klassen sind im Seitenquelltext eines Beitrags oder einer "
+"Seite ersichtlich, in dem der Shortcode oder das Widget eingebunden ist."
+
+#: includes/options_helptexts.php:25
+#, php-format
+msgid ""
+"To differ between different shortcodes you can set the attribute %1$s and "
+"add CSS-code for these special classes"
+msgstr ""
+"Um zwischen verschiedenen Shortcodes unterscheiden zu können, kann das "
+"Attribut %1$s gesetzt und CSS-Code für diese speziellen Klassen ergänzt "
+"werden."
+
+#: includes/options_helptexts.php:27
+msgid "Examples"
+msgstr "Beispiele"
 
 #: includes/widget_helptexts.php:8
-msgid "Title:"
-msgstr "Titel:"
+msgid "Title"
+msgstr "Titel"
 
 #: includes/widget_helptexts.php:9
-msgid "The title for the widget"
-msgstr "Der Titel für das Widget"
+msgid "This option defines the displayed title for the widget."
+msgstr "Diese Option legt den anzuzeugenden Titel für das Widget fest."
 
 #: includes/widget_helptexts.php:13
-msgid "Shortcode attributes:"
-msgstr "Shortcode Attribute:"
+msgid "Shortcode attributes"
+msgstr "Shortcode Attribute"
 
 #: includes/widget_helptexts.php:14
-msgid ""
-"You can add all attributes which are available for the linkview shortcode"
+#, php-format
+msgid "All attributes which are available for the %1$s shortcode can be used."
 msgstr ""
+"Alle Attribute, die für den %1$s Shortcode verfügbar sind, können verwendet "
+"werden."
 
 #: includes/widget.php:20
+#, php-format
 msgid ""
-"This widget allows you to insert the linkview shortcode in the sidebar. You "
-"can set every attribute which is available for the shortcode."
+"With this widget a %1$s shortcode can be added to a sidebar or widget area."
 msgstr ""
+"Mit diesem Widget kann ein %1$s Shortcode zu einem Sidebar- oder Widget-"
+"Bereich hinzugefügt werden."
 
 #: includes/widget.php:24
 msgid "Links"

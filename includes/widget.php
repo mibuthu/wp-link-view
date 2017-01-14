@@ -17,7 +17,7 @@ class LV_Widget extends WP_Widget {
 		parent::__construct(
 	 		'linkview_widget', // Base ID
 			'LinkView', // Name
-			array('description' => __('This widget allows you to insert the linkview shortcode in the sidebar. You can set every attribute which is available for the shortcode.','link-view'),)
+			array('description' => sprintf(__('With this widget a %1$s shortcode can be added to a sidebar or widget area.','link-view'), 'LinkView'),)
 		);
 		// define all available items
 		$this->items = array(
