@@ -31,30 +31,27 @@ class LV_Admin_About {
 		// create content
 		$out ='
 			<div class="wrap nosubsub">
-			<div id="icon-link-manager" class="icon32"><br /></div><h2>About LinkView</h2></div>
-			<h3>Help and Instructions</h3>
-			<h4>Create a page or post with links</h4>
+			<div id="icon-link-manager" class="icon32"><br /></div><h2>'.sprintf(__('About %1$s','link-view'), 'LinkView').'</h2></div>
+			<h3>'.__('Help and Instructions','link-view').'</h3>
+			<h4>'.__('Show links in posts or pages','link-view').'</h4>
 			<div class="help-content">
-				<p>"LinkView" works by using a "shortcode" in a page or post.</p>
-				<p>Shortcodes are snippets of pseudo code that are placed in blog posts or pages to easily render HTML output.<br />
-				To create a link page or post add the shortcode <code>[linkview]</code> in the text field of any page or post.</p>
-				<p>There are many shortcode attributes available which let you change the listed links and their styling.<br />
-				To get the correct result you can combine as much attributes as you want.<br />
-				E.g. the shortcode including the attributes "cat_name" and "show_img" would look like this:<br />
+				<p>'.sprintf(__('To show links in a post or page the shortcode %1$s must be added in the post or page content text.','link-view'), '<code>[linkview]</code>').'</p>
+				<p>'.__('The listed links and their styles can be modified with the available attributes for the shortcode.','link-view').'<br />
+				'.__('You can combine as much attributes as you want.','link-view').'
+				'.sprintf(__('E.g. the shortcode including the attributes %1$s and %2$s would look like this','link-view'), '"cat_name"', '"show_img"').':<br />
 				<code>[linkview cat_name=Sponsors show_img=1]</code><br />
-				Below you can find a list with all supported attributes, their descriptions and available options.</p>
+				'.__('Below you can find tables with all supported attributes, their descriptions and available options.','link-view').'</p>
 			</div>
-			<h4>LinkView Widget</h4>
+			<h4>'.__('Show links in sidebars and widget areas','link-view').'</h4>
 			<div class="help-content">
-				With the LinkView Widget you can add links in sidebars and widget areas.<br />
-				Goto <a href="'.admin_url('widgets.php').'">Appearance &rarr; Widgets</a> and add the "LinkView"-Widget in one of your sidebars.<br />
-				You can enter a title for the widget and add all the required shortcode attributes in the appropriate field.<br />
-				You can use all available shortcode attributes of the linkview-shortcode in the widget too.<br />
-				Press "Save" to activate the changes.
+				'.sprintf(__('With the %1$s Widget you can add links in sidebars and widget areas.','link-view'), 'LinkView').'<br />
+				'.sprintf(__('Goto %1$s and drag the %2$s-Widget into one of the sidebar or widget areas.','link-view'), '<a href="'.admin_url('widgets.php').'">'.__('Appearance').' &rarr; '.__('Widgets').'</a>', '"LinkView"').'<br />
+				'.sprintf(__('Enter a title for the widget and add the required shortcode attributes in the appropriate field. All available shortcode attributes for the %1$s-shortcode can be used in the widget too.','link-view'), '"linkview"').'<br />
+				'.sprintf(__('Press %1$s to confirm the changes.','link-view'), '"Save"').'
 			</div>
-			<h4>Settings</h4>
+			<h4>'.sprintf(__('%1$s Settings','link-view'), 'LinkView').'</h4>
 			<div class="help-content">
-				In the linkview settings page, available under <a href="'.admin_url('options-general.php?page=lv_admin_options').'">Settings &rarr; LinkView</a>, you can find some options to modify the plugin.
+				'.sprintf(__('In the %1$s settings page, available under %2$s, you can find some options to modify the plugin.','link-view'), 'LinkView', '<a href="'.admin_url('options-general.php?page=lv_admin_options').'">'.__('Settings').' &rarr; LinkView</a>').'
 			</div>
 			<h3>About</h3>
 			<div class="help-content">

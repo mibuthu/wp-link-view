@@ -32,7 +32,7 @@ class LV_Admin_Settings {
 		// create content
 		$out ='
 			<div class="wrap nosubsub">
-			<div id="icon-link-manager" class="icon32"><br /></div><h2>LinkView Settings</h2></div>';
+			<div id="icon-link-manager" class="icon32"><br /></div><h2>'.sprintf(__('%1$s Settings','link-view'), 'LinkView').'</h2></div>';
 		$out .= $this->html_settings();
 		echo $out;
 	}
