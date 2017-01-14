@@ -26,7 +26,7 @@ The purpose of this plugin is to to show the wordpress integrated links in a lis
 * option to set additional css styles for the link-lists and link-sliders
 * the required user roles to edit links can be adjusted in the settings page
 
-If you want to follow the development status have a look at the [git-repository on github](https://github.com/mibuthu/wp-linkview "wp-linkview git-repository").
+If you want to follow the development status have a look at the [git-repository on github](https://github.com/mibuthu/wp-link-view "wp-link-view git-repository").
 
 
 == Installation ==
