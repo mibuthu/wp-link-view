@@ -6,6 +6,7 @@ Description: Display a link-list or link-slider in a post or page by using a sho
 Version: 0.6.4
 Author: Michael Burtscher
 Author URI: http://wordpress.org/extend/plugins/link-view/
+Text Domain: link-view
 License: GPLv2
 
 A plugin for the blogging MySQL/PHP-based WordPress.
