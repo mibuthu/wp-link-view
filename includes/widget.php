@@ -17,23 +17,22 @@ class LV_Widget extends WP_Widget {
 		parent::__construct(
 	 		'linkview_widget', // Base ID
 			'LinkView', // Name
-			array('description' => __('This widget allows you to insert the linkview shortcode in the sidebar. You can set every attribute which is available for the shortcode.', 'text_domain'),) // Args
+			array('description' => sprintf(__('With this widget a %1$s shortcode can be added to a sidebar or widget area.','link-view'), 'LinkView'),)
 		);
 		// define all available items
 		$this->items = array(
-			'title' => array('type'          => 'text',
-			                 'std_value'     => __('Links', 'text_domain'),
-			                 'caption'       => __('Title:'),
-			                 'tooltip'       => __('The title for the widget'),
-			                 'form_style'    => null),
-
-			'atts' =>  array('type'          => 'textarea',
-			                 'std_value'     => '',
-			                 'caption'       => __('Shortcode attributes:'),
-			                 'tooltip'       => __('You can add all attributes which are available for the linkview shortcode'),
-			                 'form_style'    => null,
-			                 'form_rows'     => 5)
+			'title' => array('std_value' => __('Links', 'link-view')),
+			'atts' =>  array('std_value' => ''),
 		);
+		add_action('admin_init', array(&$this, 'load_widget_items_helptexts'), 2);
+	}
+
+	public function load_widget_items_helptexts() {
+		require_once(LV_PATH.'includes/widget_helptexts.php');
+		foreach($widget_items_helptexts as $name => $values) {
+			$this->items[$name] += $values;
+		}
+		unset($widget_items_helptexts);
 	}
 
 	/**

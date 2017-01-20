@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+
+[wp-link-view.link-view_pot]
+file_filter = languages/link-view-<lang>.po
+source_file = languages/link-view.pot
+source_lang = en
+type = PO

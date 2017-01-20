@@ -3,8 +3,8 @@ Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css, multi-column
 Requires at least: 3.3
-Tested up to: 4.6
-Stable tag: 0.6.4
+Tested up to: 4.7
+Stable tag: 0.7.0
 Plugin URI: http://wordpress.org/extend/plugins/link-view
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -26,7 +26,7 @@ The purpose of this plugin is to to show the wordpress integrated links in a lis
 * option to set additional css styles for the link-lists and link-sliders
 * the required user roles to edit links can be adjusted in the settings page
 
-If you want to follow the development status have a look at the [git-repository on github](https://github.com/mibuthu/wp-linkview "wp-linkview git-repository").
+If you want to follow the development status have a look at the [git-repository on github](https://github.com/mibuthu/wp-link-view "wp-link-view git-repository").
 
 
 == Installation ==
@@ -59,6 +59,14 @@ Yes, you can create an instance of the "SC_Linkview" class which located in "php
 
 
 == Changelog ==
+
+= 0.7.0 (2017-01-20) =
+* added multi-language-support (not all strings translatable yet)
+* added german translation
+* moved helptexts into separate file and only load them if required
+* updated masonry script from version 3.2.2 to 4.1.1
+* removed deprecated shortcode attributes "cat_name" and "target"
+* changed link to renamed github-repository
 
 = 0.6.4 (2016-10-31) =
 * added minified version of slider-script

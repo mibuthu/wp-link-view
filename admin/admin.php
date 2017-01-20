@@ -31,9 +31,9 @@ class LV_Admin {
 	 * Add and register all admin pages in the admin menu
 	 */
 	public function register_pages() {
-		$page = add_submenu_page('link-manager.php', 'About LinkView', 'About LinkView', $this->options->get('lv_req_cap'), 'lv_admin_about', array(&$this, 'show_about_page'));
+		$page = add_submenu_page('link-manager.php', sprintf(__('About %1$s','link-view'), 'LinkView'), sprintf(__('About %1$s','link-view'), 'LinkView'), $this->options->get('lv_req_cap'), 'lv_admin_about', array(&$this, 'show_about_page'));
 		add_action('admin_print_scripts-'.$page, array(&$this, 'embed_about_scripts'));
-		$page = add_submenu_page('options-general.php', 'LinkView Settings', 'LinkView', 'manage_options', 'lv_admin_options', array(&$this, 'show_settings_page'));
+		$page = add_submenu_page('options-general.php', sprintf(__('%1$s Settings','link-view'), 'LinkView'), 'LinkView', 'manage_options', 'lv_admin_options', array(&$this, 'show_settings_page'));
 		add_action('admin_print_scripts-'.$page, array(&$this, 'embed_settings_scripts'));
 	}
 
