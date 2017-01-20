@@ -68,6 +68,8 @@ Yes, you can create an instance of the "SC_Linkview" class which located in "php
 * removed deprecated shortcode attributes "cat_name" and "target"
 * changed link to renamed github-repository
 
+Attention: Due to a change of a filename the plugin probably gets deactivated after upgrade! Please check the plugin settings and activate link-view again if required!
+
 = 0.6.4 (2016-10-31) =
 * added minified version of slider-script
 * consolidate and improve multi-column support for categories and link-lists
