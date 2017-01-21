@@ -16,7 +16,7 @@ Display a link-list or link-slider in a post or page by using a shortcode.
 
 The purpose of this plugin is to to show the wordpress integrated links in a list or a slider by using a shortcode or a widget.
 
-= Current Features =
+= Current Features: =
 * the shortcode [linkview] can be used to add the links in a post or page
 * the widget "LinkView" can be used to add links in a sidebar
 * the links can be displayed in a list or in a slider
@@ -26,8 +26,14 @@ The purpose of this plugin is to to show the wordpress integrated links in a lis
 * option to set additional css styles for the link-lists and link-sliders
 * the required user roles to edit links can be adjusted in the settings page
 
+= Development: =
 If you want to follow the development status have a look at the [git-repository on github](https://github.com/mibuthu/wp-link-view "wp-link-view git-repository").
+Feel free to add your merge requests there, if you want to help to improve the plugin.
 
+= Translations: =
+Please help translating this plugin into multiple languages.
+You can submit your translations at [transifex.com](https://www.transifex.com/projects/p/wp-link-view "wp-link-view at transifex").
+There the source strings will always be in sync with the actual development version.
 
 == Installation ==
 
