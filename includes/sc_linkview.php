@@ -31,7 +31,7 @@ class SC_Linkview {
 		// Define all available attributes
 		$this->atts = array(
 			'view_type'      => array('std_val' => 'list'),
-			'cat_filter'     => array('std_val' => 'all'),
+			'cat_filter'     => array('std_val' => ''),
 			'exclude_cat'    => array('std_val' => ''),
 			'show_cat_name'  => array('std_val' => '1'),
 			'link_orderby'   => array('std_val' => 'name'),
@@ -178,7 +178,8 @@ class SC_Linkview {
 
 	private function categories($a) {
 		$catarray = array();
-		if('all' != $a['cat_filter'] || '' == $a['cat_filter']) {
+		// TODO: cat_filter "all" is depricated and can be removed in 0.8.0
+		if('' != $a['cat_filter'] && 'all' != $a['cat_filter']) {
 			str_replace(',', '|', $a['cat_filter']);
 			$catslugs = array_map('trim', explode('|', $a['cat_filter']));
 			foreach($catslugs as $catslug) {

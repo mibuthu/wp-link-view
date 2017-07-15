@@ -11,7 +11,7 @@ $sc_linkview_helptexts = array(
 
 	'cat_filter'     => array('section' => 'general',
 	                          'val'     => 'category slugs',
-	                          'desc'    => 'This attribute specifies the link categories of which links are displayed. The standard is "all" or an empty string to show all links.<br />
+	                          'desc'    => 'This attribute specifies the link categories of which links are displayed. The default is an empty string to show all links.<br />
 	                                        Links defined in categories which doesn´t match cat_filter will not be displayed.<br />
 	                                        The filter is specified via the given category slug. You can specify a single slug to only show links from this category.<br />
 	                                        To show multiple categories you can use OR connection with the delimiter "<strong>&verbar;</strong>" or "<strong>&comma;</strong>".<br />
