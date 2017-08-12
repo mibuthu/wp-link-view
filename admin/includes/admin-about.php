@@ -28,10 +28,39 @@ class LV_Admin_About {
 		if(!current_user_can($this->options->get('lv_req_cap'))) {
 			wp_die(__('You do not have sufficient permissions to access this page.'));
 		}
+		if(!isset($_GET['tab'])) {
+			$_GET['tab'] = 'general';
+		}
 		// create content
-		$out ='
+		echo '
 			<div class="wrap nosubsub">
-			<div id="icon-link-manager" class="icon32"><br /></div><h2>'.sprintf(__('About %1$s','link-view'), 'LinkView').'</h2></div>
+				<div id="icon-link-manager" class="icon32"><br /></div><h2>'.sprintf(__('About %1$s','link-view'), 'LinkView').'</h2></div>';
+		echo $this->show_tabs($_GET['tab']);
+		if('atts' == $_GET['tab']) {
+			$this->show_atts();
+		}
+		else {
+			$this->show_help();
+			$this->show_author();
+		}
+		echo '
+			</div>';
+	}
+
+	private function show_tabs($current = 'general') {
+		$tabs = array('general' => __('General','link-view'),
+		              'atts'    => __('Shortcode Attributes','link-view'));
+		$out = '<h3 class="nav-tab-wrapper">';
+		foreach($tabs as $tab => $name){
+			$class = ($tab == $current) ? ' nav-tab-active' : '';
+			$out .= '<a class="nav-tab'.$class.'" href="?page=lv_admin_about&amp;tab='.$tab.'">'.$name.'</a>';
+		}
+		$out .= '</h3>';
+		return $out;
+	}
+
+	private function show_help() {
+		echo '
 			<h3>'.__('Help and Instructions','link-view').'</h3>
 			<h4>'.__('Show links in posts or pages','link-view').'</h4>
 			<div class="help-content">
@@ -52,7 +81,11 @@ class LV_Admin_About {
 			<h4>'.sprintf(__('%1$s Settings','link-view'), 'LinkView').'</h4>
 			<div class="help-content">
 				'.sprintf(__('In the %1$s settings page, available under %2$s, you can find some options to modify the plugin.','link-view'), 'LinkView', '<a href="'.admin_url('options-general.php?page=lv_admin_options').'">'.__('Settings').' &rarr; LinkView</a>').'
-			</div>
+			</div>';
+	}
+
+	private function show_author() {
+		echo '
 			<h3>'.__('About','link-view').'</h3>
 			<div class="help-content">
 				<p>'.sprintf(__('This plugin is developed by %1$s, you can find more information about the plugin on the %2$s.','link-view'), 'mibuthu', '<a href="http://wordpress.org/plugins/link-view" target="_blank" rel="noopener">'.__('wordpress plugin site','link-view').'</a>').'</p>
@@ -61,26 +94,23 @@ class LV_Admin_About {
 				<a class="donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/paypal_btn_donate.gif" alt="PayPal Donation" title="Donate with PayPal" border="0"></a>
 				<a class="donate" href="https://flattr.com/submit/auto?user_id=mibuthu&url=https%3A%2F%2Fwordpress.org%2Fplugins%2Flink-view" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0"></a></p>
 			</div>';
-			$out .= $this->html_atts();
-		echo $out;
 	}
 
-	private function html_atts() {
+	private function show_atts() {
 		require_once(LV_PATH.'includes/sc_linkview.php');
 		$shortcode = &SC_Linkview::get_instance();
 		$shortcode->load_sc_linkview_helptexts();
-		$out = '
+		echo '
 			<h3>'.__('Shortcode Attributes','link-view').'</h3>
 			<div class="help-content">
-				'.sprintf(__('In the following tables you can find all available shortcode attributes for %1$s','link-view'), '<code>[linkview]</code>').':
-				';
-		$out .= '<h4 class="atts-section-title">'.__('General','link-view').':</h4>';
-		$out .= $this->html_atts_table($shortcode->get_atts('general'));
-		$out .= '<h4 class="atts-section-title">'.__('Link List','link-view').':</h4>';
-		$out .= $this->html_atts_table($shortcode->get_atts('list'));
-		$out .= '<h4 class="atts-section-title">'.__('Link Slider','link-view').':</h4>';
-		$out .= $this->html_atts_table($shortcode->get_atts('slider'));
-		$out .= '<br />
+				'.sprintf(__('In the following tables you can find all available shortcode attributes for %1$s','link-view'), '<code>[linkview]</code>').':';
+		echo '<h4 class="atts-section-title">'.__('General','link-view').':</h4>';
+		echo $this->html_atts_table($shortcode->get_atts('general'));
+		echo '<h4 class="atts-section-title">'.__('Link List','link-view').':</h4>';
+		echo $this->html_atts_table($shortcode->get_atts('list'));
+		echo '<h4 class="atts-section-title">'.__('Link Slider','link-view').':</h4>';
+		echo $this->html_atts_table($shortcode->get_atts('slider'));
+		echo '<br />
 				<h4 class="atts-section-title">'.__('Multi-column layout types and options','link-view').':</h4><a id="multicol"></a>
 				There are 3 different types of multiple column layouts available for category or link multi-column view. Each type has some advantages and disadvantages compared to the others.
 				<p>Additionally the available layouts can be modified with their options:</p>
@@ -114,7 +144,6 @@ class LV_Admin_About {
 					<p><code>[linkview cat_columns="masonry(masonry(isOriginTop=false|isOriginLeft=false)"</code> &hellip; show the categories in columns with the masonry script (with some specific masonry options)</p>
 				</div>
 			</div>';
-		return $out;
 	}
 
 	private function html_atts_table($atts) {
