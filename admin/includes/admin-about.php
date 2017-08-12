@@ -33,8 +33,8 @@ class LV_Admin_About {
 		}
 		// create content
 		echo '
-			<div class="wrap nosubsub">
-				<div id="icon-link-manager" class="icon32"><br /></div><h2>'.sprintf(__('About %1$s','link-view'), 'LinkView').'</h2></div>';
+			<div class="wrap">
+				<div id="icon-link-manager" class="icon32"><br /></div><h2>'.sprintf(__('About %1$s','link-view'), 'LinkView').'</h2>';
 		echo $this->show_tabs($_GET['tab']);
 		if('atts' == $_GET['tab']) {
 			$this->show_atts();
