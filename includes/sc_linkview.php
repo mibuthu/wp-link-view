@@ -94,7 +94,7 @@ class SC_Linkview {
 		$a = shortcode_atts($std_values, $atts);
 
 		// set categories
-		$categories = $this->categories($a);
+		$categories = $this->get_categories($a);
 		$out = '';
 
 		// prepare for category multi columns
@@ -121,12 +121,7 @@ class SC_Linkview {
 				$a['link_order'] = 'asc';
 			}
 			// get links
-			$args = array(
-				'orderby'        => $a['link_orderby'],
-				'order'          => $a['link_order'],
-				'limit'          => $a['num_links'],
-				'category_name'  => $cat->name);
-			$links = get_bookmarks($args);
+			$links = $this->get_links($cat, $a);
 			// generate output
 			if(!empty($links)) {
 				$out .='
@@ -203,6 +198,15 @@ class SC_Linkview {
 			}
 		}
 		return $catarray;
+	}
+
+	private function get_links($cat, $a) {
+		$args = array(
+			'orderby'       => $a['link_orderby'],
+			'order'         => $a['link_order'],
+			'limit'         => $a['num_links'],
+			'category_name' => $cat->name);
+		return get_bookmarks($args);
 	}
 
 	private function slider_size($a, $links) {
