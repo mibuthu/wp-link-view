@@ -86,7 +86,7 @@ class LV_Admin_About {
 
 	private function show_author() {
 		echo '
-			<h3>'.__('About','link-view').'</h3>
+			<h3>'.__('About the plugin author','link-view').'</h3>
 			<div class="help-content">
 				<p>'.sprintf(__('This plugin is developed by %1$s, you can find more information about the plugin on the %2$s.','link-view'), 'mibuthu', '<a href="http://wordpress.org/plugins/link-view" target="_blank" rel="noopener">'.__('wordpress plugin site','link-view').'</a>').'</p>
 				<p>'.sprintf(__('If you like the plugin please rate it on the %1$s.','link-view'), '<a href="http://wordpress.org/support/view/plugin-reviews/link-view" target="_blank" rel="noopener">'.__('wordpress plugin review site','link-view').'</a>').'<br />
