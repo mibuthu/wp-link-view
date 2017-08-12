@@ -30,6 +30,11 @@ $sc_linkview_helptexts = array(
 	                          'val'     => array('0 &hellip; false','1 &hellip; true'),
 	                          'desc'    => 'This attribute specifies if the category name is shown as a headline.'),
 
+	'show_num_links' => array('section' => 'general',
+	                          'val'     => array('0 &hellip; false','1 &hellip; true'),
+	                          'desc'    => 'This attribute specifies if the number of links shall be displayed in brackets next to the category name.<br />
+	                                        The cat name must be displayed (<code>show_cat_name=true</code>) to show the number of events.'),
+
 	'link_orderby'   => array('section' => 'general',
 	                          'val'     => array('link_id','url','name','owner','rating','visible','length','rand'),
 	                          'std_val' => 'name',

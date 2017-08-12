@@ -34,6 +34,7 @@ class SC_Linkview {
 			'cat_filter'     => array('std_val' => ''),
 			'exclude_cat'    => array('std_val' => ''),
 			'show_cat_name'  => array('std_val' => '1'),
+			'show_num_links' => array('std_val' => '0'),
 			'link_orderby'   => array('std_val' => 'name'),
 			'link_order'     => array('std_val' => 'asc'),
 			'num_links'      => array('std_val' => '-1'),
@@ -126,7 +127,7 @@ class SC_Linkview {
 			if(!empty($links)) {
 				$out .='
 					<div'.$cat_classes.'>';
-				$out .= $this->html_category($cat, $a);
+				$out .= $this->html_category($cat, $a, count($links));
 				$list_id = $this->get_new_list_id();
 				$slider_size = array(0, 0);
 				if('slider' === $a['view_type']) {
@@ -171,7 +172,7 @@ class SC_Linkview {
 		return $this->slider_ids;
 	}
 
-	private function categories($a) {
+	private function get_categories($a) {
 		$catarray = array();
 		// TODO: cat_filter "all" is depricated and can be removed in 0.8.0
 		if('' != $a['cat_filter'] && 'all' != $a['cat_filter']) {
@@ -242,11 +243,12 @@ class SC_Linkview {
 		return array($width, $height);
 	}
 
-	private function html_category($cat, $a) {
+	private function html_category($cat, $a, $num_links) {
 		$out = '';
 		if($a['show_cat_name'] > 0) {
+			$num_links_text = $a['show_num_links'] > 0 ? ' <small>('.$num_links.')</small>' : '';
 			$out .= '
-					<h2 class="lv-cat-name'.$a['class_suffix'].'">'.$cat->name.'</h2>';
+					<h2 class="lv-cat-name'.$a['class_suffix'].'">'.$cat->name.$num_links_text.'</h2>';
 		}
 		return $out;
 	}
