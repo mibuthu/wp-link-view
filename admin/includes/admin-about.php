@@ -76,7 +76,7 @@ class LV_Admin_About {
 				'.sprintf(__('With the %1$s Widget you can add links in sidebars and widget areas.','link-view'), 'LinkView').'<br />
 				'.sprintf(__('Goto %1$s and drag the %2$s-Widget into one of the sidebar or widget areas.','link-view'), '<a href="'.admin_url('widgets.php').'">'.__('Appearance').' &rarr; '.__('Widgets').'</a>', '"LinkView"').'<br />
 				'.sprintf(__('Enter a title for the widget and add the required shortcode attributes in the appropriate field. All available shortcode attributes for the %1$s-shortcode can be used in the widget too.','link-view'), '"linkview"').'<br />
-				'.sprintf(__('Press %1$s to confirm the changes.','link-view'), '"Save"').'
+				'.sprintf(__('Press %1$s to confirm the changes.','link-view'), '"'.__('Save').'"').'
 			</div>
 			<h4>'.sprintf(__('%1$s Settings','link-view'), 'LinkView').'</h4>
 			<div class="help-content">
@@ -91,8 +91,9 @@ class LV_Admin_About {
 				<p>'.sprintf(__('This plugin is developed by %1$s, you can find more information about the plugin on the %2$s.','link-view'), 'mibuthu', '<a href="http://wordpress.org/plugins/link-view" target="_blank" rel="noopener">'.__('wordpress plugin site','link-view').'</a>').'</p>
 				<p>'.sprintf(__('If you like the plugin please rate it on the %1$s.','link-view'), '<a href="http://wordpress.org/support/view/plugin-reviews/link-view" target="_blank" rel="noopener">'.__('wordpress plugin review site','link-view').'</a>').'<br />
 				<p>'.__('If you want to support the plugin I would be happy to get a small donation','link-view').':<br />
-				<a class="donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/paypal_btn_donate.gif" alt="PayPal Donation" title="Donate with PayPal" border="0"></a>
-				<a class="donate" href="https://flattr.com/submit/auto?user_id=mibuthu&url=https%3A%2F%2Fwordpress.org%2Fplugins%2Flink-view" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0"></a></p>
+				<a class="donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/paypal_btn_donate.gif" alt="PayPal Donation" title="'.sprintf(__('Donate with %1$s','link-view'), 'PayPal').'" border="0"></a>
+				<a class="donate" href="https://liberapay.com/mibuthu/donate" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/liberapay-donate.svg" alt="Liberapay Donation" title="'.sprintf(__('Donate with %1$s','link-view'), 'Liberapay').'" border="0"></a>
+				<a class="donate" href="https://flattr.com/submit/auto?user_id=mibuthu&url=https%3A%2F%2Fwordpress.org%2Fplugins%2Flink-view" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/flattr-badge-large.png" alt="Flattr this" title="'.sprintf(__('Donate with %1$s','link-view'), 'Flattr').'" border="0"></a></p>
 			</div>';
 	}
 
