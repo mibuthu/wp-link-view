@@ -2,9 +2,9 @@
 Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css, multi-column
-Requires at least: 3.3
-Tested up to: 4.7
-Stable tag: 0.7.0
+Requires at least: 3.8
+Tested up to: 4.9
+Stable tag: 0.7.1
 Plugin URI: http://wordpress.org/extend/plugins/link-view
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -16,7 +16,7 @@ Display a link-list or link-slider in a post or page by using a shortcode.
 
 The purpose of this plugin is to to show the wordpress integrated links in a list or a slider by using a shortcode or a widget.
 
-= Current Features =
+= Current Features: =
 * the shortcode [linkview] can be used to add the links in a post or page
 * the widget "LinkView" can be used to add links in a sidebar
 * the links can be displayed in a list or in a slider
@@ -26,8 +26,14 @@ The purpose of this plugin is to to show the wordpress integrated links in a lis
 * option to set additional css styles for the link-lists and link-sliders
 * the required user roles to edit links can be adjusted in the settings page
 
+= Development: =
 If you want to follow the development status have a look at the [git-repository on github](https://github.com/mibuthu/wp-link-view "wp-link-view git-repository").
+Feel free to add your merge requests there, if you want to help to improve the plugin.
 
+= Translations: =
+Please help translating this plugin into multiple languages.
+You can submit your translations at [transifex.com](https://www.transifex.com/projects/p/wp-link-view "wp-link-view at transifex").
+There the source strings will be kept in sync with the actual development version. And in each plugin release the available translation files will be updated.
 
 == Installation ==
 
@@ -59,6 +65,16 @@ Yes, you can create an instance of the "SC_Linkview" class which located in "php
 
 
 == Changelog ==
+
+= 0.7.1 (2017-08-13) =
+* added shortcode attribute "show_num_links"
+* changed default value for cat_filter from "all" to an empty string ("all" is deprecated now)
+* splitted admin about page in 2 tabs (general and shortcode attributes)
+* added information about translations
+* updated masonry script to version 4.2
+* prepare more strings for translation add added german translations for them
+* Rise mimimum required Wordpress version to 3.8
+* moved screenshots to assets folder
 
 = 0.7.0 (2017-01-20) =
 * added multi-language-support (not all strings translatable yet)

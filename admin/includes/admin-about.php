@@ -28,10 +28,40 @@ class LV_Admin_About {
 		if(!current_user_can($this->options->get('lv_req_cap'))) {
 			wp_die(__('You do not have sufficient permissions to access this page.'));
 		}
+		if(!isset($_GET['tab'])) {
+			$_GET['tab'] = 'general';
+		}
 		// create content
-		$out ='
-			<div class="wrap nosubsub">
-			<div id="icon-link-manager" class="icon32"><br /></div><h2>'.sprintf(__('About %1$s','link-view'), 'LinkView').'</h2></div>
+		echo '
+			<div class="wrap">
+				<div id="icon-link-manager" class="icon32"><br /></div><h2>'.sprintf(__('About %1$s','link-view'), 'LinkView').'</h2>';
+		echo $this->show_tabs($_GET['tab']);
+		if('atts' == $_GET['tab']) {
+			$this->show_atts();
+		}
+		else {
+			$this->show_help();
+			$this->show_author();
+			$this->show_translation_info();
+		}
+		echo '
+			</div>';
+	}
+
+	private function show_tabs($current = 'general') {
+		$tabs = array('general' => __('General','link-view'),
+		              'atts'    => __('Shortcode Attributes','link-view'));
+		$out = '<h3 class="nav-tab-wrapper">';
+		foreach($tabs as $tab => $name){
+			$class = ($tab == $current) ? ' nav-tab-active' : '';
+			$out .= '<a class="nav-tab'.$class.'" href="?page=lv_admin_about&amp;tab='.$tab.'">'.$name.'</a>';
+		}
+		$out .= '</h3>';
+		return $out;
+	}
+
+	private function show_help() {
+		echo '
 			<h3>'.__('Help and Instructions','link-view').'</h3>
 			<h4>'.__('Show links in posts or pages','link-view').'</h4>
 			<div class="help-content">
@@ -47,74 +77,84 @@ class LV_Admin_About {
 				'.sprintf(__('With the %1$s Widget you can add links in sidebars and widget areas.','link-view'), 'LinkView').'<br />
 				'.sprintf(__('Goto %1$s and drag the %2$s-Widget into one of the sidebar or widget areas.','link-view'), '<a href="'.admin_url('widgets.php').'">'.__('Appearance').' &rarr; '.__('Widgets').'</a>', '"LinkView"').'<br />
 				'.sprintf(__('Enter a title for the widget and add the required shortcode attributes in the appropriate field. All available shortcode attributes for the %1$s-shortcode can be used in the widget too.','link-view'), '"linkview"').'<br />
-				'.sprintf(__('Press %1$s to confirm the changes.','link-view'), '"Save"').'
+				'.sprintf(__('Press %1$s to confirm the changes.','link-view'), '"'.__('Save').'"').'
 			</div>
 			<h4>'.sprintf(__('%1$s Settings','link-view'), 'LinkView').'</h4>
 			<div class="help-content">
 				'.sprintf(__('In the %1$s settings page, available under %2$s, you can find some options to modify the plugin.','link-view'), 'LinkView', '<a href="'.admin_url('options-general.php?page=lv_admin_options').'">'.__('Settings').' &rarr; LinkView</a>').'
-			</div>
-			<h3>'.__('About','link-view').'</h3>
+			</div>';
+	}
+
+	private function show_author() {
+		echo '
+			<h3>'.__('About the plugin author','link-view').'</h3>
 			<div class="help-content">
 				<p>'.sprintf(__('This plugin is developed by %1$s, you can find more information about the plugin on the %2$s.','link-view'), 'mibuthu', '<a href="http://wordpress.org/plugins/link-view" target="_blank" rel="noopener">'.__('wordpress plugin site','link-view').'</a>').'</p>
 				<p>'.sprintf(__('If you like the plugin please rate it on the %1$s.','link-view'), '<a href="http://wordpress.org/support/view/plugin-reviews/link-view" target="_blank" rel="noopener">'.__('wordpress plugin review site','link-view').'</a>').'<br />
 				<p>'.__('If you want to support the plugin I would be happy to get a small donation','link-view').':<br />
-				<a class="donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/paypal_btn_donate.gif" alt="PayPal Donation" title="Donate with PayPal" border="0"></a>
-				<a class="donate" href="https://flattr.com/submit/auto?user_id=mibuthu&url=https%3A%2F%2Fwordpress.org%2Fplugins%2Flink-view" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0"></a></p>
+				<a class="donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/paypal_btn_donate.gif" alt="PayPal Donation" title="'.sprintf(__('Donate with %1$s','link-view'), 'PayPal').'" border="0"></a>
+				<a class="donate" href="https://liberapay.com/mibuthu/donate" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/liberapay-donate.svg" alt="Liberapay Donation" title="'.sprintf(__('Donate with %1$s','link-view'), 'Liberapay').'" border="0"></a>
+				<a class="donate" href="https://flattr.com/submit/auto?user_id=mibuthu&url=https%3A%2F%2Fwordpress.org%2Fplugins%2Flink-view" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/flattr-badge-large.png" alt="Flattr this" title="'.sprintf(__('Donate with %1$s','link-view'), 'Flattr').'" border="0"></a></p>
 			</div>';
-			$out .= $this->html_atts();
-		echo $out;
 	}
 
-	private function html_atts() {
+	private function show_translation_info() {
+		echo '
+			<h3>'.__('Translations','link-view').'</h3>
+			<div class="help-content">
+				<p>'.__('Please help translating this plugin into your language.','link-view').'</p>
+				<p>'.sprintf(__('You can submit your translations at %1$s.','link-view'), '<a href="https://www.transifex.com/projects/p/wp-link-view">Transifex</a>').'<br />
+				'.__('There the source strings will be kept in sync with the actual development version. And in each plugin release the available translation files will be updated.','link-view').'</p>';
+	}
+
+	private function show_atts() {
 		require_once(LV_PATH.'includes/sc_linkview.php');
 		$shortcode = &SC_Linkview::get_instance();
 		$shortcode->load_sc_linkview_helptexts();
-		$out = '
+		echo '
 			<h3>'.__('Shortcode Attributes','link-view').'</h3>
 			<div class="help-content">
-				'.sprintf(__('In the following tables you can find all available shortcode attributes for %1$s','link-view'), '<code>[linkview]</code>').':
-				';
-		$out .= '<h4 class="atts-section-title">'.__('General','link-view').':</h4>';
-		$out .= $this->html_atts_table($shortcode->get_atts('general'));
-		$out .= '<h4 class="atts-section-title">'.__('Link List','link-view').':</h4>';
-		$out .= $this->html_atts_table($shortcode->get_atts('list'));
-		$out .= '<h4 class="atts-section-title">'.__('Link Slider','link-view').':</h4>';
-		$out .= $this->html_atts_table($shortcode->get_atts('slider'));
-		$out .= '<br />
+				'.sprintf(__('In the following tables you can find all available shortcode attributes for %1$s','link-view'), '<code>[linkview]</code>').':';
+		echo '<h4 class="atts-section-title">'.__('General','link-view').':</h4>';
+		echo $this->html_atts_table($shortcode->get_atts('general'));
+		echo '<h4 class="atts-section-title">'.__('Link List','link-view').':</h4>';
+		echo $this->html_atts_table($shortcode->get_atts('list'));
+		echo '<h4 class="atts-section-title">'.__('Link Slider','link-view').':</h4>';
+		echo $this->html_atts_table($shortcode->get_atts('slider'));
+		echo '<br />
 				<h4 class="atts-section-title">'.__('Multi-column layout types and options','link-view').':</h4><a id="multicol"></a>
-				There are 3 different types of multiple column layouts available for category or link multi-column view. Each type has some advantages and disadvantages compared to the others.
-				<p>Additionally the available layouts can be modified with their options:</p>
+				'.__('There are 3 different types of multiple column layouts for category or link-lists available. Each type has some advantages but also some disadvantages compared to the others.','link-view').'
+				<p>'.__('Additionally the available layouts can be modified with their options','link-view').':</p>
 				<table class="atts-table">
-				<tr><th>layout type</th><th>type description</th></tr>
-				<tr><td>Number</td><td>Use a single number to specify a static number of columns.<br />
-					This is a short form of the static layout type (see below).</td></tr>
-				<tr><td>static</td><td>Set a static number of columns. The categories or links will be arranged in rows.
-					<h5>available options:</h5>
-					<em>num_columns</em>: Provide a single number which specifys the number of columns. If no value is given 3 will be used by default.</td></tr>
-				<tr><td>css</td><td>This type uses the <a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">multi-column feature of CSS</a> to arrange the columns.
-					<h5>available options:</h5>
-					You can use all available properties for CSS3 Multi-column Layout (see <a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">this link</a> for detailed information).<br />
-					The given attributes will be added to the wrapper div element. Also the prefixed browser specific attributes will be added.</td></tr>
-				<tr><td>masonry</td><td>This type uses the <a href="http://masonry.desandro.com/" target="_blank" rel="noopener">Masonry grid layout javascript library</a> to arrange the columns.
-					<h5>available options:</h5>
-					You can use all Options which are available for the Masonry library (see <a href="http://masonry.desandro.com/options.html" target="_blank" rel="noopener">masonry options</a> for detailed information).<br />
-					The given options will be provided to the Masonry javascript library.</td></tr>
+				<tr><th>'.__('layout type','link-view').'</th><th>'.__('type description','link-view').'</th></tr>
+				<tr><td>'.__('Number','link-view').'</td><td>'.__('Use a single number to specify a static number of columns.','link-view').'<br />
+					'.__('This is a short form of the static layout type (see below).','link-view').'</td></tr>
+				<tr><td>static</td><td>'.__('Set a static number of columns. The categories or links will be arranged in rows.','link-view').'
+					<h5>'.__('available options','link-view').':</h5>
+					<em>num_columns</em>: '.__('Provide a single number which specifys the number of columns. If no value is given 3 columns will be displayed by default.','link-view').'</td></tr>
+				<tr><td>css</td><td>'.sprintf(__('This type uses the %1$s to arrange the columns.','link-view'), '<a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">'.__('multi-column feature of CSS','link-view').'</a>').'
+					<h5>'.__('available options','link-view').':</h5>
+					'.sprintf(__('You can use all available properties for CSS3 Multi-column Layout (see %1$s for detailed information).','link-view'), '<a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">'.__('this link','link-view').'</a>').'<br />
+					'.__('The given attributes will be added to the wrapper div element. Also the prefixed browser specific attributes will be added.','link-view').'</td></tr>
+				<tr><td>masonry</td><td>'.sprintf(__('This type uses the %1$s to arrange the columns.','link-view'), '<a href="http://masonry.desandro.com/" target="_blank" rel="noopener">'.sprintf(__('%1$s grid layout javascript library','link-view'), 'Masonry').'</a>').'
+					<h5>'.__('available options','link-view').':</h5>
+					'.sprintf(__('You can use all Options which are available for the Masonry library (see %1$s for detailed information).','link-view'), '<a href="http://masonry.desandro.com/options.html" target="_blank" rel="noopener">'.__('this link','link-view').'</a>').'<br />
+					'.__('The given options will be forwarded to the javascript library.','link-view').'</td></tr>
 				</table>
 				<div class="help-content">
-					<h5>Usage:</h5>
-					For the most types and options it is recommended to define a fixed width for the categories and/or links. This width must be set manually e.g. via the css entry: <code>.lv-multi-column { width: 32%; }</code><br />
-					Depending on the type and options there are probably more css modifications required for a correct multi-column layout.<br />
-					There are different ways to add required css code, one method is the link-view setting "CSS-code for linkview" which can be found in <a href="'.admin_url('options-general.php?page=lv_admin_options').'">Settings &rarr; LinkView</a>.<br />
-					The optional type options must be added in brackets in the format "option_name=value", multiple options can be added seperated by a pipe ("|").
-					<h5>Examples:</h5>
-					<p><code>[linkview cat_columns=3]</code> &hellip; show the categories in 3 static columns</p>
-					<p><code>[linkview link_columns="static(num_columns=2)"]</code> &hellip; show the link-lists in 2 static columns</p>
-					<p><code>[linkview cat_columns="css(column-width=4)"</code> &hellip; show the categories in columns with the css column properties with a fixed width per category</p>
-					<p><code>[linkview links_columns="css(column-count=4|column-rule=4px outset #ff00ff|column-gap=40px)"</code> &hellip; show the link-lists in 4 columns with multiple css column properties</p>
-					<p><code>[linkview cat_columns="masonry(masonry(isOriginTop=false|isOriginLeft=false)"</code> &hellip; show the categories in columns with the masonry script (with some specific masonry options)</p>
+					<h5>'.__('Usage','link-view').':</h5>
+					'.__('For the most types and options it is recommended to define a fixed width for the categories and/or links. This width must be set manually e.g. via the css entry:','link-view').' <code>.lv-multi-column { width: 32%; }</code><br />
+					'.__('Depending on the type and options there are probably more css modifications required for a correct multi-column layout.','link-view').'<br />
+					'.sprintf(__('There are several ways to add the required css code. One method is the %1$s setting %2$s which can be found in %3$s.','link-view'), 'LinkView', '"'.sprintf(__('CSS-code for %1$s','link-view'), 'LinkView').'"', '<a href="'.admin_url('options-general.php?page=lv_admin_options').'">'.__('Settings').' &rarr; LinkView</a>').'<br />
+					'.sprintf(__('The optional type options must be added in brackets in the format "option_name=value", multiple options can be added seperated by a pipe %1$s.','link-view'), '("<strong>|</strong>")').'
+					<h5>'.__('Examples','link-view').':</h5>
+					<p><code>[linkview cat_columns=3]</code> &hellip; '.__('show the categories in 3 static columns','link-view').'</p>
+					<p><code>[linkview link_columns="static(num_columns=2)"]</code> &hellip; '.__('show the link-lists in 2 static columns','link-view').'</p>
+					<p><code>[linkview cat_columns="css(column-width=4)"</code> &hellip; '.__('show the categories in columns with the css column properties with a fixed width per category','link-view').'</p>
+					<p><code>[linkview links_columns="css(column-count=4|column-rule=4px outset #ff00ff|column-gap=40px)"</code> &hellip; '.__('show the link-lists in 4 columns by using the CSS multi column properties','link-view').'</p>
+					<p><code>[linkview cat_columns="masonry(masonry(isOriginTop=false|isOriginLeft=false)"</code> &hellip; '.__('show the categories in columns by using the masonry script (with some specific masonry options)','link-view').'</p>
 				</div>
 			</div>';
-		return $out;
 	}
 
 	private function html_atts_table($atts) {

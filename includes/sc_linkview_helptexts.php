@@ -11,7 +11,7 @@ $sc_linkview_helptexts = array(
 
 	'cat_filter'     => array('section' => 'general',
 	                          'val'     => 'category slugs',
-	                          'desc'    => 'This attribute specifies the link categories of which links are displayed. The standard is "all" or an empty string to show all links.<br />
+	                          'desc'    => 'This attribute specifies the link categories of which links are displayed. The default is an empty string to show all links.<br />
 	                                        Links defined in categories which doesn´t match cat_filter will not be displayed.<br />
 	                                        The filter is specified via the given category slug. You can specify a single slug to only show links from this category.<br />
 	                                        To show multiple categories you can use OR connection with the delimiter "<strong>&verbar;</strong>" or "<strong>&comma;</strong>".<br />
@@ -20,15 +20,20 @@ $sc_linkview_helptexts = array(
 	                                        <code>[linkview cat_filter="blogroll&comma;social-media"]</code>&hellip; Show all links with category "blogroll" or "social-media".'),
 
 	'exclude_cat'    => array('section' => 'general',
-	                          'val'     => 'Cat 1,Cat 2,...',
+	                          'val'     => 'Cat 1,Cat 2,&hellip;',
 	                          'desc'    => 'This attribute specifies which categories should be excluded. This attribute is only considered if the attribute "cat_filter" is not set.<br />
 	                                        If the category name has spaces, simply wrap the name in quotes.<br />
 	                                        If you want to define multiple categories you can give them in a list splitted by the delimiter ","<br />
 	                                        Example: <code>[linkview exclude_cat="Blogroll,Social Media"]</code>'),
 
 	'show_cat_name'  => array('section' => 'general',
-	                          'val'     => array('0 ... false','1 ... true'),
+	                          'val'     => array('0 &hellip; false','1 &hellip; true'),
 	                          'desc'    => 'This attribute specifies if the category name is shown as a headline.'),
+
+	'show_num_links' => array('section' => 'general',
+	                          'val'     => array('0 &hellip; false','1 &hellip; true'),
+	                          'desc'    => 'This attribute specifies if the number of links shall be displayed in brackets next to the category name.<br />
+	                                        The cat name must be displayed (<code>show_cat_name=true</code>) to show the number of events.'),
 
 	'link_orderby'   => array('section' => 'general',
 	                          'val'     => array('link_id','url','name','owner','rating','visible','length','rand'),
@@ -50,14 +55,14 @@ $sc_linkview_helptexts = array(
 	                                        Specify a number smaller than 0 to view all links.'),
 
 	'show_img'       => array('section' => 'general',
-	                          'val'     => array('0 ... false','1 ... true'),
+	                          'val'     => array('0 &hellip; false','1 &hellip; true'),
 	                          'desc'    => 'This attribute specifies if the image is displayed instead of the name. This attribute is only considered for links where an image was set.'),
 
 	'link_items'     => array('section' => 'general',
 	                          'val'     => array('name','address','description','image','rss','notes','rating'),
 	                          'desc'    => 'This is a more complex but very powerful attribute.
 	                                        The standard is to leave it emtpy. Then only the link name or the link image (see attribute "show_img") is shown.<br />
-	                                        If you use this attribute you can overwrite these settings and you can customize the displayed link items and their arrangement to your special requirements.<br />
+	                                        If you use this attribute you can override these settings and you can customize the displayed link items and their arrangement to your special requirements.<br />
 	                                        This attribute is set via a specific JSON data structure.<br />
 	                                        Please use single quotes for defining this attribute because you require the double quotes to define the JSON code.<br />
 	                                        This attribute can also be defined as the content of an enclosed shortcode e.g. <code>[linkview]JSON data[/linkview]</code>.<br />
@@ -82,8 +87,8 @@ $sc_linkview_helptexts = array(
 
 	'link_target'    => array('section' => 'general',
 	                          'val'     => array('std','blank','top','self'),
-	                          'desc'    => 'Set one of the given values to overwrite the standard value which was set for the link.<br />
-	                                        Set the attribute to "std" if you don´t want to overwrite the standard.'),
+	                          'desc'    => 'Set one of the given values to override the standard value which was set for the link.<br />
+	                                        Set the attribute to "std" if you don´t want to override the standard.'),
 
 	'link_rel'       => array('section' => 'general',
 	                       // 'val'     => val is already set in sc_linkview, because the array is required for checking for a valid rel attribute
@@ -97,7 +102,7 @@ $sc_linkview_helptexts = array(
 	'list_symbol'    => array('section' => 'list',
 	                          'val'     => array('std','none','circle','square','disc'),
 	                          'desc'    => 'This attribute sets the style type of the list symbol.<br />
-	                                        The standard value is "std", this means the standard type which is set in your theme will be used. Set one of the other values to overwrite this standard.<br />
+	                                        The standard value is "std", this means the standard type which is set in your theme will be used. Set one of the other values to overide this standard.<br />
 	                                        A good example for the usage is to set the value to "none" for an image link list. The list symbols will be hidden which often looks better when images are used.'),
 
 	'vertical_align' => array('section' => 'general',
