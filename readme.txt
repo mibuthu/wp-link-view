@@ -33,7 +33,7 @@ Feel free to add your merge requests there, if you want to help to improve the p
 = Translations: =
 Please help translating this plugin into multiple languages.
 You can submit your translations at [transifex.com](https://www.transifex.com/projects/p/wp-link-view "wp-link-view at transifex").
-There the source strings will always be in sync with the actual development version.
+There the source strings will be kept in sync with the actual development version. And in each plugin release the available translation files will be updated.
 
 == Installation ==
 

@@ -42,6 +42,7 @@ class LV_Admin_About {
 		else {
 			$this->show_help();
 			$this->show_author();
+			$this->show_translation_info();
 		}
 		echo '
 			</div>';
@@ -95,6 +96,15 @@ class LV_Admin_About {
 				<a class="donate" href="https://liberapay.com/mibuthu/donate" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/liberapay-donate.svg" alt="Liberapay Donation" title="'.sprintf(__('Donate with %1$s','link-view'), 'Liberapay').'" border="0"></a>
 				<a class="donate" href="https://flattr.com/submit/auto?user_id=mibuthu&url=https%3A%2F%2Fwordpress.org%2Fplugins%2Flink-view" target="_blank" rel="noopener"><img src="'.LV_URL.'admin/images/flattr-badge-large.png" alt="Flattr this" title="'.sprintf(__('Donate with %1$s','link-view'), 'Flattr').'" border="0"></a></p>
 			</div>';
+	}
+
+	private function show_translation_info() {
+		echo '
+			<h3>'.__('Translations','link-view').'</h3>
+			<div class="help-content">
+				<p>'.__('Please help translating this plugin into your language.','link-view').'</p>
+				<p>'.sprintf(__('You can submit your translations at %1$s.','link-view'), '<a href="https://www.transifex.com/projects/p/wp-link-view">Transifex</a>').'<br />
+				'.__('There the source strings will be kept in sync with the actual development version. And in each plugin release the available translation files will be updated.','link-view').'</p>';
 	}
 
 	private function show_atts() {
