@@ -2,9 +2,9 @@
 Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css, multi-column
-Requires at least: 3.3
-Tested up to: 4.7
-Stable tag: 0.7.0
+Requires at least: 3.8
+Tested up to: 4.9
+Stable tag: 0.7.1
 Plugin URI: http://wordpress.org/extend/plugins/link-view
 Licence: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -65,6 +65,16 @@ Yes, you can create an instance of the "SC_Linkview" class which located in "php
 
 
 == Changelog ==
+
+= 0.7.1 (2017-08-13) =
+* added shortcode attribute "show_num_links"
+* changed default value for cat_filter from "all" to an empty string ("all" is deprecated now)
+* splitted admin about page in 2 tabs (general and shortcode attributes)
+* added information about translations
+* updated masonry script to version 4.2
+* prepare more strings for translation add added german translations for them
+* Rise mimimum required Wordpress version to 3.8
+* moved screenshots to assets folder
 
 = 0.7.0 (2017-01-20) =
 * added multi-language-support (not all strings translatable yet)
