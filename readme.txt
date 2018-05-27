@@ -4,6 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css, multi-column
 Requires at least: 3.8
 Tested up to: 4.9
+Requires PHP: 5.2
 Stable tag: 0.7.1
 Plugin URI: http://wordpress.org/extend/plugins/link-view
 Licence: GPLv2
