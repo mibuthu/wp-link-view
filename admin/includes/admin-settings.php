@@ -123,7 +123,7 @@ class LV_Admin_Settings {
 			}
 			echo '
 					</td>
-					<td class="description">' . esc_html( $o['desc'] ) . '</td>
+					<td class="description">' . wp_kses_post( $o['desc'] ) . '</td>
 				</tr>';
 		}
 	}
