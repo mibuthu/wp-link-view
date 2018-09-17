@@ -1,79 +1,150 @@
 <?php
-if(!defined('WPINC')) {
-	die;
+/**
+ * Options class
+ *
+ * @package link-view
+ */
+
+if ( ! defined( 'WPINC' ) ) {
+	exit;
 }
 
-// This class handles all available options
+require_once LV_PATH . 'includes/attribute.php';
+
+/**
+ * Options class
+ *
+ * This class handles all available options with their information
+ */
 class LV_Options {
+
+	/**
+	 * Class singleton instance reference
+	 *
+	 * @var object
+	 */
 	private static $instance;
+
+	/**
+	 * Options array
+	 *
+	 * @var array
+	 */
 	public $options;
 
+
+	/**
+	 * Singleton provider and setup
+	 *
+	 * @return object
+	 */
 	public static function &get_instance() {
-		// singleton setup
-		if(!isset(self::$instance)) {
-			self::$instance = new self;
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new self();
 			self::$instance->init();
 		}
 		return self::$instance;
 	}
 
+
+	/**
+	 * Class constructor which initializes required variables
+	 */
 	private function __construct() {
 		$this->options = array(
-			'lv_req_cap'  => array('std_val' => 'manage_links'),
-			'lv_ml_role'  => array('std_val' => 'editor'),
-			'lv_css'      => array('std_val' => ''),
+			'lv_req_cap' => new LV_Attribute( 'manage_links' ),
+			'lv_ml_role' => new LV_Attribute( 'editor' ),
+			'lv_css'     => new LV_Attribute( '' ),
 		);
 	}
 
-	public function load_options_helptexts() {
-		require_once(LV_PATH.'includes/options_helptexts.php');
-		foreach($options_helptexts as $name => $values) {
-			$this->options[$name] += $values;
-		}
-		unset($options_helptexts);
-	}
 
+	/**
+	 * Init action hook
+	 *
+	 * @return void
+	 */
 	public function init() {
-		add_action('admin_init', array(&$this, 'register'));
-		add_filter('pre_update_option_lv_ml_role', array(&$this, 'update_manage_links_role'));
+		add_action( 'admin_init', array( &$this, 'register' ) );
+		add_filter( 'pre_update_option_lv_ml_role', array( &$this, 'update_manage_links_role' ) );
 	}
 
+
+	/**
+	 * Register all settings in WordPress
+	 *
+	 * @return void
+	 */
 	public function register() {
-		foreach($this->options as $oname => $o) {
-			register_setting('lv_options', $oname);
+		foreach ( array_keys( $this->options ) as $oname ) {
+			register_setting( 'lv_options', $oname );
 		}
 	}
 
-	public function get($name) {
-		if(isset($this->options[$name])) {
-			return get_option($name, $this->options[$name]['std_val']);
+
+	/**
+	 * Load options helptext from additional file
+	 *
+	 * @return void
+	 */
+	public function load_helptexts() {
+		global $lv_options_helptexts;
+		require_once LV_PATH . 'includes/options-helptexts.php';
+		foreach ( $lv_options_helptexts as $name => $values ) {
+			$this->options[ $name ]->modify( $values );
 		}
-		else {
-			return null;
-		}
+		unset( $lv_options_helptexts );
 	}
 
-	public function update_manage_links_role($new_value, $old_value=null) {
+
+	/**
+	 * Update the role to manage links
+	 *
+	 * @param string $new_value New role.
+	 * @param null   $old_value Old role (not used).
+	 * @return string The $new_value string.
+	 *
+	 * @suppress PhanUnusedPublicMethodParameter
+	 */
+	public function update_manage_links_role( $new_value, $old_value = null ) {
 		global $wp_roles;
-		switch($new_value) {
+		switch ( $new_value ) {
 			case 'subscriber':
-				$wp_roles->add_cap('subscriber', 'manage_links');
+				$wp_roles->add_cap( 'subscriber', 'manage_links' );
+				// Case fall-through intended.
 			case 'contributor':
-				$wp_roles->add_cap('contributor', 'manage_links');
+				$wp_roles->add_cap( 'contributor', 'manage_links' );
+				// Case fall-through intended.
 			case 'author':
-				$wp_roles->add_cap('author', 'manage_links');
+				$wp_roles->add_cap( 'author', 'manage_links' );
 				break;
 		}
-		switch($new_value) {
+		switch ( $new_value ) {
 			case 'editor':
-				$wp_roles->remove_cap('author', 'manage_links');
+				$wp_roles->remove_cap( 'author', 'manage_links' );
+				// Case fall-through intended.
 			case 'author':
-				$wp_roles->remove_cap('contributor', 'manage_links');
+				$wp_roles->remove_cap( 'contributor', 'manage_links' );
+				// Case fall-through intended.
 			case 'contributor':
-				$wp_roles->remove_cap('subscriber', 'manage_links');
+				$wp_roles->remove_cap( 'subscriber', 'manage_links' );
 				break;
 		}
 		return $new_value;
 	}
-} // end of class LV_Options
 
+
+	/**
+	 * Get the value of the specified option
+	 *
+	 * @param string $name Option name.
+	 * @return null|string Option value.
+	 */
+	public function get( $name ) {
+		if ( ! isset( $this->options[ $name ] ) ) {
+			return null;
+		}
+		return get_option( $name, $this->options[ $name ]->std_val );
+	}
+
+}

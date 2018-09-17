@@ -53,7 +53,7 @@ class LV_Admin_Settings {
 	 */
 	private function __construct() {
 		$this->options = &LV_Options::get_instance();
-		$this->options->load_options_helptexts();
+		$this->options->load_helptexts();
 	}
 
 
@@ -109,14 +109,14 @@ class LV_Admin_Settings {
 			echo '
 				<tr>
 					<th>';
-			if ( '' !== $o['label'] ) {
-				echo '<label for="' . esc_attr( $oname ) . '">' . esc_html( $o['label'] ) . ':</label>';
+			if ( '' !== $o->label ) {
+				echo '<label for="' . esc_attr( $oname ) . '">' . esc_html( $o->label ) . ':</label>';
 			}
 			echo '</th>
 					<td>';
-			switch ( $o['type'] ) {
+			switch ( $o->type ) {
 				case 'radio':
-					$this->show_radio( $oname, $this->options->get( $oname ), $o['caption'] );
+					$this->show_radio( $oname, $this->options->get( $oname ), $o->caption );
 					break;
 				case 'textarea':
 					$this->show_textarea( $oname, $this->options->get( $oname ) );
@@ -124,7 +124,7 @@ class LV_Admin_Settings {
 			}
 			echo '
 					</td>
-					<td class="description">' . wp_kses_post( $o['desc'] ) . '</td>
+					<td class="description">' . wp_kses_post( $o->description ) . '</td>
 				</tr>';
 		}
 	}
@@ -145,12 +145,14 @@ class LV_Admin_Settings {
 							<fieldset>';
 		foreach ( $caption as $okey => $ocaption ) {
 			$checked = ( $value === $okey ) ? 'checked="checked" ' : '';
-			echo '
+			echo wp_kses_post(
+				'
 								<label title="' . esc_attr( $ocaption ) . '">
-									<input type="radio" ' . $checked . 'value="' . esc_attr( $okey ) . '" name="' . esc_attr( $name ) . '">
-									<span>' . esc_html( $ocaption ) . '</span>
+									<input type="radio" ' . $checked . 'value="' . $okey . '" name="' . $name . '">
+									<span>' . $ocaption . '</span>
 								</label>
-								<br />';
+								<br />'
+			);
 		}
 		echo '
 							</fieldset>';
