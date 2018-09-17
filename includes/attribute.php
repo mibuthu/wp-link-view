@@ -67,6 +67,13 @@ class LV_Attribute {
 	 */
 	public $description = null;
 
+	/**
+	 * Attribute tooltip
+	 *
+	 * @var string|null
+	 */
+	public $tooltip = null;
+
 
 	/**
 	 * Class constructor which sets the required variables
