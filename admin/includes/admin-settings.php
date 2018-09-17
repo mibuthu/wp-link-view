@@ -145,14 +145,12 @@ class LV_Admin_Settings {
 							<fieldset>';
 		foreach ( $caption as $okey => $ocaption ) {
 			$checked = ( $value === $okey ) ? 'checked="checked" ' : '';
-			echo wp_kses_post(
-				'
+			echo '
 								<label title="' . esc_attr( $ocaption ) . '">
-									<input type="radio" ' . $checked . 'value="' . $okey . '" name="' . $name . '">
-									<span>' . $ocaption . '</span>
+									<input type="radio" ' . wp_kses_post( $checked ) . 'value="' . esc_attr( $okey ) . '" name="' . esc_attr( $name ) . '">
+									<span>' . esc_html( $ocaption ) . '</span>
 								</label>
-								<br />'
-			);
+								<br />';
 		}
 		echo '
 							</fieldset>';
