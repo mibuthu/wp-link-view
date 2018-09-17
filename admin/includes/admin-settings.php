@@ -64,12 +64,12 @@ class LV_Admin_Settings {
 	public function show_page() {
 		// Check required privilegs.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.', 'default' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'default' ) );
 		}
 		// Create content.
 		echo '
 			<div class="wrap nosubsub">
-			<div id="icon-link-manager" class="icon32"><br /></div><h2>' . sprintf( __( '%1$s Settings', 'link-view' ), 'LinkView' ) . '</h2></div>';
+			<div id="icon-link-manager" class="icon32"><br /></div><h2>' . sprintf( esc_html__( '%1$s Settings', 'link-view' ), 'LinkView' ) . '</h2></div>';
 		$this->html_settings();
 	}
 
