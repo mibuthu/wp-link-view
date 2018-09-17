@@ -39,7 +39,9 @@ define( 'LV_PATH', plugin_dir_path( __FILE__ ) );
 
 
 /**
- * Main plugin class!
+ * Main plugin class
+ *
+ * This is the initial class for loading the plugin.
  */
 class LV_LinkView {
 

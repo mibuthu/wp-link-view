@@ -12,6 +12,7 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 
 require_once LV_PATH . 'includes/options.php';
 
+
 /**
  * LinkViews Main Admin Class
  *
