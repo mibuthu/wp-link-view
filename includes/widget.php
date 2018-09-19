@@ -96,7 +96,7 @@ class LV_Widget extends WP_Widget {
 		$this->load_helptexts();
 		foreach ( $this->items as $itemname => $item ) {
 			if ( ! isset( $instance[ $itemname ] ) ) {
-				$instance[ $itemname ] = $item->std_val;
+				$instance[ $itemname ] = $item->value;
 			}
 			if ( 'textarea' === $item->type ) {
 				echo '
@@ -112,8 +112,7 @@ class LV_Widget extends WP_Widget {
 					</p>';
 			}
 		}
-		// TODO: Test if 'noform' return value is o.k. (Check if Save button is shown correctly).
-		return 'noform';
+		return '';
 	}
 
 

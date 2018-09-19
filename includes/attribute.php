@@ -19,18 +19,18 @@ if ( ! defined( 'WPINC' ) ) {
 class LV_Attribute {
 
 	/**
-	 * Attribute default value
+	 * Attribute (default) value
 	 *
 	 * @var string
 	 */
-	public $std_val;
+	public $value;
 
 	/**
-	 * Attribute value
+	 * Attribute value options
 	 *
-	 * @var null|string
+	 * @var null|string|array
 	 */
-	public $val = null;
+	public $value_options = null;
 
 	/**
 	 * Attribute section
@@ -78,14 +78,14 @@ class LV_Attribute {
 	/**
 	 * Class constructor which sets the required variables
 	 *
-	 * @param string      $std_val Standard attribute value.
-	 * @param string|null $val     Attribute value (optional).
+	 * @param string            $std_value Standard attribute value.
+	 * @param null|string|array $value_options Attribute value (optional).
 	 * @return void
 	 */
-	public function __construct( $std_val, $val = null ) {
-		$this->std_val = $std_val;
-		if ( ! is_null( $val ) ) {
-			$this->val = $val;
+	public function __construct( $std_value, $value_options = null ) {
+		$this->value = $std_value;
+		if ( ! is_null( $value_options ) ) {
+			$this->value_options = $value_options;
 		}
 	}
 
@@ -93,13 +93,16 @@ class LV_Attribute {
 	/**
 	 * Modify several fields at once with the values given in an array
 	 *
-	 * @param array $items Fields with values to modify.
+	 * @param array $attributes Fields with values to modify.
 	 * @return void
 	 */
-	public function modify( $items ) {
-		foreach ( $items as $itemname => $itemvalue ) {
-			if ( property_exists( $this, $itemname ) ) {
-				$this->$itemname = $itemvalue;
+	public function modify( $attributes ) {
+		foreach ( $attributes as $name => $value ) {
+			if ( property_exists( $this, $name ) ) {
+				$this->$name = $value;
+			} else {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+				trigger_error( 'Attribute "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
 			}
 		}
 	}

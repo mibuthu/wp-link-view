@@ -144,7 +144,7 @@ class LV_Options {
 		if ( ! isset( $this->options[ $name ] ) ) {
 			return null;
 		}
-		return get_option( $name, $this->options[ $name ]->std_val );
+		return get_option( $name, $this->options[ $name ]->value );
 	}
 
 }
