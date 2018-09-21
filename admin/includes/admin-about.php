@@ -229,7 +229,7 @@ class LV_Admin_About {
 					<p><code>[linkview link_columns="static(num_columns=2)"]</code> &hellip; ' . __( 'show the link-lists in 2 static columns', 'link-view' ) . '</p>
 					<p><code>[linkview cat_columns="css(column-width=4)"</code> &hellip; ' . __( 'show the categories in columns with the css column properties with a fixed width per category', 'link-view' ) . '</p>
 					<p><code>[linkview links_columns="css(column-count=4|column-rule=4px outset #ff00ff|column-gap=40px)"</code> &hellip; ' . __( 'show the link-lists in 4 columns by using the CSS multi column properties', 'link-view' ) . '</p>
-					<p><code>[linkview cat_columns="masonry(masonry(isOriginTop=false|isOriginLeft=false)"</code> &hellip; ' . __( 'show the categories in columns by using the masonry script (with some specific masonry options)', 'link-view' ) . '</p>
+					<p><code>[linkview cat_columns="masonry(isOriginTop=false|isOriginLeft=false)"</code> &hellip; ' . __( 'show the categories in columns by using the masonry script (with some specific masonry options)', 'link-view' ) . '</p>
 				</div>
 			</div>'
 			);
