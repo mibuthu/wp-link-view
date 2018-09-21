@@ -6,9 +6,9 @@ Requires at least: 3.8
 Tested up to: 4.9
 Requires PHP: 5.2
 Stable tag: 0.7.1
-Plugin URI: http://wordpress.org/extend/plugins/link-view
+Plugin URI: https://wordpress.org/extend/plugins/link-view
 Licence: GPLv2
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Display a link-list or link-slider in a post or page by using a shortcode.
 

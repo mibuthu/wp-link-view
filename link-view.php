@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Link View
- * Plugin URI: http://wordpress.org/extend/plugins/link-view/
+ * Plugin URI: https://wordpress.org/extend/plugins/link-view/
  * Description: Display a link-list or link-slider in a post or page by using a shortcode.
  * Version: 0.7.1
  * Author: mibuthu
- * Author URI: http://wordpress.org/extend/plugins/link-view/
+ * Author URI: https://wordpress.org/extend/plugins/link-view/
  * Text Domain: link-view
  * License: GPLv2
  *
@@ -23,7 +23,7 @@
  * GNU General Public License for more details.
  *
  * You can view a copy of the HTML version of the GNU General Public
- * License at http://www.gnu.org/copyleft/gpl.html
+ * License at https://www.gnu.org/copyleft/gpl.html
  *
  * @package link-view
  */

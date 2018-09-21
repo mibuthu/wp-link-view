@@ -150,8 +150,8 @@ class LV_Admin_About {
 			'
 			<h3>' . __( 'About the plugin author', 'link-view' ) . '</h3>
 			<div class="help-content">
-				<p>' . sprintf( __( 'This plugin is developed by %1$s, you can find more information about the plugin on the %2$s.', 'link-view' ), 'mibuthu', '<a href="http://wordpress.org/plugins/link-view" target="_blank" rel="noopener">' . __( 'WordPress plugin site', 'link-view' ) . '</a>' ) . '</p>
-				<p>' . sprintf( __( 'If you like the plugin please rate it on the %1$s.', 'link-view' ), '<a href="http://wordpress.org/support/view/plugin-reviews/link-view" target="_blank" rel="noopener">' . __( 'WordPress plugin review site', 'link-view' ) . '</a>' ) . '<br />
+				<p>' . sprintf( __( 'This plugin is developed by %1$s, you can find more information about the plugin on the %2$s.', 'link-view' ), 'mibuthu', '<a href="https://wordpress.org/plugins/link-view" target="_blank" rel="noopener">' . __( 'WordPress plugin site', 'link-view' ) . '</a>' ) . '</p>
+				<p>' . sprintf( __( 'If you like the plugin please rate it on the %1$s.', 'link-view' ), '<a href="https://wordpress.org/support/view/plugin-reviews/link-view" target="_blank" rel="noopener">' . __( 'WordPress plugin review site', 'link-view' ) . '</a>' ) . '<br />
 				<p>' . __( 'If you want to support the plugin I would be happy to get a small donation', 'link-view' ) . ':<br />
 				<a class="donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY" target="_blank" rel="noopener"><img src="' . LV_URL . 'admin/images/paypal_btn_donate.gif" alt="PayPal Donation" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'PayPal' ) . '" border="0"></a>
 				<a class="donate" href="https://liberapay.com/mibuthu/donate" target="_blank" rel="noopener"><img src="' . LV_URL . 'admin/images/liberapay-donate.svg" alt="Liberapay Donation" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'Liberapay' ) . '" border="0"></a>
@@ -209,13 +209,13 @@ class LV_Admin_About {
 				<tr><td>static</td><td>' . __( 'Set a static number of columns. The categories or links will be arranged in rows.', 'link-view' ) . '
 					<h5>' . __( 'available options', 'link-view' ) . ':</h5>
 					<em>num_columns</em>: ' . __( 'Provide a single number which specifys the number of columns. If no value is given 3 columns will be displayed by default.', 'link-view' ) . '</td></tr>
-				<tr><td>css</td><td>' . sprintf( __( 'This type uses the %1$s to arrange the columns.', 'link-view' ), '<a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">' . __( 'multi-column feature of CSS', 'link-view' ) . '</a>' ) . '
+				<tr><td>css</td><td>' . sprintf( __( 'This type uses the %1$s to arrange the columns.', 'link-view' ), '<a href="https://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">' . __( 'multi-column feature of CSS', 'link-view' ) . '</a>' ) . '
 					<h5>' . __( 'available options', 'link-view' ) . ':</h5>
-					' . sprintf( __( 'You can use all available properties for CSS3 Multi-column Layout (see %1$s for detailed information).', 'link-view' ), '<a href="http://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">' . __( 'this link', 'link-view' ) . '</a>' ) . '<br />
+					' . sprintf( __( 'You can use all available properties for CSS3 Multi-column Layout (see %1$s for detailed information).', 'link-view' ), '<a href="https://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">' . __( 'this link', 'link-view' ) . '</a>' ) . '<br />
 					' . __( 'The given attributes will be added to the wrapper div element. Also the prefixed browser specific attributes will be added.', 'link-view' ) . '</td></tr>
-				<tr><td>masonry</td><td>' . sprintf( __( 'This type uses the %1$s to arrange the columns.', 'link-view' ), '<a href="http://masonry.desandro.com/" target="_blank" rel="noopener">' . sprintf( __( '%1$s grid layout javascript library', 'link-view' ), 'Masonry' ) . '</a>' ) . '
+				<tr><td>masonry</td><td>' . sprintf( __( 'This type uses the %1$s to arrange the columns.', 'link-view' ), '<a href="https://masonry.desandro.com/" target="_blank" rel="noopener">' . sprintf( __( '%1$s grid layout javascript library', 'link-view' ), 'Masonry' ) . '</a>' ) . '
 					<h5>' . __( 'available options', 'link-view' ) . ':</h5>
-					' . sprintf( __( 'You can use all Options which are available for the Masonry library (see %1$s for detailed information).', 'link-view' ), '<a href="http://masonry.desandro.com/options.html" target="_blank" rel="noopener">' . __( 'this link', 'link-view' ) . '</a>' ) . '<br />
+					' . sprintf( __( 'You can use all Options which are available for the Masonry library (see %1$s for detailed information).', 'link-view' ), '<a href="https://masonry.desandro.com/options.html" target="_blank" rel="noopener">' . __( 'this link', 'link-view' ) . '</a>' ) . '<br />
 					' . __( 'The given options will be forwarded to the javascript library.', 'link-view' ) . '</td></tr>
 				</table>
 				<div class="help-content">

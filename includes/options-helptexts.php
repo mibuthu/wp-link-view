@@ -19,7 +19,7 @@ $lv_options_helptexts = array(
 			'edit_posts'   => 'edit_posts',
 		),
 		'description' => sprintf( __( 'With this option you can specify the required capabilities to show the %1$s page.', 'link-view' ), '"' . __( 'About', 'link-view' ) . ' LinkView"' ) . '<br />
-			' . sprintf( __( 'More information can be found in the %1$s.', 'link-view' ), '<a href="http://codex.wordpress.org/Roles_and_Capabilities" target="_blank" rel="noopener">WordPress Codex</a>' ),
+			' . sprintf( __( 'More information can be found in the %1$s.', 'link-view' ), '<a href="https://codex.wordpress.org/Roles_and_Capabilities" target="_blank" rel="noopener">WordPress Codex</a>' ),
 	),
 
 	'lv_ml_role' => array(
@@ -32,7 +32,7 @@ $lv_options_helptexts = array(
 			'subscriber'  => __( 'Subscriber', 'default' ),
 		),
 		'description' => __( 'With this option minimum required role to manage links can be set', 'link-view' ) . ' (' . __( 'Capability', 'link-view' ) . ': "manage_links").<br />
-			' . sprintf( __( 'More information can be found in the %1$s.', 'link-view' ), '<a href="http://codex.wordpress.org/Roles_and_Capabilities" target="_blank" rel="noopener">WordPress Codex</a>' ) . '<br />
+			' . sprintf( __( 'More information can be found in the %1$s.', 'link-view' ), '<a href="https://codex.wordpress.org/Roles_and_Capabilities" target="_blank" rel="noopener">WordPress Codex</a>' ) . '<br />
 			' . sprintf( __( 'Please note that this option also affects the access to the %1$s page if the required capabilities are set to %2$s.', 'link-view' ), '"' . __( 'About', 'link-view' ) . ' LinkView"', '"manage_links"' ),
 	),
 
