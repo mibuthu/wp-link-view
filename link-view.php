@@ -45,13 +45,6 @@ define( 'LV_PATH', plugin_dir_path( __FILE__ ) );
  */
 class LV_LinkView {
 
-	/**
-	 * LinkView shortcode reference
-	 *
-	 * @var SC_Linkview|null
-	 */
-	private $shortcode = null;
-
 
 	/**
 	 * Class Constructor
@@ -74,8 +67,7 @@ class LV_LinkView {
 			require_once LV_PATH . 'admin/admin.php';
 			LV_Admin::get_instance()->init_admin_page();
 		} else { // Front page.
-			add_action( 'init', array( &$this, 'frontpage_init' ) );
-			add_action( 'wp_footer', array( &$this, 'frontpage_footer' ) );
+			add_action( 'wp_enqueue_scripts', array( &$this, 'register_scripts' ) );
 		}
 	}
 
@@ -98,11 +90,12 @@ class LV_LinkView {
 	 * @return string HTML to display
 	 */
 	public function shortcode_linkview( $atts, $content = '' ) {
-		if ( is_null( $this->shortcode ) ) {
-			require_once LV_PATH . 'includes/sc_linkview.php';
-			$this->shortcode = SC_Linkview::get_instance();
+		static $shortcodes;
+		if ( ! $shortcodes instanceof LV_Shortcodes ) {
+			require_once LV_PATH . 'includes/shortcodes.php';
+			$shortcodes = LV_Shortcodes::get_instance();
 		}
-		return $this->shortcode->show_html( $atts, $content );
+		return $shortcodes->add( $atts, $content );
 	}
 
 
@@ -118,25 +111,13 @@ class LV_LinkView {
 
 
 	/**
-	 * Initialization of front page
+	 * Function to register the javascript files
 	 *
 	 * @return void
 	 */
-	public function frontpage_init() {
-		wp_register_script( 'lv_easySlider', LV_URL . 'includes/js/easySlider.min.js', array( 'jquery' ), true, true );
-	}
-
-
-	/**
-	 * Initialization of front page footer
-	 *
-	 * @return void
-	 */
-	public function frontpage_footer() {
-		if ( ! is_null( $this->shortcode ) && null !== $this->shortcode->get_slider_ids() ) {
-			wp_print_scripts( 'lv_easySlider' );
-			$this->shortcode->print_slider_script();
-		}
+	public function register_scripts() {
+		wp_register_script( 'lv_easySlider', LV_URL . 'includes/js/easySlider.min.js', array( 'jquery' ), '1.7', true );
+		wp_register_script( 'lv_masonry', LV_URL . 'includes/js/masonry.pkgd.min.js', array( 'jquery' ), '4.2.2', true );
 	}
 
 }

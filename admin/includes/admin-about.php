@@ -121,8 +121,8 @@ class LV_Admin_About {
 				<p>' . sprintf( __( 'To show links in a post or page the shortcode %1$s must be added in the post or page content text.', 'link-view' ), '<code>[linkview]</code>' ) . '</p>
 				<p>' . __( 'The listed links and their styles can be modified with the available attributes for the shortcode.', 'link-view' ) . '<br />
 				' . __( 'You can combine as much attributes as you want.', 'link-view' ) . '
-				' . sprintf( __( 'E.g. the shortcode including the attributes %1$s and %2$s would look like this', 'link-view' ), '"cat_name"', '"show_img"' ) . ':<br />
-				<code>[linkview cat_name=Sponsors show_img=1]</code><br />
+				' . sprintf( __( 'E.g. the shortcode including the attributes %1$s and %2$s would look like this', 'link-view' ), '"cat_filter"', '"show_img"' ) . ':<br />
+				<code>[linkview cat_filter=Sponsors show_img=1]</code><br />
 				' . __( 'Below you can find tables with all supported attributes, their descriptions and available options.', 'link-view' ) . '</p>
 			</div>
 			<h4>' . __( 'Show links in sidebars and widget areas', 'link-view' ) . '</h4>
@@ -182,9 +182,9 @@ class LV_Admin_About {
 	 * Show attributes HTML table
 	 */
 	private function show_atts() {
-		require_once LV_PATH . 'includes/sc_linkview.php';
-		$shortcode = &SC_Linkview::get_instance();
-		$shortcode->load_sc_linkview_helptexts();
+		require_once LV_PATH . 'includes/shortcode.php';
+		$shortcode = new LV_Shortcode( 0 );
+		$shortcode->load_atts_helptexts();
 		echo wp_kses_post(
 			'
 			<h3>' . __( 'Shortcode Attributes', 'link-view' ) . '</h3>
@@ -253,15 +253,15 @@ class LV_Admin_About {
 					<th class="atts-table-desc">' . __( 'Description', 'link-view' ) . '</th>
 				</tr>'
 		);
-		foreach ( $atts as $aname => $a ) {
-			$val = is_array( $a['val'] ) ? implode( '<br />', $a['val'] ) : $a['val'];
+		foreach ( $atts as $name => $attribute ) {
+			$value_options = is_array( $attribute->value_options ) ? implode( '<br />', $attribute->value_options ) : $attribute->value_options;
 			echo wp_kses_post(
 				'
 				<tr>
-					<td>' . $aname . '</td>
-					<td>' . $val . '</td>
-					<td>' . $a['std_val'] . '</td>
-					<td>' . $a['desc'] . '</td>
+					<td>' . $name . '</td>
+					<td>' . $value_options . '</td>
+					<td>' . $attribute->value . '</td>
+					<td>' . $attribute->description . '</td>
 				</tr>'
 			);
 		}
