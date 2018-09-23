@@ -85,8 +85,8 @@ class LV_LinkView {
 	/**
 	 * Initialize link-view shortcode
 	 *
-	 * @param array  $atts Shortcode attributes.
-	 * @param string $content Shortcode content.
+	 * @param array<string,string> $atts Shortcode attributes.
+	 * @param string               $content Shortcode content.
 	 * @return string HTML to display
 	 */
 	public function shortcode_linkview( $atts, $content = '' ) {

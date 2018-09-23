@@ -41,6 +41,8 @@ class LV_Admin_Settings {
 	 * @return self
 	 */
 	public static function &get_instance() {
+		// There seems to be an issue with the self variable in phan.
+		// @phan-suppress-next-line PhanPluginUndeclaredVariableIsset.
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new self();
 		}
@@ -116,7 +118,7 @@ class LV_Admin_Settings {
 					<td>';
 			switch ( $o->type ) {
 				case 'radio':
-					$this->show_radio( $oname, $this->options->get( $oname ), $o->caption );
+					$this->show_radio( $oname, $this->options->get( $oname ), (array) $o->caption );
 					break;
 				case 'textarea':
 					$this->show_textarea( $oname, $this->options->get( $oname ) );
@@ -133,12 +135,14 @@ class LV_Admin_Settings {
 	/**
 	 * Show a set of radio buttons
 	 *
-	 * @param string   $name HTML name attribute.
-	 * @param string   $value HTML value attribute.
-	 * @param string[] $caption List of captions.
-	 * @param bool     $disabled Disable the radio buttons.
+	 * @param string               $name HTML name attribute.
+	 * @param string               $value HTML value attribute.
+	 * @param array<string,string> $caption List of captions.
+	 * @param bool                 $disabled Disable the radio buttons.
 	 * @return void
-	 * TODO: implement or remove $disabled
+	 * Parameter $disabled not implemented yet.
+	 * TODO: Implement or remove parameter $disabled.
+	 * @phan-suppress PhanUnusedPrivateMethodParameter.
 	 */
 	private function show_radio( $name, $value, $caption, $disabled = false ) {
 		echo '

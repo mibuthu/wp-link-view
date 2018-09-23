@@ -39,6 +39,8 @@ class LV_Options {
 	 * @return object
 	 */
 	public static function &get_instance() {
+		// There seems to be an issue with the self variable in phan.
+		// @phan-suppress-next-line PhanPluginUndeclaredVariableIsset.
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new self();
 			self::$instance->init();
@@ -104,7 +106,8 @@ class LV_Options {
 	 * @param null   $old_value Old role (not used).
 	 * @return string The $new_value string.
 	 *
-	 * @suppress PhanUnusedPublicMethodParameter
+	 * Variable $old_value is not required.
+	 * @phan-suppress PhanUnusedPublicMethodParameter.
 	 */
 	public function update_manage_links_role( $new_value, $old_value = null ) {
 		global $wp_roles;
@@ -138,11 +141,14 @@ class LV_Options {
 	 * Get the value of the specified option
 	 *
 	 * @param string $name Option name.
-	 * @return null|string Option value.
+	 * @return string Option value.
 	 */
 	public function get( $name ) {
 		if ( ! isset( $this->options[ $name ] ) ) {
-			return null;
+			// Trigger error is allowed in this case.
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+			trigger_error( 'The requested option "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
+			return '';
 		}
 		return get_option( $name, $this->options[ $name ]->value );
 	}

@@ -41,6 +41,8 @@ class LV_Admin_About {
 	 * @return self
 	 */
 	public static function &get_instance() {
+		// There seems to be an issue with the self variable in phan.
+		// @phan-suppress-next-line PhanPluginUndeclaredVariableIsset.
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new self();
 		}
@@ -67,15 +69,15 @@ class LV_Admin_About {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'default' ) );
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
-		$current_tab = ! empty( $_GET['tab'] ) && 'atts' === sanitize_title( wp_unslash( $_GET['tab'] ) ) ? 'atts' : 'general';
+		$tab = ! empty( $_GET['tab'] ) && 'atts' === sanitize_title( (string) wp_unslash( (string) $_GET['tab'] ) ) ? 'atts' : 'general';
 		// Create content.
 		echo wp_kses_post(
 			'
 			<div class="wrap">
 				<div id="icon-link-manager" class="icon32"><br /></div><h2>' . sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ) . '</h2>'
 		);
-		$this->show_tabs( $current_tab );
-		if ( 'atts' === $current_tab ) {
+		$this->show_tabs( $tab );
+		if ( 'atts' === $tab ) {
 			$this->show_atts();
 		} else {
 			$this->show_help();
@@ -239,7 +241,7 @@ class LV_Admin_About {
 	/**
 	 * Show a single attribute table for a given section
 	 *
-	 * @param array $atts Attributes to display.
+	 * @param array<string,LV_Attribute> $atts Attributes to display.
 	 * @return void
 	 */
 	private function html_atts_table( $atts ) {

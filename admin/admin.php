@@ -41,6 +41,8 @@ class LV_Admin {
 	 * @return self
 	 */
 	public static function &get_instance() {
+		// There seems to be an issue with the self variable in phan.
+		// @phan-suppress-next-line PhanPluginUndeclaredVariableIsset.
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new self();
 		}
@@ -68,6 +70,8 @@ class LV_Admin {
 
 	/**
 	 * Add and register all pages in the admin menu
+	 *
+	 * @return void
 	 */
 	public function register_pages() {
 		$page = add_submenu_page(
@@ -82,7 +86,8 @@ class LV_Admin {
 		$page = add_submenu_page(
 			'options-general.php',
 			sprintf( __( '%1$s Settings', 'link-view' ), 'LinkView' ),
-			'LinkView', 'manage_options',
+			'LinkView',
+			'manage_options',
 			'lv_admin_options',
 			array( &$this, 'show_settings_page' )
 		);
@@ -119,7 +124,7 @@ class LV_Admin {
 	 * @return void
 	 */
 	public function embed_about_styles() {
-		wp_enqueue_style( 'lv_admin_about', LV_URL . 'admin/css/admin_about.css' );
+		wp_enqueue_style( 'lv_admin_about', LV_URL . 'admin/css/admin_about.css', array(), '1.0' );
 	}
 
 
@@ -130,7 +135,7 @@ class LV_Admin {
 	 * @return void
 	 */
 	public function embed_settings_styles() {
-		wp_enqueue_style( 'lv_admin_settings', LV_URL . 'admin/css/admin_settings.css' );
+		wp_enqueue_style( 'lv_admin_settings', LV_URL . 'admin/css/admin_settings.css', array(), '1.0' );
 	}
 
 }

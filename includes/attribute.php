@@ -28,51 +28,57 @@ class LV_Attribute {
 	/**
 	 * Attribute value options
 	 *
-	 * @var null|string|array
+	 * @var string|array
 	 */
-	public $value_options = null;
+	public $value_options = '';
 
 	/**
 	 * Attribute section
 	 *
-	 * @var null|string
+	 * @var string
+	 * @phan-suppress PhanUnreferencedPublicProperty
 	 */
-	public $section = null;
+	public $section = '';
 
 	/**
 	 * Attribute type
 	 *
-	 * @var null|string
+	 * @var string
+	 * @phan-suppress PhanReadOnlyPublicProperty
 	 */
-	public $type = null;
+	public $type = '';
 
 	/**
 	 * Attribute label
 	 *
-	 * @var null|string
+	 * @var string
+	 * @phan-suppress PhanReadOnlyPublicProperty
 	 */
-	public $label = null;
+	public $label = '';
 
 	/**
 	 * Attribute caption
 	 *
-	 * @var null|string
+	 * @var string|array
+	 * @phan-suppress PhanReadOnlyPublicProperty
 	 */
-	public $caption = null;
+	public $caption = '';
 
 	/**
 	 * Attribute description
 	 *
-	 * @var string|null
+	 * @var string
+	 * @phan-suppress PhanReadOnlyPublicProperty
 	 */
-	public $description = null;
+	public $description = '';
 
 	/**
 	 * Attribute tooltip
 	 *
-	 * @var string|null
+	 * @var string
+	 * @phan-suppress PhanReadOnlyPublicProperty
 	 */
-	public $tooltip = null;
+	public $tooltip = '';
 
 
 	/**
@@ -93,7 +99,7 @@ class LV_Attribute {
 	/**
 	 * Modify several fields at once with the values given in an array
 	 *
-	 * @param array $attributes Fields with values to modify.
+	 * @param array<string,string> $attributes Fields with values to modify.
 	 * @return void
 	 */
 	public function modify( $attributes ) {
@@ -101,8 +107,9 @@ class LV_Attribute {
 			if ( property_exists( $this, $name ) ) {
 				$this->$name = $value;
 			} else {
+				// Trigger error is allowed in this case.
 				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
-				trigger_error( 'Attribute "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
+				trigger_error( 'The requested attribute "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
 			}
 		}
 	}

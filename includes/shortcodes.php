@@ -38,7 +38,7 @@ class LV_Shortcodes {
 	/**
 	 * Shortcode instances
 	 *
-	 * @var LV_Shortcode[]
+	 * @var array<int,LV_Shortcode>
 	 */
 	private $shortcodes = array();
 
@@ -49,6 +49,8 @@ class LV_Shortcodes {
 	 * @return self
 	 */
 	public static function &get_instance() {
+		// There seems to be an issue with the self variable in phan.
+		// @phan-suppress-next-line PhanPluginUndeclaredVariableIsset.
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new self();
 		}
@@ -71,8 +73,8 @@ class LV_Shortcodes {
 	/**
 	 * Add a new shortcode instance
 	 *
-	 * @param array  $atts Shortcode attributes.
-	 * @param string $content Shortcode content.
+	 * @param array<string,string> $atts Shortcode attributes.
+	 * @param string               $content Shortcode content.
 	 * @return string HTML to render.
 	 */
 	public function add( $atts, $content = '' ) {

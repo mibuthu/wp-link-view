@@ -20,7 +20,7 @@ class LV_Widget extends WP_Widget {
 	/**
 	 * Widget Items
 	 *
-	 * @var LV_Attribute[]
+	 * @var array<string,LV_Attribute>
 	 */
 	private $items;
 
@@ -49,8 +49,8 @@ class LV_Widget extends WP_Widget {
 	 *
 	 * @see WP_Widget::widget()
 	 *
-	 * @param array $args     Widget arguments.
-	 * @param array $instance Saved values from database.
+	 * @param array<string,string> $args Widget arguments.
+	 * @param array<string,string> $instance Saved values from database.
 	 * @return void
 	 */
 	public function widget( $args, $instance ) {
@@ -69,16 +69,18 @@ class LV_Widget extends WP_Widget {
 	 *
 	 * @see WP_Widget::update()
 	 *
-	 * @param array $new_instance Values just sent to be saved.
-	 * @param array $old_instance Previously saved values from database (not used).
-	 * @return array Updated safe values to be saved.
+	 * @param array<string,string> $new_instance Values just sent to be saved.
+	 * @param array<string,string> $old_instance Previously saved values from database (not used).
+	 * @return array<string,string> Updated values to be saved.
 	 *
 	 * @suppress PhanUnusedPublicMethodParameter
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
-		foreach ( array_keys( $this->items ) as $itemname ) {
-			$instance[ $itemname ] = wp_strip_all_tags( $new_instance[ $itemname ] );
+		foreach ( array_keys( $this->items ) as $name ) {
+			if ( isset( $new_instance[ $name ] ) ) {
+				$instance[ $name ] = wp_strip_all_tags( $new_instance[ $name ] );
+			}
 		}
 		return $instance;
 	}
@@ -89,26 +91,30 @@ class LV_Widget extends WP_Widget {
 	 *
 	 * @see WP_Widget::form()
 	 *
-	 * @param array $instance Previously saved values from database.
+	 * @param array<string,string> $instance Previously saved values from database.
 	 * @return string Value used to check if the Safe button is displayed.
 	 */
 	public function form( $instance ) {
 		$this->load_helptexts();
-		foreach ( $this->items as $itemname => $item ) {
-			if ( ! isset( $instance[ $itemname ] ) ) {
-				$instance[ $itemname ] = $item->value;
+		foreach ( $this->items as $name => $item ) {
+			if ( ! isset( $instance[ $name ] ) ) {
+				$instance[ $name ] = $item->value;
 			}
 			if ( 'textarea' === $item->type ) {
 				echo '
 					<p' . ' title="' . esc_attr( $item->tooltip ) . '">
-						<label for="' . esc_attr( $this->get_field_id( $itemname ) ) . '">' . esc_html( $item->caption ) . ' </label>
-						<textarea class="widefat" id="' . esc_attr( $this->get_field_id( $itemname ) ) . '" name="' . esc_attr( $this->get_field_name( $itemname ) ) . '" rows="5">' . esc_attr( $instance[ $itemname ] ) . '</textarea>
+						<label for="' . esc_attr( $this->get_field_id( $name ) ) . '">' . esc_html( (string) $item->caption ) . ' </label>
+						<textarea class="widefat" id="' . esc_attr( $this->get_field_id( $name ) )
+							. '" name="' . esc_attr( $this->get_field_name( $name ) )
+							. '" rows="5">' . esc_attr( $instance[ $name ] ) . '</textarea>
 					</p>';
 			} else { // 'text'
 				echo '
 					<p' . ' title="' . esc_attr( $item->tooltip ) . '">
-						<label for="' . esc_attr( $this->get_field_id( $itemname ) ) . '">' . esc_html( $item->caption ) . ' </label>
-						<input class="widefat" id="' . esc_attr( $this->get_field_id( $itemname ) ) . '" name="' . esc_attr( $this->get_field_name( $itemname ) ) . '" type="text" value="' . esc_attr( $instance[ $itemname ] ) . '" />
+						<label for="' . esc_attr( $this->get_field_id( $name ) ) . '">' . esc_html( (string) $item->caption ) . ' </label>
+						<input class="widefat" id="' . esc_attr( $this->get_field_id( $name ) )
+							. '" name="' . esc_attr( $this->get_field_name( $name ) )
+							. '" type="text" value="' . esc_attr( $instance[ $name ] ) . '" />
 					</p>';
 			}
 		}

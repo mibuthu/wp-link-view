@@ -209,7 +209,7 @@ class LV_ShortcodeAtts {
 	/**
 	 * Set the values of multiple attributes
 	 *
-	 * @param array $atts Attributes to set.
+	 * @param array<string,string> $atts Attributes to set.
 	 * @return void
 	 */
 	public function set_values( $atts ) {
@@ -222,6 +222,7 @@ class LV_ShortcodeAtts {
 					$this->$name->value = $value;
 				}
 			} else {
+				// Trigger error is allowed in this case.
 				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 				trigger_error( 'Shortcode attribute "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
 			}

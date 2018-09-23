@@ -77,8 +77,8 @@ class LV_Shortcode {
 	/**
 	 * Main function to show the rendered HTML output
 	 *
-	 * @param array  $atts Shortcode attributes.
-	 * @param string $content Shortcode content.
+	 * @param array<string,string> $atts Shortcode attributes.
+	 * @param string               $content Shortcode content.
 	 * @return string HTML to render.
 	 */
 	public function show_html( $atts, $content = '' ) {
@@ -108,8 +108,8 @@ class LV_Shortcode {
 	/**
 	 * Prepare the given attribute for the shortcode handling
 	 *
-	 * @param array  $atts Shortcode attributes.
-	 * @param string $content Shortcode content.
+	 * @param array<string,string> $atts Shortcode attributes.
+	 * @param string               $content Shortcode content.
 	 * @return void
 	 */
 	private function prepare_atts( $atts, $content ) {
@@ -136,7 +136,7 @@ class LV_Shortcode {
 	 * Get all shortcode attributes by section
 	 *
 	 * @param null|string $section Section of which the attributes are requested.
-	 * @return array Requested attributes.
+	 * @return array<string,LV_Attribute> Requested attributes.
 	 */
 	public function get_atts( $section = null ) {
 		if ( is_null( $section ) ) {
@@ -155,31 +155,37 @@ class LV_Shortcode {
 	/**
 	 * Get link categories
 	 *
-	 * @return array Link category object array.
+	 * @return WP_Term[] Link category object array.
 	 */
 	private function get_categories() {
 		$catarray = array();
-		// TODO: cat_filter "all" is depricated and can be removed in 0.8.0.
+		// TODO: The cat_filter value "all" is depricated and can be removed in 0.8.0.
 		if ( ! empty( $this->atts->cat_filter->value ) && 'all' !== $this->atts->cat_filter->value ) {
 			str_replace( ',', '|', $this->atts->cat_filter->value );
-			$catslugs = array_map( 'trim', explode( '|', $this->atts->cat_filter->value ) );
+			$catslugs = array_map( 'trim', array_map( 'strval', (array) explode( '|', $this->atts->cat_filter->value ) ) );
 			foreach ( $catslugs as $catslug ) {
-				if ( ! empty( get_term_by( 'slug', $catslug, 'link_category' ) ) ) {
-					$catarray[] = get_term_by( 'slug', $catslug, 'link_category' );
+				$term = get_term_by( 'slug', $catslug, 'link_category' );
+				if ( $term instanceof WP_Term ) {
+					$catarray[] = $term;
 				}
 			}
 		} else {
-			$catarray = get_terms(
+			// There seems to be a problem to recognize the get_terms function correctly.
+			// @phan-suppress-next-line PhanAccessMethodInternal.
+			$terms = get_terms(
 				array(
 					'taxonomy' => 'link_category',
 					'orderby'  => 'name',
 				)
 			);
+			if ( is_array( $terms ) ) {
+				$catarray = $terms;
+			}
 			if ( ! empty( $this->atts->exclude_cat->value ) ) {
-				$excludecat = array_map( 'trim', explode( ',', $this->atts->exclude_cat->value ) );
+				$excludecat = array_map( 'trim', array_map( 'strval', (array) explode( ',', $this->atts->exclude_cat->value ) ) );
 				$diff       = array();
 				foreach ( $catarray as $cat ) {
-					if ( array_search( $cat->name, $excludecat, true ) === false ) {
+					if ( false === array_search( $cat->name, $excludecat, true ) ) {
 						array_push( $diff, $cat );
 					}
 				}
@@ -187,6 +193,8 @@ class LV_Shortcode {
 				unset( $diff );
 			}
 		}
+		// The is_array check for the terms (got from get_terms()) is sufficient that a list of WP_Terms was returned.
+		// @phan-suppress-next-line PhanPartialTypeMismatchReturn.
 		return $catarray;
 	}
 
@@ -195,7 +203,7 @@ class LV_Shortcode {
 	 * Get Links
 	 *
 	 * @param WP_Term $category Category object.
-	 * @return array Links object array.
+	 * @return stdClass[] Links object array.
 	 */
 	private function get_links( $category ) {
 		$args = array(
@@ -211,8 +219,8 @@ class LV_Shortcode {
 	/**
 	 * Add a new slider and prepare its settings
 	 *
-	 * @param int   $list_id The list id which is also used for the slider id.
-	 * @param array $links The links which are displayed in the slider.
+	 * @param int        $list_id The list id which is also used for the slider id.
+	 * @param stdClass[] $links The links which are displayed in the slider.
 	 * @return void
 	 */
 	private function new_slider( $list_id, $links ) {
@@ -225,15 +233,15 @@ class LV_Shortcode {
 	/**
 	 * Get calculated slider size
 	 *
-	 * @param array $links Links object array.
-	 * @return array Array with slider width and height.
+	 * @param stdClass[] $links Links object array.
+	 * @return array<string,int> Array with slider width and height.
 	 */
 	private function slider_size( $links ) {
 		// Use manual size given in the attributes.
 		if ( ! empty( $this->atts->slider_width->value ) && ! empty( $this->atts->slider_height->value ) ) {
 			return array(
-				'w' => $this->atts->slider_width->value,
-				'h' => $this->atts->slider_height->value,
+				'w' => intval( $this->atts->slider_width->value ),
+				'h' => intval( $this->atts->slider_height->value ),
 			);
 		}
 
@@ -305,8 +313,8 @@ class LV_Shortcode {
 	/**
 	 * Get HTML for showing a link list
 	 *
-	 * @param array $links Links object array to show.
-	 * @param int   $list_id Shortcode id.
+	 * @param stdClass[] $links Links object array to show.
+	 * @param int        $list_id Shortcode id.
 	 * @return string HTML to render link list.
 	 */
 	private function html_link_list( $links, $list_id ) {
@@ -377,8 +385,8 @@ class LV_Shortcode {
 	/**
 	 * Get HTML for showing a single link
 	 *
-	 * @param object $link Link object.
-	 * @param int    $list_id The id of the actual link list/slider.
+	 * @param stdClass $link Link object.
+	 * @param int      $list_id The id of the actual link list/slider.
 	 * @return string HTML to render link.
 	 */
 	private function html_link( $link, $list_id ) {
@@ -395,7 +403,7 @@ class LV_Shortcode {
 		} else {
 			// Enhanced style (all items given in link_items attribute).
 			$items = json_decode( $this->atts->link_items->value, true );
-			if ( ! is_null( $items ) ) {
+			if ( is_array( $items ) ) {
 				$out .= $this->html_link_section( $link, $items, $list_id );
 			} else {
 				$out .= 'ERROR while json decoding. There must be an error in your "link_items" json syntax.';
@@ -408,9 +416,9 @@ class LV_Shortcode {
 	/**
 	 * Get HTML for showing a link section
 	 *
-	 * @param object $link Link object.
-	 * @param array  $items Link items array included in the section.
-	 * @param int    $list_id The id of the actual link list/slider.
+	 * @param stdClass             $link Link object.
+	 * @param array<string,string> $items Link items array included in the section.
+	 * @param int                  $list_id The id of the actual link list/slider.
 	 * @return string HTML to render link section.
 	 */
 	private function html_link_section( $link, $items, $list_id ) {
@@ -431,10 +439,10 @@ class LV_Shortcode {
 	/**
 	 * Get HTML for showing a link item
 	 *
-	 * @param object $link Link object.
-	 * @param string $item Item type to display.
-	 * @param int    $list_id The id of the actual link list/slider.
-	 * @param string $caption Link item caption.
+	 * @param stdClass $link Link object.
+	 * @param string   $item Item type to display.
+	 * @param int      $list_id The id of the actual link list/slider.
+	 * @param string   $caption Link item caption.
 	 * @return string HTML to render link item.
 	 */
 	private function html_link_item( $link, $item, $list_id, $caption = '' ) {
@@ -513,8 +521,8 @@ class LV_Shortcode {
 	/**
 	 * Get HTML for showing the image
 	 *
-	 * @param object $link Link object.
-	 * @param int    $list_id The id of the actual link list/slider.
+	 * @param stdClass $link Link object.
+	 * @param int      $list_id The id of the actual link list/slider.
 	 * @return string HTML to render the image.
 	 */
 	private function html_img_tag( $link, $list_id ) {
@@ -614,8 +622,8 @@ class LV_Shortcode {
 			if ( 'static' !== $ret['type'] && 'css' !== $ret['type'] && 'masonry' !== $ret['type'] ) {
 				$ret['type'] = 'static';
 			}
-			if ( isset( $options[1] ) ) {
-				$option_array = explode( '|', substr( $options[1], 0, -1 ) );
+			if ( is_string( $options[1] ) ) {
+				$option_array = explode( '|', (string) substr( $options[1], 0, -1 ) );
 				foreach ( $option_array as $option_text ) {
 					$o                   = explode( '=', $option_text );
 					$ret['opt'][ $o[0] ] = $o[1];
