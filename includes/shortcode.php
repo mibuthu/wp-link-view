@@ -358,31 +358,6 @@ class LV_Shortcode {
 
 
 	/**
-	 * Get HTML for showing slider styles
-	 *
-	 * @return string HTML to render slider styles.
-	 */
-	public function slider_styles() {
-		$ret = '';
-		foreach ( $this->slider_parameter as $list_id => $parameter ) {
-			$ret .= '
-					#lv-id-' . $this->sc_id . '-' . $list_id . ' li { ' .
-						'width:' . intval( $parameter['size']['w'] ) . 'px; ' .
-						'height:' . intval( $parameter['size']['h'] ) . 'px; }';
-			if ( 'std' !== $this->atts->vertical_align->value ) {
-				$ret .= '
-					#lv-id-' . $this->sc_id . '-' . $list_id . ' .lv-link' . $this->atts->class_suffix->value . ' { ' .
-						'display:table-cell; ' .
-						'vertical-align:' . $this->atts->vertical_align->value . '; ' .
-						'width:' . $parameter['size']['w'] . 'px; ' .
-						'height:' . $parameter['size']['h'] . 'px; }';
-			}
-		}
-		return $ret;
-	}
-
-
-	/**
 	 * Get HTML for showing a single link
 	 *
 	 * @param stdClass $link Link object.
@@ -709,6 +684,31 @@ class LV_Shortcode {
 		} else {
 			return ' style="' . $styles . '"';
 		}
+	}
+
+
+	/**
+	 * Get HTML for showing slider styles
+	 *
+	 * @return string HTML to render slider styles.
+	 */
+	public function slider_styles() {
+		$ret = '';
+		foreach ( $this->slider_parameter as $list_id => $parameter ) {
+			$ret .= '
+					#lv-id-' . $this->sc_id . '-' . $list_id . ' li { ' .
+						'width:' . intval( $parameter['size']['w'] ) . 'px; ' .
+						'height:' . intval( $parameter['size']['h'] ) . 'px; }';
+			if ( 'std' !== $this->atts->vertical_align->value ) {
+				$ret .= '
+					#lv-id-' . $this->sc_id . '-' . $list_id . ' .lv-link' . $this->atts->class_suffix->value . ' { ' .
+						'display:table-cell; ' .
+						'vertical-align:' . $this->atts->vertical_align->value . '; ' .
+						'width:' . $parameter['size']['w'] . 'px; ' .
+						'height:' . $parameter['size']['h'] . 'px; }';
+			}
+		}
+		return $ret;
 	}
 
 
