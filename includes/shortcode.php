@@ -597,7 +597,7 @@ class LV_Shortcode {
 			if ( 'static' !== $ret['type'] && 'css' !== $ret['type'] && 'masonry' !== $ret['type'] ) {
 				$ret['type'] = 'static';
 			}
-			if ( is_string( $options[1] ) ) {
+			if ( ! empty( $options[1] ) ) {
 				$option_array = explode( '|', (string) substr( $options[1], 0, -1 ) );
 				foreach ( $option_array as $option_text ) {
 					$o                   = explode( '=', $option_text );
