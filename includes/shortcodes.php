@@ -42,22 +42,6 @@ class LV_Shortcodes {
 	 */
 	private $shortcodes = array();
 
-	/**
-	 * Number of Ids
-	 * TODO: Check if required
-	 *
-	 * @var int
-	 */
-	private $num_ids = 0;
-
-	/**
-	 * Number of Shortcodes
-	 * TODO: Check if required
-	 *
-	 * @var int
-	 */
-	private $sc_ids = 0;
-
 
 	/**
 	 * Singleton provider and setup

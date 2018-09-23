@@ -10,7 +10,6 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-require_once LV_PATH . 'includes/options.php';
 require_once LV_PATH . 'includes/shortcode-atts.php';
 
 
@@ -20,13 +19,6 @@ require_once LV_PATH . 'includes/shortcode-atts.php';
  * This class handles the shortcode [linkview].
  */
 class LV_Shortcode {
-
-	/**
-	 * Options class instance reference
-	 *
-	 * @var LV_Options
-	 */
-	private $options;
 
 	/**
 	 * Shortcode attributes
@@ -77,9 +69,8 @@ class LV_Shortcode {
 	 * @param int $sc_id The id of the shortcode.
 	 */
 	public function __construct( $sc_id ) {
-		$this->options = &LV_Options::get_instance();
-		$this->atts    = new LV_ShortcodeAtts();
-		$this->sc_id   = $sc_id;
+		$this->atts  = new LV_ShortcodeAtts();
+		$this->sc_id = $sc_id;
 	}
 
 
