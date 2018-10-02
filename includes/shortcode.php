@@ -453,12 +453,16 @@ class LV_Shortcode {
 				$description = ' (' . $link->link_description . ')';
 			}
 			// Check rel attribute.
-			$rel = '';
-			if ( ! empty( $this->atts->link_rel->value ) ) {
+			$rel          = '';
+			$combined_rel = $this->atts->link_rel->value . ' ' . $link->link_rel;
+			if ( ! empty( $combined_rel ) ) {
 				// Check value according to allowed values for HTML5 (see https://www.w3schools.com/tags/att_a_rel.asp).
-				if ( ! empty( $this->atts->link_rel->value ) ) {
-					$rel = ' rel="' . $this->atts->link_rel->value . '"';
-				}
+				$rels = array_intersect(
+					array_unique( explode( ' ', $combined_rel ) ),
+					$this->atts->link_rel->value_options
+				);
+
+				$rel = ' rel="' . implode( ' ', $rels ) . '"';
 			}
 			$out .= '<a class="lv-anchor' . $this->atts->class_suffix->value . '" href="' . $link->link_url . '" target="' . $target . '" title="' . $link->link_name . $description . '"' . $rel . '>';
 		}
