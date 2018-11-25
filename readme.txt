@@ -3,9 +3,9 @@ Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css, multi-column
 Requires at least: 4.5
-Tested up to: 4.9
+Tested up to: 5.0
 Requires PHP: 5.2
-Stable tag: 0.7.1
+Stable tag: 0.7.2
 Plugin URI: https://wordpress.org/extend/plugins/link-view
 Licence: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -66,6 +66,13 @@ Yes, you can create an instance of the "SC_Linkview" class which located in "php
 
 
 == Changelog ==
+
+= 0.7.2 (2018-11-25) =
+* complete code rewrite:
+  * switched to wordpress coding standard
+  * added comments for all files, classes and functions
+  * code check with phpcs and phan
+  * use shortcode class instances instead of singleton
 
 = 0.7.1 (2017-08-13) =
 * added shortcode attribute "show_num_links"
