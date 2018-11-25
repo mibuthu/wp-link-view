@@ -3,4 +3,5 @@
 /.settings
 /.directory
 /.vscode
+/.phan
 *.phprj
