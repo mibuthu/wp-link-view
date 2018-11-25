@@ -1,108 +1,139 @@
 <?php
-if(!defined('WPINC')) {
+/**
+ * LV_Widget class
+ *
+ * @package link-view
+ */
+
+if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+require_once LV_PATH . 'includes/attribute.php';
+
+
 /**
- * Adds Foo_Widget widget.
+ * LinkView Widget class
  */
 class LV_Widget extends WP_Widget {
 
+	/**
+	 * Widget Items
+	 *
+	 * @var array<string,LV_Attribute>
+	 */
 	private $items;
+
 
 	/**
 	 * Register widget with WordPress.
 	 */
 	public function __construct() {
 		parent::__construct(
-	 		'linkview_widget', // Base ID
-			'LinkView', // Name
-			array('description' => sprintf(__('With this widget a %1$s shortcode can be added to a sidebar or widget area.','link-view'), 'LinkView'),)
+			'linkview_widget', // Base ID.
+			'LinkView', // Name.
+			array(
+				'description' => sprintf( __( 'With this widget a %1$s shortcode can be added to a sidebar or widget area.', 'link-view' ), 'LinkView' ),
+			)
 		);
-		// define all available items
+		// Define all available items.
 		$this->items = array(
-			'title' => array('std_value' => __('Links', 'link-view')),
-			'atts' =>  array('std_value' => ''),
+			'title' => new LV_Attribute( __( 'Links', 'link-view' ) ),
+			'atts'  => new LV_Attribute( '' ),
 		);
-		add_action('admin_init', array(&$this, 'load_widget_items_helptexts'), 2);
 	}
 
-	public function load_widget_items_helptexts() {
-		require_once(LV_PATH.'includes/widget_helptexts.php');
-		foreach($widget_items_helptexts as $name => $values) {
-			$this->items[$name] += $values;
-		}
-		unset($widget_items_helptexts);
-	}
 
 	/**
 	 * Front-end display of widget.
 	 *
 	 * @see WP_Widget::widget()
 	 *
-	 * @param array $args     Widget arguments.
-	 * @param array $instance Saved values from database.
+	 * @param array<string,string> $args Widget arguments.
+	 * @param array<string,string> $instance Saved values from database.
+	 * @return void
 	 */
-	public function widget($args, $instance) {
-		$title = apply_filters('widget_title', $instance['title']);
-		$out = $args['before_widget'];
-		if(!empty($title)) {
-			$out .= $args['before_title'].$title.$args['after_title'];
+	public function widget( $args, $instance ) {
+		echo wp_kses_post( $args['before_widget'] );
+		$title = apply_filters( 'widget_title', $instance['title'] );
+		if ( ! empty( $title ) ) {
+			echo wp_kses_post( $args['before_title'] . $title . $args['after_title'] );
 		}
-		$out .= do_shortcode('[linkview '.$instance['atts'].']');
-		$out .= $args['after_widget'];
-		echo $out;
+		echo do_shortcode( '[linkview ' . $instance['atts'] . ']' );
+		echo wp_kses_post( $args['after_widget'] );
 	}
+
 
 	/**
 	 * Sanitize widget form values as they are saved.
 	 *
 	 * @see WP_Widget::update()
 	 *
-	 * @param array $new_instance Values just sent to be saved.
-	 * @param array $old_instance Previously saved values from database.
+	 * @param array<string,string> $new_instance Values just sent to be saved.
+	 * @param array<string,string> $old_instance Previously saved values from database (not used).
+	 * @return array<string,string> Updated values to be saved.
 	 *
-	 * @return array Updated safe values to be saved.
+	 * @suppress PhanUnusedPublicMethodParameter
 	 */
-	public function update($new_instance, $old_instance) {
+	public function update( $new_instance, $old_instance ) {
 		$instance = array();
-		foreach($this->items as $itemname => $item) {
-			$instance[$itemname] = strip_tags($new_instance[$itemname]);
+		foreach ( array_keys( $this->items ) as $name ) {
+			if ( isset( $new_instance[ $name ] ) ) {
+				$instance[ $name ] = wp_strip_all_tags( $new_instance[ $name ] );
+			}
 		}
 		return $instance;
 	}
 
+
 	/**
-	 * Back-end widget form.
+	 * Admin page widget form.
 	 *
 	 * @see WP_Widget::form()
 	 *
-	 * @param array $instance Previously saved values from database.
+	 * @param array<string,string> $instance Previously saved values from database.
+	 * @return string Value used to check if the Safe button is displayed.
 	 */
-	public function form($instance) {
-		$out = '';
-		foreach($this->items as $itemname => $item) {
-			if(!isset($instance[$itemname])) {
-				$instance[$itemname] = $item['std_value'];
+	public function form( $instance ) {
+		$this->load_helptexts();
+		foreach ( $this->items as $name => $item ) {
+			if ( ! isset( $instance[ $name ] ) ) {
+				$instance[ $name ] = $item->value;
 			}
-			$style_text = (null===$item['form_style']) ? '' : ' style="'.$item['form_style'].'"';
-			if('textarea' === $item['type']) {
-				$rows = (isset($item['form_rows']) && null===$item['form_rows']) ? '' : ' rows='.$item['form_rows'];
-				$out .= '
-					<p'.$style_text.' title="'.$item['tooltip'].'">
-						<label for="'.$this->get_field_id($itemname).'">'.$item['caption'].' </label>
-						<textarea class="widefat" id="'.$this->get_field_id($itemname).'" name="'.$this->get_field_name($itemname).'"'.$rows.'>'.esc_attr($instance[$itemname]).'</textarea>
+			if ( 'textarea' === $item->type ) {
+				echo '
+					<p' . ' title="' . esc_attr( $item->tooltip ) . '">
+						<label for="' . esc_attr( $this->get_field_id( $name ) ) . '">' . esc_html( (string) $item->caption ) . ' </label>
+						<textarea class="widefat" id="' . esc_attr( $this->get_field_id( $name ) )
+							. '" name="' . esc_attr( $this->get_field_name( $name ) )
+							. '" rows="5">' . esc_attr( $instance[ $name ] ) . '</textarea>
 					</p>';
-			}
-			else { // 'text'
-				$out .= '
-					<p'.$style_text.' title="'.$item['tooltip'].'">
-						<label for="'.$this->get_field_id($itemname).'">'.$item['caption'].' </label>
-						<input class="widefat" id="'.$this->get_field_id($itemname).'" name="'.$this->get_field_name($itemname).'" type="text" value="'.esc_attr($instance[$itemname]).'" />
+			} else { // 'text'
+				echo '
+					<p' . ' title="' . esc_attr( $item->tooltip ) . '">
+						<label for="' . esc_attr( $this->get_field_id( $name ) ) . '">' . esc_html( (string) $item->caption ) . ' </label>
+						<input class="widefat" id="' . esc_attr( $this->get_field_id( $name ) )
+							. '" name="' . esc_attr( $this->get_field_name( $name ) )
+							. '" type="text" value="' . esc_attr( $instance[ $name ] ) . '" />
 					</p>';
 			}
 		}
-		echo $out;
+		return '';
 	}
-} // end of class LV_Widget
-?>
+
+
+	/**
+	 * Load helptexts of widget items
+	 *
+	 * @return void
+	 */
+	private function load_helptexts() {
+		global $lv_widget_items_helptexts;
+		require_once LV_PATH . 'includes/widget-helptexts.php';
+		foreach ( $lv_widget_items_helptexts as $name => $values ) {
+			$this->items[ $name ]->modify( $values );
+		}
+		unset( $lv_widget_items_helptexts );
+	}
+
+}
