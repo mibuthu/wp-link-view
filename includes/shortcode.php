@@ -143,6 +143,7 @@ class LV_Shortcode {
 			return (array) $this->atts;
 		}
 		$atts = array();
+		// @phan-suppress-next-line PhanTypeSuspiciousNonTraversableForeach.
 		foreach ( $this->atts as $name => $attr ) {
 			if ( $attr->section === $section ) {
 				$atts[ $name ] = $attr;
