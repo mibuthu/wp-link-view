@@ -26,10 +26,15 @@ $lv_options_helptexts = array(
 		'type'        => 'radio',
 		'label'       => __( 'Required role to manage links', 'link-view' ),
 		'caption'     => array(
-			'editor'      => __( 'Editor', 'default' ) . ' (WordPress-' . __( 'Default', 'link-view' ) . ')',
-			'author'      => __( 'Author', 'default' ),
-			'contributor' => __( 'Contributor', 'default' ),
-			'subscriber'  => __( 'Subscriber', 'default' ),
+			// Use "default" text domain for translations available in WordPress Core.
+			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+			'editor'      => __( 'Editor' ) . ' (WordPress-' . __( 'Default', 'link-view' ) . ')',
+			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+			'author'      => __( 'Author' ),
+			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+			'contributor' => __( 'Contributor' ),
+			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+			'subscriber'  => __( 'Subscriber' ),
 		),
 		'description' => __( 'With this option minimum required role to manage links can be set', 'link-view' ) . ' (' . __( 'Capability', 'link-view' ) . ': "manage_links").<br />
 			' . sprintf( __( 'More information can be found in the %1$s.', 'link-view' ), '<a href="https://codex.wordpress.org/Roles_and_Capabilities" target="_blank" rel="noopener">WordPress Codex</a>' ) . '<br />

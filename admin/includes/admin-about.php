@@ -66,7 +66,8 @@ class LV_Admin_About {
 	public function show_page() {
 		// Check required privilegs.
 		if ( ! current_user_can( $this->options->get( 'lv_req_cap' ) ) ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'default' ) );
+			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
 		$tab = ! empty( $_GET['tab'] ) && 'atts' === sanitize_title( (string) wp_unslash( (string) $_GET['tab'] ) ) ? 'atts' : 'general';
@@ -130,13 +131,41 @@ class LV_Admin_About {
 			<h4>' . __( 'Show links in sidebars and widget areas', 'link-view' ) . '</h4>
 			<div class="help-content">
 				' . sprintf( __( 'With the %1$s Widget you can add links in sidebars and widget areas.', 'link-view' ), 'LinkView' ) . '<br />
-				' . sprintf( __( 'Goto %1$s and drag the %2$s-Widget into one of the sidebar or widget areas.', 'link-view' ), '<a href="' . admin_url( 'widgets.php' ) . '">' . __( 'Appearance', 'default' ) . ' &rarr; ' . __( 'Widgets', 'default' ) . '</a>', '"LinkView"' ) . '<br />
+				' .
+				sprintf(
+					__( 'Goto %1$s and drag the %2$s-Widget into one of the sidebar or widget areas.', 'link-view' ),
+					'<a href="' .
+					admin_url( 'widgets.php' ) . '">' .
+					// Use "default" text domain for translations available in WordPress Core.
+					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+					__( 'Appearance' ) . ' &rarr; ' .
+					// Use "default" text domain for translations available in WordPress Core.
+					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+					__( 'Widgets' ) . '</a>',
+					'"LinkView"'
+				) . '<br />
 				' . sprintf( __( 'Enter a title for the widget and add the required shortcode attributes in the appropriate field. All available shortcode attributes for the %1$s-shortcode can be used in the widget too.', 'link-view' ), '"linkview"' ) . '<br />
-				' . sprintf( __( 'Press %1$s to confirm the changes.', 'link-view' ), '"' . __( 'Save', 'default' ) . '"' ) . '
+				' .
+				sprintf(
+					__( 'Press %1$s to confirm the changes.', 'link-view' ),
+					'"' .
+					// Use "default" text domain for translations available in WordPress Core.
+					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+					__( 'Save' ) .
+					'"'
+				) . '
 			</div>
 			<h4>' . sprintf( __( '%1$s Settings', 'link-view' ), 'LinkView' ) . '</h4>
 			<div class="help-content">
-				' . sprintf( __( 'In the %1$s settings page, available under %2$s, you can find some options to modify the plugin.', 'link-view' ), 'LinkView', '<a href="' . admin_url( 'options-general.php?page=lv_admin_options' ) . '">' . __( 'Settings', 'default' ) . ' &rarr; LinkView</a>' ) . '
+				' .
+				sprintf(
+					__( 'In the %1$s settings page, available under %2$s, you can find some options to modify the plugin.', 'link-view' ),
+					'LinkView',
+					'<a href="' . admin_url( 'options-general.php?page=lv_admin_options' ) . '">' .
+					// Use "default" text domain for translations available in WordPress Core.
+					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+					__( 'Settings' ) . ' &rarr; LinkView</a>'
+				) . '
 			</div>'
 		);
 	}
@@ -224,7 +253,17 @@ class LV_Admin_About {
 					<h5>' . __( 'Usage', 'link-view' ) . ':</h5>
 					' . __( 'For the most types and options it is recommended to define a fixed width for the categories and/or links. This width must be set manually e.g. via the css entry:', 'link-view' ) . ' <code>.lv-multi-column { width: 32%; }</code><br />
 					' . __( 'Depending on the type and options there are probably more css modifications required for a correct multi-column layout.', 'link-view' ) . '<br />
-					' . sprintf( __( 'There are several ways to add the required css code. One method is the %1$s setting %2$s which can be found in %3$s.', 'link-view' ), 'LinkView', '"' . sprintf( __( 'CSS-code for %1$s', 'link-view' ), 'LinkView' ) . '"', '<a href="' . admin_url( 'options-general.php?page=lv_admin_options' ) . '">' . __( 'Settings', 'default' ) . ' &rarr; LinkView</a>' ) . '<br />
+					' .
+					sprintf(
+						__( 'There are several ways to add the required css code. One method is the %1$s setting %2$s which can be found in %3$s.', 'link-view' ),
+						'LinkView',
+						'"' .
+						sprintf( __( 'CSS-code for %1$s', 'link-view' ), 'LinkView' ) . '"',
+						'<a href="' . admin_url( 'options-general.php?page=lv_admin_options' ) . '">' .
+						// Use "default" text domain for translations available in WordPress Core.
+						// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+						__( 'Settings' ) . ' &rarr; LinkView</a>'
+					) . '<br />
 					' . sprintf( __( 'The optional type options must be added in brackets in the format "option_name=value", multiple options can be added seperated by a pipe %1$s.', 'link-view' ), '("<strong>|</strong>")' ) . '
 					<h5>' . __( 'Examples', 'link-view' ) . ':</h5>
 					<p><code>[linkview cat_columns=3]</code> &hellip; ' . __( 'show the categories in 3 static columns', 'link-view' ) . '</p>

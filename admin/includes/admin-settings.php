@@ -67,7 +67,9 @@ class LV_Admin_Settings {
 	public function show_page() {
 		// Check required privilegs.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'default' ) );
+			// Use "default" text domain for translations available in WordPress Core.
+			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
 		// Create content.
 		echo '
