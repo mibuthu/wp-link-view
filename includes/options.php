@@ -5,8 +5,9 @@
  * @package link-view
  */
 
+declare( strict_types=1 );
 if ( ! defined( 'WPINC' ) ) {
-	exit;
+	exit();
 }
 
 require_once LV_PATH . 'includes/attribute.php';

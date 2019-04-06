@@ -5,8 +5,9 @@
  * @package link-view
  */
 
+declare( strict_types=1 );
 if ( ! defined( 'WPINC' ) ) {
-	exit;
+	exit();
 }
 
 $lv_options_helptexts = array(
