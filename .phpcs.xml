@@ -1,29 +1,29 @@
 <?xml version="1.0"?>
 <ruleset name="WordPress-Mike" namespace="WordPress-Mike">
-	<description>WordPress Coding Standards with some adaptions</description>
+    <description>WordPress Coding Standards with some adaptions</description>
 
-	<rule ref="WordPress">
-	</rule>
+    <rule ref="WordPress">
+    </rule>
 
     <rule ref="WordPress.Files.FileName">
-	    <properties>
-		    <property name="strict_class_file_names" type="bool" value="false" />
-	    </properties>
+        <properties>
+            <property name="strict_class_file_names" type="bool" value="false" />
+        </properties>
     </rule>
     <rule ref="WordPress.WP.I18n">
-	    <properties>
-		    <property name="text_domain" type="array" value="link-view,default" />
-	    </properties>
+        <properties>
+            <property name="text_domain" type="array" value="link-view,default" />
+        </properties>
     </rule>
     <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
-	    <properties>
-		    <property name="prefixes" type="array" value="lv" />
-	    </properties>
+        <properties>
+            <property name="prefixes" type="array" value="lvw" />
+        </properties>
     </rule>
     <rule ref="WordPress.WP.DeprecatedFunctions">
-	    <properties>
-		    <property name="minimum_supported_version" value="4.5" />
-	    </properties>
+        <properties>
+            <property name="minimum_supported_version" value="4.5" />
+        </properties>
     </rule>
     <rule ref="WordPress.WP.I18n">
         <properties>
@@ -31,18 +31,18 @@
         </properties>
     </rule>
     <rule ref="WordPress.WhiteSpace.ControlStructureSpacing">
-	    <properties>
-		    <property name="blank_line_check" value="true" />
-	    </properties>
+        <properties>
+            <property name="blank_line_check" value="true" />
+        </properties>
     </rule>
     <rule ref="WordPress.Arrays.MultipleStatementAlignment">
-	    <properties>
-		    <property name="ignoreNewlines" value="false" />
-	    </properties>
-    </rule>
-    <rule ref="Squiz.WhiteSpace.FunctionSpacing" >
         <properties>
-	    <property name="spacing" value="2" />
+            <property name="ignoreNewlines" value="false" />
+        </properties>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.FunctionSpacing">
+        <properties>
+            <property name="spacing" value="2" />
             <property name="spacingAfterLast" value="1" />
         </properties>
     </rule>
@@ -53,10 +53,10 @@
         </properties>
     </rule>
     <rule ref="WordPress.Security.EscapeOutput">
-	    <properties>
-		    <property name="customEscapingFunctions" type="array" value="admin_url" />
-		    <property name="customAutoEscapedFunctions" type="array" value="LV_URL" />
-	    </properties>
+        <properties>
+            <property name="customEscapingFunctions" type="array" value="admin_url" />
+            <property name="customAutoEscapedFunctions" type="array" value="LVW_URL" />
+        </properties>
     </rule>
 
     <config name="minimum_supported_wp_version" value="4.5"/>

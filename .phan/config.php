@@ -351,6 +351,10 @@ return array(
 		// 'PhanPluginPossiblyStaticProtectedMethod',
 		// // The types of ast\Node->children are all possibly unset.
 		// 'PhanTypePossiblyInvalidDimOffset',
+		// MODIFIED!
+		'PhanPluginPrintfVariableFormatString',
+		// MODIFIED!
+		'PhanPluginUnknownArrayPropertyType',
 	),
 
 	// If empty, no filter against issues types will be applied.
@@ -452,17 +456,17 @@ return array(
 	'autoload_internal_extension_signatures'            => array(
 		'ast'      => '.phan/internal_stubs/ast.phan_php',
 		'ctype'    => '.phan/internal_stubs/ctype.phan_php',
-		// MODIFICATION!
+		// MODIFIED!
 		// 'igbinary' => '.phan/internal_stubs/igbinary.phan_php',
 		'mbstring' => '.phan/internal_stubs/mbstring.phan_php',
 		'pcntl'    => '.phan/internal_stubs/pcntl.phan_php',
 		'posix'    => '.phan/internal_stubs/posix.phan_php',
 		'readline' => '.phan/internal_stubs/readline.phan_php',
-		// MODIFICATION!
+		// MODIFIED!
 		// 'sysvmsg'  => '.phan/internal_stubs/sysvmsg.phan_php',
-		// MODIFICATION!
+		// MODIFIED!
 		// 'sysvsem'  => '.phan/internal_stubs/sysvsem.phan_php',
-		// MODIFICATION!
+		// MODIFIED!
 		// 'sysvshm'  => '.phan/internal_stubs/sysvshm.phan_php',
 	),
 
@@ -516,7 +520,8 @@ return array(
 		'PregRegexCheckerPlugin',
 		'PrintfCheckerPlugin',
 		'PHPUnitAssertionPlugin',  // analyze assertSame/assertInstanceof/assertTrue/assertFalse
-		'UseReturnValuePlugin',
+		// MODIFIED! Can be used for PHP > 7.1 only!
+		// 'UseReturnValuePlugin',
 
 		// UnknownElementTypePlugin warns about unknown types in element signatures.
 		'UnknownElementTypePlugin',
@@ -535,7 +540,8 @@ return array(
 		'PossiblyStaticMethodPlugin',
 
 		'HasPHPDocPlugin',
-		'PHPDocToRealTypesPlugin',  // suggests replacing (at)return void with `: void` in the declaration, etc.
+		// MODIFIED! Can be used for PHP > 7.1 only!
+		// 'PHPDocToRealTypesPlugin',  // suggests replacing (at)return void with `: void` in the declaration, etc.
 		'PHPDocRedundantPlugin',
 		'PreferNamespaceUsePlugin',
 		'EmptyStatementListPlugin',
