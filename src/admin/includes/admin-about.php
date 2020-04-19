@@ -67,7 +67,7 @@ class LV_Admin_About {
 			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
-		// phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$tab = ! empty( $_GET['tab'] ) && 'atts' === sanitize_title( (string) wp_unslash( (string) $_GET['tab'] ) ) ? 'atts' : 'general';
 		// Create content.
 		echo wp_kses_post(

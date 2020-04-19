@@ -29,7 +29,7 @@ class LV_Options {
 	/**
 	 * Options array
 	 *
-	 * @var array
+	 * @var array<string, LV_Attribute>
 	 */
 	public $options;
 
@@ -106,7 +106,7 @@ class LV_Options {
 	 * @return string The $new_value string.
 	 *
 	 * Variable $old_value is not required.
-	 * @phan-suppress PhanUnusedPublicMethodParameter.
+	 * @phan-suppress PhanUnusedPublicNoOverrideMethodParameter.
 	 */
 	public function update_manage_links_role( $new_value, $old_value = null ) {
 		global $wp_roles;
