@@ -17,7 +17,7 @@
     </rule>
     <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
         <properties>
-            <property name="prefixes" type="array" value="lvw" />
+            <property name="prefixes" type="array" value="lv" />
         </properties>
     </rule>
     <rule ref="WordPress.WP.DeprecatedFunctions">
@@ -55,7 +55,7 @@
     <rule ref="WordPress.Security.EscapeOutput">
         <properties>
             <property name="customEscapingFunctions" type="array" value="admin_url" />
-            <property name="customAutoEscapedFunctions" type="array" value="LVW_URL" />
+            <property name="customAutoEscapedFunctions" type="array" value="LV_URL" />
         </properties>
     </rule>
 
