@@ -5,9 +5,9 @@
  * @package link-view
  */
 
-declare(strict_types=1);
+// declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 if ( ! defined( 'WP_ADMIN' ) ) {
-	exit;
+	exit();
 }
 
 require_once LV_PATH . 'includes/options.php';
@@ -41,8 +41,6 @@ class LV_Admin_About {
 	 * @return self
 	 */
 	public static function &get_instance() {
-		// There seems to be an issue with the self variable in phan.
-		// @phan-suppress-next-line PhanPluginUndeclaredVariableIsset.
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new self();
 		}
@@ -69,7 +67,7 @@ class LV_Admin_About {
 			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
-		// phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$tab = ! empty( $_GET['tab'] ) && 'atts' === sanitize_title( (string) wp_unslash( (string) $_GET['tab'] ) ) ? 'atts' : 'general';
 		// Create content.
 		echo wp_kses_post(

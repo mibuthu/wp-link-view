@@ -5,8 +5,9 @@
  * @package link-view
  */
 
+// declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 if ( ! defined( 'WPINC' ) ) {
-	exit;
+	exit();
 }
 
 require_once LV_PATH . 'includes/attribute.php';
@@ -28,7 +29,7 @@ class LV_Options {
 	/**
 	 * Options array
 	 *
-	 * @var array
+	 * @var array<string, LV_Attribute>
 	 */
 	public $options;
 
@@ -39,8 +40,6 @@ class LV_Options {
 	 * @return object
 	 */
 	public static function &get_instance() {
-		// There seems to be an issue with the self variable in phan.
-		// @phan-suppress-next-line PhanPluginUndeclaredVariableIsset.
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new self();
 			self::$instance->init();
@@ -107,7 +106,7 @@ class LV_Options {
 	 * @return string The $new_value string.
 	 *
 	 * Variable $old_value is not required.
-	 * @phan-suppress PhanUnusedPublicMethodParameter.
+	 * @phan-suppress PhanUnusedPublicNoOverrideMethodParameter.
 	 */
 	public function update_manage_links_role( $new_value, $old_value = null ) {
 		global $wp_roles;

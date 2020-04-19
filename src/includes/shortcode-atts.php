@@ -5,9 +5,9 @@
  * @package link-view
  */
 
-declare(strict_types=1);
+// declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 if ( ! defined( 'WPINC' ) ) {
-	die;
+	exit();
 }
 
 require_once LV_PATH . 'includes/attribute.php';
@@ -195,8 +195,8 @@ class LV_ShortcodeAtts {
 		$this->link_target    = new LV_Attribute( 'std', array( 'std', 'blank', 'top', 'self' ) );
 		$this->link_rel       = new LV_Attribute( 'noopener', array( '', 'alternate', 'author', 'bookmark', 'external', 'help', 'license', 'next', 'nofollow', 'noreferrer', 'noopener', 'prev', 'search', 'tag' ) );
 		$this->class_suffix   = new LV_Attribute( '' );
-		$this->list_symbol    = new LV_Attribute( 'std', array( 'std', 'none', 'circle', 'square', 'disc' ) );
 		$this->vertical_align = new LV_Attribute( 'std', array( 'std', 'top', 'bottom', 'middle' ) );
+		$this->list_symbol    = new LV_Attribute( 'std', array( 'std', 'none', 'circle', 'square', 'disc' ) );
 		$this->cat_columns    = new LV_Attribute( '1' );
 		$this->link_columns   = new LV_Attribute( '1' );
 		$this->slider_width   = new LV_Attribute( '0' );

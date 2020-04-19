@@ -5,9 +5,9 @@
  * @package link-view
  */
 
-declare(strict_types=1);
+// declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 if ( ! defined( 'WPINC' ) ) {
-	die;
+	exit();
 }
 
 require_once LV_PATH . 'includes/shortcode-atts.php';
@@ -259,8 +259,10 @@ class LV_Shortcode {
 		// Get the maximum image size depending on the given size in the attributes.
 		$ratio = 1;
 		if ( ! empty( $this->atts->slider_width->value ) ) {
+			// @phan-suppress-next-line PhanTypeInvalidLeftOperandOfNumericOp $ratio is not a string!
 			$ratio = $this->atts->slider_width->value / $width;
 		} elseif ( ! empty( $this->atts->slider_height->value ) ) {
+			// @phan-suppress-next-line PhanTypeInvalidLeftOperandOfNumericOp $ratio is not a string!
 			$ratio = $this->atts->slider_height->value / $height;
 		}
 		$width  = round( $width * $ratio );
@@ -454,12 +456,16 @@ class LV_Shortcode {
 				$description = ' (' . $link->link_description . ')';
 			}
 			// Check rel attribute.
-			$rel = '';
-			if ( ! empty( $this->atts->link_rel->value ) ) {
+			$rel          = '';
+			$combined_rel = $this->atts->link_rel->value . ' ' . $link->link_rel;
+			if ( ! empty( $combined_rel ) ) {
 				// Check value according to allowed values for HTML5 (see https://www.w3schools.com/tags/att_a_rel.asp).
-				if ( ! empty( $this->atts->link_rel->value ) ) {
-					$rel = ' rel="' . $this->atts->link_rel->value . '"';
-				}
+				$rels = array_intersect(
+					array_unique( explode( ' ', $combined_rel ) ),
+					(array) $this->atts->link_rel->value_options
+				);
+
+				$rel = ' rel="' . implode( ' ', $rels ) . '"';
 			}
 			$out .= '<a class="lv-anchor' . $this->atts->class_suffix->value . '" href="' . $link->link_url . '" target="' . $target . '" title="' . $link->link_name . $description . '"' . $rel . '>';
 		}
@@ -538,10 +544,10 @@ class LV_Shortcode {
 
 
 	/**
-	 * Helper function for multicolumn handling
+	 * Helper function for multicolumn handling (opening)
 	 *
-	 * @param array $multicol_settings Multicolumn settings.
-	 * @param int   $column Acual column.
+	 * @param array<string, string|array> $multicol_settings Multicolumn settings.
+	 * @param int                         $column Acual column.
 	 * @return string Required HTML which is required before the element for multicolumns.
 	 */
 	private function html_multicol_before( $multicol_settings, &$column ) {
@@ -558,10 +564,10 @@ class LV_Shortcode {
 
 
 	/**
-	 * Helper function for multicolumn handling
+	 * Helper function for multicolumn handling (closing)
 	 *
-	 * @param array $multicol_settings Multicolumn settings.
-	 * @param int   $column Acual column.
+	 * @param array<string, string|array> $multicol_settings Multicolumn settings.
+	 * @param int                         $column Acual column.
 	 * @return string Required HTML which is required after the element for multicolumns.
 	 */
 	private function html_multicol_after( $multicol_settings, &$column ) {
@@ -579,7 +585,7 @@ class LV_Shortcode {
 	 *
 	 * @param string      $column_option The value of the category or link column option.
 	 * @param null|string $list_symbol The list symbol type (if required).
-	 * @return array Multicolumn settings.
+	 * @return array<string,string|array> Multicolumn settings.
 	 */
 	private function multicol_settings( $column_option, $list_symbol = null ) {
 		$ret = array();
@@ -636,8 +642,8 @@ class LV_Shortcode {
 	/**
 	 * Get required HTML classes for Multicolumn handling
 	 *
-	 * @param array  $multicol_settings Multicolumn settings.
-	 * @param string $additional_classes Additional classes to include.
+	 * @param array<string|array> $multicol_settings Multicolumn settings.
+	 * @param string              $additional_classes Additional classes to include.
 	 * @return string HTML class string.
 	 */
 	private function multicol_classes( $multicol_settings, $additional_classes = '' ) {
@@ -656,8 +662,8 @@ class LV_Shortcode {
 	/**
 	 * Get required wrapper styles for Multicolumn handling
 	 *
-	 * @param array       $multicol_settings Multicolumn settings.
-	 * @param null|string $list_symbol The list symbol type (if required).
+	 * @param array<string, string|array> $multicol_settings Multicolumn settings.
+	 * @param null|string                 $list_symbol The list symbol type (if required).
 	 * @return string HTML style text.
 	 */
 	private function multicol_wrapper_styles( $multicol_settings, $list_symbol = null ) {

@@ -5,9 +5,9 @@
  * @package link-view
  */
 
-declare(strict_types=1);
+// declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 if ( ! defined( 'WPINC' ) ) {
-	die;
+	exit();
 }
 
 

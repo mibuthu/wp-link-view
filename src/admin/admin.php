@@ -5,9 +5,9 @@
  * @package link-view
  */
 
-declare(strict_types=1);
+// declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 if ( ! defined( 'WP_ADMIN' ) ) {
-	exit;
+	exit();
 }
 
 require_once LV_PATH . 'includes/options.php';
@@ -41,8 +41,6 @@ class LV_Admin {
 	 * @return self
 	 */
 	public static function &get_instance() {
-		// There seems to be an issue with the self variable in phan.
-		// @phan-suppress-next-line PhanPluginUndeclaredVariableIsset.
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new self();
 		}

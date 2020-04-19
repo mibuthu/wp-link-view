@@ -1,16 +1,16 @@
 <?php
 /**
  * Plugin Name: Link View
- * Plugin URI: https://wordpress.org/extend/plugins/link-view/
+ * Plugin URI: https://wordpress.org/plugins/link-view/
  * Description: Display a link-list or link-slider in a post or page by using a shortcode.
- * Version: 0.7.2
+ * Version: 0.7.3
  * Author: mibuthu
- * Author URI: https://wordpress.org/extend/plugins/link-view/
+ * Author URI: https://wordpress.org/plugins/link-view/
  * Text Domain: link-view
  * License: GPLv2
  *
  * A plugin for the blogging MySQL/PHP-based WordPress.
- * Copyright 2012-2018 mibuthu
+ * Copyright 2012-2020 mibuthu
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNUs General Public License
@@ -28,9 +28,9 @@
  * @package link-view
  */
 
-declare(strict_types=1);
+// declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 if ( ! defined( 'WPINC' ) ) {
-	exit;
+	exit();
 }
 
 // General definitions.
