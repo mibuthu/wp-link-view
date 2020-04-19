@@ -2,6 +2,10 @@
 <ruleset name="WordPress-Mike" namespace="WordPress-Mike">
     <description>WordPress Coding Standards with some adaptions</description>
 
+    <arg name="extensions" value="php,inc" />
+    <arg name="report" value="full"/>
+    <arg name="colors"/>
+
     <rule ref="WordPress">
     </rule>
 
