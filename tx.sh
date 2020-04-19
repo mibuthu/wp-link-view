@@ -9,7 +9,6 @@ plugin_path="$(cd "$(dirname "$0")/${plugin_root_dir}" && pwd)"
 plugin_slug="$(basename $(ls "${plugin_path}"/*.php) .php)"
 lang_path="${plugin_path}/${lang_dir}"
 lang_source="${lang_path}/${plugin_slug}.pot"
-debug=0
 tx_arg=""
 
 # get project information from the plugin header
@@ -58,7 +57,7 @@ function tx_help() {
     done
     if [[ $1 =~ ^[0-9]+$ ]] ; then
         echo -e "\nScript aborted! You can try to enable debug messages with -d if you don't know why."
-        exit $1
+        exit "$1"
     else
         exit 0
     fi
@@ -67,8 +66,7 @@ function tx_help() {
 # Function to enable debug messages and already print some general debug info
 # parameters: none
 function tx_enable_debug() {
-    debug=1
-    tx_arg="-d"
+    tx_arg="${tx_arg} -d"
     # print some general debug messages
     echo "Plugin Slug: $plugin_slug"
     echo "Language Path :$lang_path"
@@ -84,8 +82,8 @@ function tx_update_source() {
     # define the wp keywords
     # specify all keywords with numargs parmameter (t) to exclude functions without specified text-domain which will be used to use wordpress standard translations
     wp_keywords="-k__:1,2t -k_e:1,2t -k_n:1,2,4t -k_x:1,2c,3t -k_ex:1,2c,3t -k_nx:1,2,4c,5t -kesc_attr__:1,2t -kesc_attr_e:1,2t -kesc_attr_x:1,2c,3t -kesc_html__:1,2t -kesc_html_e:1,2t -kesc_html_x:1,2c,3t -k_n_noop:1,2,3t -k_nx_noop:1,2,3c,4t"
-    cd "${plugin_path}";
-    find "." -iname "*.php" | sort | xargs xgettext --from-code=UTF-8 --default-domain=${plugin_slug} --output="${lang_source}" --language=PHP --no-wrap --copyright-holder="${plugin_author}" --msgid-bugs-address="https://wordpress.org/support/plugin/${plugin_slug}/" ${wp_keywords}
+    cd "${plugin_path}" || exit;
+    find "." -iname "*.php" | sort | xargs xgettext --from-code=UTF-8 --default-domain="${plugin_slug}" --output="${lang_source}" --language=PHP --no-wrap --copyright-holder="${plugin_author}" --msgid-bugs-address="https://wordpress.org/support/plugin/${plugin_slug}/" ${wp_keywords}
     
     # fix the header comments in the file
     now=$(date +%Y)
@@ -146,7 +144,7 @@ function tx_pull_translation() {
 # parameter: none
 function tx_compile_translations() {
     for po_file in $(ls "${lang_path}/${plugin_slug}"*.po); do
-        po_file=$(basename $po_file .po)
+        po_file=$(basename "$po_file" .po)
         echo "compiling    ${po_file}.po  ->  ${po_file}.mo"
         msgcat "${lang_path}/${po_file}.po" | msgfmt -o "${lang_path}/${po_file}.mo" -
     done
@@ -174,7 +172,7 @@ cmd_option="$2"
 if [ "${arg:0:1}" = "-" ]; then
     valid_option=0
     for optionname in "${!options[@]}"; do
-        if [ "${optionname%, *}" = "$arg" -o "${optionname#*, }" = "$arg" ]; then
+        if [ "${optionname%, *}" = "$arg" ] || [ "${optionname#*, }" = "$arg" ]; then
             valid_option=1
             arg=$2
             cmd_option=$3
