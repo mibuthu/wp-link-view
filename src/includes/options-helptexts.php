@@ -10,23 +10,23 @@ if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-$lv_options_helptexts = array(
-	'lv_req_cap' => array(
+$lv_options_helptexts = [
+	'lv_req_cap' => [
 		'type'        => 'radio',
 		'label'       => sprintf( __( 'Required capabilities to show the %1$s page', 'link-view' ), '"' . __( 'About', 'link-view' ) . ' LinkView"' ),
-		'caption'     => array(
+		'caption'     => [
 			'manage_links' => 'manage_links (' . __( 'Default', 'link-view' ) . ')',
 			'edit_pages'   => 'edit_pages',
 			'edit_posts'   => 'edit_posts',
-		),
+		],
 		'description' => sprintf( __( 'With this option you can specify the required capabilities to show the %1$s page.', 'link-view' ), '"' . __( 'About', 'link-view' ) . ' LinkView"' ) . '<br />
 			' . sprintf( __( 'More information can be found in the %1$s.', 'link-view' ), '<a href="https://codex.wordpress.org/Roles_and_Capabilities" target="_blank" rel="noopener">WordPress Codex</a>' ),
-	),
+	],
 
-	'lv_ml_role' => array(
+	'lv_ml_role' => [
 		'type'        => 'radio',
 		'label'       => __( 'Required role to manage links', 'link-view' ),
-		'caption'     => array(
+		'caption'     => [
 			// Use "default" text domain for translations available in WordPress Core.
 			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
 			'editor'      => __( 'Editor' ) . ' (WordPress-' . __( 'Default', 'link-view' ) . ')',
@@ -36,13 +36,13 @@ $lv_options_helptexts = array(
 			'contributor' => __( 'Contributor' ),
 			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
 			'subscriber'  => __( 'Subscriber' ),
-		),
+		],
 		'description' => __( 'With this option minimum required role to manage links can be set', 'link-view' ) . ' (' . __( 'Capability', 'link-view' ) . ': "manage_links").<br />
 			' . sprintf( __( 'More information can be found in the %1$s.', 'link-view' ), '<a href="https://codex.wordpress.org/Roles_and_Capabilities" target="_blank" rel="noopener">WordPress Codex</a>' ) . '<br />
 			' . sprintf( __( 'Please note that this option also affects the access to the %1$s page if the required capabilities are set to %2$s.', 'link-view' ), '"' . __( 'About', 'link-view' ) . ' LinkView"', '"manage_links"' ),
-	),
+	],
 
-	'lv_css'     => array(
+	'lv_css'     => [
 		'type'        => 'textarea',
 		'label'       => sprintf( __( 'CSS-code for %1$s', 'link-view' ), 'LinkView' ),
 		'description' => sprintf( __( 'With this option you can specify CSS-code for the links displayed by the %1$s shortcode.', 'link-view' ), '[link-view]' ) . '<br />
@@ -69,6 +69,6 @@ $lv_options_helptexts = array(
 				&nbsp;&nbsp;&nbsp;float: right;<br />
 				&nbsp;&nbsp;&nbsp;margin-left: 15px;<br />
 			}</code>',
-	),
-);
+	],
+];
 

@@ -48,7 +48,7 @@ class Admin extends Singleton {
 	 * @return void
 	 */
 	public function init() {
-		add_action( 'admin_menu', array( $this, 'register_pages' ) );
+		add_action( 'admin_menu', [ $this, 'register_pages' ] );
 	}
 
 
@@ -64,18 +64,18 @@ class Admin extends Singleton {
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
 			$this->options->get( 'lv_req_cap' ),
 			'lv_admin_about',
-			array( $this, 'show_about_page' )
+			[ $this, 'show_about_page' ]
 		);
-		add_action( 'admin_print_scripts-' . $page, array( $this, 'embed_about_styles' ) );
+		add_action( 'admin_print_scripts-' . $page, [ $this, 'embed_about_styles' ] );
 		$page = add_submenu_page(
 			'options-general.php',
 			sprintf( __( '%1$s Settings', 'link-view' ), 'LinkView' ),
 			'LinkView',
 			'manage_options',
 			'lv_admin_options',
-			array( &$this, 'show_settings_page' )
+			[ &$this, 'show_settings_page' ]
 		);
-		add_action( 'admin_print_scripts-' . $page, array( &$this, 'embed_settings_styles' ) );
+		add_action( 'admin_print_scripts-' . $page, [ &$this, 'embed_settings_styles' ] );
 	}
 
 
@@ -110,7 +110,7 @@ class Admin extends Singleton {
 	 * @return void
 	 */
 	public function embed_about_styles() {
-		wp_enqueue_style( 'lv_admin_about', PLUGIN_URL . 'admin/css/admin_about.css', array(), '1.0' );
+		wp_enqueue_style( 'lv_admin_about', PLUGIN_URL . 'admin/css/admin_about.css', [], '1.0' );
 	}
 
 
@@ -121,7 +121,7 @@ class Admin extends Singleton {
 	 * @return void
 	 */
 	public function embed_settings_styles() {
-		wp_enqueue_style( 'lv_admin_settings', PLUGIN_URL . 'admin/css/admin_settings.css', array(), '1.0' );
+		wp_enqueue_style( 'lv_admin_settings', PLUGIN_URL . 'admin/css/admin_settings.css', [], '1.0' );
 	}
 
 }

@@ -10,14 +10,14 @@ if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-$lv_shortcode_atts_helptexts = array(
-	'view_type'      => array(
+$lv_shortcode_atts_helptexts = [
+	'view_type'      => [
 		'section'     => 'general',
 		'description' => __( 'This attribute specifies how the links are displayed.', 'link-view' ) . '<br />
 			' . __( 'Showing the links in a list is the default, alternatively the links can be displayed in a slider.', 'link-view' ),
-	),
+	],
 
-	'cat_filter'     => array(
+	'cat_filter'     => [
 		'section'       => 'general',
 		'value_options' => __( 'category slugs', 'link-view' ),
 		'description'   => __( 'This attribute specifies the displayed link categories. Default is an empty string to show all categories.', 'link-view' ) . '<br />
@@ -27,9 +27,9 @@ $lv_shortcode_atts_helptexts = array(
 			' . __( 'Examples', 'link-view' ) . ':<br />
 			<code>[linkview cat_filter="social-media"]</code> &hellip; ' . sprintf( __( 'Show all links with category %1$s.', 'link-view' ), '"social-media"' ) . '<br />
 			<code>[linkview cat_filter="blogroll&comma;social-media"]</code> &hellip; ' . sprintf( __( 'Show all links with category %1$s or %2$s.', 'link-view' ), '"blogroll"', '"social-media"' ),
-	),
+	],
 
-	'exclude_cat'    => array(
+	'exclude_cat'    => [
 		'section'       => 'general',
 		'value_options' => 'Cat 1,Cat 2,&hellip;',
 		'description'   => __( 'This attribute specifies which categories should be excluded.', 'link-view' )
@@ -37,22 +37,22 @@ $lv_shortcode_atts_helptexts = array(
 			' . __( 'If the category name has spaces, the name must be surrounded by quotes.', 'link-view' ) . '<br />
 			' . sprintf( __( 'To exclude multiple categories, multiple names can be provided seperated by %1$s.', 'link-view' ), '<code>,</code>' ) . '<br />
 			' . __( 'Example', 'link-view' ) . ': <code>[linkview exclude_cat="Blogroll,Social Media"]</code>',
-	),
+	],
 
-	'show_cat_name'  => array(
+	'show_cat_name'  => [
 		'section'       => 'general',
-		'value_options' => array( '0 &hellip; false', '1 &hellip; true' ),
+		'value_options' => [ '0 &hellip; false', '1 &hellip; true' ],
 		'description'   => __( 'This attribute specifies if the category name is shown as a headline.', 'link-view' ),
-	),
+	],
 
-	'show_num_links' => array(
+	'show_num_links' => [
 		'section'       => 'general',
-		'value_options' => array( '0 &hellip; false', '1 &hellip; true' ),
+		'value_options' => [ '0 &hellip; false', '1 &hellip; true' ],
 		'description'   => __( 'This attribute specifies if the number of links shall be displayed in brackets next to the category name in the headline.', 'link-view' ) . '<br />
 			' . sprintf( __( 'The headline with the category name must be displayed (%1$s) to show the number of links.', 'link-view' ), '<code>show_cat_name=true</code>' ),
-	),
+	],
 
-	'link_orderby'   => array(
+	'link_orderby'   => [
 		'section'     => 'general',
 		'description' => __( 'This attribute specifies the sort parameter of the links for each category.', 'link-view' ) . '<br />
 			' . __( 'By default the links are sorted according the link name.', 'link-view' ) . '<br />
@@ -63,31 +63,31 @@ $lv_shortcode_atts_helptexts = array(
 				'</a>'
 			) . '<br />
 			' . sprintf( __( 'See also the attribute %1$s to specify the order direction.', 'link-view' ), '<code>link_order</code>' ),
-	),
+	],
 
-	'link_order'     => array(
+	'link_order'     => [
 		'section'     => 'general',
 		'description' => sprintf( __( 'This attribute sets the order direction for the %1$s attribute.', 'link-view' ), '"link_orderby"' ) . '<br />
 			' . sprintf( __( 'The available options are %1$s (default) and %2$s.', 'link-view' ), '<code>ascending</code>', '<code>descending</code>' ),
-	),
+	],
 
-	'num_links'      => array(
+	'num_links'      => [
 		'section'       => 'general',
 		'value_options' => __( 'Number', 'link-view' ),
 		'description'   => __( 'This attribute sets the number of displayed links for each category.', 'link-view' ) . '<br />
 			' . __( 'A number smaller than 0 displays all links.', 'link-view' ),
-	),
+	],
 
-	'show_img'       => array(
+	'show_img'       => [
 		'section'       => 'general',
-		'value_options' => array( '0 &hellip; false', '1 &hellip; true' ),
+		'value_options' => [ '0 &hellip; false', '1 &hellip; true' ],
 		'description'   => __( 'This attribute specifies if the image shall be displayed instead of the name.', 'link-view' ) .
 		__( 'This attribute is only considered for links where an image is set.', 'link-view' ),
-	),
+	],
 
-	'link_items'     => array(
+	'link_items'     => [
 		'section'       => 'general',
-		'value_options' => array( 'name', 'address', 'description', 'image', 'rss', 'notes', 'rating' ),
+		'value_options' => [ 'name', 'address', 'description', 'image', 'rss', 'notes', 'rating' ],
 		'description'   => __( 'With this attribute more complex display options can be defined.', 'link-view' ) . '<br />
 			' . sprintf( __( 'By default (empty string) only the link name or the link image (see attribute %1$s) is shown.', 'link-view' ), '<code>show_img</code>' ) . '<br />
 			' . __( 'By specifying the below described JSON structure complex display options can be defined.', 'link-view' ) . '<br />
@@ -110,9 +110,9 @@ $lv_shortcode_atts_helptexts = array(
 				__( 'Multiple items can be grouped by using sub-object. The key of the sub-object defines the name of the group which also will be added as a css-class (e.g. %1$s).', 'link-view' ),
 				'<code>.lv-section-left</code>'
 			),
-	),
+	],
 
-	'link_item_img'  => array(
+	'link_item_img'  => [
 		'section'     => 'general',
 		'description' => __( 'With this attribute the display option for link images can be set, if no link image is available.', 'link-view' ) . '<br />
 			' . sprintf( __( 'This option is only considered if the %1$s item is used in %2$s.', 'link-view' ), '<coee>link_image</code>', '<code>link_items</code>' ) . '<br />
@@ -120,89 +120,89 @@ $lv_shortcode_atts_helptexts = array(
 			. sprintf( __( 'Due to the empty link address of the image the %1$s attribute will be displayed.', 'link-view' ), '<code>alt</code>' ) . '<br />
 			' . sprintf( __( 'With %1$s the complete link item will be removed.', 'link-view' ), '<code>show_nothing</code>' ) . '<br />
 			' . sprintf( __( 'With the other options only the %1$s tag will be removed and an alternative text (link name or description) will be displayed.', 'link-view' ), '<code>&lt;img&gt;</code>' ),
-	),
+	],
 
-	'link_target'    => array(
+	'link_target'    => [
 		'section'     => 'general',
 		'description' => __( 'Set one of the available options to override the default value defined for the link.', 'link-view' ),
-	),
+	],
 
-	'link_rel'       => array(
+	'link_rel'       => [
 		'section'     => 'general',
 		'description' => sprintf( __( 'With this attribute the %1$s attribute for the HTML-links can be set.', 'link-view' ), '<code>rel</code>' )
 			. ' (' . sprintf( __( 'see %1$sthis link%2$s for details', 'link-view' ), '<a href="https://www.w3schools.com/tags/att_a_rel.asp" target="_blank" rel="noopener">', '</a> for details).' ) . ').',
-	),
+	],
 
-	'class_suffix'   => array(
+	'class_suffix'   => [
 		'section'       => 'general',
 		'value_options' => __( 'String', 'link-view' ),
 		'description'   => __( 'With this attribute a css class suffix can be specified. This allows using different css styles for different link lists or sliders on the same site.', 'link-view' ),
-	),
+	],
 
-	'vertical_align' => array(
+	'vertical_align' => [
 		'section'     => 'general',
 		'description' => __( 'This attribute specifies the vertical alignment of the links. Changing this attribute normally only make sense if the link-images are displayed.', 'link-view' ) . '<br />
 			' . __( 'With this option e.g. the vertical alignment of the list symbol relativ to the image or the vertical alignment of images with different height in a slider can be changed.', 'link-view' ),
-	),
+	],
 
-	'list_symbol'    => array(
+	'list_symbol'    => [
 		'section'     => 'list',
 		'description' => __( 'This attribute sets the style type of the list symbol.', 'link-view' ) . '<br />
 			' . sprintf( __( 'With the default value %1$s the standard type which is set in your theme will be used.', 'link-view' ), '<code>std</code>' )
 			. __( 'All other available options overide this standard.', 'link-view' ) . '<br />
 			' . sprintf( __( 'For example setting the value to %1$s will hide the list symbols.', 'link-view' ), '<code>none</code>' ),
-	),
+	],
 
-	'cat_columns'    => array(
+	'cat_columns'    => [
 		'section'       => 'list',
-		'value_options' => array( 'Number', 'static', 'css', 'masonry' ),
+		'value_options' => [ 'Number', 'static', 'css', 'masonry' ],
 		'description'   => __( 'This attribute specifies column layout for the categories in list view.', 'link-view' ) . '<br />
 			' . __( 'There are 3 different types of multiple column layouts available.', 'link-view' )
 			. sprintf(
 				__( 'Find more information regarding the types and options in the chapter %1$s.', 'link-view' ),
 				'<a href="#multicol">' . __( 'Multi-column layout types and options', 'link-view' ) . '</a>.'
 			),
-	),
+	],
 
-	'link_columns'   => array(
+	'link_columns'   => [
 		'section'       => 'list',
-		'value_options' => array( 'Number', 'static', 'css', 'masonry' ),
+		'value_options' => [ 'Number', 'static', 'css', 'masonry' ],
 		'description'   => __( 'This attribute specifies column layout for the links in list view.', 'link-view' ) . '<br />
 			' . __( 'There are 3 different types of multiple column layouts available.', 'link-view' )
 			. sprintf(
 				__( 'Find more information regarding the types and options in the chapter %1$s.', 'link-view' ),
 				'<a href="#multicol">' . __( 'Multi-column layout types and options', 'link-view' ) . '</a>.'
 			),
-	),
+	],
 
-	'slider_width'   => array(
+	'slider_width'   => [
 		'section'       => 'slider',
 		'value_options' => 'Number',
 		'description'   => __( 'This attribute sets the fix width of the slider.', 'link-view' )
 			. sprintf( __( 'If the attribute is set to %1$s the width will be calculated automatically due to the given image sizes.', 'link-view' ), '<code>0</code>' ) . '<br />
 			' . sprintf( __( 'This attribute is only considered if the view type %1$s is selected.', 'link-view' ), '<code>slider</code>' ),
-	),
+	],
 
-	'slider_height'  => array(
+	'slider_height'  => [
 		'section'       => 'slider',
 		'value_options' => 'Number',
 		'description'   => __( 'This attribute sets the fix height of the slider.', 'link-view' )
 			. sprintf( __( 'If the attribute is set to %1$s the height will be calculated automatically due to the given image sizes.', 'link-view' ), '<code>0</code>' ) . '<br />
 			' . sprintf( __( 'This attribute is only considered if the view type %1$s is selected.', 'link-view' ), '<code>slider</code>' ),
-	),
+	],
 
-	'slider_pause'   => array(
+	'slider_pause'   => [
 		'section'       => 'slider',
 		'value_options' => 'Number',
 		'description'   => __( 'This attribute sets the duration between the the slides in milliseconds.', 'link-view' )
 			. __( 'The link stands still for this time and afterwards the sliding animation to the next link starts.', 'link-view' ) . '<br />
 			' . sprintf( __( 'This attribute is only considered if the view type %1$s is selected.', 'link-view' ), '<code>slider</code>' ),
-	),
+	],
 
-	'slider_speed'   => array(
+	'slider_speed'   => [
 		'section'       => 'slider',
 		'value_options' => 'Number',
 		'description'   => __( 'This attribute sets the duration of the animation for switching from one link to the next in milliseconds.', 'link-view' ) . '<br />
 			' . sprintf( __( 'This attribute is only considered if the view type %1$s is selected.', 'link-view' ), '<code>slider</code>' ),
-	),
-);
+	],
+];

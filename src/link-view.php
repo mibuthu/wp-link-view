@@ -57,9 +57,9 @@ class LinkView {
 	 */
 	public function __construct() {
 		// Always!
-		add_action( 'plugins_loaded', array( &$this, 'load_textdomain' ) );
-		add_shortcode( 'linkview', array( &$this, 'shortcode_linkview' ) );
-		add_action( 'widgets_init', array( &$this, 'widget_init' ) );
+		add_action( 'plugins_loaded', [ &$this, 'load_textdomain' ] );
+		add_shortcode( 'linkview', [ &$this, 'shortcode_linkview' ] );
+		add_action( 'widgets_init', [ &$this, 'widget_init' ] );
 		// Enable WordPress link manager (disabled by default since version 3.5).
 		if ( false !== get_option( 'link_manager_enabled' ) ) {
 			add_filter( 'pre_option_link_manager_enabled', '__return_true' );
@@ -71,7 +71,7 @@ class LinkView {
 			// @phan-suppress-next-line PhanUndeclaredMethod
 			Admin\Admin::get_instance()->init();
 		} else { // Front page.
-			add_action( 'wp_enqueue_scripts', array( &$this, 'register_scripts' ) );
+			add_action( 'wp_enqueue_scripts', [ &$this, 'register_scripts' ] );
 		}
 	}
 
@@ -121,8 +121,8 @@ class LinkView {
 	 * @return void
 	 */
 	public function register_scripts() {
-		wp_register_script( 'lv_easySlider', PLUGIN_URL . 'includes/js/easySlider.min.js', array( 'jquery' ), '1.7', true );
-		wp_register_script( 'lv_masonry', PLUGIN_URL . 'includes/js/masonry.pkgd.min.js', array( 'jquery' ), '4.2.2', true );
+		wp_register_script( 'lv_easySlider', PLUGIN_URL . 'includes/js/easySlider.min.js', [ 'jquery' ], '1.7', true );
+		wp_register_script( 'lv_masonry', PLUGIN_URL . 'includes/js/masonry.pkgd.min.js', [ 'jquery' ], '4.2.2', true );
 	}
 
 }

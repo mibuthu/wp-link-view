@@ -57,7 +57,12 @@
             <property name="customAutoEscapedFunctions" type="array" value="PLUGIN_URL" />
         </properties>
     </rule>
+    <!-- Use short array syntax instead of long array syntax specified in Wordpress -->
+    <rule ref="Generic.Arrays.DisallowShortArraySyntax.Found">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found"/>
 
-    <config name="minimum_supported_wp_version" value="4.5"/>
+    <config name="minimum_supported_wp_version" value="4.9"/>
 
 </ruleset>

@@ -36,15 +36,15 @@ class Widget extends \WP_Widget {
 		parent::__construct(
 			'linkview_widget', // Base ID.
 			'LinkView', // Name.
-			array(
+			[
 				'description' => sprintf( __( 'With this widget a %1$s shortcode can be added to a sidebar or widget area.', 'link-view' ), 'LinkView' ),
-			)
+			]
 		);
 		// Define all available items.
-		$this->items = array(
+		$this->items = [
 			'title' => new Attribute( __( 'Links', 'link-view' ) ),
 			'atts'  => new Attribute( '' ),
-		);
+		];
 	}
 
 
@@ -80,7 +80,7 @@ class Widget extends \WP_Widget {
 	 * @suppress PhanUnusedPublicMethodParameter
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance = array();
+		$instance = [];
 		foreach ( array_keys( $this->items ) as $name ) {
 			if ( isset( $new_instance[ $name ] ) ) {
 				$instance[ $name ] = wp_strip_all_tags( $new_instance[ $name ] );

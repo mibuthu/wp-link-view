@@ -184,22 +184,22 @@ class ShortcodeAtts {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->view_type      = new Attribute( 'list', array( 'list', 'slider' ) );
+		$this->view_type      = new Attribute( 'list', [ 'list', 'slider' ] );
 		$this->cat_filter     = new Attribute( '' );
 		$this->exclude_cat    = new Attribute( '' );
-		$this->show_cat_name  = new Attribute( '1', array( '0', '1' ) );
-		$this->show_num_links = new Attribute( '0', array( '0', '1' ) );
-		$this->link_orderby   = new Attribute( 'name', array( 'link_id', 'url', 'name', 'owner', 'rating', 'visible', 'length', 'rand' ) );
-		$this->link_order     = new Attribute( 'asc', array( 'asc', 'desc' ) );
+		$this->show_cat_name  = new Attribute( '1', [ '0', '1' ] );
+		$this->show_num_links = new Attribute( '0', [ '0', '1' ] );
+		$this->link_orderby   = new Attribute( 'name', [ 'link_id', 'url', 'name', 'owner', 'rating', 'visible', 'length', 'rand' ] );
+		$this->link_order     = new Attribute( 'asc', [ 'asc', 'desc' ] );
 		$this->num_links      = new Attribute( '-1' );
-		$this->show_img       = new Attribute( '0', array( '0', '1' ) );
+		$this->show_img       = new Attribute( '0', [ '0', '1' ] );
 		$this->link_items     = new Attribute( '' );
-		$this->link_item_img  = new Attribute( 'show_img_tag', array( 'show_img_tag', 'show_link_name', 'show_link_description', 'show_nothing' ) );
-		$this->link_target    = new Attribute( 'std', array( 'std', 'blank', 'top', 'self' ) );
-		$this->link_rel       = new Attribute( 'noopener', array( '', 'alternate', 'author', 'bookmark', 'external', 'help', 'license', 'next', 'nofollow', 'noreferrer', 'noopener', 'prev', 'search', 'tag' ) );
+		$this->link_item_img  = new Attribute( 'show_img_tag', [ 'show_img_tag', 'show_link_name', 'show_link_description', 'show_nothing' ] );
+		$this->link_target    = new Attribute( 'std', [ 'std', 'blank', 'top', 'self' ] );
+		$this->link_rel       = new Attribute( 'noopener', [ '', 'alternate', 'author', 'bookmark', 'external', 'help', 'license', 'next', 'nofollow', 'noreferrer', 'noopener', 'prev', 'search', 'tag' ] );
 		$this->class_suffix   = new Attribute( '' );
-		$this->vertical_align = new Attribute( 'std', array( 'std', 'top', 'bottom', 'middle' ) );
-		$this->list_symbol    = new Attribute( 'std', array( 'std', 'none', 'circle', 'square', 'disc' ) );
+		$this->vertical_align = new Attribute( 'std', [ 'std', 'top', 'bottom', 'middle' ] );
+		$this->list_symbol    = new Attribute( 'std', [ 'std', 'none', 'circle', 'square', 'disc' ] );
 		$this->cat_columns    = new Attribute( '1' );
 		$this->link_columns   = new Attribute( '1' );
 		$this->slider_width   = new Attribute( '0' );

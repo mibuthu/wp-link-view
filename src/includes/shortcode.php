@@ -49,21 +49,21 @@ class Shortcode {
 	 *
 	 * @var array
 	 */
-	private $cat_multicol_settings = array();
+	private $cat_multicol_settings = [];
 
 	/**
 	 * Link multicolumn settings
 	 *
 	 * @var array
 	 */
-	private $link_multicol_settings = array();
+	private $link_multicol_settings = [];
 
 	/**
 	 * Slider parameter (Parameters for the easyslider javascript function)
 	 *
 	 * @var array
 	 */
-	private $slider_parameter = array();
+	private $slider_parameter = [];
 
 
 	/**
@@ -123,7 +123,7 @@ class Shortcode {
 		// Set attribute link_items to $content if an enclosing shortcode was used.
 		if ( ! empty( $content ) ) {
 			// Replace quotes html code with real quotes.
-			$content = str_replace( array( '&#8220;', '&#8221;', '&#8222;' ), '"', $content );
+			$content = str_replace( [ '&#8220;', '&#8221;', '&#8222;' ], '"', $content );
 			// Set attribute.
 			$atts['link_items'] = $content;
 		}
@@ -145,7 +145,7 @@ class Shortcode {
 		if ( is_null( $section ) ) {
 			return (array) $this->atts;
 		}
-		$atts = array();
+		$atts = [];
 		// @phan-suppress-next-line PhanTypeSuspiciousNonTraversableForeach.
 		foreach ( $this->atts as $name => $attr ) {
 			if ( $attr->section === $section ) {
@@ -162,7 +162,7 @@ class Shortcode {
 	 * @return \WP_Term[] Link category object array.
 	 */
 	private function get_categories() {
-		$catarray = array();
+		$catarray = [];
 		// TODO: The cat_filter value "all" is depricated and can be removed in 0.8.0.
 		if ( ! empty( $this->atts->cat_filter->value ) && 'all' !== $this->atts->cat_filter->value ) {
 			str_replace( ',', '|', $this->atts->cat_filter->value );
@@ -177,17 +177,17 @@ class Shortcode {
 			// There seems to be a problem to recognize the get_terms function correctly.
 			// @phan-suppress-next-line PhanAccessMethodInternal.
 			$terms = get_terms(
-				array(
+				[
 					'taxonomy' => 'link_category',
 					'orderby'  => 'name',
-				)
+				]
 			);
 			if ( is_array( $terms ) ) {
 				$catarray = $terms;
 			}
 			if ( ! empty( $this->atts->exclude_cat->value ) ) {
 				$excludecat = array_map( 'trim', array_map( 'strval', (array) explode( ',', $this->atts->exclude_cat->value ) ) );
-				$diff       = array();
+				$diff       = [];
 				foreach ( $catarray as $cat ) {
 					if ( false === array_search( $cat->name, $excludecat, true ) ) {
 						array_push( $diff, $cat );
@@ -210,12 +210,12 @@ class Shortcode {
 	 * @return object[] Links object array.
 	 */
 	private function get_links( $category ) {
-		$args = array(
+		$args = [
 			'orderby'       => $this->atts->link_orderby->value,
 			'order'         => $this->atts->link_order->value,
 			'limit'         => $this->atts->num_links->value,
 			'category_name' => $category->name,
-		);
+		];
 		return get_bookmarks( $args );
 	}
 
@@ -228,9 +228,9 @@ class Shortcode {
 	 * @return void
 	 */
 	private function new_slider( $list_id, $links ) {
-		$this->slider_parameter[ $list_id ] = array(
+		$this->slider_parameter[ $list_id ] = [
 			'size' => $this->slider_size( $links ),
-		);
+		];
 	}
 
 
@@ -243,10 +243,10 @@ class Shortcode {
 	private function slider_size( $links ) {
 		// Use manual size given in the attributes.
 		if ( ! empty( $this->atts->slider_width->value ) && ! empty( $this->atts->slider_height->value ) ) {
-			return array(
+			return [
 				'w' => intval( $this->atts->slider_width->value ),
 				'h' => intval( $this->atts->slider_height->value ),
-			);
+			];
 		}
 
 		// Get the maximum image size.
@@ -277,10 +277,10 @@ class Shortcode {
 		if ( empty( $height ) ) {
 			$height = 30;
 		}
-		return array(
+		return [
 			'w' => $width,
 			'h' => $height,
-		);
+		];
 	}
 
 
@@ -449,7 +449,7 @@ class Shortcode {
 			} else {
 				$target = $link->link_target;
 				// Set target to _self if an empty string or _none was returned.
-				if ( in_array( $target, array( '', '_none' ), true ) ) {
+				if ( in_array( $target, [ '', '_none' ], true ) ) {
 					$target = '_self';
 				}
 			}
@@ -591,7 +591,7 @@ class Shortcode {
 	 * @return array<string,string|array> Multicolumn settings.
 	 */
 	private function multicol_settings( $column_option, $list_symbol = null ) {
-		$ret = array();
+		$ret = [];
 		// Check if multicolumn is enabled.
 		if ( 1 === intval( $column_option ) ) {  // No multicolumn.
 			$ret['type']               = false;
@@ -601,7 +601,7 @@ class Shortcode {
 			$ret['opt']['num_columns'] = $column_option;
 		} else {  // All other cases.
 			// Extract type and options.
-			$ret['opt']  = array();
+			$ret['opt']  = [];
 			$options     = explode( '(', $column_option );
 			$ret['type'] = $options[0];
 			if ( 'static' !== $ret['type'] && 'css' !== $ret['type'] && 'masonry' !== $ret['type'] ) {

@@ -83,10 +83,10 @@ class About extends Singleton {
 	 * @return void
 	 */
 	private function show_tabs( $current = 'general' ) {
-		$tabs = array(
+		$tabs = [
 			'general' => __( 'General', 'link-view' ),
 			'atts'    => __( 'Shortcode Attributes', 'link-view' ),
-		);
+		];
 		echo '<h3 class="nav-tab-wrapper">';
 		foreach ( $tabs as $tab => $name ) {
 			$class = ( $tab === $current ) ? ' nav-tab-active' : '';

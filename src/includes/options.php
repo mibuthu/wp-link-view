@@ -35,11 +35,11 @@ final class Options extends Singleton {
 	 * Class constructor which initializes required variables
 	 */
 	protected function __construct() {
-		$this->options = array(
+		$this->options = [
 			'lv_req_cap' => new Attribute( 'manage_links' ),
 			'lv_ml_role' => new Attribute( 'editor' ),
 			'lv_css'     => new Attribute( '' ),
-		);
+		];
 	}
 
 
@@ -49,8 +49,8 @@ final class Options extends Singleton {
 	 * @return void
 	 */
 	public function init() {
-		add_action( 'admin_init', array( &$this, 'register' ) );
-		add_filter( 'pre_update_option_lv_ml_role', array( &$this, 'update_manage_links_role' ) );
+		add_action( 'admin_init', [ &$this, 'register' ] );
+		add_filter( 'pre_update_option_lv_ml_role', [ &$this, 'update_manage_links_role' ] );
 	}
 
 

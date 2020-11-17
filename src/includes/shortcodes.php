@@ -36,7 +36,7 @@ class Shortcodes extends Singleton {
 	 *
 	 * @var array<int,Shortcode>
 	 */
-	private $shortcodes = array();
+	private $shortcodes = [];
 
 
 	/**
@@ -46,8 +46,8 @@ class Shortcodes extends Singleton {
 	 */
 	protected function __construct() {
 		$this->options = Options::get_instance();
-		add_action( 'print_late_styles', array( &$this, 'print_styles' ) );
-		add_action( 'wp_footer', array( &$this, 'enqueue_scripts' ), 1 );
+		add_action( 'print_late_styles', [ &$this, 'print_styles' ] );
+		add_action( 'wp_footer', [ &$this, 'enqueue_scripts' ], 1 );
 	}
 
 
