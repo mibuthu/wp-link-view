@@ -6,11 +6,14 @@
  */
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+
+namespace WordPress\Plugins\mibuthu\LinkView;
+
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once LV_PATH . 'includes/attribute.php';
+require_once PLUGIN_PATH . 'includes/attribute.php';
 
 
 /**
@@ -18,159 +21,159 @@ require_once LV_PATH . 'includes/attribute.php';
  *
  * This class handles the attributes for the shortcode [linkview].
  */
-class LV_ShortcodeAtts {
+class ShortcodeAtts {
 
 	/**
 	 * View Type
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $view_type;
 
 	/**
 	 * Category Filter
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $cat_filter;
 
 	/**
 	 * Excluded categories
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $exclude_cat;
 
 	/**
 	 * Show category name
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $show_cat_name;
 
 	/**
 	 * Show number of links
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $show_num_links;
 
 	/**
 	 * Link order field
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $link_orderby;
 
 	/**
 	 * Link order direction
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $link_order;
 
 	/**
 	 * Number of links to show
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $num_links;
 
 	/**
 	 * Show link image
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $show_img;
 
 	/**
 	 * Link items to display
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $link_items;
 
 	/**
 	 * Link item default image
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $link_item_img;
 
 	/**
 	 * Link target
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $link_target;
 
 	/**
 	 * Link rel attribute
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $link_rel;
 
 	/**
 	 * HTML class suffix
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $class_suffix;
 
 	/**
 	 * Used list symbol
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $list_symbol;
 
 	/**
 	 * Vertical alignment
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $vertical_align;
 
 	/**
 	 * Category columns settings
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $cat_columns;
 
 	/**
 	 * Link columns settings
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $link_columns;
 
 	/**
 	 * Slider width
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $slider_width;
 
 	/**
 	 * Slider height
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $slider_height;
 
 	/**
 	 * Slider pause duration
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $slider_pause;
 
 	/**
 	 * Slider speed
 	 *
-	 * @var LV_Attribute
+	 * @var Attribute
 	 */
 	public $slider_speed;
 
@@ -181,28 +184,28 @@ class LV_ShortcodeAtts {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->view_type      = new LV_Attribute( 'list', array( 'list', 'slider' ) );
-		$this->cat_filter     = new LV_Attribute( '' );
-		$this->exclude_cat    = new LV_Attribute( '' );
-		$this->show_cat_name  = new LV_Attribute( '1', array( '0', '1' ) );
-		$this->show_num_links = new LV_Attribute( '0', array( '0', '1' ) );
-		$this->link_orderby   = new LV_Attribute( 'name', array( 'link_id', 'url', 'name', 'owner', 'rating', 'visible', 'length', 'rand' ) );
-		$this->link_order     = new LV_Attribute( 'asc', array( 'asc', 'desc' ) );
-		$this->num_links      = new LV_Attribute( '-1' );
-		$this->show_img       = new LV_Attribute( '0', array( '0', '1' ) );
-		$this->link_items     = new LV_Attribute( '' );
-		$this->link_item_img  = new LV_Attribute( 'show_img_tag', array( 'show_img_tag', 'show_link_name', 'show_link_description', 'show_nothing' ) );
-		$this->link_target    = new LV_Attribute( 'std', array( 'std', 'blank', 'top', 'self' ) );
-		$this->link_rel       = new LV_Attribute( 'noopener', array( '', 'alternate', 'author', 'bookmark', 'external', 'help', 'license', 'next', 'nofollow', 'noreferrer', 'noopener', 'prev', 'search', 'tag' ) );
-		$this->class_suffix   = new LV_Attribute( '' );
-		$this->vertical_align = new LV_Attribute( 'std', array( 'std', 'top', 'bottom', 'middle' ) );
-		$this->list_symbol    = new LV_Attribute( 'std', array( 'std', 'none', 'circle', 'square', 'disc' ) );
-		$this->cat_columns    = new LV_Attribute( '1' );
-		$this->link_columns   = new LV_Attribute( '1' );
-		$this->slider_width   = new LV_Attribute( '0' );
-		$this->slider_height  = new LV_Attribute( '0' );
-		$this->slider_pause   = new LV_Attribute( '6000' );
-		$this->slider_speed   = new LV_Attribute( '1000' );
+		$this->view_type      = new Attribute( 'list', array( 'list', 'slider' ) );
+		$this->cat_filter     = new Attribute( '' );
+		$this->exclude_cat    = new Attribute( '' );
+		$this->show_cat_name  = new Attribute( '1', array( '0', '1' ) );
+		$this->show_num_links = new Attribute( '0', array( '0', '1' ) );
+		$this->link_orderby   = new Attribute( 'name', array( 'link_id', 'url', 'name', 'owner', 'rating', 'visible', 'length', 'rand' ) );
+		$this->link_order     = new Attribute( 'asc', array( 'asc', 'desc' ) );
+		$this->num_links      = new Attribute( '-1' );
+		$this->show_img       = new Attribute( '0', array( '0', '1' ) );
+		$this->link_items     = new Attribute( '' );
+		$this->link_item_img  = new Attribute( 'show_img_tag', array( 'show_img_tag', 'show_link_name', 'show_link_description', 'show_nothing' ) );
+		$this->link_target    = new Attribute( 'std', array( 'std', 'blank', 'top', 'self' ) );
+		$this->link_rel       = new Attribute( 'noopener', array( '', 'alternate', 'author', 'bookmark', 'external', 'help', 'license', 'next', 'nofollow', 'noreferrer', 'noopener', 'prev', 'search', 'tag' ) );
+		$this->class_suffix   = new Attribute( '' );
+		$this->vertical_align = new Attribute( 'std', array( 'std', 'top', 'bottom', 'middle' ) );
+		$this->list_symbol    = new Attribute( 'std', array( 'std', 'none', 'circle', 'square', 'disc' ) );
+		$this->cat_columns    = new Attribute( '1' );
+		$this->link_columns   = new Attribute( '1' );
+		$this->slider_width   = new Attribute( '0' );
+		$this->slider_height  = new Attribute( '0' );
+		$this->slider_pause   = new Attribute( '6000' );
+		$this->slider_speed   = new Attribute( '1000' );
 	}
 
 
@@ -237,7 +240,7 @@ class LV_ShortcodeAtts {
 	 */
 	public function load_helptexts() {
 		global $lv_shortcode_atts_helptexts;
-		require_once LV_PATH . 'includes/shortcode-atts-helptexts.php';
+		require_once PLUGIN_PATH . 'includes/shortcode-atts-helptexts.php';
 		foreach ( $lv_shortcode_atts_helptexts as $name => $values ) {
 			if ( isset( $this->$name ) ) {
 				$this->$name->modify( $values );

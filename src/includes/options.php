@@ -6,56 +6,39 @@
  */
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+
+namespace WordPress\Plugins\mibuthu\LinkView;
+
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once LV_PATH . 'includes/attribute.php';
+require_once PLUGIN_PATH . 'includes/singleton.php';
+require_once PLUGIN_PATH . 'includes/attribute.php';
 
 /**
  * Options class
  *
  * This class handles all available options with their information
  */
-class LV_Options {
-
-	/**
-	 * Class singleton instance reference
-	 *
-	 * @var object
-	 */
-	private static $instance;
+final class Options extends Singleton {
 
 	/**
 	 * Options array
 	 *
-	 * @var array<string, LV_Attribute>
+	 * @var array<string, Attribute>
 	 */
 	public $options;
 
 
 	/**
-	 * Singleton provider and setup
-	 *
-	 * @return object
-	 */
-	public static function &get_instance() {
-		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self();
-			self::$instance->init();
-		}
-		return self::$instance;
-	}
-
-
-	/**
 	 * Class constructor which initializes required variables
 	 */
-	private function __construct() {
+	protected function __construct() {
 		$this->options = array(
-			'lv_req_cap' => new LV_Attribute( 'manage_links' ),
-			'lv_ml_role' => new LV_Attribute( 'editor' ),
-			'lv_css'     => new LV_Attribute( '' ),
+			'lv_req_cap' => new Attribute( 'manage_links' ),
+			'lv_ml_role' => new Attribute( 'editor' ),
+			'lv_css'     => new Attribute( '' ),
 		);
 	}
 
@@ -90,7 +73,7 @@ class LV_Options {
 	 */
 	public function load_helptexts() {
 		global $lv_options_helptexts;
-		require_once LV_PATH . 'includes/options-helptexts.php';
+		require_once PLUGIN_PATH . 'includes/options-helptexts.php';
 		foreach ( $lv_options_helptexts as $name => $values ) {
 			$this->options[ $name ]->modify( $values );
 		}
@@ -106,7 +89,7 @@ class LV_Options {
 	 * @return string The $new_value string.
 	 *
 	 * Variable $old_value is not required.
-	 * @phan-suppress PhanUnusedPublicNoOverrideMethodParameter.
+	 * @phan-suppress PhanUnusedPublicFinalMethodParameter.
 	 */
 	public function update_manage_links_role( $new_value, $old_value = null ) {
 		global $wp_roles;

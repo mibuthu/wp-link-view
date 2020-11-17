@@ -6,11 +6,19 @@
  */
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+
+namespace WordPress\Plugins\mibuthu\LinkView\Admin;
+
+use WordPress\Plugins\mibuthu\LinkView\Singleton;
+use WordPress\Plugins\mibuthu\LinkView\Options;
+use WordPress\Plugins\mibuthu\LinkView\Shortcode;
+use WordPress\Plugins\mibuthu\LinkView\Attribute;
+
 if ( ! defined( 'WP_ADMIN' ) ) {
 	exit();
 }
 
-require_once LV_PATH . 'includes/options.php';
+require_once PLUGIN_PATH . 'includes/options.php';
 
 
 /**
@@ -18,41 +26,21 @@ require_once LV_PATH . 'includes/options.php';
  *
  * This class handles the display of the admin about page
  */
-class LV_Admin_About {
-
-		/**
-		 * Class singleton instance reference
-		 *
-		 * @var self
-		 */
-	private static $instance;
+class About extends Singleton {
 
 	/**
 	 * Options class instance reference
 	 *
-	 * @var LV_Options
+	 * @var Options
 	 */
 	private $options;
 
 
 	/**
-	 * Singleton provider and setup
-	 *
-	 * @return self
-	 */
-	public static function &get_instance() {
-		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
-
-	/**
 	 * Class constructor which initializes required variables
 	 */
-	private function __construct() {
-		$this->options = &LV_Options::get_instance();
+	protected function __construct() {
+		$this->options = Options::get_instance();
 	}
 
 
@@ -182,9 +170,9 @@ class LV_Admin_About {
 				<p>' . sprintf( __( 'This plugin is developed by %1$s, you can find more information about the plugin on the %2$s.', 'link-view' ), 'mibuthu', '<a href="https://wordpress.org/plugins/link-view" target="_blank" rel="noopener">' . __( 'WordPress plugin site', 'link-view' ) . '</a>' ) . '</p>
 				<p>' . sprintf( __( 'If you like the plugin please rate it on the %1$s.', 'link-view' ), '<a href="https://wordpress.org/support/view/plugin-reviews/link-view" target="_blank" rel="noopener">' . __( 'WordPress plugin review site', 'link-view' ) . '</a>' ) . '<br />
 				<p>' . __( 'If you want to support the plugin I would be happy to get a small donation', 'link-view' ) . ':<br />
-				<a class="donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY" target="_blank" rel="noopener"><img src="' . LV_URL . 'admin/images/paypal_btn_donate.gif" alt="PayPal Donation" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'PayPal' ) . '" border="0"></a>
-				<a class="donate" href="https://liberapay.com/mibuthu/donate" target="_blank" rel="noopener"><img src="' . LV_URL . 'admin/images/liberapay-donate.svg" alt="Liberapay Donation" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'Liberapay' ) . '" border="0"></a>
-				<a class="donate" href="https://flattr.com/submit/auto?user_id=mibuthu&url=https%3A%2F%2Fwordpress.org%2Fplugins%2Flink-view" target="_blank" rel="noopener"><img src="' . LV_URL . 'admin/images/flattr-badge-large.png" alt="Flattr this" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'Flattr' ) . '" border="0"></a></p>
+				<a class="donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY" target="_blank" rel="noopener"><img src="' . PLUGIN_URL . 'admin/images/paypal_btn_donate.gif" alt="PayPal Donation" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'PayPal' ) . '" border="0"></a>
+				<a class="donate" href="https://liberapay.com/mibuthu/donate" target="_blank" rel="noopener"><img src="' . PLUGIN_URL . 'admin/images/liberapay-donate.svg" alt="Liberapay Donation" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'Liberapay' ) . '" border="0"></a>
+				<a class="donate" href="https://flattr.com/submit/auto?user_id=mibuthu&url=https%3A%2F%2Fwordpress.org%2Fplugins%2Flink-view" target="_blank" rel="noopener"><img src="' . PLUGIN_URL . 'admin/images/flattr-badge-large.png" alt="Flattr this" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'Flattr' ) . '" border="0"></a></p>
 			</div>'
 		);
 	}
@@ -211,8 +199,8 @@ class LV_Admin_About {
 	 * Show attributes HTML table
 	 */
 	private function show_atts() {
-		require_once LV_PATH . 'includes/shortcode.php';
-		$shortcode = new LV_Shortcode( 0 );
+		require_once PLUGIN_PATH . 'includes/shortcode.php';
+		$shortcode = new Shortcode( 0 );
 		$shortcode->load_atts_helptexts();
 		echo wp_kses_post(
 			'
@@ -278,7 +266,7 @@ class LV_Admin_About {
 	/**
 	 * Show a single attribute table for a given section
 	 *
-	 * @param array<string,LV_Attribute> $atts Attributes to display.
+	 * @param array<string,Attribute> $atts Attributes to display.
 	 * @return void
 	 */
 	private function html_atts_table( $atts ) {

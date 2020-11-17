@@ -6,6 +6,9 @@
  */
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+
+namespace WordPress\Plugins\mibuthu\LinkView;
+
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
@@ -16,7 +19,7 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * This class handles the attributes for shortcode, widget options and plugin options.
  */
-class LV_Attribute {
+class Attribute {
 
 	/**
 	 * Attribute (default) value

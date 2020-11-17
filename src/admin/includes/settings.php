@@ -6,11 +6,17 @@
  */
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+
+namespace WordPress\Plugins\mibuthu\LinkView\Admin;
+
+use WordPress\Plugins\mibuthu\LinkView\Singleton;
+use WordPress\Plugins\mibuthu\LinkView\Options;
+
 if ( ! defined( 'WP_ADMIN' ) ) {
 	exit();
 }
 
-require_once LV_PATH . 'includes/options.php';
+require_once PLUGIN_PATH . 'includes/options.php';
 
 
 /**
@@ -18,41 +24,22 @@ require_once LV_PATH . 'includes/options.php';
  *
  * This class handles the display of the admin settings page
  */
-class LV_Admin_Settings {
-
-	/**
-	 * Class singleton instance reference
-	 *
-	 * @var self
-	 */
-	private static $instance;
+class Settings extends Singleton {
 
 	/**
 	 * Options class instance reference
 	 *
-	 * @var LV_Options
+	 * @var Options
 	 */
 	private $options;
 
 
 	/**
-	 * Singleton provider and setup
-	 *
-	 * @return self
-	 */
-	public static function &get_instance() {
-		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
-
-	/**
 	 * Class constructor which initializes required variables
 	 */
-	private function __construct() {
-		$this->options = &LV_Options::get_instance();
+	protected function __construct() {
+		$this->options = Options::get_instance();
+		// @phan-suppress-next-line PhanUndeclaredMethod
 		$this->options->load_helptexts();
 	}
 

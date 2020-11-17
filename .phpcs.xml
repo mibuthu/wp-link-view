@@ -19,11 +19,6 @@
             <property name="text_domain" type="array" value="link-view,default" />
         </properties>
     </rule>
-    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
-        <properties>
-            <property name="prefixes" type="array" value="lv" />
-        </properties>
-    </rule>
     <rule ref="WordPress.WP.DeprecatedFunctions">
         <properties>
             <property name="minimum_supported_version" value="4.5" />
@@ -59,7 +54,7 @@
     <rule ref="WordPress.Security.EscapeOutput">
         <properties>
             <property name="customEscapingFunctions" type="array" value="admin_url" />
-            <property name="customAutoEscapedFunctions" type="array" value="LV_URL" />
+            <property name="customAutoEscapedFunctions" type="array" value="PLUGIN_URL" />
         </properties>
     </rule>
 

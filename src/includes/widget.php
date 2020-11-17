@@ -1,27 +1,30 @@
 <?php
 /**
- * LV_Widget class
+ * Widget class
  *
  * @package link-view
  */
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+
+namespace WordPress\Plugins\mibuthu\LinkView;
+
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once LV_PATH . 'includes/attribute.php';
+require_once PLUGIN_PATH . 'includes/attribute.php';
 
 
 /**
  * LinkView Widget class
  */
-class LV_Widget extends WP_Widget {
+class Widget extends \WP_Widget {
 
 	/**
 	 * Widget Items
 	 *
-	 * @var array<string,LV_Attribute>
+	 * @var array<string,Attribute>
 	 */
 	private $items;
 
@@ -39,8 +42,8 @@ class LV_Widget extends WP_Widget {
 		);
 		// Define all available items.
 		$this->items = array(
-			'title' => new LV_Attribute( __( 'Links', 'link-view' ) ),
-			'atts'  => new LV_Attribute( '' ),
+			'title' => new Attribute( __( 'Links', 'link-view' ) ),
+			'atts'  => new Attribute( '' ),
 		);
 	}
 
@@ -130,7 +133,7 @@ class LV_Widget extends WP_Widget {
 	 */
 	private function load_helptexts() {
 		global $lv_widget_items_helptexts;
-		require_once LV_PATH . 'includes/widget-helptexts.php';
+		require_once PLUGIN_PATH . 'includes/widget-helptexts.php';
 		foreach ( $lv_widget_items_helptexts as $name => $values ) {
 			$this->items[ $name ]->modify( $values );
 		}

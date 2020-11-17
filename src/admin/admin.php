@@ -6,11 +6,17 @@
  */
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+
+namespace WordPress\Plugins\mibuthu\LinkView\Admin;
+
+use WordPress\Plugins\mibuthu\LinkView\Singleton;
+use WordPress\Plugins\mibuthu\LinkView\Options;
+
 if ( ! defined( 'WP_ADMIN' ) ) {
 	exit();
 }
 
-require_once LV_PATH . 'includes/options.php';
+require_once PLUGIN_PATH . 'includes/options.php';
 
 
 /**
@@ -18,41 +24,21 @@ require_once LV_PATH . 'includes/options.php';
  *
  * This class handles all LinkView admin pages.
  */
-class LV_Admin {
-
-	/**
-	 * Class singleton instance reference
-	 *
-	 * @var self
-	 */
-	private static $instance;
+class Admin extends Singleton {
 
 	/**
 	 * Options class instance reference
 	 *
-	 * @var LV_Options
+	 * @var Options
 	 */
 	private $options;
 
 
 	/**
-	 * Singleton provider and setup
-	 *
-	 * @return self
-	 */
-	public static function &get_instance() {
-		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
-
-	/**
 	 * Class constructor which initializes required variables
 	 */
-	private function __construct() {
-		$this->options = LV_Options::get_instance();
+	protected function __construct() {
+		$this->options = Options::get_instance();
 	}
 
 
@@ -61,8 +47,8 @@ class LV_Admin {
 	 *
 	 * @return void
 	 */
-	public function init_admin_page() {
-		add_action( 'admin_menu', array( &$this, 'register_pages' ) );
+	public function init() {
+		add_action( 'admin_menu', array( $this, 'register_pages' ) );
 	}
 
 
@@ -78,9 +64,9 @@ class LV_Admin {
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
 			$this->options->get( 'lv_req_cap' ),
 			'lv_admin_about',
-			array( &$this, 'show_about_page' )
+			array( $this, 'show_about_page' )
 		);
-		add_action( 'admin_print_scripts-' . $page, array( &$this, 'embed_about_styles' ) );
+		add_action( 'admin_print_scripts-' . $page, array( $this, 'embed_about_styles' ) );
 		$page = add_submenu_page(
 			'options-general.php',
 			sprintf( __( '%1$s Settings', 'link-view' ), 'LinkView' ),
@@ -99,8 +85,9 @@ class LV_Admin {
 	 * @return void
 	 */
 	public function show_about_page() {
-		require_once LV_PATH . 'admin/includes/admin-about.php';
-		LV_Admin_About::get_instance()->show_page();
+		require_once PLUGIN_PATH . 'admin/includes/about.php';
+		// @phan-suppress-next-line PhanUndeclaredMethod
+		About::get_instance()->show_page();
 	}
 
 
@@ -110,8 +97,9 @@ class LV_Admin {
 	 * @return void
 	 */
 	public function show_settings_page() {
-		require_once LV_PATH . 'admin/includes/admin-settings.php';
-		LV_Admin_Settings::get_instance()->show_page();
+		require_once PLUGIN_PATH . 'admin/includes/settings.php';
+		// @phan-suppress-next-line PhanUndeclaredMethod
+		Settings::get_instance()->show_page();
 	}
 
 
@@ -122,7 +110,7 @@ class LV_Admin {
 	 * @return void
 	 */
 	public function embed_about_styles() {
-		wp_enqueue_style( 'lv_admin_about', LV_URL . 'admin/css/admin_about.css', array(), '1.0' );
+		wp_enqueue_style( 'lv_admin_about', PLUGIN_URL . 'admin/css/admin_about.css', array(), '1.0' );
 	}
 
 
@@ -133,7 +121,7 @@ class LV_Admin {
 	 * @return void
 	 */
 	public function embed_settings_styles() {
-		wp_enqueue_style( 'lv_admin_settings', LV_URL . 'admin/css/admin_settings.css', array(), '1.0' );
+		wp_enqueue_style( 'lv_admin_settings', PLUGIN_URL . 'admin/css/admin_settings.css', array(), '1.0' );
 	}
 
 }

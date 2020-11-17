@@ -29,13 +29,16 @@
  */
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+
+namespace WordPress\Plugins\mibuthu\LinkView;
+
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
 // General definitions.
-define( 'LV_URL', plugin_dir_url( __FILE__ ) );
-define( 'LV_PATH', plugin_dir_path( __FILE__ ) );
+define( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
 
 /**
@@ -43,7 +46,7 @@ define( 'LV_PATH', plugin_dir_path( __FILE__ ) );
  *
  * This is the initial class for loading the plugin.
  */
-class LV_LinkView {
+class LinkView {
 
 
 	/**
@@ -64,8 +67,9 @@ class LV_LinkView {
 
 		// Depending on Page Type!
 		if ( is_admin() ) { // Admin page.
-			require_once LV_PATH . 'admin/admin.php';
-			LV_Admin::get_instance()->init_admin_page();
+			require_once PLUGIN_PATH . 'admin/admin.php';
+			// @phan-suppress-next-line PhanUndeclaredMethod
+			Admin\Admin::get_instance()->init();
 		} else { // Front page.
 			add_action( 'wp_enqueue_scripts', array( &$this, 'register_scripts' ) );
 		}
@@ -78,7 +82,7 @@ class LV_LinkView {
 	 * @return void
 	 */
 	public function load_textdomain() {
-		load_plugin_textdomain( 'link-view', false, basename( LV_PATH ) . '/languages' );
+		load_plugin_textdomain( 'link-view', false, basename( PLUGIN_PATH ) . '/languages' );
 	}
 
 
@@ -91,10 +95,11 @@ class LV_LinkView {
 	 */
 	public function shortcode_linkview( $atts, $content = '' ) {
 		static $shortcodes;
-		if ( ! $shortcodes instanceof LV_Shortcodes ) {
-			require_once LV_PATH . 'includes/shortcodes.php';
-			$shortcodes = LV_Shortcodes::get_instance();
+		if ( ! $shortcodes instanceof Shortcodes ) {
+			require_once PLUGIN_PATH . 'includes/shortcodes.php';
+			$shortcodes = Shortcodes::get_instance();
 		}
+		// @phan-suppress-next-line PhanPossiblyUndeclaredMethod
 		return $shortcodes->add( $atts, $content );
 	}
 
@@ -105,8 +110,8 @@ class LV_LinkView {
 	 * @return void
 	 */
 	public function widget_init() {
-		require_once LV_PATH . 'includes/widget.php';
-		register_widget( 'LV_Widget' );
+		require_once PLUGIN_PATH . 'includes/widget.php';
+		register_widget( __NAMESPACE__ . '\Widget' );
 	}
 
 
@@ -116,8 +121,8 @@ class LV_LinkView {
 	 * @return void
 	 */
 	public function register_scripts() {
-		wp_register_script( 'lv_easySlider', LV_URL . 'includes/js/easySlider.min.js', array( 'jquery' ), '1.7', true );
-		wp_register_script( 'lv_masonry', LV_URL . 'includes/js/masonry.pkgd.min.js', array( 'jquery' ), '4.2.2', true );
+		wp_register_script( 'lv_easySlider', PLUGIN_URL . 'includes/js/easySlider.min.js', array( 'jquery' ), '1.7', true );
+		wp_register_script( 'lv_masonry', PLUGIN_URL . 'includes/js/masonry.pkgd.min.js', array( 'jquery' ), '4.2.2', true );
 	}
 
 }
@@ -126,6 +131,6 @@ class LV_LinkView {
 /**
  * LinkView Class instance
  *
- * @var LV_LinkView
+ * @var LinkView
  */
-$lv_linkview = new LV_LinkView();
+$linkview = new LinkView();

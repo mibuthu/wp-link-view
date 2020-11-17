@@ -6,12 +6,15 @@
  */
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+
+namespace WordPress\Plugins\mibuthu\LinkView;
+
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once LV_PATH . 'includes/options.php';
-require_once LV_PATH . 'includes/shortcode.php';
+require_once PLUGIN_PATH . 'includes/options.php';
+require_once PLUGIN_PATH . 'includes/shortcode.php';
 
 
 /**
@@ -19,41 +22,21 @@ require_once LV_PATH . 'includes/shortcode.php';
  *
  * This class handles the shortcode instances and the styles/scripts which are required for all instances.
  */
-class LV_Shortcodes {
-
-	/**
-	 * Class singleton instance reference
-	 *
-	 * @var self
-	 */
-	private static $instance;
+class Shortcodes extends Singleton {
 
 	/**
 	 * Options class instance reference
 	 *
-	 * @var LV_Options
+	 * @var Options
 	 */
 	private $options;
 
 	/**
 	 * Shortcode instances
 	 *
-	 * @var array<int,LV_Shortcode>
+	 * @var array<int,Shortcode>
 	 */
 	private $shortcodes = array();
-
-
-	/**
-	 * Singleton provider and setup
-	 *
-	 * @return self
-	 */
-	public static function &get_instance() {
-		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
 
 
 	/**
@@ -61,8 +44,8 @@ class LV_Shortcodes {
 	 *
 	 * @return void
 	 */
-	private function __construct() {
-		$this->options = LV_Options::get_instance();
+	protected function __construct() {
+		$this->options = Options::get_instance();
 		add_action( 'print_late_styles', array( &$this, 'print_styles' ) );
 		add_action( 'wp_footer', array( &$this, 'enqueue_scripts' ), 1 );
 	}
@@ -77,7 +60,7 @@ class LV_Shortcodes {
 	 */
 	public function add( $atts, $content = '' ) {
 		$sc_id              = count( $this->shortcodes ) + 1;
-		$this->shortcodes[] = new LV_Shortcode( $sc_id );
+		$this->shortcodes[] = new Shortcode( $sc_id );
 		return $this->shortcodes[ $sc_id - 1 ]->show_html( $atts, $content );
 	}
 

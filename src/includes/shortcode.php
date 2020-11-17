@@ -6,11 +6,14 @@
  */
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+
+namespace WordPress\Plugins\mibuthu\LinkView;
+
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once LV_PATH . 'includes/shortcode-atts.php';
+require_once PLUGIN_PATH . 'includes/shortcode-atts.php';
 
 
 /**
@@ -18,12 +21,12 @@ require_once LV_PATH . 'includes/shortcode-atts.php';
  *
  * This class handles the shortcode [linkview].
  */
-class LV_Shortcode {
+class Shortcode {
 
 	/**
 	 * Shortcode attributes
 	 *
-	 * @var LV_ShortcodeAtts
+	 * @var ShortcodeAtts
 	 */
 	private $atts;
 
@@ -69,7 +72,7 @@ class LV_Shortcode {
 	 * @param int $sc_id The id of the shortcode.
 	 */
 	public function __construct( $sc_id ) {
-		$this->atts  = new LV_ShortcodeAtts();
+		$this->atts  = new ShortcodeAtts();
 		$this->sc_id = $sc_id;
 	}
 
@@ -136,7 +139,7 @@ class LV_Shortcode {
 	 * Get all shortcode attributes by section
 	 *
 	 * @param null|string $section Section of which the attributes are requested.
-	 * @return array<string,LV_Attribute> Requested attributes.
+	 * @return array<string,Attribute> Requested attributes.
 	 */
 	public function get_atts( $section = null ) {
 		if ( is_null( $section ) ) {
@@ -156,7 +159,7 @@ class LV_Shortcode {
 	/**
 	 * Get link categories
 	 *
-	 * @return WP_Term[] Link category object array.
+	 * @return \WP_Term[] Link category object array.
 	 */
 	private function get_categories() {
 		$catarray = array();
@@ -166,7 +169,7 @@ class LV_Shortcode {
 			$catslugs = array_map( 'trim', array_map( 'strval', (array) explode( '|', $this->atts->cat_filter->value ) ) );
 			foreach ( $catslugs as $catslug ) {
 				$term = get_term_by( 'slug', $catslug, 'link_category' );
-				if ( $term instanceof WP_Term ) {
+				if ( $term instanceof \WP_Term ) {
 					$catarray[] = $term;
 				}
 			}
@@ -203,8 +206,8 @@ class LV_Shortcode {
 	/**
 	 * Get Links
 	 *
-	 * @param WP_Term $category Category object.
-	 * @return stdClass[] Links object array.
+	 * @param \WP_Term $category Category object.
+	 * @return object[] Links object array.
 	 */
 	private function get_links( $category ) {
 		$args = array(
@@ -220,8 +223,8 @@ class LV_Shortcode {
 	/**
 	 * Add a new slider and prepare its settings
 	 *
-	 * @param int        $list_id The list id which is also used for the slider id.
-	 * @param stdClass[] $links The links which are displayed in the slider.
+	 * @param int      $list_id The list id which is also used for the slider id.
+	 * @param object[] $links The links which are displayed in the slider.
 	 * @return void
 	 */
 	private function new_slider( $list_id, $links ) {
@@ -234,7 +237,7 @@ class LV_Shortcode {
 	/**
 	 * Get calculated slider size
 	 *
-	 * @param stdClass[] $links Links object array.
+	 * @param object[] $links Links object array.
 	 * @return array<string,int> Array with slider width and height.
 	 */
 	private function slider_size( $links ) {
@@ -284,8 +287,8 @@ class LV_Shortcode {
 	/**
 	 * Get HTML for showing a single category
 	 *
-	 * @param WP_Term $category Category object to show.
-	 * @param int     $cat_column The actual category column.
+	 * @param \WP_Term $category Category object to show.
+	 * @param int      $cat_column The actual category column.
 	 * @return string HTML to render.
 	 */
 	private function html_category( $category, &$cat_column ) {
@@ -316,8 +319,8 @@ class LV_Shortcode {
 	/**
 	 * Get HTML for showing a link list
 	 *
-	 * @param stdClass[] $links Links object array to show.
-	 * @param int        $list_id Shortcode id.
+	 * @param object[] $links Links object array to show.
+	 * @param int      $list_id Shortcode id.
 	 * @return string HTML to render link list.
 	 */
 	private function html_link_list( $links, $list_id ) {
@@ -363,8 +366,8 @@ class LV_Shortcode {
 	/**
 	 * Get HTML for showing a single link
 	 *
-	 * @param stdClass $link Link object.
-	 * @param int      $list_id The id of the actual link list/slider.
+	 * @param object $link Link object.
+	 * @param int    $list_id The id of the actual link list/slider.
 	 * @return string HTML to render link.
 	 */
 	private function html_link( $link, $list_id ) {
@@ -394,7 +397,7 @@ class LV_Shortcode {
 	/**
 	 * Get HTML for showing a link section
 	 *
-	 * @param stdClass             $link Link object.
+	 * @param object               $link Link object.
 	 * @param array<string,string> $items Link items array included in the section.
 	 * @param int                  $list_id The id of the actual link list/slider.
 	 * @return string HTML to render link section.
@@ -417,10 +420,10 @@ class LV_Shortcode {
 	/**
 	 * Get HTML for showing a link item
 	 *
-	 * @param stdClass $link Link object.
-	 * @param string   $item Item type to display.
-	 * @param int      $list_id The id of the actual link list/slider.
-	 * @param string   $caption Link item caption.
+	 * @param object $link Link object.
+	 * @param string $item Item type to display.
+	 * @param int    $list_id The id of the actual link list/slider.
+	 * @param string $caption Link item caption.
 	 * @return string HTML to render link item.
 	 */
 	private function html_link_item( $link, $item, $list_id, $caption = '' ) {
@@ -503,8 +506,8 @@ class LV_Shortcode {
 	/**
 	 * Get HTML for showing the image
 	 *
-	 * @param stdClass $link Link object.
-	 * @param int      $list_id The id of the actual link list/slider.
+	 * @param object $link Link object.
+	 * @param int    $list_id The id of the actual link list/slider.
 	 * @return string HTML to render the image.
 	 */
 	private function html_img_tag( $link, $list_id ) {
