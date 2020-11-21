@@ -22,7 +22,7 @@ abstract class Singleton {
 	/**
 	 * The registry of Singleton classes
 	 *
-	 * @var array<Singleton>
+	 * @var Singleton[]
 	 */
 	private static $registry;
 
