@@ -20,6 +20,10 @@ require_once PLUGIN_PATH . 'includes/attribute.php';
  * Options class
  *
  * This class handles all available options with their information
+ *
+ * @property-read string $lvw_req_capabilities
+ * @property-read string $lvw_req_manage_links_role
+ * @property-read string $lvw_custom_css
  */
 final class Options extends Singleton {
 

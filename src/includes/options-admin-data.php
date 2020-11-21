@@ -21,6 +21,10 @@ require_once PLUGIN_PATH . 'includes/attribute.php';
  * Options class
  *
  * This class provides all additional data for the options which is only required in the admin page.
+ *
+ * @property-read string $lvw_req_capabilities Required capabilities option.
+ * @property-read string $lvw_req_manage_links_role Required manage links role option.
+ * @property-read string $lvw_custom_css Custom css option.
  */
 final class OptionsAdminData extends Singleton {
 
@@ -54,12 +58,10 @@ final class OptionsAdminData extends Singleton {
 				'label'       => __( 'Required role to manage links', 'link-view' ),
 				'caption'     => [
 					// Use "default" text domain for translations available in WordPress Core.
-					// phpcs:disable WordPress.WP.I18n.MissingArgDomainDefault
-					'editor'      => __( 'Editor' ) . ' (WordPress-' . __( 'Default', 'link-view' ) . ')',
-					'author'      => __( 'Author' ),
-					'contributor' => __( 'Contributor' ),
-					'subscriber'  => __( 'Subscriber' ),
-					// phpcs:enable WordPress.WP.I18n.MissingArgDomainDefault
+					'editor'      => __( 'Editor', 'default' ) . ' (WordPress-' . __( 'Default', 'link-view' ) . ')',
+					'author'      => __( 'Author', 'default' ),
+					'contributor' => __( 'Contributor', 'default' ),
+					'subscriber'  => __( 'Subscriber', 'default' ),
 				],
 				'description' => __( 'With this option minimum required role to manage links can be set', 'link-view' ) . ' (' . __( 'Capability', 'link-view' ) . ': "manage_links").<br />
 					' . sprintf( __( 'More information can be found in the %1$s.', 'link-view' ), '<a href="https://codex.wordpress.org/Roles_and_Capabilities" target="_blank" rel="noopener">WordPress Codex</a>' ) . '<br />
