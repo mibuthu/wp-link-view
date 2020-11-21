@@ -14,6 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 require_once PLUGIN_PATH . 'includes/attribute.php';
+require_once PLUGIN_PATH . 'includes/widget-args.php';
 
 
 /**
@@ -22,11 +23,11 @@ require_once PLUGIN_PATH . 'includes/attribute.php';
 class Widget extends \WP_Widget {
 
 	/**
-	 * Widget Items
+	 * Widget Arguments
 	 *
-	 * @var array<string,Attribute>
+	 * @var WidgetArgs
 	 */
-	private $items;
+	private $args;
 
 
 	/**
@@ -41,10 +42,7 @@ class Widget extends \WP_Widget {
 			]
 		);
 		// Define all available items.
-		$this->items = [
-			'title' => new Attribute( __( 'Links', 'link-view' ) ),
-			'atts'  => new Attribute( '' ),
-		];
+		$this->args = new WidgetArgs();
 	}
 
 
@@ -81,7 +79,7 @@ class Widget extends \WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance = [];
-		foreach ( array_keys( $this->items ) as $name ) {
+		foreach ( array_keys( $this->args->get_all() ) as $name ) {
 			if ( isset( $new_instance[ $name ] ) ) {
 				$instance[ $name ] = wp_strip_all_tags( $new_instance[ $name ] );
 			}
@@ -99,8 +97,8 @@ class Widget extends \WP_Widget {
 	 * @return string Value used to check if the Safe button is displayed.
 	 */
 	public function form( $instance ) {
-		$this->load_helptexts();
-		foreach ( $this->items as $name => $item ) {
+		$this->args->load_args_admin_data();
+		foreach ( $this->args->get_all() as $name => $item ) {
 			if ( ! isset( $instance[ $name ] ) ) {
 				$instance[ $name ] = $item->value;
 			}
@@ -123,21 +121,6 @@ class Widget extends \WP_Widget {
 			}
 		}
 		return '';
-	}
-
-
-	/**
-	 * Load helptexts of widget items
-	 *
-	 * @return void
-	 */
-	private function load_helptexts() {
-		global $lv_widget_items_helptexts;
-		require_once PLUGIN_PATH . 'includes/widget-helptexts.php';
-		foreach ( $lv_widget_items_helptexts as $name => $values ) {
-			$this->items[ $name ]->modify( $values );
-		}
-		unset( $lv_widget_items_helptexts );
 	}
 
 }
