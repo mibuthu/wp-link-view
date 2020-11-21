@@ -201,7 +201,7 @@ class About extends Singleton {
 	private function show_atts() {
 		require_once PLUGIN_PATH . 'includes/shortcode.php';
 		$shortcode = new Shortcode( 0 );
-		$shortcode->load_atts_helptexts();
+		$shortcode->load_atts_admin_data();
 		echo wp_kses_post(
 			'
 			<h3>' . __( 'Shortcode Attributes', 'link-view' ) . '</h3>

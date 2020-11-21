@@ -777,8 +777,8 @@ class Shortcode {
 	 *
 	 * @return void
 	 */
-	public function load_atts_helptexts() {
-		$this->atts->load_helptexts();
+	public function load_atts_admin_data() {
+		$this->atts->load_admin_data();
 	}
 
 }

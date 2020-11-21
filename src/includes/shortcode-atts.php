@@ -47,7 +47,7 @@ require_once PLUGIN_PATH . 'includes/attribute.php';
 class ShortcodeAtts {
 
 	/**
-	 * View Type
+	 * Shortcode attributes
 	 *
 	 * @var array<string,Attribute>
 	 */
@@ -172,19 +172,16 @@ class ShortcodeAtts {
 
 
 	/**
-	 * Load shortcode helptexts (required for admin page only)
+	 * Load the additional shortcode attribute data
 	 *
 	 * @return void
 	 */
-	public function load_helptexts() {
-		global $lv_shortcode_atts_helptexts;
-		require_once PLUGIN_PATH . 'includes/shortcode-atts-helptexts.php';
-		foreach ( $lv_shortcode_atts_helptexts as $name => $values ) {
-			if ( isset( $this->shortcode_atts[ $name ] ) ) {
-				$this->shortcode_atts[ $name ]->modify( $values );
-			}
+	public function load_admin_data() {
+		require_once PLUGIN_PATH . 'includes/shortcode-atts-admin-data.php';
+		$atts_admin_data = ShortcodeAttsAdminData::get_instance();
+		foreach ( array_keys( $this->shortcode_atts ) as $attr_name ) {
+			$this->shortcode_atts[ $attr_name ]->modify( $atts_admin_data->$attr_name );
 		}
-		unset( $lv_shortcode_atts_helptexts );
 	}
 
 }
