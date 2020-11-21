@@ -127,7 +127,7 @@ final class Options extends Singleton {
 
 
 	/**
-	 * Load options helptext from additional file
+	 * Load the additional option data
 	 *
 	 * @return void
 	 */

@@ -29,7 +29,7 @@ require_once PLUGIN_PATH . 'includes/attribute.php';
 final class OptionsAdminData extends Singleton {
 
 	/**
-	 * Additional data for the options which are only required
+	 * Additional data for the options
 	 *
 	 * @var array<string,array<string,string|array>>
 	 */
