@@ -20,162 +20,38 @@ require_once PLUGIN_PATH . 'includes/attribute.php';
  * LinkView Shortcode Attribute Class
  *
  * This class handles the attributes for the shortcode [linkview].
+ *
+ * @property string $view_type
+ * @property string $cat_filter
+ * @property string $exclude_cat
+ * @property string $show_cat_name
+ * @property string $show_num_links
+ * @property string $link_orderby
+ * @property string $link_order
+ * @property string $num_links
+ * @property string $show_img
+ * @property string $link_items
+ * @property string $link_item_img
+ * @property string $link_target
+ * @property string $link_rel
+ * @property string $class_suffix
+ * @property string $vertical_align
+ * @property string $list_symbol
+ * @property string $cat_columns
+ * @property string $link_columns
+ * @property string $slider_width
+ * @property string $slider_height
+ * @property string $slider_pause
+ * @property string $slider_speed
  */
 class ShortcodeAtts {
 
 	/**
 	 * View Type
 	 *
-	 * @var Attribute
+	 * @var array<string,Attribute>
 	 */
-	public $view_type;
-
-	/**
-	 * Category Filter
-	 *
-	 * @var Attribute
-	 */
-	public $cat_filter;
-
-	/**
-	 * Excluded categories
-	 *
-	 * @var Attribute
-	 */
-	public $exclude_cat;
-
-	/**
-	 * Show category name
-	 *
-	 * @var Attribute
-	 */
-	public $show_cat_name;
-
-	/**
-	 * Show number of links
-	 *
-	 * @var Attribute
-	 */
-	public $show_num_links;
-
-	/**
-	 * Link order field
-	 *
-	 * @var Attribute
-	 */
-	public $link_orderby;
-
-	/**
-	 * Link order direction
-	 *
-	 * @var Attribute
-	 */
-	public $link_order;
-
-	/**
-	 * Number of links to show
-	 *
-	 * @var Attribute
-	 */
-	public $num_links;
-
-	/**
-	 * Show link image
-	 *
-	 * @var Attribute
-	 */
-	public $show_img;
-
-	/**
-	 * Link items to display
-	 *
-	 * @var Attribute
-	 */
-	public $link_items;
-
-	/**
-	 * Link item default image
-	 *
-	 * @var Attribute
-	 */
-	public $link_item_img;
-
-	/**
-	 * Link target
-	 *
-	 * @var Attribute
-	 */
-	public $link_target;
-
-	/**
-	 * Link rel attribute
-	 *
-	 * @var Attribute
-	 */
-	public $link_rel;
-
-	/**
-	 * HTML class suffix
-	 *
-	 * @var Attribute
-	 */
-	public $class_suffix;
-
-	/**
-	 * Used list symbol
-	 *
-	 * @var Attribute
-	 */
-	public $list_symbol;
-
-	/**
-	 * Vertical alignment
-	 *
-	 * @var Attribute
-	 */
-	public $vertical_align;
-
-	/**
-	 * Category columns settings
-	 *
-	 * @var Attribute
-	 */
-	public $cat_columns;
-
-	/**
-	 * Link columns settings
-	 *
-	 * @var Attribute
-	 */
-	public $link_columns;
-
-	/**
-	 * Slider width
-	 *
-	 * @var Attribute
-	 */
-	public $slider_width;
-
-	/**
-	 * Slider height
-	 *
-	 * @var Attribute
-	 */
-	public $slider_height;
-
-	/**
-	 * Slider pause duration
-	 *
-	 * @var Attribute
-	 */
-	public $slider_pause;
-
-	/**
-	 * Slider speed
-	 *
-	 * @var Attribute
-	 */
-	public $slider_speed;
+	private $shortcode_atts;
 
 
 	/**
@@ -184,28 +60,30 @@ class ShortcodeAtts {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->view_type      = new Attribute( 'list', [ 'list', 'slider' ] );
-		$this->cat_filter     = new Attribute( '' );
-		$this->exclude_cat    = new Attribute( '' );
-		$this->show_cat_name  = new Attribute( '1', [ '0', '1' ] );
-		$this->show_num_links = new Attribute( '0', [ '0', '1' ] );
-		$this->link_orderby   = new Attribute( 'name', [ 'link_id', 'url', 'name', 'owner', 'rating', 'visible', 'length', 'rand' ] );
-		$this->link_order     = new Attribute( 'asc', [ 'asc', 'desc' ] );
-		$this->num_links      = new Attribute( '-1' );
-		$this->show_img       = new Attribute( '0', [ '0', '1' ] );
-		$this->link_items     = new Attribute( '' );
-		$this->link_item_img  = new Attribute( 'show_img_tag', [ 'show_img_tag', 'show_link_name', 'show_link_description', 'show_nothing' ] );
-		$this->link_target    = new Attribute( 'std', [ 'std', 'blank', 'top', 'self' ] );
-		$this->link_rel       = new Attribute( 'noopener', [ '', 'alternate', 'author', 'bookmark', 'external', 'help', 'license', 'next', 'nofollow', 'noreferrer', 'noopener', 'prev', 'search', 'tag' ] );
-		$this->class_suffix   = new Attribute( '' );
-		$this->vertical_align = new Attribute( 'std', [ 'std', 'top', 'bottom', 'middle' ] );
-		$this->list_symbol    = new Attribute( 'std', [ 'std', 'none', 'circle', 'square', 'disc' ] );
-		$this->cat_columns    = new Attribute( '1' );
-		$this->link_columns   = new Attribute( '1' );
-		$this->slider_width   = new Attribute( '0' );
-		$this->slider_height  = new Attribute( '0' );
-		$this->slider_pause   = new Attribute( '6000' );
-		$this->slider_speed   = new Attribute( '1000' );
+		$this->shortcode_atts = [
+			'view_type'      => new Attribute( 'list', [ 'list', 'slider' ] ),
+			'cat_filter'     => new Attribute( '' ),
+			'exclude_cat'    => new Attribute( '' ),
+			'show_cat_name'  => new Attribute( '1', [ '0', '1' ] ),
+			'show_num_links' => new Attribute( '0', [ '0', '1' ] ),
+			'link_orderby'   => new Attribute( 'name', [ 'link_id', 'url', 'name', 'owner', 'rating', 'visible', 'length', 'rand' ] ),
+			'link_order'     => new Attribute( 'asc', [ 'asc', 'desc' ] ),
+			'num_links'      => new Attribute( '-1' ),
+			'show_img'       => new Attribute( '0', [ '0', '1' ] ),
+			'link_items'     => new Attribute( '' ),
+			'link_item_img'  => new Attribute( 'show_img_tag', [ 'show_img_tag', 'show_link_name', 'show_link_description', 'show_nothing' ] ),
+			'link_target'    => new Attribute( 'std', [ 'std', 'blank', 'top', 'self' ] ),
+			'link_rel'       => new Attribute( 'noopener', [ '', 'alternate', 'author', 'bookmark', 'external', 'help', 'license', 'next', 'nofollow', 'noreferrer', 'noopener', 'prev', 'search', 'tag' ] ),
+			'class_suffix'   => new Attribute( '' ),
+			'vertical_align' => new Attribute( 'std', [ 'std', 'top', 'bottom', 'middle' ] ),
+			'list_symbol'    => new Attribute( 'std', [ 'std', 'none', 'circle', 'square', 'disc' ] ),
+			'cat_columns'    => new Attribute( '1' ),
+			'link_columns'   => new Attribute( '1' ),
+			'slider_width'   => new Attribute( '0' ),
+			'slider_height'  => new Attribute( '0' ),
+			'slider_pause'   => new Attribute( '6000' ),
+			'slider_speed'   => new Attribute( '1000' ),
+		];
 	}
 
 
@@ -220,9 +98,10 @@ class ShortcodeAtts {
 			return;
 		}
 		foreach ( $atts as $name => $value ) {
-			if ( property_exists( $this, $name ) ) {
-				if ( ! is_array( $this->$name->value_options ) || in_array( $value, $this->$name->value_options, true ) ) {
-					$this->$name->value = $value;
+			if ( isset( $this->shortcode_atts[ $name ] ) ) {
+				// @phan-suppress-next-line PhanPartialTypeMismatchArgumentInternal
+				if ( ! is_array( $this->shortcode_atts [ $name ]->value_options ) || in_array( $value, $this->shortcode_atts [ $name ]->value_options, true ) ) {
+					$this->shortcode_atts[ $name ]->value = $value;
 				}
 			} else {
 				// Trigger error is allowed in this case.
@@ -230,6 +109,65 @@ class ShortcodeAtts {
 				trigger_error( 'Shortcode attribute "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
 			}
 		}
+	}
+
+
+	/**
+	 * Get the value of the given attribute.
+	 *
+	 * @param string $name Attribute name.
+	 * @return string Attribute value.
+	 */
+	public function __get( $name ) {
+		if ( isset( $this->shortcode_atts[ $name ] ) ) {
+			return $this->shortcode_atts[ $name ]->value;
+		}
+		// Trigger error is allowed in this case.
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+		trigger_error( 'Shortcode attribute "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
+	}
+
+
+	/**
+	 * Set the value of the given attribute.
+	 *
+	 * @param string $name Attribute name.
+	 * @param string $value Attribute value.
+	 * @return void
+	 */
+	public function __set( $name, $value ) {
+		if ( isset( $this->shortcode_atts[ $name ] ) ) {
+			$this->shortcode_atts[ $name ]->value = $value;
+		}
+		// Trigger error is allowed in this case.
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+		trigger_error( 'Shortcode attribute "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
+	}
+
+
+	/**
+	 * Get a complete attribute.
+	 *
+	 * @param string $name Attribute name.
+	 * @return Attribute
+	 */
+	public function get( $name ) {
+		if ( isset( $this->shortcode_atts[ $name ] ) ) {
+			return $this->shortcode_atts[ $name ];
+		}
+		// Trigger error is allowed in this case.
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+		trigger_error( 'Shortcode attribute "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
+	}
+
+
+	/**
+	 * Get all specified options
+	 *
+	 * @return array<string,Attribute>
+	 */
+	public function get_all() {
+		return $this->shortcode_atts;
 	}
 
 
@@ -242,8 +180,8 @@ class ShortcodeAtts {
 		global $lv_shortcode_atts_helptexts;
 		require_once PLUGIN_PATH . 'includes/shortcode-atts-helptexts.php';
 		foreach ( $lv_shortcode_atts_helptexts as $name => $values ) {
-			if ( isset( $this->$name ) ) {
-				$this->$name->modify( $values );
+			if ( isset( $this->shortcode_atts[ $name ] ) ) {
+				$this->shortcode_atts[ $name ]->modify( $values );
 			}
 		}
 		unset( $lv_shortcode_atts_helptexts );

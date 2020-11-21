@@ -130,8 +130,8 @@ class Shortcode {
 		// Set given attributes.
 		$this->atts->set_values( $atts );
 		// Preparations for multi-column category and link-list.
-		$this->cat_multicol_settings  = $this->multicol_settings( $this->atts->cat_columns->value );
-		$this->link_multicol_settings = $this->multicol_settings( $this->atts->link_columns->value, $this->atts->list_symbol->value );
+		$this->cat_multicol_settings  = $this->multicol_settings( $this->atts->cat_columns );
+		$this->link_multicol_settings = $this->multicol_settings( $this->atts->link_columns, $this->atts->list_symbol );
 	}
 
 
@@ -147,7 +147,7 @@ class Shortcode {
 		}
 		$atts = [];
 		// @phan-suppress-next-line PhanTypeSuspiciousNonTraversableForeach.
-		foreach ( $this->atts as $name => $attr ) {
+		foreach ( $this->atts->get_all() as $name => $attr ) {
 			if ( $attr->section === $section ) {
 				$atts[ $name ] = $attr;
 			}
@@ -164,9 +164,9 @@ class Shortcode {
 	private function get_categories() {
 		$catarray = [];
 		// TODO: The cat_filter value "all" is depricated and can be removed in 0.9.
-		if ( ! empty( $this->atts->cat_filter->value ) && 'all' !== $this->atts->cat_filter->value ) {
-			str_replace( ',', '|', $this->atts->cat_filter->value );
-			$catslugs = array_map( 'trim', array_map( 'strval', (array) explode( '|', $this->atts->cat_filter->value ) ) );
+		if ( ! empty( $this->atts->cat_filter ) && 'all' !== $this->atts->cat_filter ) {
+			str_replace( ',', '|', $this->atts->cat_filter );
+			$catslugs = array_map( 'trim', array_map( 'strval', (array) explode( '|', $this->atts->cat_filter ) ) );
 			foreach ( $catslugs as $catslug ) {
 				$term = get_term_by( 'slug', $catslug, 'link_category' );
 				if ( $term instanceof \WP_Term ) {
@@ -185,8 +185,8 @@ class Shortcode {
 			if ( is_array( $terms ) ) {
 				$catarray = $terms;
 			}
-			if ( ! empty( $this->atts->exclude_cat->value ) ) {
-				$excludecat = array_map( 'trim', array_map( 'strval', (array) explode( ',', $this->atts->exclude_cat->value ) ) );
+			if ( ! empty( $this->atts->exclude_cat ) ) {
+				$excludecat = array_map( 'trim', array_map( 'strval', (array) explode( ',', $this->atts->exclude_cat ) ) );
 				$diff       = [];
 				foreach ( $catarray as $cat ) {
 					if ( false === array_search( $cat->name, $excludecat, true ) ) {
@@ -211,9 +211,9 @@ class Shortcode {
 	 */
 	private function get_links( $category ) {
 		$args = [
-			'orderby'       => $this->atts->link_orderby->value,
-			'order'         => $this->atts->link_order->value,
-			'limit'         => $this->atts->num_links->value,
+			'orderby'       => $this->atts->link_orderby,
+			'order'         => $this->atts->link_order,
+			'limit'         => $this->atts->num_links,
 			'category_name' => $category->name,
 		];
 		return get_bookmarks( $args );
@@ -242,10 +242,10 @@ class Shortcode {
 	 */
 	private function slider_size( $links ) {
 		// Use manual size given in the attributes.
-		if ( ! empty( $this->atts->slider_width->value ) && ! empty( $this->atts->slider_height->value ) ) {
+		if ( ! empty( $this->atts->slider_width ) && ! empty( $this->atts->slider_height ) ) {
 			return [
-				'w' => intval( $this->atts->slider_width->value ),
-				'h' => intval( $this->atts->slider_height->value ),
+				'w' => intval( $this->atts->slider_width ),
+				'h' => intval( $this->atts->slider_height ),
 			];
 		}
 
@@ -253,7 +253,7 @@ class Shortcode {
 		$width  = 0;
 		$height = 0;
 		foreach ( $links as $link ) {
-			if ( ! empty( $this->atts->show_img->value ) && ! empty( $link->link_image ) ) {
+			if ( ! empty( $this->atts->show_img ) && ! empty( $link->link_image ) ) {
 				list($w, $h) = getimagesize( $link->link_image );
 				$width       = max( $width, $w );
 				$height      = max( $height, $h );
@@ -261,12 +261,12 @@ class Shortcode {
 		}
 		// Get the maximum image size depending on the given size in the attributes.
 		$ratio = 1;
-		if ( ! empty( $this->atts->slider_width->value ) ) {
+		if ( ! empty( $this->atts->slider_width ) ) {
 			// @phan-suppress-next-line PhanTypeInvalidLeftOperandOfNumericOp $ratio is not a string!
-			$ratio = $this->atts->slider_width->value / $width;
-		} elseif ( ! empty( $this->atts->slider_height->value ) ) {
+			$ratio = $this->atts->slider_width / $width;
+		} elseif ( ! empty( $this->atts->slider_height ) ) {
 			// @phan-suppress-next-line PhanTypeInvalidLeftOperandOfNumericOp $ratio is not a string!
-			$ratio = $this->atts->slider_height->value / $height;
+			$ratio = $this->atts->slider_height / $height;
 		}
 		$width  = round( $width * $ratio );
 		$height = round( $height * $ratio );
@@ -296,15 +296,15 @@ class Shortcode {
 		$out   = $this->html_multicol_before( $this->cat_multicol_settings, $cat_column );
 		if ( ! empty( $links ) ) {
 			$out .= '
-					<div' . $this->multicol_classes( $this->cat_multicol_settings, 'lv-category' . $this->atts->class_suffix->value ) . '>';
-			if ( ! empty( $this->atts->show_cat_name->value ) ) {
-				$num_links_text = ! empty( $this->atts->show_num_links->value ) ? ' <small>(' . count( $links ) . ')</small>' : '';
+					<div' . $this->multicol_classes( $this->cat_multicol_settings, 'lv-category' . $this->atts->class_suffix ) . '>';
+			if ( ! empty( $this->atts->show_cat_name ) ) {
+				$num_links_text = ! empty( $this->atts->show_num_links ) ? ' <small>(' . count( $links ) . ')</small>' : '';
 				$out           .= '
-						<h2 class="lv-cat-name' . $this->atts->class_suffix->value . '">' . $category->name . $num_links_text . '</h2>';
+						<h2 class="lv-cat-name' . $this->atts->class_suffix . '">' . $category->name . $num_links_text . '</h2>';
 			}
 			// Show links.
 			$list_id = ++ $this->num_lists;
-			if ( 'slider' === $this->atts->view_type->value ) {
+			if ( 'slider' === $this->atts->view_type ) {
 				$this->new_slider( $list_id, $links );
 			}
 			$out .= $this->html_link_list( $links, $list_id );
@@ -328,21 +328,21 @@ class Shortcode {
 		// Wrapper div and list tag.
 		$out = '
 					<div id="lv-id-' . $this->sc_id . '-' . $list_id . '"';
-		if ( 'slider' === $this->atts->view_type->value ) {
+		if ( 'slider' === $this->atts->view_type ) {
 			$out .= ' class="lv-slider"';
 		}
 		$out .= '>
-					<ul class="lv-link-list' . $this->atts->class_suffix->value . '"' . $this->link_multicol_settings['wrapper_styles'] . '>';
+					<ul class="lv-link-list' . $this->atts->class_suffix . '"' . $this->link_multicol_settings['wrapper_styles'] . '>';
 		// Iterate over the links.
 		foreach ( $links as $link ) {
 			// Link multi-column handling.
 			$out .= $this->html_multicol_before( $this->link_multicol_settings, $link_col );
 			// Actual link.
 			$out .= '
-						<li' . $this->multicol_classes( $this->link_multicol_settings, 'lv-list-item' . $this->atts->class_suffix->value ) . '>
-						<div class="lv-link' . $this->atts->class_suffix->value . '"';
-			if ( 'slider' !== $this->atts->view_type->value && 'std' !== $this->atts->vertical_align->value ) {
-				$out .= ' style="display:inline-block; vertical-align:' . $this->atts->vertical_align->value . ';"';
+						<li' . $this->multicol_classes( $this->link_multicol_settings, 'lv-list-item' . $this->atts->class_suffix ) . '>
+						<div class="lv-link' . $this->atts->class_suffix . '"';
+			if ( 'slider' !== $this->atts->view_type && 'std' !== $this->atts->vertical_align ) {
+				$out .= ' style="display:inline-block; vertical-align:' . $this->atts->vertical_align . ';"';
 			}
 			$out .= '>';
 			$out .= $this->html_link( $link, $list_id );
@@ -372,9 +372,9 @@ class Shortcode {
 	 */
 	private function html_link( $link, $list_id ) {
 		$out = '';
-		if ( empty( $this->atts->link_items->value ) ) {
+		if ( empty( $this->atts->link_items ) ) {
 			// Simple style (name or image).
-			if ( ! empty( $this->atts->show_img->value ) && ! is_null( $link->link_image ) ) {
+			if ( ! empty( $this->atts->show_img ) && ! is_null( $link->link_image ) ) {
 				// Image.
 				$out .= $this->html_link_item( $link, 'image_l', $list_id );
 			} else {
@@ -383,7 +383,7 @@ class Shortcode {
 			}
 		} else {
 			// Enhanced style (all items given in link_items attribute).
-			$items = json_decode( $this->atts->link_items->value, true );
+			$items = json_decode( $this->atts->link_items, true );
 			if ( is_array( $items ) ) {
 				$out .= $this->html_link_section( $link, $items, $list_id );
 			} else {
@@ -406,7 +406,7 @@ class Shortcode {
 		$out = '';
 		foreach ( $items as $name => $item ) {
 			if ( is_array( $item ) ) {
-				$out .= '<div class="lv-section-' . $name . $this->atts->class_suffix->value . '">';
+				$out .= '<div class="lv-section-' . $name . $this->atts->class_suffix . '">';
 				$out .= $this->html_link_section( $link, $item, $list_id );
 				$out .= '</div>';
 			} else {
@@ -433,19 +433,19 @@ class Shortcode {
 			$item = substr( $item, 0, -2 );
 		}
 		// Handle link_item_img="nothing".
-		if ( 'image' === $item && '' === $link->link_image && 'show_nothing' === $this->atts->link_item_img->value ) {
+		if ( 'image' === $item && '' === $link->link_image && 'show_nothing' === $this->atts->link_item_img ) {
 			return '';
 		}
 		// Prepare output.
-		$out = '<div class="lv-item-' . $item . $this->atts->class_suffix->value . '">';
+		$out = '<div class="lv-item-' . $item . $this->atts->class_suffix . '">';
 		if ( ! empty( $caption ) ) {
-			$out .= '<span class="lv-item-caption' . $this->atts->class_suffix->value . '">' . $caption . '</span>';
+			$out .= '<span class="lv-item-caption' . $this->atts->class_suffix . '">' . $caption . '</span>';
 		}
 		// Pepare link if required.
 		if ( $is_link ) {
 			// Check target.
-			if ( 'std' !== $this->atts->link_target->value ) {
-				$target = '_' . $this->atts->link_target->value;
+			if ( 'std' !== $this->atts->link_target ) {
+				$target = '_' . $this->atts->link_target;
 			} else {
 				$target = $link->link_target;
 				// Set target to _self if an empty string or _none was returned.
@@ -460,17 +460,17 @@ class Shortcode {
 			}
 			// Check rel attribute.
 			$rel          = '';
-			$combined_rel = $this->atts->link_rel->value . ' ' . $link->link_rel;
+			$combined_rel = $this->atts->link_rel . ' ' . $link->link_rel;
 			if ( ! empty( $combined_rel ) ) {
 				// Check value according to allowed values for HTML5 (see https://www.w3schools.com/tags/att_a_rel.asp).
 				$rels = array_intersect(
 					array_unique( explode( ' ', $combined_rel ) ),
-					(array) $this->atts->link_rel->value_options
+					(array) $this->atts->get( 'link_rel' )->value_options
 				);
 
 				$rel = ' rel="' . implode( ' ', $rels ) . '"';
 			}
-			$out .= '<a class="lv-anchor' . $this->atts->class_suffix->value . '" href="' . $link->link_url . '" target="' . $target . '" title="' . $link->link_name . $description . '"' . $rel . '>';
+			$out .= '<a class="lv-anchor' . $this->atts->class_suffix . '" href="' . $link->link_url . '" target="' . $target . '" title="' . $link->link_name . $description . '"' . $rel . '>';
 		}
 		switch ( $item ) {
 			case 'name':
@@ -513,7 +513,7 @@ class Shortcode {
 	private function html_img_tag( $link, $list_id ) {
 		// Handle links without an image.
 		if ( empty( $link->link_image ) ) {
-			switch ( $this->atts->link_item_img->value ) {
+			switch ( $this->atts->link_item_img ) {
 				case 'show_link_name':
 					return $link->link_name;
 				case 'show_link_description':
@@ -709,11 +709,11 @@ class Shortcode {
 					#lv-id-' . $this->sc_id . '-' . $list_id . ' li { ' .
 						'width:' . intval( $parameter['size']['w'] ) . 'px; ' .
 						'height:' . intval( $parameter['size']['h'] ) . 'px; }';
-			if ( 'std' !== $this->atts->vertical_align->value ) {
+			if ( 'std' !== $this->atts->vertical_align ) {
 				$ret .= '
-					#lv-id-' . $this->sc_id . '-' . $list_id . ' .lv-link' . $this->atts->class_suffix->value . ' { ' .
+					#lv-id-' . $this->sc_id . '-' . $list_id . ' .lv-link' . $this->atts->class_suffix . ' { ' .
 						'display:table-cell; ' .
-						'vertical-align:' . $this->atts->vertical_align->value . '; ' .
+						'vertical-align:' . $this->atts->vertical_align . '; ' .
 						'width:' . $parameter['size']['w'] . 'px; ' .
 						'height:' . $parameter['size']['h'] . 'px; }';
 			}
@@ -733,8 +733,8 @@ class Shortcode {
 			$ret .= '
 					jQuery("#lv-id-' . $this->sc_id . '-' . $list_id . '").easySlider({';
 			$ret .= 'auto: true, continuous: true, controlsShow: false';
-			$ret .= ', pause: ' . $this->atts->slider_pause->value;
-			$ret .= ', speed: ' . $this->atts->slider_speed->value;
+			$ret .= ', pause: ' . $this->atts->slider_pause;
+			$ret .= ', speed: ' . $this->atts->slider_speed;
 			$ret .= '});';
 		}
 		return $ret;
