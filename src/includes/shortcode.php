@@ -163,7 +163,7 @@ class Shortcode {
 	 */
 	private function get_categories() {
 		$catarray = [];
-		// TODO: The cat_filter value "all" is depricated and can be removed in 0.8.0.
+		// TODO: The cat_filter value "all" is depricated and can be removed in 0.9.
 		if ( ! empty( $this->atts->cat_filter->value ) && 'all' !== $this->atts->cat_filter->value ) {
 			str_replace( ',', '|', $this->atts->cat_filter->value );
 			$catslugs = array_map( 'trim', array_map( 'strval', (array) explode( '|', $this->atts->cat_filter->value ) ) );
