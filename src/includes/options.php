@@ -40,15 +40,6 @@ final class Options extends Singleton {
 			'lv_ml_role' => new Attribute( 'editor' ),
 			'lv_css'     => new Attribute( '' ),
 		];
-	}
-
-
-	/**
-	 * Init action hook
-	 *
-	 * @return void
-	 */
-	public function init() {
 		add_action( 'admin_init', [ &$this, 'register' ] );
 		add_filter( 'pre_update_option_lv_ml_role', [ &$this, 'update_manage_links_role' ] );
 	}
