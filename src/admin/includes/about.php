@@ -90,7 +90,7 @@ class About extends Singleton {
 		echo '<h3 class="nav-tab-wrapper">';
 		foreach ( $tabs as $tab => $name ) {
 			$class = ( $tab === $current ) ? ' nav-tab-active' : '';
-			echo '<a class="nav-tab' . esc_html( $class ) . '" href="?page=lv_admin_about&amp;tab=' . esc_attr( $tab ) . '">' . esc_html( $name ) . '</a>';
+			echo '<a class="nav-tab' . esc_html( $class ) . '" href="?page=lvw_admin_about&amp;tab=' . esc_attr( $tab ) . '">' . esc_html( $name ) . '</a>';
 		}
 		echo '</h3>';
 	}
@@ -147,7 +147,7 @@ class About extends Singleton {
 				sprintf(
 					__( 'In the %1$s settings page, available under %2$s, you can find some options to modify the plugin.', 'link-view' ),
 					'LinkView',
-					'<a href="' . admin_url( 'options-general.php?page=lv_admin_options' ) . '">' .
+					'<a href="' . admin_url( 'options-general.php?page=lvw_admin_options' ) . '">' .
 					// Use "default" text domain for translations available in WordPress Core.
 					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
 					__( 'Settings' ) . ' &rarr; LinkView</a>'
@@ -245,7 +245,7 @@ class About extends Singleton {
 						'LinkView',
 						'"' .
 						sprintf( __( 'CSS-code for %1$s', 'link-view' ), 'LinkView' ) . '"',
-						'<a href="' . admin_url( 'options-general.php?page=lv_admin_options' ) . '">' .
+						'<a href="' . admin_url( 'options-general.php?page=lvw_admin_options' ) . '">' .
 						// Use "default" text domain for translations available in WordPress Core.
 						// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
 						__( 'Settings' ) . ' &rarr; LinkView</a>'

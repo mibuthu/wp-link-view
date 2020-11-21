@@ -71,7 +71,7 @@ class Shortcodes extends Singleton {
 	 * @return void
 	 */
 	public function print_styles() {
-		// Default styles for the shortcode and user specific styles from lv_css option.
+		// Default styles for the shortcode and user specific styles from lvw_custom_css option.
 		echo '
 			<style type="text/css">
 				.linkview { overflow:auto; }
@@ -108,8 +108,8 @@ class Shortcodes extends Singleton {
 			$slider = '
 				jQuery(document).ready( function() {' . $slider . '
 				});';
-			wp_enqueue_script( 'lv_easySlider' );
-			wp_add_inline_script( 'lv_easySlider', $slider );
+			wp_enqueue_script( 'lvw_easySlider' );
+			wp_add_inline_script( 'lvw_easySlider', $slider );
 		}
 		// Masonry scripts.
 		$masonry = '';
@@ -120,8 +120,8 @@ class Shortcodes extends Singleton {
 			$masonry = '
 				jQuery(document).ready( function() {' . $masonry . '
 				});';
-			wp_enqueue_script( 'lv_masonry' );
-			wp_add_inline_script( 'lv_masonry', $masonry );
+			wp_enqueue_script( 'lvw_masonry' );
+			wp_add_inline_script( 'lvw_masonry', $masonry );
 		}
 	}
 

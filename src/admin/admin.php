@@ -64,7 +64,7 @@ class Admin extends Singleton {
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
 			$this->options->lvw_req_capabilities,
-			'lv_admin_about',
+			'lvw_admin_about',
 			[ $this, 'show_about_page' ]
 		);
 		add_action( 'admin_print_scripts-' . $page, [ $this, 'embed_about_styles' ] );
@@ -73,7 +73,7 @@ class Admin extends Singleton {
 			sprintf( __( '%1$s Settings', 'link-view' ), 'LinkView' ),
 			'LinkView',
 			'manage_options',
-			'lv_admin_options',
+			'lvw_admin_options',
 			[ &$this, 'show_settings_page' ]
 		);
 		add_action( 'admin_print_scripts-' . $page, [ &$this, 'embed_settings_styles' ] );
@@ -111,7 +111,7 @@ class Admin extends Singleton {
 	 * @return void
 	 */
 	public function embed_about_styles() {
-		wp_enqueue_style( 'lv_admin_about', PLUGIN_URL . 'admin/css/admin_about.css', [], '1.0' );
+		wp_enqueue_style( 'lvw_admin_about', PLUGIN_URL . 'admin/css/admin_about.css', [], '1.0' );
 	}
 
 
@@ -122,7 +122,7 @@ class Admin extends Singleton {
 	 * @return void
 	 */
 	public function embed_settings_styles() {
-		wp_enqueue_style( 'lv_admin_settings', PLUGIN_URL . 'admin/css/admin_settings.css', [], '1.0' );
+		wp_enqueue_style( 'lvw_admin_settings', PLUGIN_URL . 'admin/css/admin_settings.css', [], '1.0' );
 	}
 
 }
