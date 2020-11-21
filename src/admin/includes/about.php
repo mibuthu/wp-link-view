@@ -51,7 +51,7 @@ class About extends Singleton {
 	 */
 	public function show_page() {
 		// Check required privilegs.
-		if ( ! current_user_can( $this->options->get( 'lv_req_cap' ) ) ) {
+		if ( ! current_user_can( $this->options->lvw_req_capabilities ) ) {
 			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}

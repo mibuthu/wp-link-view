@@ -40,7 +40,7 @@ class Settings extends Singleton {
 	protected function __construct() {
 		$this->options = Options::get_instance();
 		// @phan-suppress-next-line PhanUndeclaredMethod
-		$this->options->load_helptexts();
+		$this->options->load_admin_data();
 	}
 
 
@@ -74,7 +74,7 @@ class Settings extends Singleton {
 			<div id="posttype-page" class="posttypediv">
 			<form method="post" action="options.php">
 				';
-		settings_fields( 'lv_options' );
+		settings_fields( 'lvw_options' );
 		echo '
 			<table class="form-table">';
 		$this->html_options();
@@ -94,7 +94,8 @@ class Settings extends Singleton {
 	 * @return void
 	 */
 	private function html_options() {
-		foreach ( $this->options->options as $oname => $o ) {
+		foreach ( $this->options->get_all() as $oname => $o ) {
+			// Add options prefix to option name.
 			echo '
 				<tr>
 					<th>';
@@ -105,10 +106,10 @@ class Settings extends Singleton {
 					<td>';
 			switch ( $o->type ) {
 				case 'radio':
-					$this->show_radio( $oname, $this->options->get( $oname ), (array) $o->caption );
+					$this->show_radio( $oname, $this->options->$oname, (array) $o->caption );
 					break;
 				case 'textarea':
-					$this->show_textarea( $oname, $this->options->get( $oname ) );
+					$this->show_textarea( $oname, $this->options->$oname );
 					break;
 			}
 			echo '

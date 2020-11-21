@@ -28,7 +28,7 @@ final class Options extends Singleton {
 	 *
 	 * @var array<string, Attribute>
 	 */
-	public $options;
+	private $options;
 
 
 	/**
@@ -36,12 +36,12 @@ final class Options extends Singleton {
 	 */
 	protected function __construct() {
 		$this->options = [
-			'lv_req_cap' => new Attribute( 'manage_links' ),
-			'lv_ml_role' => new Attribute( 'editor' ),
-			'lv_css'     => new Attribute( '' ),
+			'lvw_req_capabilities'      => new Attribute( 'manage_links' ),
+			'lvw_req_manage_links_role' => new Attribute( 'editor' ),
+			'lvw_custom_css'            => new Attribute( '' ),
 		];
 		add_action( 'admin_init', [ &$this, 'register' ] );
-		add_filter( 'pre_update_option_lv_ml_role', [ &$this, 'update_manage_links_role' ] );
+		add_filter( 'pre_update_option_lvw_req_manages_link_role', [ &$this, 'update_manage_links_role' ] );
 	}
 
 
@@ -52,23 +52,8 @@ final class Options extends Singleton {
 	 */
 	public function register() {
 		foreach ( array_keys( $this->options ) as $oname ) {
-			register_setting( 'lv_options', $oname );
+			register_setting( 'lvw_options', $oname );
 		}
-	}
-
-
-	/**
-	 * Load options helptext from additional file
-	 *
-	 * @return void
-	 */
-	public function load_helptexts() {
-		global $lv_options_helptexts;
-		require_once PLUGIN_PATH . 'includes/options-helptexts.php';
-		foreach ( $lv_options_helptexts as $name => $values ) {
-			$this->options[ $name ]->modify( $values );
-		}
-		unset( $lv_options_helptexts );
 	}
 
 
@@ -116,7 +101,7 @@ final class Options extends Singleton {
 	 * @param string $name Option name.
 	 * @return string Option value.
 	 */
-	public function get( $name ) {
+	public function __get( $name ) {
 		if ( ! isset( $this->options[ $name ] ) ) {
 			// Trigger error is allowed in this case.
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
@@ -124,6 +109,63 @@ final class Options extends Singleton {
 			return '';
 		}
 		return get_option( $name, $this->options[ $name ]->value );
+	}
+
+
+	/**
+	 * Get all specified options
+	 *
+	 * @return array<string,Attribute>
+	 */
+	public function get_all() {
+		return $this->options;
+	}
+
+
+	/**
+	 * Load options helptext from additional file
+	 *
+	 * @return void
+	 */
+	public function load_admin_data() {
+		require_once PLUGIN_PATH . 'includes/options-admin-data.php';
+		$option_admin_data = OptionsAdminData::get_instance();
+		foreach ( array_keys( $this->options ) as $oname ) {
+			$this->options[ $oname ]->modify( $option_admin_data->$oname );
+		}
+	}
+
+
+	/**
+	 * Upgrades renamed or modified options to the actual version
+	 *
+	 * Version 0.7.3 to 0.8:
+	 *  * lv_req_cap -> lvw_req_capabilities
+	 *  * lv_ml_role -> lvw_req_manages_links_role
+	 *  * lv_css -> lvw_custom_css
+	 *
+	 * @return void
+	 */
+	public function version_upgrade() {
+		$this->rename_option( 'lv_req_cap', 'lvw_req_capabilities' );
+		$this->rename_option( 'lv_ml_role', 'lvw_req_manage_links_role' );
+		$this->rename_option( 'lv_css', 'lvw_custom_css' );
+	}
+
+
+	/**
+	 * Rename an existing option
+	 *
+	 * @param string $old_name The old option name.
+	 * @param string $new_name The new option name.
+	 * @return void
+	 */
+	private function rename_option( $old_name, $new_name ) {
+		$value = get_option( $old_name, null );
+		if ( null !== $value ) {
+			add_option( $new_name, $value );
+			delete_option( $old_name );
+		}
 	}
 
 }

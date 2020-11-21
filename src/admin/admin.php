@@ -49,6 +49,7 @@ class Admin extends Singleton {
 	 */
 	public function init() {
 		add_action( 'admin_menu', [ $this, 'register_pages' ] );
+		add_action( 'plugins_loaded', [ $this->options, 'version_upgrade' ] );
 	}
 
 
@@ -62,7 +63,7 @@ class Admin extends Singleton {
 			'link-manager.php',
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
-			$this->options->get( 'lv_req_cap' ),
+			$this->options->lvw_req_capabilities,
 			'lv_admin_about',
 			[ $this, 'show_about_page' ]
 		);

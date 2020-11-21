@@ -83,7 +83,7 @@ class Shortcodes extends Singleton {
 				.lv-multi-column li { page-break-inside: avoid; }
 				.lv-row { overflow:auto; }
 				.lv-css-column { break-inside:avoid-column; column-break-inside:avoid; -webkit-column-break-inside:avoid; overflow:hidden; }
-				' . wp_kses_post( $this->options->get( 'lv_css' ) );
+				' . wp_kses_post( $this->options->lvw_custom_css );
 		// Slider styles.
 		foreach ( $this->shortcodes as $shortcode ) {
 			echo wp_kses_post( $shortcode->slider_styles() );
