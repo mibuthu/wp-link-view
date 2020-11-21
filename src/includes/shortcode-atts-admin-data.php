@@ -259,7 +259,7 @@ class ShortcodeAttsAdminData extends Singleton {
 
 
 	/**
-	 * Get the data for a given option.
+	 * Get the data for a given attribute
 	 *
 	 * @param string $attribute_name The name of the option.
 	 * @return array<string,string|array>

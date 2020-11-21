@@ -113,7 +113,7 @@ class ShortcodeAtts {
 
 
 	/**
-	 * Get the value of the given attribute.
+	 * Get the value of the given attribute
 	 *
 	 * @param string $name Attribute name.
 	 * @return string Attribute value.
@@ -129,7 +129,7 @@ class ShortcodeAtts {
 
 
 	/**
-	 * Set the value of the given attribute.
+	 * Set the value of the given attribute
 	 *
 	 * @param string $name Attribute name.
 	 * @param string $value Attribute value.
@@ -146,7 +146,7 @@ class ShortcodeAtts {
 
 
 	/**
-	 * Get a complete attribute.
+	 * Get a complete attribute
 	 *
 	 * @param string $name Attribute name.
 	 * @return Attribute
@@ -162,7 +162,7 @@ class ShortcodeAtts {
 
 
 	/**
-	 * Get all specified options
+	 * Get all specified attributes
 	 *
 	 * @return array<string,Attribute>
 	 */
