@@ -10,7 +10,7 @@
 namespace WordPress\Plugins\mibuthu\LinkView\Admin;
 
 use WordPress\Plugins\mibuthu\LinkView\Config;
-use WordPress\Plugins\mibuthu\LinkView\ShortcodeAtts;
+use WordPress\Plugins\mibuthu\LinkView\ShortcodeConfig;
 use WordPress\Plugins\mibuthu\LinkView\Option;
 
 if ( ! defined( 'WP_ADMIN' ) ) {
@@ -192,9 +192,9 @@ class About {
 	 * Show attributes HTML table
 	 */
 	private function show_atts() {
-		require_once PLUGIN_PATH . 'includes/shortcode-atts.php';
-		$shortcode_atts = new ShortcodeAtts();
-		$shortcode_atts->load_admin_data();
+		require_once PLUGIN_PATH . 'includes/shortcode-config.php';
+		$shortcode_config = new ShortcodeConfig();
+		$shortcode_config->load_admin_data();
 		echo wp_kses_post(
 			'
 			<h3>' . __( 'Shortcode Attributes', 'link-view' ) . '</h3>
@@ -202,11 +202,11 @@ class About {
 				' . sprintf( __( 'In the following tables you can find all available shortcode attributes for %1$s', 'link-view' ), '<code>[linkview]</code>' ) . ':'
 		);
 			echo wp_kses_post( '<h4 class="atts-section-title">' . __( 'General', 'link-view' ) . ':</h4>' );
-			$this->html_atts_table( $shortcode_atts->get_all( 'general' ) );
+			$this->html_atts_table( $shortcode_config->get_all( 'general' ) );
 			echo wp_kses_post( '<h4 class="atts-section-title">' . __( 'Link List', 'link-view' ) . ':</h4>' );
-			$this->html_atts_table( $shortcode_atts->get_all( 'list' ) );
+			$this->html_atts_table( $shortcode_config->get_all( 'list' ) );
 			echo wp_kses_post( '<h4 class="atts-section-title">' . __( 'Link Slider', 'link-view' ) . ':</h4>' );
-			$this->html_atts_table( $shortcode_atts->get_all( 'slider' ) );
+			$this->html_atts_table( $shortcode_config->get_all( 'slider' ) );
 			echo wp_kses_post(
 				'<br />
 				<h4 class="atts-section-title">' . __( 'Multi-column layout types and options', 'link-view' ) . ':</h4><a id="multicol"></a>

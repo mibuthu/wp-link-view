@@ -17,7 +17,7 @@ require_once PLUGIN_PATH . 'includes/option.php';
 
 
 /**
- * LinkView Shortcode Attribute Class
+ * LinkView Shortcode Config Class
  *
  * This class handles the attributes for the shortcode [linkview].
  *
@@ -44,7 +44,7 @@ require_once PLUGIN_PATH . 'includes/option.php';
  * @property string $slider_pause
  * @property string $slider_speed
  */
-class ShortcodeAtts {
+class ShortcodeConfig {
 
 	/**
 	 * Shortcode attributes
@@ -187,8 +187,8 @@ class ShortcodeAtts {
 	 * @return void
 	 */
 	public function load_admin_data() {
-		require_once PLUGIN_PATH . 'includes/shortcode-atts-admin-data.php';
-		$atts_admin_data = new ShortcodeAttsAdminData();
+		require_once PLUGIN_PATH . 'includes/shortcode-config-admin-data.php';
+		$atts_admin_data = new ShortcodeConfigAdminData();
 		foreach ( array_keys( $this->shortcode_atts ) as $attr_name ) {
 			$this->shortcode_atts[ $attr_name ]->modify( $atts_admin_data->$attr_name );
 		}

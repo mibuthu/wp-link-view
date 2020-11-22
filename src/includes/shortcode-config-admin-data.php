@@ -17,7 +17,7 @@ require_once PLUGIN_PATH . 'includes/option.php';
 
 
 /**
- * LinkView Shortcode Attribute Class
+ * LinkView Shortcode Config Attributes Admin Data Class
  *
  * This class provides all additional data for the attributes which is only required in the admin page.
  *
@@ -44,7 +44,7 @@ require_once PLUGIN_PATH . 'includes/option.php';
  * @property string $slider_pause
  * @property string $slider_speed
  */
-class ShortcodeAttsAdminData {
+class ShortcodeConfigAdminData {
 
 	/**
 	 * Additional data for the attributes
