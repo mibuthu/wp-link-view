@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/options.php';
+require_once PLUGIN_PATH . 'includes/config.php';
 require_once PLUGIN_PATH . 'includes/shortcode.php';
 
 
@@ -25,11 +25,11 @@ require_once PLUGIN_PATH . 'includes/shortcode.php';
 class Shortcodes {
 
 	/**
-	 * Options class instance reference
+	 * Config class instance reference
 	 *
-	 * @var Options
+	 * @var Config
 	 */
-	private $options;
+	private $config;
 
 	/**
 	 * Shortcode instances
@@ -42,11 +42,11 @@ class Shortcodes {
 	/**
 	 * Class constructor which initializes required variables
 	 *
-	 * @param Options $options_instance The Options instance as a reference.
+	 * @param Config $config_instance The Config instance as a reference.
 	 * @return void
 	 */
-	public function __construct( &$options_instance ) {
-		$this->options = $options_instance;
+	public function __construct( &$config_instance ) {
+		$this->config = $config_instance;
 		add_action( 'print_late_styles', [ &$this, 'print_styles' ] );
 		add_action( 'wp_footer', [ &$this, 'enqueue_scripts' ], 1 );
 	}
@@ -84,7 +84,7 @@ class Shortcodes {
 				.lv-multi-column li { page-break-inside: avoid; }
 				.lv-row { overflow:auto; }
 				.lv-css-column { break-inside:avoid-column; column-break-inside:avoid; -webkit-column-break-inside:avoid; overflow:hidden; }
-				' . wp_kses_post( $this->options->lvw_custom_css );
+				' . wp_kses_post( $this->config->lvw_custom_css );
 		// Slider styles.
 		foreach ( $this->shortcodes as $shortcode ) {
 			echo wp_kses_post( $shortcode->slider_styles() );

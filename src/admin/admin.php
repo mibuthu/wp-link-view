@@ -9,13 +9,13 @@
 
 namespace WordPress\Plugins\mibuthu\LinkView\Admin;
 
-use WordPress\Plugins\mibuthu\LinkView\Options;
+use WordPress\Plugins\mibuthu\LinkView\Config;
 
 if ( ! defined( 'WP_ADMIN' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/options.php';
+require_once PLUGIN_PATH . 'includes/config.php';
 
 
 /**
@@ -26,20 +26,20 @@ require_once PLUGIN_PATH . 'includes/options.php';
 class Admin {
 
 	/**
-	 * Options class instance reference
+	 * Config class instance reference
 	 *
-	 * @var Options
+	 * @var Config
 	 */
-	private $options;
+	private $config;
 
 
 	/**
 	 * Class constructor which initializes required variables
 	 *
-	 * @param Options $options_instance The Options instance as a reference.
+	 * @param Config $config_instance The Config instance as a reference.
 	 */
-	public function __construct( &$options_instance ) {
-		$this->options = $options_instance;
+	public function __construct( &$config_instance ) {
+		$this->config = $config_instance;
 	}
 
 
@@ -50,7 +50,7 @@ class Admin {
 	 */
 	public function init() {
 		add_action( 'admin_menu', [ $this, 'register_pages' ] );
-		add_action( 'plugins_loaded', [ $this->options, 'version_upgrade' ] );
+		add_action( 'plugins_loaded', [ $this->config, 'version_upgrade' ] );
 	}
 
 
@@ -64,7 +64,7 @@ class Admin {
 			'link-manager.php',
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
-			$this->options->lvw_req_capabilities,
+			$this->config->lvw_req_capabilities,
 			'lvw_admin_about',
 			[ $this, 'show_about_page' ]
 		);
@@ -74,7 +74,7 @@ class Admin {
 			sprintf( __( '%1$s Settings', 'link-view' ), 'LinkView' ),
 			'LinkView',
 			'manage_options',
-			'lvw_admin_options',
+			'lvw_admin_settings',
 			[ &$this, 'show_settings_page' ]
 		);
 		add_action( 'admin_print_scripts-' . $page, [ &$this, 'embed_settings_styles' ] );
@@ -88,7 +88,7 @@ class Admin {
 	 */
 	public function show_about_page() {
 		require_once PLUGIN_PATH . 'admin/includes/about.php';
-		$about = new About( $this->options );
+		$about = new About( $this->config );
 		$about->show_page();
 	}
 
@@ -100,7 +100,7 @@ class Admin {
 	 */
 	public function show_settings_page() {
 		require_once PLUGIN_PATH . 'admin/includes/settings.php';
-		$settings = new Settings( $this->options );
+		$settings = new Settings( $this->config );
 		$settings->show_page();
 	}
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Additional data for the options required for the options help page.
+ * Additional data for the cofig required for the settings help page.
  *
  * @package link-view
  */
@@ -17,29 +17,29 @@ require_once PLUGIN_PATH . 'includes/option.php';
 
 
 /**
- * Options class
+ * ConfigAdminData class
  *
- * This class provides all additional data for the options which is only required in the admin page.
+ * This class provides all additional data for the Config class which is only required in the admin page.
  *
  * @property-read string $lvw_req_capabilities Required capabilities option.
  * @property-read string $lvw_req_manage_links_role Required manage links role option.
  * @property-read string $lvw_custom_css Custom css option.
  */
-final class OptionsAdminData {
+final class ConfigAdminData {
 
 	/**
-	 * Additional data for the options
+	 * Additional data for the config options
 	 *
 	 * @var array<string,array<string,string|array>>
 	 */
-	private $options_data;
+	private $config_data;
 
 
 	/**
 	 * Constructor: Initialize the data
 	 */
 	public function __construct() {
-		$this->options_data = [
+		$this->config_data = [
 			'lvw_req_capabilities'      => [
 				'type'        => 'radio',
 				'label'       => sprintf( __( 'Required capabilities to show the %1$s page', 'link-view' ), '"' . __( 'About', 'link-view' ) . ' LinkView"' ),
@@ -106,8 +106,8 @@ final class OptionsAdminData {
 	 * @return array<string,string|array>
 	 */
 	public function __get( $option_name ) {
-		if ( isset( $this->options_data[ $option_name ] ) ) {
-			return $this->options_data[ $option_name ];
+		if ( isset( $this->config_data[ $option_name ] ) ) {
+			return $this->config_data[ $option_name ];
 		}
 	}
 

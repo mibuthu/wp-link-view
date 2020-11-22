@@ -9,7 +9,7 @@
 
 namespace WordPress\Plugins\mibuthu\LinkView\Admin;
 
-use WordPress\Plugins\mibuthu\LinkView\Options;
+use WordPress\Plugins\mibuthu\LinkView\Config;
 use WordPress\Plugins\mibuthu\LinkView\ShortcodeAtts;
 use WordPress\Plugins\mibuthu\LinkView\Option;
 
@@ -17,7 +17,7 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/options.php';
+require_once PLUGIN_PATH . 'includes/config.php';
 
 
 /**
@@ -28,20 +28,20 @@ require_once PLUGIN_PATH . 'includes/options.php';
 class About {
 
 	/**
-	 * Options class instance reference
+	 * Config class instance reference
 	 *
-	 * @var Options
+	 * @var Config
 	 */
-	private $options;
+	private $config;
 
 
 	/**
 	 * Class constructor which initializes required variables
 	 *
-	 * @param Options $options_instance The Options instance as a reference.
+	 * @param Config $config_instance The Config instance as a reference.
 	 */
-	public function __construct( &$options_instance ) {
-		$this->options = $options_instance;
+	public function __construct( &$config_instance ) {
+		$this->config = $config_instance;
 	}
 
 
@@ -52,7 +52,7 @@ class About {
 	 */
 	public function show_page() {
 		// Check required privilegs.
-		if ( ! current_user_can( $this->options->lvw_req_capabilities ) ) {
+		if ( ! current_user_can( $this->config->lvw_req_capabilities ) ) {
 			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
@@ -142,7 +142,7 @@ class About {
 				sprintf(
 					__( 'In the %1$s settings page, available under %2$s, you can find some options to modify the plugin.', 'link-view' ),
 					'LinkView',
-					'<a href="' . admin_url( 'options-general.php?page=lvw_admin_options' ) . '">' .
+					'<a href="' . admin_url( 'options-general.php?page=lvw_admin_settings' ) . '">' .
 					__( 'Settings', 'default' ) . ' &rarr; LinkView</a>'
 				) . '
 			</div>'
@@ -225,7 +225,7 @@ class About {
 					' . __( 'The given attributes will be added to the wrapper div element. Also the prefixed browser specific attributes will be added.', 'link-view' ) . '</td></tr>
 				<tr><td>masonry</td><td>' . sprintf( __( 'This type uses the %1$s to arrange the columns.', 'link-view' ), '<a href="https://masonry.desandro.com/" target="_blank" rel="noopener">' . sprintf( __( '%1$s grid layout javascript library', 'link-view' ), 'Masonry' ) . '</a>' ) . '
 					<h5>' . __( 'available options', 'link-view' ) . ':</h5>
-					' . sprintf( __( 'You can use all Options which are available for the Masonry library (see %1$s for detailed information).', 'link-view' ), '<a href="https://masonry.desandro.com/options.html" target="_blank" rel="noopener">' . __( 'this link', 'link-view' ) . '</a>' ) . '<br />
+					' . sprintf( __( 'You can use all options which are available for the Masonry library (see %1$s for detailed information).', 'link-view' ), '<a href="https://masonry.desandro.com/options.html" target="_blank" rel="noopener">' . __( 'this link', 'link-view' ) . '</a>' ) . '<br />
 					' . __( 'The given options will be forwarded to the javascript library.', 'link-view' ) . '</td></tr>
 				</table>
 				<div class="help-content">
@@ -238,7 +238,7 @@ class About {
 						'LinkView',
 						'"' .
 						sprintf( __( 'CSS-code for %1$s', 'link-view' ), 'LinkView' ) . '"',
-						'<a href="' . admin_url( 'options-general.php?page=lvw_admin_options' ) . '">' .
+						'<a href="' . admin_url( 'options-general.php?page=lvw_admin_settings' ) . '">' .
 						// Use "default" text domain for translations available in WordPress Core.
 						// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
 						__( 'Settings' ) . ' &rarr; LinkView</a>'

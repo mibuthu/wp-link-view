@@ -41,7 +41,7 @@ define( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
 
-require_once PLUGIN_PATH . 'includes/options.php';
+require_once PLUGIN_PATH . 'includes/config.php';
 
 /**
  * Main plugin class
@@ -51,11 +51,11 @@ require_once PLUGIN_PATH . 'includes/options.php';
 class LinkView {
 
 	/**
-	 * Options instance used for the whole plugin
+	 * Config instance used for the whole plugin
 	 *
-	 * @var Options
+	 * @var Config
 	 */
-	private $options;
+	private $config;
 
 
 	/**
@@ -66,8 +66,8 @@ class LinkView {
 	 */
 	public function __construct() {
 		// Always!
-		// Create Options instance which is used for the whole plugin.
-		$this->options = new Options();
+		// Create Config instance which is used for the whole plugin.
+		$this->config = new Config();
 		// Shortcodes, actions and filters.
 		add_action( 'plugins_loaded', [ &$this, 'load_textdomain' ] );
 		add_shortcode( 'linkview', [ &$this, 'shortcode_linkview' ] );
@@ -80,7 +80,7 @@ class LinkView {
 		// Depending on Page Type!
 		if ( is_admin() ) { // Admin page.
 			require_once PLUGIN_PATH . 'admin/admin.php';
-			$admin = new Admin\Admin( $this->options );
+			$admin = new Admin\Admin( $this->config );
 			$admin->init();
 		} else { // Front page.
 			add_action( 'wp_enqueue_scripts', [ &$this, 'register_scripts' ] );
@@ -109,7 +109,7 @@ class LinkView {
 		static $shortcodes;
 		if ( ! $shortcodes instanceof Shortcodes ) {
 			require_once PLUGIN_PATH . 'includes/shortcodes.php';
-			$shortcodes = new Shortcodes( $this->options );
+			$shortcodes = new Shortcodes( $this->config );
 		}
 		return $shortcodes->add( $atts, $content );
 	}

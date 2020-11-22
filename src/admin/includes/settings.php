@@ -9,13 +9,13 @@
 
 namespace WordPress\Plugins\mibuthu\LinkView\Admin;
 
-use WordPress\Plugins\mibuthu\LinkView\Options;
+use WordPress\Plugins\mibuthu\LinkView\Config;
 
 if ( ! defined( 'WP_ADMIN' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/options.php';
+require_once PLUGIN_PATH . 'includes/config.php';
 
 
 /**
@@ -26,21 +26,21 @@ require_once PLUGIN_PATH . 'includes/options.php';
 class Settings {
 
 	/**
-	 * Options class instance reference
+	 * Config class instance reference
 	 *
-	 * @var Options
+	 * @var Config
 	 */
-	private $options;
+	private $config;
 
 
 	/**
 	 * Class constructor which initializes required variables
 	 *
-	 * @param Options $options_instance The Options instance as a reference.
+	 * @param Config $config_instance The Config instance as a reference.
 	 */
-	public function __construct( &$options_instance ) {
-		$this->options = $options_instance;
-		$this->options->load_admin_data();
+	public function __construct( &$config_instance ) {
+		$this->config = $config_instance;
+		$this->config->load_admin_data();
 	}
 
 
@@ -72,12 +72,12 @@ class Settings {
 	private function html_settings() {
 		echo '
 			<div id="posttype-page" class="posttypediv">
-			<form method="post" action="options.php">
+			<form method="post" action="config.php">
 				';
-		settings_fields( 'lvw_options' );
+		settings_fields( 'lvw_config' );
 		echo '
 			<table class="form-table">';
-		$this->html_options();
+		$this->html_config();
 		echo '
 			</table>
 			';
@@ -89,13 +89,12 @@ class Settings {
 
 
 	/**
-	 * Show options
+	 * Show config options
 	 *
 	 * @return void
 	 */
-	private function html_options() {
-		foreach ( $this->options->get_all() as $oname => $o ) {
-			// Add options prefix to option name.
+	private function html_config() {
+		foreach ( $this->config->get_all() as $oname => $o ) {
 			echo '
 				<tr>
 					<th>';
@@ -106,10 +105,10 @@ class Settings {
 					<td>';
 			switch ( $o->type ) {
 				case 'radio':
-					$this->show_radio( $oname, $this->options->$oname, (array) $o->caption );
+					$this->show_radio( $oname, $this->config->$oname, (array) $o->caption );
 					break;
 				case 'textarea':
-					$this->show_textarea( $oname, $this->options->$oname );
+					$this->show_textarea( $oname, $this->config->$oname );
 					break;
 			}
 			echo '

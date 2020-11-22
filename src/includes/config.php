@@ -1,6 +1,6 @@
 <?php
 /**
- * Options class
+ * LinkView Config class
  *
  * @package link-view
  */
@@ -16,15 +16,15 @@ if ( ! defined( 'WPINC' ) ) {
 require_once PLUGIN_PATH . 'includes/option.php';
 
 /**
- * Options class
+ * Config class
  *
- * This class handles all available options with their information
+ * This class handles all available config options with their information
  *
  * @property-read string $lvw_req_capabilities
  * @property-read string $lvw_req_manage_links_role
  * @property-read string $lvw_custom_css
  */
-final class Options {
+final class Config {
 
 	/**
 	 * Options array
@@ -55,7 +55,7 @@ final class Options {
 	 */
 	public function register() {
 		foreach ( array_keys( $this->options ) as $oname ) {
-			register_setting( 'lvw_options', $oname );
+			register_setting( 'lvw_config', $oname );
 		}
 	}
 
@@ -131,10 +131,10 @@ final class Options {
 	 * @return void
 	 */
 	public function load_admin_data() {
-		require_once PLUGIN_PATH . 'includes/options-admin-data.php';
-		$option_admin_data = new OptionsAdminData();
-		foreach ( array_keys( $this->options ) as $oname ) {
-			$this->options[ $oname ]->modify( $option_admin_data->$oname );
+		require_once PLUGIN_PATH . 'includes/config-admin-data.php';
+		$config_admin_data = new ConfigAdminData();
+		foreach ( array_keys( $this->options ) as $option_name ) {
+			$this->options[ $option_name ]->modify( $config_admin_data->$option_name );
 		}
 	}
 
