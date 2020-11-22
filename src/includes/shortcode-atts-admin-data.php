@@ -156,7 +156,7 @@ class ShortcodeAttsAdminData {
 			<code>{ "name": "", "left": { image_l": "", "address_l": "URL :" }, "right": { "description": "Description :", "notes": "Notes: " } }</code><br />
 			' . sprintf(
 				__( 'Multiple items can be grouped by using sub-object. The key of the sub-object defines the name of the group which also will be added as a css-class (e.g. %1$s).', 'link-view' ),
-				'<code>.lv-section-left</code>'
+				'<code>.lvw-section-left</code>'
 			),
 			],
 

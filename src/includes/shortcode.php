@@ -91,7 +91,7 @@ class Shortcode {
 
 		// Wrapper div.
 		$out = '
-				<div class="linkview" id="lv-sc-id-' . $this->sc_id . '"' . $this->cat_multicol_settings['wrapper_styles'] . '>';
+				<div class="linkview" id="lvw-sc-id-' . $this->sc_id . '"' . $this->cat_multicol_settings['wrapper_styles'] . '>';
 		// Go through each category.
 		foreach ( $categories as $category ) {
 			$out .= $this->html_category( $category, $cat_column );
@@ -273,11 +273,11 @@ class Shortcode {
 		$out   = $this->html_multicol_before( $this->cat_multicol_settings, $cat_column );
 		if ( ! empty( $links ) ) {
 			$out .= '
-					<div' . $this->multicol_classes( $this->cat_multicol_settings, 'lv-category' . $this->atts->class_suffix ) . '>';
+					<div' . $this->multicol_classes( $this->cat_multicol_settings, 'lvw-category' . $this->atts->class_suffix ) . '>';
 			if ( ! empty( $this->atts->show_cat_name ) ) {
 				$num_links_text = ! empty( $this->atts->show_num_links ) ? ' <small>(' . count( $links ) . ')</small>' : '';
 				$out           .= '
-						<h2 class="lv-cat-name' . $this->atts->class_suffix . '">' . $category->name . $num_links_text . '</h2>';
+						<h2 class="lvw-cat-name' . $this->atts->class_suffix . '">' . $category->name . $num_links_text . '</h2>';
 			}
 			// Show links.
 			$list_id = ++ $this->num_lists;
@@ -304,20 +304,20 @@ class Shortcode {
 		$link_col = 0;
 		// Wrapper div and list tag.
 		$out = '
-					<div id="lv-id-' . $this->sc_id . '-' . $list_id . '"';
+					<div id="lvw-id-' . $this->sc_id . '-' . $list_id . '"';
 		if ( 'slider' === $this->atts->view_type ) {
-			$out .= ' class="lv-slider"';
+			$out .= ' class="lvw-slider"';
 		}
 		$out .= '>
-					<ul class="lv-link-list' . $this->atts->class_suffix . '"' . $this->link_multicol_settings['wrapper_styles'] . '>';
+					<ul class="lvw-link-list' . $this->atts->class_suffix . '"' . $this->link_multicol_settings['wrapper_styles'] . '>';
 		// Iterate over the links.
 		foreach ( $links as $link ) {
 			// Link multi-column handling.
 			$out .= $this->html_multicol_before( $this->link_multicol_settings, $link_col );
 			// Actual link.
 			$out .= '
-						<li' . $this->multicol_classes( $this->link_multicol_settings, 'lv-list-item' . $this->atts->class_suffix ) . '>
-						<div class="lv-link' . $this->atts->class_suffix . '"';
+						<li' . $this->multicol_classes( $this->link_multicol_settings, 'lvw-list-item' . $this->atts->class_suffix ) . '>
+						<div class="lvw-link' . $this->atts->class_suffix . '"';
 			if ( 'slider' !== $this->atts->view_type && 'std' !== $this->atts->vertical_align ) {
 				$out .= ' style="display:inline-block; vertical-align:' . $this->atts->vertical_align . ';"';
 			}
@@ -383,7 +383,7 @@ class Shortcode {
 		$out = '';
 		foreach ( $items as $name => $item ) {
 			if ( is_array( $item ) ) {
-				$out .= '<div class="lv-section-' . $name . $this->atts->class_suffix . '">';
+				$out .= '<div class="lvw-section-' . $name . $this->atts->class_suffix . '">';
 				$out .= $this->html_link_section( $link, $item, $list_id );
 				$out .= '</div>';
 			} else {
@@ -414,9 +414,9 @@ class Shortcode {
 			return '';
 		}
 		// Prepare output.
-		$out = '<div class="lv-item-' . $item . $this->atts->class_suffix . '">';
+		$out = '<div class="lvw-item-' . $item . $this->atts->class_suffix . '">';
 		if ( ! empty( $caption ) ) {
-			$out .= '<span class="lv-item-caption' . $this->atts->class_suffix . '">' . $caption . '</span>';
+			$out .= '<span class="lvw-item-caption' . $this->atts->class_suffix . '">' . $caption . '</span>';
 		}
 		// Pepare link if required.
 		if ( $is_link ) {
@@ -447,7 +447,7 @@ class Shortcode {
 
 				$rel = ' rel="' . implode( ' ', $rels ) . '"';
 			}
-			$out .= '<a class="lv-anchor' . $this->atts->class_suffix . '" href="' . $link->link_url . '" target="' . $target . '" title="' . $link->link_name . $description . '"' . $rel . '>';
+			$out .= '<a class="lvw-anchor' . $this->atts->class_suffix . '" href="' . $link->link_url . '" target="' . $target . '" title="' . $link->link_name . $description . '"' . $rel . '>';
 		}
 		switch ( $item ) {
 			case 'name':
@@ -536,7 +536,7 @@ class Shortcode {
 			$column++;
 			if ( 1 === $column ) {   // First column.
 				return '
-				<div class="lv-row">';
+				<div class="lvw-row">';
 			}
 		}
 		return '';
@@ -629,7 +629,7 @@ class Shortcode {
 	private function multicol_classes( $multicol_settings, $additional_classes = '' ) {
 		$classes = $additional_classes;
 		if ( ! empty( $multicol_settings['type'] ) ) {
-			$classes .= ' lv-multi-column lv-' . $multicol_settings['type'] . '-column';
+			$classes .= ' lvw-multi-column lvw-' . $multicol_settings['type'] . '-column';
 		}
 		if ( empty( $classes ) ) {
 			return '';
@@ -683,12 +683,12 @@ class Shortcode {
 		$ret = '';
 		foreach ( $this->slider_parameter as $list_id => $parameter ) {
 			$ret .= '
-					#lv-id-' . $this->sc_id . '-' . $list_id . ' li { ' .
+					#lvw-id-' . $this->sc_id . '-' . $list_id . ' li { ' .
 						'width:' . intval( $parameter['size']['w'] ) . 'px; ' .
 						'height:' . intval( $parameter['size']['h'] ) . 'px; }';
 			if ( 'std' !== $this->atts->vertical_align ) {
 				$ret .= '
-					#lv-id-' . $this->sc_id . '-' . $list_id . ' .lv-link' . $this->atts->class_suffix . ' { ' .
+					#lvw-id-' . $this->sc_id . '-' . $list_id . ' .lvw-link' . $this->atts->class_suffix . ' { ' .
 						'display:table-cell; ' .
 						'vertical-align:' . $this->atts->vertical_align . '; ' .
 						'width:' . $parameter['size']['w'] . 'px; ' .
@@ -708,7 +708,7 @@ class Shortcode {
 		$ret = '';
 		foreach ( array_keys( $this->slider_parameter ) as $list_id ) {
 			$ret .= '
-					jQuery("#lv-id-' . $this->sc_id . '-' . $list_id . '").easySlider({';
+					jQuery("#lvw-id-' . $this->sc_id . '-' . $list_id . '").easySlider({';
 			$ret .= 'auto: true, continuous: true, controlsShow: false';
 			$ret .= ', pause: ' . $this->atts->slider_pause;
 			$ret .= ', speed: ' . $this->atts->slider_speed;
@@ -727,22 +727,22 @@ class Shortcode {
 		$ret = '';
 		// Scripts for categories.
 		if ( 'masonry' === $this->cat_multicol_settings['type'] ) {
-			$options = 'itemSelector:".lv-category-column"';
+			$options = 'itemSelector:".lvw-category-column"';
 			foreach ( $this->cat_multicol_settings['opt'] as $name => $value ) {
 				$options .= ',' . $name . ':' . $value;
 			}
 			$ret .= '
-					jQuery(".linkview#lv-sc-id-' . $this->sc_id . '").masonry({' . $options . '});';
+					jQuery(".linkview#lvw-sc-id-' . $this->sc_id . '").masonry({' . $options . '});';
 		}
 		// Scripts for links.
 		if ( 'masonry' === $this->link_multicol_settings['type'] ) {
-			$options = 'itemSelector:".lv-list-item-column"';
+			$options = 'itemSelector:".lvw-list-item-column"';
 			foreach ( $this->link_multicol_settings['opt'] as $name => $value ) {
 				$options .= ',' . $name . ':' . $value;
 			}
 			for ( $id = 1; $id <= $this->num_lists; $id++ ) {
 				$ret .= '
-						jQuery(".linkview#lv-id-' . $this->sc_id . '-' . $id . '").masonry({' . $options . '});';
+						jQuery(".linkview#lvw-id-' . $this->sc_id . '-' . $id . '").masonry({' . $options . '});';
 			}
 		}
 		return $ret;

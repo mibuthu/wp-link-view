@@ -230,7 +230,7 @@ class About {
 				</table>
 				<div class="help-content">
 					<h5>' . __( 'Usage', 'link-view' ) . ':</h5>
-					' . __( 'For the most types and options it is recommended to define a fixed width for the categories and/or links. This width must be set manually e.g. via the css entry:', 'link-view' ) . ' <code>.lv-multi-column { width: 32%; }</code><br />
+					' . __( 'For the most types and options it is recommended to define a fixed width for the categories and/or links. This width must be set manually e.g. via the css entry:', 'link-view' ) . ' <code>.lvw-multi-column { width: 32%; }</code><br />
 					' . __( 'Depending on the type and options there are probably more css modifications required for a correct multi-column layout.', 'link-view' ) . '<br />
 					' .
 					sprintf(

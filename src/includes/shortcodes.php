@@ -77,13 +77,13 @@ class Shortcodes {
 			<style type="text/css">
 				.linkview { overflow:auto; }
 				.linkview > div { overflow:hidden; }
-				.lv-slider ul, .lv-slider li { margin:0; padding:0; list-style-type:none; list-style-image:none; }
-				.lv-slider li { overflow:hidden; text-align:center; }
-				.lv-slider img { max-width:100%; }
-				.lv-multi-column { float:left; }
-				.lv-multi-column li { page-break-inside: avoid; }
-				.lv-row { overflow:auto; }
-				.lv-css-column { break-inside:avoid-column; column-break-inside:avoid; -webkit-column-break-inside:avoid; overflow:hidden; }
+				.lvw-slider ul, .lvw-slider li { margin:0; padding:0; list-style-type:none; list-style-image:none; }
+				.lvw-slider li { overflow:hidden; text-align:center; }
+				.lvw-slider img { max-width:100%; }
+				.lvw-multi-column { float:left; }
+				.lvw-multi-column li { page-break-inside: avoid; }
+				.lvw-row { overflow:auto; }
+				.lvw-css-column { break-inside:avoid-column; column-break-inside:avoid; -webkit-column-break-inside:avoid; overflow:hidden; }
 				' . wp_kses_post( $this->config->lvw_custom_css );
 		// Slider styles.
 		foreach ( $this->shortcodes as $shortcode ) {
