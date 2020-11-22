@@ -9,7 +9,6 @@
 
 namespace WordPress\Plugins\mibuthu\LinkView\Admin;
 
-use WordPress\Plugins\mibuthu\LinkView\Singleton;
 use WordPress\Plugins\mibuthu\LinkView\Options;
 
 if ( ! defined( 'WP_ADMIN' ) ) {
@@ -24,7 +23,7 @@ require_once PLUGIN_PATH . 'includes/options.php';
  *
  * This class handles all LinkView admin pages.
  */
-class Admin extends Singleton {
+class Admin {
 
 	/**
 	 * Options class instance reference
@@ -36,9 +35,11 @@ class Admin extends Singleton {
 
 	/**
 	 * Class constructor which initializes required variables
+	 *
+	 * @param Options $options_instance The Options instance as a reference.
 	 */
-	protected function __construct() {
-		$this->options = Options::get_instance();
+	public function __construct( &$options_instance ) {
+		$this->options = $options_instance;
 	}
 
 
@@ -87,8 +88,8 @@ class Admin extends Singleton {
 	 */
 	public function show_about_page() {
 		require_once PLUGIN_PATH . 'admin/includes/about.php';
-		// @phan-suppress-next-line PhanUndeclaredMethod
-		About::get_instance()->show_page();
+		$about = new About( $this->options );
+		$about->show_page();
 	}
 
 
@@ -99,8 +100,8 @@ class Admin extends Singleton {
 	 */
 	public function show_settings_page() {
 		require_once PLUGIN_PATH . 'admin/includes/settings.php';
-		// @phan-suppress-next-line PhanUndeclaredMethod
-		Settings::get_instance()->show_page();
+		$settings = new Settings( $this->options );
+		$settings->show_page();
 	}
 
 

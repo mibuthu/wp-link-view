@@ -22,7 +22,7 @@ require_once PLUGIN_PATH . 'includes/shortcode.php';
  *
  * This class handles the shortcode instances and the styles/scripts which are required for all instances.
  */
-class Shortcodes extends Singleton {
+class Shortcodes {
 
 	/**
 	 * Options class instance reference
@@ -42,10 +42,11 @@ class Shortcodes extends Singleton {
 	/**
 	 * Class constructor which initializes required variables
 	 *
+	 * @param Options $options_instance The Options instance as a reference.
 	 * @return void
 	 */
-	protected function __construct() {
-		$this->options = Options::get_instance();
+	public function __construct( &$options_instance ) {
+		$this->options = $options_instance;
 		add_action( 'print_late_styles', [ &$this, 'print_styles' ] );
 		add_action( 'wp_footer', [ &$this, 'enqueue_scripts' ], 1 );
 	}

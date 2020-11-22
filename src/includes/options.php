@@ -13,7 +13,6 @@ if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/singleton.php';
 require_once PLUGIN_PATH . 'includes/attribute.php';
 
 /**
@@ -25,7 +24,7 @@ require_once PLUGIN_PATH . 'includes/attribute.php';
  * @property-read string $lvw_req_manage_links_role
  * @property-read string $lvw_custom_css
  */
-final class Options extends Singleton {
+final class Options {
 
 	/**
 	 * Options array
@@ -38,7 +37,7 @@ final class Options extends Singleton {
 	/**
 	 * Class constructor which initializes required variables
 	 */
-	protected function __construct() {
+	public function __construct() {
 		$this->options = [
 			'lvw_req_capabilities'      => new Attribute( 'manage_links' ),
 			'lvw_req_manage_links_role' => new Attribute( 'editor' ),
@@ -133,7 +132,7 @@ final class Options extends Singleton {
 	 */
 	public function load_admin_data() {
 		require_once PLUGIN_PATH . 'includes/options-admin-data.php';
-		$option_admin_data = OptionsAdminData::get_instance();
+		$option_admin_data = new OptionsAdminData();
 		foreach ( array_keys( $this->options ) as $oname ) {
 			$this->options[ $oname ]->modify( $option_admin_data->$oname );
 		}

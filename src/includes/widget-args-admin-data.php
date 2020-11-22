@@ -13,7 +13,6 @@ if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/singleton.php';
 require_once PLUGIN_PATH . 'includes/attribute.php';
 
 
@@ -25,7 +24,7 @@ require_once PLUGIN_PATH . 'includes/attribute.php';
  * @property string $title
  * @property string $atts
  */
-class WidgetArgsAdminData extends Singleton {
+class WidgetArgsAdminData {
 
 	/**
 	 * Additional data for the arguments
@@ -38,7 +37,7 @@ class WidgetArgsAdminData extends Singleton {
 	/**
 	 * Constructor: Initialize the data
 	 */
-	protected function __construct() {
+	public function __construct() {
 		$this->args_data = [
 			'title' => [
 				'type'    => 'text',

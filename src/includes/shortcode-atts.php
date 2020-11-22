@@ -188,7 +188,7 @@ class ShortcodeAtts {
 	 */
 	public function load_admin_data() {
 		require_once PLUGIN_PATH . 'includes/shortcode-atts-admin-data.php';
-		$atts_admin_data = ShortcodeAttsAdminData::get_instance();
+		$atts_admin_data = new ShortcodeAttsAdminData();
 		foreach ( array_keys( $this->shortcode_atts ) as $attr_name ) {
 			$this->shortcode_atts[ $attr_name ]->modify( $atts_admin_data->$attr_name );
 		}

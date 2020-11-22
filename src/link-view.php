@@ -41,12 +41,21 @@ define( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
 
+require_once PLUGIN_PATH . 'includes/options.php';
+
 /**
  * Main plugin class
  *
  * This is the initial class for loading the plugin.
  */
 class LinkView {
+
+	/**
+	 * Options instance used for the whole plugin
+	 *
+	 * @var Options
+	 */
+	private $options;
 
 
 	/**
@@ -57,6 +66,9 @@ class LinkView {
 	 */
 	public function __construct() {
 		// Always!
+		// Create Options instance which is used for the whole plugin.
+		$this->options = new Options();
+		// Shortcodes, actions and filters.
 		add_action( 'plugins_loaded', [ &$this, 'load_textdomain' ] );
 		add_shortcode( 'linkview', [ &$this, 'shortcode_linkview' ] );
 		add_action( 'widgets_init', [ &$this, 'widget_init' ] );
@@ -68,8 +80,8 @@ class LinkView {
 		// Depending on Page Type!
 		if ( is_admin() ) { // Admin page.
 			require_once PLUGIN_PATH . 'admin/admin.php';
-			// @phan-suppress-next-line PhanUndeclaredMethod
-			Admin\Admin::get_instance()->init();
+			$admin = new Admin\Admin( $this->options );
+			$admin->init();
 		} else { // Front page.
 			add_action( 'wp_enqueue_scripts', [ &$this, 'register_scripts' ] );
 		}
@@ -97,9 +109,8 @@ class LinkView {
 		static $shortcodes;
 		if ( ! $shortcodes instanceof Shortcodes ) {
 			require_once PLUGIN_PATH . 'includes/shortcodes.php';
-			$shortcodes = Shortcodes::get_instance();
+			$shortcodes = new Shortcodes( $this->options );
 		}
-		// @phan-suppress-next-line PhanPossiblyUndeclaredMethod
 		return $shortcodes->add( $atts, $content );
 	}
 

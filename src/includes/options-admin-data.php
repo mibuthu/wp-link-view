@@ -13,7 +13,6 @@ if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/singleton.php';
 require_once PLUGIN_PATH . 'includes/attribute.php';
 
 
@@ -26,7 +25,7 @@ require_once PLUGIN_PATH . 'includes/attribute.php';
  * @property-read string $lvw_req_manage_links_role Required manage links role option.
  * @property-read string $lvw_custom_css Custom css option.
  */
-final class OptionsAdminData extends Singleton {
+final class OptionsAdminData {
 
 	/**
 	 * Additional data for the options
@@ -39,7 +38,7 @@ final class OptionsAdminData extends Singleton {
 	/**
 	 * Constructor: Initialize the data
 	 */
-	protected function __construct() {
+	public function __construct() {
 		$this->options_data = [
 			'lvw_req_capabilities'      => [
 				'type'        => 'radio',

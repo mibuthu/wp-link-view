@@ -9,7 +9,6 @@
 
 namespace WordPress\Plugins\mibuthu\LinkView\Admin;
 
-use WordPress\Plugins\mibuthu\LinkView\Singleton;
 use WordPress\Plugins\mibuthu\LinkView\Options;
 use WordPress\Plugins\mibuthu\LinkView\ShortcodeAtts;
 use WordPress\Plugins\mibuthu\LinkView\Attribute;
@@ -26,7 +25,7 @@ require_once PLUGIN_PATH . 'includes/options.php';
  *
  * This class handles the display of the admin about page
  */
-class About extends Singleton {
+class About {
 
 	/**
 	 * Options class instance reference
@@ -38,9 +37,11 @@ class About extends Singleton {
 
 	/**
 	 * Class constructor which initializes required variables
+	 *
+	 * @param Options $options_instance The Options instance as a reference.
 	 */
-	protected function __construct() {
-		$this->options = Options::get_instance();
+	public function __construct( &$options_instance ) {
+		$this->options = $options_instance;
 	}
 
 

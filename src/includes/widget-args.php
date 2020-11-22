@@ -76,7 +76,7 @@ class WidgetArgs extends \WP_Widget {
 	 */
 	public function load_args_admin_data() {
 		require_once PLUGIN_PATH . 'includes/widget-args-admin-data.php';
-		$args_admin_data = WidgetArgsAdminData::get_instance();
+		$args_admin_data = new WidgetArgsAdminData();
 		foreach ( array_keys( $this->args ) as $arg_name ) {
 			$this->args[ $arg_name ]->modify( $args_admin_data->$arg_name );
 		}

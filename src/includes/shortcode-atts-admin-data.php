@@ -13,7 +13,6 @@ if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/singleton.php';
 require_once PLUGIN_PATH . 'includes/attribute.php';
 
 
@@ -45,7 +44,7 @@ require_once PLUGIN_PATH . 'includes/attribute.php';
  * @property string $slider_pause
  * @property string $slider_speed
  */
-class ShortcodeAttsAdminData extends Singleton {
+class ShortcodeAttsAdminData {
 
 	/**
 	 * Additional data for the attributes
@@ -58,7 +57,7 @@ class ShortcodeAttsAdminData extends Singleton {
 	/**
 	 * Constructor: Initialize the data
 	 */
-	protected function __construct() {
+	public function __construct() {
 		$this->atts_data = [
 			'view_type'      => [
 				'section'     => 'general',
