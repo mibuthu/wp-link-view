@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/attribute.php';
+require_once PLUGIN_PATH . 'includes/option.php';
 
 
 /**
@@ -66,9 +66,9 @@ class ShortcodeAttsAdminData {
 			],
 
 			'cat_filter'     => [
-				'section'       => 'general',
-				'value_options' => __( 'category slugs', 'link-view' ),
-				'description'   => __( 'This attribute specifies the displayed link categories. Default is an empty string to show all categories.', 'link-view' ) . '<br />
+				'section'          => 'general',
+				'permitted_values' => __( 'category slugs', 'link-view' ),
+				'description'      => __( 'This attribute specifies the displayed link categories. Default is an empty string to show all categories.', 'link-view' ) . '<br />
 			' . __( 'Links with categories that doesn´t match the filter will not be displayed.', 'link-view' ) . '<br />
 			' . __( 'The filter is specified via the given category slug. The simplest version is a single slug to only show links from this category.', 'link-view' ) . '<br />
 			' . sprintf( __( 'To show multiple categories, multiple slugs can be provided seperated by %1$s or %2$s.', 'link-view' ), '<code>|</code>', '<code>,</code>' ) . '<br />
@@ -78,9 +78,9 @@ class ShortcodeAttsAdminData {
 			],
 
 			'exclude_cat'    => [
-				'section'       => 'general',
-				'value_options' => 'Cat 1,Cat 2,&hellip;',
-				'description'   => __( 'This attribute specifies which categories should be excluded.', 'link-view' )
+				'section'          => 'general',
+				'permitted_values' => 'Cat 1,Cat 2,&hellip;',
+				'description'      => __( 'This attribute specifies which categories should be excluded.', 'link-view' )
 					. sprintf( __( 'This attribute is only considered if the attribute %1$s is not set.', 'link-view' ), '<code>cat_filter</code>' ) . '<br />
 			' . __( 'If the category name has spaces, the name must be surrounded by quotes.', 'link-view' ) . '<br />
 			' . sprintf( __( 'To exclude multiple categories, multiple names can be provided seperated by %1$s.', 'link-view' ), '<code>,</code>' ) . '<br />
@@ -88,15 +88,15 @@ class ShortcodeAttsAdminData {
 			],
 
 			'show_cat_name'  => [
-				'section'       => 'general',
-				'value_options' => [ '0 &hellip; false', '1 &hellip; true' ],
-				'description'   => __( 'This attribute specifies if the category name is shown as a headline.', 'link-view' ),
+				'section'          => 'general',
+				'permitted_values' => [ '0 &hellip; false', '1 &hellip; true' ],
+				'description'      => __( 'This attribute specifies if the category name is shown as a headline.', 'link-view' ),
 			],
 
 			'show_num_links' => [
-				'section'       => 'general',
-				'value_options' => [ '0 &hellip; false', '1 &hellip; true' ],
-				'description'   => __( 'This attribute specifies if the number of links shall be displayed in brackets next to the category name in the headline.', 'link-view' ) . '<br />
+				'section'          => 'general',
+				'permitted_values' => [ '0 &hellip; false', '1 &hellip; true' ],
+				'description'      => __( 'This attribute specifies if the number of links shall be displayed in brackets next to the category name in the headline.', 'link-view' ) . '<br />
 			' . sprintf( __( 'The headline with the category name must be displayed (%1$s) to show the number of links.', 'link-view' ), '<code>show_cat_name=true</code>' ),
 			],
 
@@ -120,23 +120,23 @@ class ShortcodeAttsAdminData {
 			],
 
 			'num_links'      => [
-				'section'       => 'general',
-				'value_options' => __( 'Number', 'link-view' ),
-				'description'   => __( 'This attribute sets the number of displayed links for each category.', 'link-view' ) . '<br />
+				'section'          => 'general',
+				'permitted_values' => __( 'Number', 'link-view' ),
+				'description'      => __( 'This attribute sets the number of displayed links for each category.', 'link-view' ) . '<br />
 			' . __( 'A number smaller than 0 displays all links.', 'link-view' ),
 			],
 
 			'show_img'       => [
-				'section'       => 'general',
-				'value_options' => [ '0 &hellip; false', '1 &hellip; true' ],
-				'description'   => __( 'This attribute specifies if the image shall be displayed instead of the name.', 'link-view' ) .
+				'section'          => 'general',
+				'permitted_values' => [ '0 &hellip; false', '1 &hellip; true' ],
+				'description'      => __( 'This attribute specifies if the image shall be displayed instead of the name.', 'link-view' ) .
 				__( 'This attribute is only considered for links where an image is set.', 'link-view' ),
 			],
 
 			'link_items'     => [
-				'section'       => 'general',
-				'value_options' => [ 'name', 'address', 'description', 'image', 'rss', 'notes', 'rating' ],
-				'description'   => __( 'With this attribute more complex display options can be defined.', 'link-view' ) . '<br />
+				'section'          => 'general',
+				'permitted_values' => [ 'name', 'address', 'description', 'image', 'rss', 'notes', 'rating' ],
+				'description'      => __( 'With this attribute more complex display options can be defined.', 'link-view' ) . '<br />
 			' . sprintf( __( 'By default (empty string) only the link name or the link image (see attribute %1$s) is shown.', 'link-view' ), '<code>show_img</code>' ) . '<br />
 			' . __( 'By specifying the below described JSON structure complex display options can be defined.', 'link-view' ) . '<br />
 			' . __( 'Please use single quotes for defining this attribute because the double quotes are required to define the JSON code.', 'link-view' ) . '<br />
@@ -182,9 +182,9 @@ class ShortcodeAttsAdminData {
 			],
 
 			'class_suffix'   => [
-				'section'       => 'general',
-				'value_options' => __( 'String', 'link-view' ),
-				'description'   => __( 'With this attribute a css class suffix can be specified. This allows using different css styles for different link lists or sliders on the same site.', 'link-view' ),
+				'section'          => 'general',
+				'permitted_values' => __( 'String', 'link-view' ),
+				'description'      => __( 'With this attribute a css class suffix can be specified. This allows using different css styles for different link lists or sliders on the same site.', 'link-view' ),
 			],
 
 			'vertical_align' => [
@@ -202,9 +202,9 @@ class ShortcodeAttsAdminData {
 			],
 
 			'cat_columns'    => [
-				'section'       => 'list',
-				'value_options' => [ 'Number', 'static', 'css', 'masonry' ],
-				'description'   => __( 'This attribute specifies column layout for the categories in list view.', 'link-view' ) . '<br />
+				'section'          => 'list',
+				'permitted_values' => [ 'Number', 'static', 'css', 'masonry' ],
+				'description'      => __( 'This attribute specifies column layout for the categories in list view.', 'link-view' ) . '<br />
 			' . __( 'There are 3 different types of multiple column layouts available.', 'link-view' )
 					. sprintf(
 						__( 'Find more information regarding the types and options in the chapter %1$s.', 'link-view' ),
@@ -213,9 +213,9 @@ class ShortcodeAttsAdminData {
 			],
 
 			'link_columns'   => [
-				'section'       => 'list',
-				'value_options' => [ 'Number', 'static', 'css', 'masonry' ],
-				'description'   => __( 'This attribute specifies column layout for the links in list view.', 'link-view' ) . '<br />
+				'section'          => 'list',
+				'permitted_values' => [ 'Number', 'static', 'css', 'masonry' ],
+				'description'      => __( 'This attribute specifies column layout for the links in list view.', 'link-view' ) . '<br />
 			' . __( 'There are 3 different types of multiple column layouts available.', 'link-view' )
 					. sprintf(
 						__( 'Find more information regarding the types and options in the chapter %1$s.', 'link-view' ),
@@ -224,33 +224,33 @@ class ShortcodeAttsAdminData {
 			],
 
 			'slider_width'   => [
-				'section'       => 'slider',
-				'value_options' => 'Number',
-				'description'   => __( 'This attribute sets the fix width of the slider.', 'link-view' )
+				'section'          => 'slider',
+				'permitted_values' => 'Number',
+				'description'      => __( 'This attribute sets the fix width of the slider.', 'link-view' )
 					. sprintf( __( 'If the attribute is set to %1$s the width will be calculated automatically due to the given image sizes.', 'link-view' ), '<code>0</code>' ) . '<br />
 			' . sprintf( __( 'This attribute is only considered if the view type %1$s is selected.', 'link-view' ), '<code>slider</code>' ),
 			],
 
 			'slider_height'  => [
-				'section'       => 'slider',
-				'value_options' => 'Number',
-				'description'   => __( 'This attribute sets the fix height of the slider.', 'link-view' )
+				'section'          => 'slider',
+				'permitted_values' => 'Number',
+				'description'      => __( 'This attribute sets the fix height of the slider.', 'link-view' )
 					. sprintf( __( 'If the attribute is set to %1$s the height will be calculated automatically due to the given image sizes.', 'link-view' ), '<code>0</code>' ) . '<br />
 			' . sprintf( __( 'This attribute is only considered if the view type %1$s is selected.', 'link-view' ), '<code>slider</code>' ),
 			],
 
 			'slider_pause'   => [
-				'section'       => 'slider',
-				'value_options' => 'Number',
-				'description'   => __( 'This attribute sets the duration between the the slides in milliseconds.', 'link-view' )
+				'section'          => 'slider',
+				'permitted_values' => 'Number',
+				'description'      => __( 'This attribute sets the duration between the the slides in milliseconds.', 'link-view' )
 					. __( 'The link stands still for this time and afterwards the sliding animation to the next link starts.', 'link-view' ) . '<br />
 			' . sprintf( __( 'This attribute is only considered if the view type %1$s is selected.', 'link-view' ), '<code>slider</code>' ),
 			],
 
 			'slider_speed'   => [
-				'section'       => 'slider',
-				'value_options' => 'Number',
-				'description'   => __( 'This attribute sets the duration of the animation for switching from one link to the next in milliseconds.', 'link-view' ) . '<br />
+				'section'          => 'slider',
+				'permitted_values' => 'Number',
+				'description'      => __( 'This attribute sets the duration of the animation for switching from one link to the next in milliseconds.', 'link-view' ) . '<br />
 			' . sprintf( __( 'This attribute is only considered if the view type %1$s is selected.', 'link-view' ), '<code>slider</code>' ),
 			],
 		];

@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/attribute.php';
+require_once PLUGIN_PATH . 'includes/option.php';
 
 
 /**
@@ -27,7 +27,7 @@ class WidgetArgs extends \WP_Widget {
 	/**
 	 * Widget Items
 	 *
-	 * @var array<string,Attribute>
+	 * @var array<string,Option>
 	 */
 	private $args;
 
@@ -37,8 +37,8 @@ class WidgetArgs extends \WP_Widget {
 	 */
 	public function __construct() {
 		$this->args = [
-			'title' => new Attribute( __( 'Links', 'link-view' ) ),
-			'atts'  => new Attribute( '' ),
+			'title' => new Option( __( 'Links', 'link-view' ) ),
+			'atts'  => new Option( '' ),
 		];
 	}
 
@@ -62,7 +62,7 @@ class WidgetArgs extends \WP_Widget {
 	/**
 	 * Get all specified arguments
 	 *
-	 * @return array<string,Attribute>
+	 * @return array<string,Option>
 	 */
 	public function get_all() {
 		return $this->args;

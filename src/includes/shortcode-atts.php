@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/attribute.php';
+require_once PLUGIN_PATH . 'includes/option.php';
 
 
 /**
@@ -49,7 +49,7 @@ class ShortcodeAtts {
 	/**
 	 * Shortcode attributes
 	 *
-	 * @var array<string,Attribute>
+	 * @var array<string,Option>
 	 */
 	private $shortcode_atts;
 
@@ -61,28 +61,28 @@ class ShortcodeAtts {
 	 */
 	public function __construct() {
 		$this->shortcode_atts = [
-			'view_type'      => new Attribute( 'list', [ 'list', 'slider' ] ),
-			'cat_filter'     => new Attribute( '' ),
-			'exclude_cat'    => new Attribute( '' ),
-			'show_cat_name'  => new Attribute( '1', [ '0', '1' ] ),
-			'show_num_links' => new Attribute( '0', [ '0', '1' ] ),
-			'link_orderby'   => new Attribute( 'name', [ 'link_id', 'url', 'name', 'owner', 'rating', 'visible', 'length', 'rand' ] ),
-			'link_order'     => new Attribute( 'asc', [ 'asc', 'desc' ] ),
-			'num_links'      => new Attribute( '-1' ),
-			'show_img'       => new Attribute( '0', [ '0', '1' ] ),
-			'link_items'     => new Attribute( '' ),
-			'link_item_img'  => new Attribute( 'show_img_tag', [ 'show_img_tag', 'show_link_name', 'show_link_description', 'show_nothing' ] ),
-			'link_target'    => new Attribute( 'std', [ 'std', 'blank', 'top', 'self' ] ),
-			'link_rel'       => new Attribute( 'noopener', [ '', 'alternate', 'author', 'bookmark', 'external', 'help', 'license', 'next', 'nofollow', 'noreferrer', 'noopener', 'prev', 'search', 'tag' ] ),
-			'class_suffix'   => new Attribute( '' ),
-			'vertical_align' => new Attribute( 'std', [ 'std', 'top', 'bottom', 'middle' ] ),
-			'list_symbol'    => new Attribute( 'std', [ 'std', 'none', 'circle', 'square', 'disc' ] ),
-			'cat_columns'    => new Attribute( '1' ),
-			'link_columns'   => new Attribute( '1' ),
-			'slider_width'   => new Attribute( '0' ),
-			'slider_height'  => new Attribute( '0' ),
-			'slider_pause'   => new Attribute( '6000' ),
-			'slider_speed'   => new Attribute( '1000' ),
+			'view_type'      => new Option( 'list', [ 'list', 'slider' ] ),
+			'cat_filter'     => new Option( '' ),
+			'exclude_cat'    => new Option( '' ),
+			'show_cat_name'  => new Option( '1', [ '0', '1' ] ),
+			'show_num_links' => new Option( '0', [ '0', '1' ] ),
+			'link_orderby'   => new Option( 'name', [ 'link_id', 'url', 'name', 'owner', 'rating', 'visible', 'length', 'rand' ] ),
+			'link_order'     => new Option( 'asc', [ 'asc', 'desc' ] ),
+			'num_links'      => new Option( '-1' ),
+			'show_img'       => new Option( '0', [ '0', '1' ] ),
+			'link_items'     => new Option( '' ),
+			'link_item_img'  => new Option( 'show_img_tag', [ 'show_img_tag', 'show_link_name', 'show_link_description', 'show_nothing' ] ),
+			'link_target'    => new Option( 'std', [ 'std', 'blank', 'top', 'self' ] ),
+			'link_rel'       => new Option( 'noopener', [ '', 'alternate', 'author', 'bookmark', 'external', 'help', 'license', 'next', 'nofollow', 'noreferrer', 'noopener', 'prev', 'search', 'tag' ] ),
+			'class_suffix'   => new Option( '' ),
+			'vertical_align' => new Option( 'std', [ 'std', 'top', 'bottom', 'middle' ] ),
+			'list_symbol'    => new Option( 'std', [ 'std', 'none', 'circle', 'square', 'disc' ] ),
+			'cat_columns'    => new Option( '1' ),
+			'link_columns'   => new Option( '1' ),
+			'slider_width'   => new Option( '0' ),
+			'slider_height'  => new Option( '0' ),
+			'slider_pause'   => new Option( '6000' ),
+			'slider_speed'   => new Option( '1000' ),
 		];
 	}
 
@@ -100,7 +100,7 @@ class ShortcodeAtts {
 		foreach ( $atts as $name => $value ) {
 			if ( isset( $this->shortcode_atts[ $name ] ) ) {
 				// @phan-suppress-next-line PhanPartialTypeMismatchArgumentInternal
-				if ( ! is_array( $this->shortcode_atts [ $name ]->value_options ) || in_array( $value, $this->shortcode_atts [ $name ]->value_options, true ) ) {
+				if ( ! is_array( $this->shortcode_atts [ $name ]->permitted_values ) || in_array( $value, $this->shortcode_atts [ $name ]->permitted_values, true ) ) {
 					$this->shortcode_atts[ $name ]->value = $value;
 				}
 			} else {
@@ -149,7 +149,7 @@ class ShortcodeAtts {
 	 * Get a complete attribute
 	 *
 	 * @param string $name Attribute name.
-	 * @return Attribute
+	 * @return Option
 	 */
 	public function get( $name ) {
 		if ( isset( $this->shortcode_atts[ $name ] ) ) {
@@ -165,7 +165,7 @@ class ShortcodeAtts {
 	 * Get all specified attributes
 	 *
 	 * @param string $section Optional, to only get the atts of the given section.
-	 * @return array<string,Attribute>
+	 * @return array<string,Option>
 	 */
 	public function get_all( $section = null ) {
 		if ( is_null( $section ) ) {

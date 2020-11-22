@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/attribute.php';
+require_once PLUGIN_PATH . 'includes/option.php';
 
 /**
  * Options class
@@ -29,7 +29,7 @@ final class Options {
 	/**
 	 * Options array
 	 *
-	 * @var array<string, Attribute>
+	 * @var array<string, Option>
 	 */
 	private $options;
 
@@ -39,9 +39,9 @@ final class Options {
 	 */
 	public function __construct() {
 		$this->options = [
-			'lvw_req_capabilities'      => new Attribute( 'manage_links' ),
-			'lvw_req_manage_links_role' => new Attribute( 'editor' ),
-			'lvw_custom_css'            => new Attribute( '' ),
+			'lvw_req_capabilities'      => new Option( 'manage_links' ),
+			'lvw_req_manage_links_role' => new Option( 'editor' ),
+			'lvw_custom_css'            => new Option( '' ),
 		];
 		add_action( 'admin_init', [ &$this, 'register' ] );
 		add_filter( 'pre_update_option_lvw_req_manages_link_role', [ &$this, 'update_manage_links_role' ] );
@@ -118,7 +118,7 @@ final class Options {
 	/**
 	 * Get all specified options
 	 *
-	 * @return array<string,Attribute>
+	 * @return array<string,Option>
 	 */
 	public function get_all() {
 		return $this->options;

@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/attribute.php';
+require_once PLUGIN_PATH . 'includes/option.php';
 require_once PLUGIN_PATH . 'includes/widget-args.php';
 
 

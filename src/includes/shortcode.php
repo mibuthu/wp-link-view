@@ -442,7 +442,7 @@ class Shortcode {
 				// Check value according to allowed values for HTML5 (see https://www.w3schools.com/tags/att_a_rel.asp).
 				$rels = array_intersect(
 					array_unique( explode( ' ', $combined_rel ) ),
-					(array) $this->atts->get( 'link_rel' )->value_options
+					(array) $this->atts->get( 'link_rel' )->permitted_values
 				);
 
 				$rel = ' rel="' . implode( ' ', $rels ) . '"';

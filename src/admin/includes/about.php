@@ -11,7 +11,7 @@ namespace WordPress\Plugins\mibuthu\LinkView\Admin;
 
 use WordPress\Plugins\mibuthu\LinkView\Options;
 use WordPress\Plugins\mibuthu\LinkView\ShortcodeAtts;
-use WordPress\Plugins\mibuthu\LinkView\Attribute;
+use WordPress\Plugins\mibuthu\LinkView\Option;
 
 if ( ! defined( 'WP_ADMIN' ) ) {
 	exit();
@@ -259,7 +259,7 @@ class About {
 	/**
 	 * Show a single attribute table for a given section
 	 *
-	 * @param array<string,Attribute> $atts Attributes to display.
+	 * @param array<string,Option> $atts Attributes to display.
 	 * @return void
 	 */
 	private function html_atts_table( $atts ) {
@@ -274,12 +274,12 @@ class About {
 				</tr>'
 		);
 		foreach ( $atts as $name => $attribute ) {
-			$value_options = is_array( $attribute->value_options ) ? implode( '<br />', $attribute->value_options ) : $attribute->value_options;
+			$permitted_values = is_array( $attribute->permitted_values ) ? implode( '<br />', $attribute->permitted_values ) : $attribute->permitted_values;
 			echo wp_kses_post(
 				'
 				<tr>
 					<td>' . $name . '</td>
-					<td>' . $value_options . '</td>
+					<td>' . $permitted_values . '</td>
 					<td>' . $attribute->value . '</td>
 					<td>' . $attribute->description . '</td>
 				</tr>'
