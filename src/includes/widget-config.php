@@ -17,12 +17,12 @@ require_once PLUGIN_PATH . 'includes/option.php';
 
 
 /**
- * LinkView Widget arguments class
+ * LinkView Widget arguments config class
  *
  * @property string $title
  * @property string $atts
  */
-class WidgetArgs extends \WP_Widget {
+class WidgetConfig {
 
 	/**
 	 * Widget Items
@@ -75,8 +75,8 @@ class WidgetArgs extends \WP_Widget {
 	 * @return void
 	 */
 	public function load_args_admin_data() {
-		require_once PLUGIN_PATH . 'includes/widget-args-admin-data.php';
-		$args_admin_data = new WidgetArgsAdminData();
+		require_once PLUGIN_PATH . 'includes/widget-config-admin-data.php';
+		$args_admin_data = new WidgetConfigAdminData();
 		foreach ( array_keys( $this->args ) as $arg_name ) {
 			$this->args[ $arg_name ]->modify( $args_admin_data->$arg_name );
 		}

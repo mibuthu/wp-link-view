@@ -14,7 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 require_once PLUGIN_PATH . 'includes/option.php';
-require_once PLUGIN_PATH . 'includes/widget-args.php';
+require_once PLUGIN_PATH . 'includes/widget-config.php';
 
 
 /**
@@ -25,9 +25,9 @@ class Widget extends \WP_Widget {
 	/**
 	 * Widget Arguments
 	 *
-	 * @var WidgetArgs
+	 * @var WidgetConfig
 	 */
-	private $args;
+	private $config;
 
 
 	/**
@@ -41,8 +41,7 @@ class Widget extends \WP_Widget {
 				'description' => sprintf( __( 'With this widget a %1$s shortcode can be added to a sidebar or widget area.', 'link-view' ), 'LinkView' ),
 			]
 		);
-		// Define all available items.
-		$this->args = new WidgetArgs();
+		$this->config = new WidgetConfig();
 	}
 
 
@@ -79,7 +78,7 @@ class Widget extends \WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance = [];
-		foreach ( array_keys( $this->args->get_all() ) as $name ) {
+		foreach ( array_keys( $this->config->get_all() ) as $name ) {
 			if ( isset( $new_instance[ $name ] ) ) {
 				$instance[ $name ] = wp_strip_all_tags( $new_instance[ $name ] );
 			}
@@ -97,8 +96,8 @@ class Widget extends \WP_Widget {
 	 * @return string Value used to check if the Safe button is displayed.
 	 */
 	public function form( $instance ) {
-		$this->args->load_args_admin_data();
-		foreach ( $this->args->get_all() as $name => $item ) {
+		$this->config->load_args_admin_data();
+		foreach ( $this->config->get_all() as $name => $item ) {
 			if ( ! isset( $instance[ $name ] ) ) {
 				$instance[ $name ] = $item->value;
 			}

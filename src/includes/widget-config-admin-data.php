@@ -17,14 +17,14 @@ require_once PLUGIN_PATH . 'includes/option.php';
 
 
 /**
- * LinkView Shortcode Attribute Class
+ * LinkView Widget args config admin data class
  *
  * This class provides all additional data for the arguments which is only required in the admin page.
  *
  * @property string $title
  * @property string $atts
  */
-class WidgetArgsAdminData {
+class WidgetConfigAdminData {
 
 	/**
 	 * Additional data for the arguments
