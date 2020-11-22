@@ -39,7 +39,6 @@ class Attribute {
 	 * Attribute section
 	 *
 	 * @var string
-	 * @phan-suppress PhanUnreferencedPublicProperty
 	 */
 	public $section = '';
 
@@ -47,7 +46,6 @@ class Attribute {
 	 * Attribute type
 	 *
 	 * @var string
-	 * @phan-suppress PhanReadOnlyPublicProperty
 	 */
 	public $type = '';
 
@@ -55,7 +53,6 @@ class Attribute {
 	 * Attribute label
 	 *
 	 * @var string
-	 * @phan-suppress PhanReadOnlyPublicProperty
 	 */
 	public $label = '';
 
@@ -63,7 +60,6 @@ class Attribute {
 	 * Attribute caption
 	 *
 	 * @var string|array
-	 * @phan-suppress PhanReadOnlyPublicProperty
 	 */
 	public $caption = '';
 
@@ -71,7 +67,6 @@ class Attribute {
 	 * Attribute description
 	 *
 	 * @var string
-	 * @phan-suppress PhanReadOnlyPublicProperty
 	 */
 	public $description = '';
 
@@ -79,7 +74,6 @@ class Attribute {
 	 * Attribute tooltip
 	 *
 	 * @var string
-	 * @phan-suppress PhanReadOnlyPublicProperty
 	 */
 	public $tooltip = '';
 

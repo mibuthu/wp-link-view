@@ -176,8 +176,6 @@ class Shortcode {
 				unset( $diff );
 			}
 		}
-		// The is_array check for the terms (got from get_terms()) is sufficient that a list of WP_Terms was returned.
-		// @phan-suppress-next-line PhanPartialTypeMismatchReturn.
 		return $catarray;
 	}
 
