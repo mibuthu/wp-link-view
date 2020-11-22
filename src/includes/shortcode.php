@@ -136,27 +136,6 @@ class Shortcode {
 
 
 	/**
-	 * Get all shortcode attributes by section
-	 *
-	 * @param null|string $section Section of which the attributes are requested.
-	 * @return array<string,Attribute> Requested attributes.
-	 */
-	public function get_atts( $section = null ) {
-		if ( is_null( $section ) ) {
-			return (array) $this->atts;
-		}
-		$atts = [];
-		// @phan-suppress-next-line PhanTypeSuspiciousNonTraversableForeach.
-		foreach ( $this->atts->get_all() as $name => $attr ) {
-			if ( $attr->section === $section ) {
-				$atts[ $name ] = $attr;
-			}
-		}
-		return $atts;
-	}
-
-
-	/**
 	 * Get link categories
 	 *
 	 * @return \WP_Term[] Link category object array.
@@ -769,16 +748,6 @@ class Shortcode {
 			}
 		}
 		return $ret;
-	}
-
-
-	/**
-	 * Load helptexts of the shortcode attributes
-	 *
-	 * @return void
-	 */
-	public function load_atts_admin_data() {
-		$this->atts->load_admin_data();
 	}
 
 }

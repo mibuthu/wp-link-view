@@ -164,10 +164,20 @@ class ShortcodeAtts {
 	/**
 	 * Get all specified attributes
 	 *
+	 * @param string $section Optional, to only get the atts of the given section.
 	 * @return array<string,Attribute>
 	 */
-	public function get_all() {
-		return $this->shortcode_atts;
+	public function get_all( $section = null ) {
+		if ( is_null( $section ) ) {
+			return $this->shortcode_atts;
+		}
+		$atts = [];
+		foreach ( $this->shortcode_atts as $name => $attr ) {
+			if ( $attr->section === $section ) {
+				$atts[ $name ] = $attr;
+			}
+		}
+		return $atts;
 	}
 
 
