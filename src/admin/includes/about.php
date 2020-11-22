@@ -122,12 +122,8 @@ class About extends Singleton {
 					__( 'Goto %1$s and drag the %2$s-Widget into one of the sidebar or widget areas.', 'link-view' ),
 					'<a href="' .
 					admin_url( 'widgets.php' ) . '">' .
-					// Use "default" text domain for translations available in WordPress Core.
-					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
-					__( 'Appearance' ) . ' &rarr; ' .
-					// Use "default" text domain for translations available in WordPress Core.
-					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
-					__( 'Widgets' ) . '</a>',
+					__( 'Appearance', 'default' ) . ' &rarr; ' .
+					__( 'Widgets', 'default' ) . '</a>',
 					'"LinkView"'
 				) . '<br />
 				' . sprintf( __( 'Enter a title for the widget and add the required shortcode attributes in the appropriate field. All available shortcode attributes for the %1$s-shortcode can be used in the widget too.', 'link-view' ), '"linkview"' ) . '<br />
@@ -135,9 +131,7 @@ class About extends Singleton {
 				sprintf(
 					__( 'Press %1$s to confirm the changes.', 'link-view' ),
 					'"' .
-					// Use "default" text domain for translations available in WordPress Core.
-					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
-					__( 'Save' ) .
+					__( 'Save', 'default' ) .
 					'"'
 				) . '
 			</div>
@@ -148,9 +142,7 @@ class About extends Singleton {
 					__( 'In the %1$s settings page, available under %2$s, you can find some options to modify the plugin.', 'link-view' ),
 					'LinkView',
 					'<a href="' . admin_url( 'options-general.php?page=lvw_admin_options' ) . '">' .
-					// Use "default" text domain for translations available in WordPress Core.
-					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
-					__( 'Settings' ) . ' &rarr; LinkView</a>'
+					__( 'Settings', 'default' ) . ' &rarr; LinkView</a>'
 				) . '
 			</div>'
 		);
