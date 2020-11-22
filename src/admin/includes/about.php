@@ -52,7 +52,7 @@ class About {
 	 */
 	public function show_page() {
 		// Check required privilegs.
-		if ( ! current_user_can( $this->config->lvw_req_capabilities ) ) {
+		if ( ! current_user_can( $this->config->req_capabilities ) ) {
 			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}

@@ -84,7 +84,7 @@ class Shortcodes {
 				.lvw-multi-column li { page-break-inside: avoid; }
 				.lvw-row { overflow:auto; }
 				.lvw-css-column { break-inside:avoid-column; column-break-inside:avoid; -webkit-column-break-inside:avoid; overflow:hidden; }
-				' . wp_kses_post( $this->config->lvw_custom_css );
+				' . wp_kses_post( $this->config->custom_css );
 		// Slider styles.
 		foreach ( $this->shortcodes as $shortcode ) {
 			echo wp_kses_post( $shortcode->slider_styles() );

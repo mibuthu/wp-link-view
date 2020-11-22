@@ -64,7 +64,7 @@ class Admin {
 			'link-manager.php',
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
-			$this->config->lvw_req_capabilities,
+			$this->config->req_capabilities,
 			'lvw_admin_about',
 			[ $this, 'show_about_page' ]
 		);

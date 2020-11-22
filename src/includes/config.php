@@ -20,9 +20,9 @@ require_once PLUGIN_PATH . 'includes/option.php';
  *
  * This class handles all available config options with their information
  *
- * @property-read string $lvw_req_capabilities
- * @property-read string $lvw_req_manage_links_role
- * @property-read string $lvw_custom_css
+ * @property-read string $req_capabilities
+ * @property-read string $req_manage_links_role
+ * @property-read string $custom_css
  */
 final class Config {
 
@@ -101,10 +101,15 @@ final class Config {
 	/**
 	 * Get the value of the specified option
 	 *
+	 * The "lvw_" prefix in the option name is optional.
+	 *
 	 * @param string $name Option name.
 	 * @return string Option value.
 	 */
 	public function __get( $name ) {
+		if ( 'lvw_' !== substr( $name, 0, 4 ) ) {
+			$name = 'lvw_' . $name;
+		}
 		if ( ! isset( $this->options[ $name ] ) ) {
 			// Trigger error is allowed in this case.
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
