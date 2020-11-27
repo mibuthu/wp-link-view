@@ -15,6 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 require_once PLUGIN_PATH . 'includes/shortcode-config.php';
 require_once PLUGIN_PATH . 'includes/shortcode-link.php';
+require_once PLUGIN_PATH . 'includes/shortcode-slider.php';
 require_once PLUGIN_PATH . 'includes/links.php';
 
 
@@ -61,11 +62,11 @@ class Shortcode {
 	private $link_multicol_settings = [];
 
 	/**
-	 * Slider parameter (Parameters for the easyslider javascript function)
+	 * Sliders used in the shortcode
 	 *
-	 * @var array
+	 * @var array<int,ShortcodeSlider>
 	 */
-	private $slider_parameter = [];
+	private $sliders = [];
 
 
 	/**
@@ -138,70 +139,6 @@ class Shortcode {
 
 
 	/**
-	 * Add a new slider and prepare its settings
-	 *
-	 * @param int      $list_id The list id which is also used for the slider id.
-	 * @param object[] $links The links which are displayed in the slider.
-	 * @return void
-	 */
-	private function new_slider( $list_id, $links ) {
-		$this->slider_parameter[ $list_id ] = [
-			'size' => $this->slider_size( $links ),
-		];
-	}
-
-
-	/**
-	 * Get calculated slider size
-	 *
-	 * @param object[] $links Links object array.
-	 * @return array<string,int> Array with slider width and height.
-	 */
-	private function slider_size( $links ) {
-		// Use manual size given in the attributes.
-		if ( ! empty( $this->config->slider_width ) && ! empty( $this->config->slider_height ) ) {
-			return [
-				'w' => intval( $this->config->slider_width ),
-				'h' => intval( $this->config->slider_height ),
-			];
-		}
-
-		// Get the maximum image size.
-		$width  = 0;
-		$height = 0;
-		foreach ( $links as $link ) {
-			if ( ! empty( $this->config->show_img ) && ! empty( $link->link_image ) ) {
-				list($w, $h) = getimagesize( $link->link_image );
-				$width       = max( $width, $w );
-				$height      = max( $height, $h );
-			}
-		}
-		// Get the maximum image size depending on the given size in the attributes.
-		$ratio = 1;
-		if ( ! empty( $this->config->slider_width ) ) {
-			// @phan-suppress-next-line PhanTypeInvalidLeftOperandOfNumericOp $ratio is not a string!
-			$ratio = $this->config->slider_width / $width;
-		} elseif ( ! empty( $this->config->slider_height ) ) {
-			// @phan-suppress-next-line PhanTypeInvalidLeftOperandOfNumericOp $ratio is not a string!
-			$ratio = $this->config->slider_height / $height;
-		}
-		$width  = round( $width * $ratio );
-		$height = round( $height * $ratio );
-		// If no image was in all links, set a manual size.
-		if ( empty( $width ) ) {
-			$width = 300;
-		}
-		if ( empty( $height ) ) {
-			$height = 30;
-		}
-		return [
-			'w' => $width,
-			'h' => $height,
-		];
-	}
-
-
-	/**
 	 * Get HTML for showing a single category
 	 *
 	 * @param \WP_Term $category Category object to show.
@@ -222,7 +159,11 @@ class Shortcode {
 			// Show links.
 			$list_id = ++ $this->num_lists;
 			if ( 'slider' === $this->config->view_type ) {
-				$this->new_slider( $list_id, $links );
+				$this->sliders[ $list_id ] = new ShortcodeSlider(
+					$links,
+					$this->config,
+					$this->sc_id . '-' . $list_id
+				);
 			}
 			$out .= $this->html_link_list( $links, $list_id );
 			$out .= '
@@ -262,8 +203,12 @@ class Shortcode {
 				$out .= ' style="display:inline-block; vertical-align:' . $this->config->vertical_align . ';"';
 			}
 			$out .= '>';
-			// @phan-suppress-next-line PhanPluginDuplicateConditionalNullCoalescing Cannot use NullCoalescing due to PHP 5.6 support.
-			$out .= ShortcodeLink::show_html( $link, $this->config, isset( $this->slider_parameter[ $list_id ] ) ? $this->slider_parameter[ $list_id ] : null );
+			$out .= ShortcodeLink::show_html(
+				$link,
+				$this->config,
+				// @phan-suppress-next-line PhanPluginDuplicateConditionalNullCoalescing Cannot use NullCoalescing due to PHP 5.6 support.
+				isset( $this->sliders[ $list_id ] ) ? $this->sliders[ $list_id ] : null
+			);
 			$out .= '</div></li>';
 			// Link multi-column-handling.
 			$out .= $this->html_multicol_after( $this->link_multicol_settings, $link_col );
@@ -439,19 +384,8 @@ class Shortcode {
 	 */
 	public function slider_styles() {
 		$ret = '';
-		foreach ( $this->slider_parameter as $list_id => $parameter ) {
-			$ret .= '
-					#lvw-id-' . $this->sc_id . '-' . $list_id . ' li { ' .
-						'width:' . intval( $parameter['size']['w'] ) . 'px; ' .
-						'height:' . intval( $parameter['size']['h'] ) . 'px; }';
-			if ( 'std' !== $this->config->vertical_align ) {
-				$ret .= '
-					#lvw-id-' . $this->sc_id . '-' . $list_id . ' .lvw-link' . $this->config->class_suffix . ' { ' .
-						'display:table-cell; ' .
-						'vertical-align:' . $this->config->vertical_align . '; ' .
-						'width:' . $parameter['size']['w'] . 'px; ' .
-						'height:' . $parameter['size']['h'] . 'px; }';
-			}
+		foreach ( $this->sliders as $slider ) {
+			$ret .= $slider->slider_style();
 		}
 		return $ret;
 	}
@@ -464,13 +398,8 @@ class Shortcode {
 	 */
 	public function slider_scripts() {
 		$ret = '';
-		foreach ( array_keys( $this->slider_parameter ) as $list_id ) {
-			$ret .= '
-					jQuery("#lvw-id-' . $this->sc_id . '-' . $list_id . '").easySlider({';
-			$ret .= 'auto: true, continuous: true, controlsShow: false';
-			$ret .= ', pause: ' . $this->config->slider_pause;
-			$ret .= ', speed: ' . $this->config->slider_speed;
-			$ret .= '});';
+		foreach ( $this->sliders as $slider ) {
+			$ret .= $slider->slider_script();
 		}
 		return $ret;
 	}
