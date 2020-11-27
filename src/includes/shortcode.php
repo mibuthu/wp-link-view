@@ -14,6 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 require_once PLUGIN_PATH . 'includes/shortcode-config.php';
+require_once PLUGIN_PATH . 'includes/links.php';
 
 
 /**
@@ -86,7 +87,7 @@ class Shortcode {
 	 */
 	public function show_html( $atts, $content = '' ) {
 		$this->prepare_atts( $atts, $content );
-		$categories = $this->get_categories();
+		$categories = Links::categories( $this->config );
 		$cat_column = 0;
 
 		// Wrapper div.
@@ -132,68 +133,6 @@ class Shortcode {
 		// Preparations for multi-column category and link-list.
 		$this->cat_multicol_settings  = $this->multicol_settings( $this->config->cat_columns );
 		$this->link_multicol_settings = $this->multicol_settings( $this->config->link_columns, $this->config->list_symbol );
-	}
-
-
-	/**
-	 * Get link categories
-	 *
-	 * @return \WP_Term[] Link category object array.
-	 */
-	private function get_categories() {
-		$catarray = [];
-		// TODO: The cat_filter value "all" is depricated and can be removed in 0.9.
-		if ( ! empty( $this->config->cat_filter ) && 'all' !== $this->config->cat_filter ) {
-			str_replace( ',', '|', $this->config->cat_filter );
-			$catslugs = array_map( 'trim', array_map( 'strval', (array) explode( '|', $this->config->cat_filter ) ) );
-			foreach ( $catslugs as $catslug ) {
-				$term = get_term_by( 'slug', $catslug, 'link_category' );
-				if ( $term instanceof \WP_Term ) {
-					$catarray[] = $term;
-				}
-			}
-		} else {
-			// There seems to be a problem to recognize the get_terms function correctly.
-			// @phan-suppress-next-line PhanAccessMethodInternal.
-			$terms = get_terms(
-				[
-					'taxonomy' => 'link_category',
-					'orderby'  => 'name',
-				]
-			);
-			if ( is_array( $terms ) ) {
-				$catarray = $terms;
-			}
-			if ( ! empty( $this->config->exclude_cat ) ) {
-				$excludecat = array_map( 'trim', array_map( 'strval', (array) explode( ',', $this->config->exclude_cat ) ) );
-				$diff       = [];
-				foreach ( $catarray as $cat ) {
-					if ( false === array_search( $cat->name, $excludecat, true ) ) {
-						array_push( $diff, $cat );
-					}
-				}
-				$catarray = $diff;
-				unset( $diff );
-			}
-		}
-		return $catarray;
-	}
-
-
-	/**
-	 * Get Links
-	 *
-	 * @param \WP_Term $category Category object.
-	 * @return object[] Links object array.
-	 */
-	private function get_links( $category ) {
-		$args = [
-			'orderby'       => $this->config->link_orderby,
-			'order'         => $this->config->link_order,
-			'limit'         => $this->config->num_links,
-			'category_name' => $category->name,
-		];
-		return get_bookmarks( $args );
 	}
 
 
@@ -269,7 +208,7 @@ class Shortcode {
 	 * @return string HTML to render.
 	 */
 	private function html_category( $category, &$cat_column ) {
-		$links = $this->get_links( $category );
+		$links = Links::get( $category, $this->config );
 		$out   = $this->html_multicol_before( $this->cat_multicol_settings, $cat_column );
 		if ( ! empty( $links ) ) {
 			$out .= '
