@@ -22,7 +22,7 @@ require_once PLUGIN_PATH . 'includes/shortcode.php';
  *
  * This class handles the shortcode instances and the styles/scripts which are required for all instances.
  */
-class Shortcodes {
+class ShortcodeFactory {
 
 	/**
 	 * Config class instance reference

@@ -57,6 +57,13 @@ class LinkView {
 	 */
 	private $config;
 
+	/**
+	 * ShortcodeFactory instance used for the whole plugin
+	 *
+	 * @var ShortcodeFactory
+	 */
+	private $shortcode_factory;
+
 
 	/**
 	 * Class Constructor
@@ -106,12 +113,11 @@ class LinkView {
 	 * @return string HTML to display
 	 */
 	public function shortcode_linkview( $atts, $content = '' ) {
-		static $shortcodes;
-		if ( ! $shortcodes instanceof Shortcodes ) {
-			require_once PLUGIN_PATH . 'includes/shortcodes.php';
-			$shortcodes = new Shortcodes( $this->config );
+		if ( ! $this->shortcode_factory instanceof ShortcodeFactory ) {
+			require_once PLUGIN_PATH . 'includes/shortcode-factory.php';
+			$this->shortcode_factory = new ShortcodeFactory( $this->config );
 		}
-		return $shortcodes->add( $atts, $content );
+		return $this->shortcode_factory->add( $atts, $content );
 	}
 
 
