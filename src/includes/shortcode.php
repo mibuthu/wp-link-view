@@ -14,6 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 require_once PLUGIN_PATH . 'includes/shortcode-config.php';
+require_once PLUGIN_PATH . 'includes/shortcode-link.php';
 require_once PLUGIN_PATH . 'includes/links.php';
 
 
@@ -261,7 +262,8 @@ class Shortcode {
 				$out .= ' style="display:inline-block; vertical-align:' . $this->config->vertical_align . ';"';
 			}
 			$out .= '>';
-			$out .= $this->html_link( $link, $list_id );
+			// @phan-suppress-next-line PhanPluginDuplicateConditionalNullCoalescing Cannot use NullCoalescing due to PHP 5.6 support.
+			$out .= ShortcodeLink::show_html( $link, $this->config, isset( $this->slider_parameter[ $list_id ] ) ? $this->slider_parameter[ $list_id ] : null );
 			$out .= '</div></li>';
 			// Link multi-column-handling.
 			$out .= $this->html_multicol_after( $this->link_multicol_settings, $link_col );
@@ -276,189 +278,6 @@ class Shortcode {
 					</ul>
 					</div>';
 		return $out;
-	}
-
-
-	/**
-	 * Get HTML for showing a single link
-	 *
-	 * @param object $link Link object.
-	 * @param int    $list_id The id of the actual link list/slider.
-	 * @return string HTML to render link.
-	 */
-	private function html_link( $link, $list_id ) {
-		$out = '';
-		if ( empty( $this->config->link_items ) ) {
-			// Simple style (name or image).
-			if ( ! empty( $this->config->show_img ) && ! is_null( $link->link_image ) ) {
-				// Image.
-				$out .= $this->html_link_item( $link, 'image_l', $list_id );
-			} else {
-				// Name.
-				$out .= $this->html_link_item( $link, 'name_l', $list_id );
-			}
-		} else {
-			// Enhanced style (all items given in link_items attribute).
-			$items = json_decode( $this->config->link_items, true );
-			if ( is_array( $items ) ) {
-				$out .= $this->html_link_section( $link, $items, $list_id );
-			} else {
-				$out .= 'ERROR while json decoding. There must be an error in your "link_items" json syntax.';
-			}
-		}
-		return $out;
-	}
-
-
-	/**
-	 * Get HTML for showing a link section
-	 *
-	 * @param object               $link Link object.
-	 * @param array<string,string> $items Link items array included in the section.
-	 * @param int                  $list_id The id of the actual link list/slider.
-	 * @return string HTML to render link section.
-	 */
-	private function html_link_section( $link, $items, $list_id ) {
-		$out = '';
-		foreach ( $items as $name => $item ) {
-			if ( is_array( $item ) ) {
-				$out .= '<div class="lvw-section-' . $name . $this->config->class_suffix . '">';
-				$out .= $this->html_link_section( $link, $item, $list_id );
-				$out .= '</div>';
-			} else {
-				$out .= $this->html_link_item( $link, $name, $list_id, $item );
-			}
-		}
-		return $out;
-	}
-
-
-	/**
-	 * Get HTML for showing a link item
-	 *
-	 * @param object $link Link object.
-	 * @param string $item Item type to display.
-	 * @param int    $list_id The id of the actual link list/slider.
-	 * @param string $caption Link item caption.
-	 * @return string HTML to render link item.
-	 */
-	private function html_link_item( $link, $item, $list_id, $caption = '' ) {
-		// Check if a hyperlink shall be added.
-		$is_link = ( '_l' === substr( $item, -2 ) );
-		if ( $is_link ) {
-			$item = substr( $item, 0, -2 );
-		}
-		// Handle link_item_img="nothing".
-		if ( 'image' === $item && '' === $link->link_image && 'show_nothing' === $this->config->link_item_img ) {
-			return '';
-		}
-		// Prepare output.
-		$out = '<div class="lvw-item-' . $item . $this->config->class_suffix . '">';
-		if ( ! empty( $caption ) ) {
-			$out .= '<span class="lvw-item-caption' . $this->config->class_suffix . '">' . $caption . '</span>';
-		}
-		// Pepare link if required.
-		if ( $is_link ) {
-			// Check target.
-			if ( 'std' !== $this->config->link_target ) {
-				$target = '_' . $this->config->link_target;
-			} else {
-				$target = $link->link_target;
-				// Set target to _self if an empty string or _none was returned.
-				if ( in_array( $target, [ '', '_none' ], true ) ) {
-					$target = '_self';
-				}
-			}
-			// Check description.
-			$description = '';
-			if ( ! empty( $link->link_description ) ) {
-				$description = ' (' . $link->link_description . ')';
-			}
-			// Check rel attribute.
-			$rel          = '';
-			$combined_rel = $this->config->link_rel . ' ' . $link->link_rel;
-			if ( ! empty( $combined_rel ) ) {
-				// Check value according to allowed values for HTML5 (see https://www.w3schools.com/tags/att_a_rel.asp).
-				$rels = array_intersect(
-					array_unique( explode( ' ', $combined_rel ) ),
-					(array) $this->config->get( 'link_rel' )->permitted_values
-				);
-
-				$rel = ' rel="' . implode( ' ', $rels ) . '"';
-			}
-			$out .= '<a class="lvw-anchor' . $this->config->class_suffix . '" href="' . $link->link_url . '" target="' . $target . '" title="' . $link->link_name . $description . '"' . $rel . '>';
-		}
-		switch ( $item ) {
-			case 'name':
-				$out .= $link->link_name;
-				break;
-			case 'address':
-				$out .= $link->link_url;
-				break;
-			case 'description':
-				$out .= $link->link_description;
-				break;
-			case 'image':
-				$out .= $this->html_img_tag( $link, $list_id );
-				break;
-			case 'rss':
-				$out .= $link->link_rss;
-				break;
-			case 'notes':
-				$out .= $link->link_notes;
-				break;
-			case 'rating':
-				$out .= $link->link_rating;
-				break;
-		}
-		if ( $is_link ) {
-			$out .= '</a>';
-		}
-		$out .= '</div>';
-		return $out;
-	}
-
-
-	/**
-	 * Get HTML for showing the image
-	 *
-	 * @param object $link Link object.
-	 * @param int    $list_id The id of the actual link list/slider.
-	 * @return string HTML to render the image.
-	 */
-	private function html_img_tag( $link, $list_id ) {
-		// Handle links without an image.
-		if ( empty( $link->link_image ) ) {
-			switch ( $this->config->link_item_img ) {
-				case 'show_link_name':
-					return $link->link_name;
-				case 'show_link_description':
-					return $link->link_description;
-				// 'show_nothing': is already handled in html_link_item.
-				// 'show_img_tag': proceed as normal with the image tag.
-			}
-		}
-		// Handle image size.
-		if ( ! isset( $this->slider_parameter[ $list_id ] ) ) {
-			$size_text = '';
-		} else {
-			$slider_width  = $this->slider_parameter[ $list_id ]['size']['w'];
-			$slider_height = $this->slider_parameter[ $list_id ]['size']['h'];
-			if ( empty( $slider_width ) || empty( $slider_height ) ) {
-				$size_text = '';
-			} else {
-				$slider_ratio                 = $slider_width / $slider_height;
-				list($img_width, $img_height) = getimagesize( $link->link_image );
-				$img_ratio                    = $img_width / $img_height;
-				if ( $slider_ratio > $img_ratio ) {
-					$scale = $slider_height / $img_height;
-				} else {
-					$scale = $slider_width / $img_width;
-				}
-				$size_text = ' width=' . round( $img_width * $scale ) . ' height=' . round( $img_height * $scale );
-			}
-		}
-		return '<img src="' . $link->link_image . '"' . $size_text . ' alt="' . $link->link_name . '" />';
 	}
 
 
