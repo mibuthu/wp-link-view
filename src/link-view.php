@@ -127,8 +127,8 @@ class LinkView {
 	 * @return void
 	 */
 	public function widget_init() {
-		require_once PLUGIN_PATH . 'includes/widget.php';
-		register_widget( __NAMESPACE__ . '\Widget' );
+		require_once PLUGIN_PATH . 'widget/widget.php';
+		register_widget( __NAMESPACE__ . '\Widget\Widget' );
 	}
 
 

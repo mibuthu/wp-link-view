@@ -7,14 +7,14 @@
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 
-namespace WordPress\Plugins\mibuthu\LinkView;
+namespace WordPress\Plugins\mibuthu\LinkView\Widget;
 
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
 require_once PLUGIN_PATH . 'includes/option.php';
-require_once PLUGIN_PATH . 'includes/widget-config.php';
+require_once PLUGIN_PATH . 'widget/config.php';
 
 
 /**
@@ -25,7 +25,7 @@ class Widget extends \WP_Widget {
 	/**
 	 * Widget Arguments
 	 *
-	 * @var WidgetConfig
+	 * @var Config
 	 */
 	private $config;
 
@@ -41,7 +41,7 @@ class Widget extends \WP_Widget {
 				'description' => sprintf( __( 'With this widget a %1$s shortcode can be added to a sidebar or widget area.', 'link-view' ), 'LinkView' ),
 			]
 		);
-		$this->config = new WidgetConfig();
+		$this->config = new Config();
 	}
 
 

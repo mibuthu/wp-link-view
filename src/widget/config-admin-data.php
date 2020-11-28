@@ -7,7 +7,7 @@
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 
-namespace WordPress\Plugins\mibuthu\LinkView;
+namespace WordPress\Plugins\mibuthu\LinkView\Widget;
 
 if ( ! defined( 'WPINC' ) ) {
 	exit();
@@ -24,7 +24,7 @@ require_once PLUGIN_PATH . 'includes/option.php';
  * @property string $title
  * @property string $atts
  */
-class WidgetConfigAdminData {
+class ConfigAdminData {
 
 	/**
 	 * Additional data for the arguments
