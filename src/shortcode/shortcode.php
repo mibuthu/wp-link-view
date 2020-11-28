@@ -198,19 +198,14 @@ class Shortcode {
 			$out .= $this->html_multicol_before( $this->link_multicol_settings, $link_col );
 			// Actual link.
 			$out .= '
-						<li' . $this->multicol_classes( $this->link_multicol_settings, 'lvw-list-item' . $this->config->class_suffix ) . '>
-						<div class="lvw-link' . $this->config->class_suffix . '"';
-			if ( 'slider' !== $this->config->view_type && 'std' !== $this->config->vertical_align ) {
-				$out .= ' style="display:inline-block; vertical-align:' . $this->config->vertical_align . ';"';
-			}
-			$out .= '>';
+						<li' . $this->multicol_classes( $this->link_multicol_settings, 'lvw-list-item' . $this->config->class_suffix ) . '>';
 			$out .= Link::show_html(
 				$link,
 				$this->config,
 				// @phan-suppress-next-line PhanPluginDuplicateConditionalNullCoalescing Cannot use NullCoalescing due to PHP 5.6 support.
 				isset( $this->sliders[ $list_id ] ) ? $this->sliders[ $list_id ] : null
 			);
-			$out .= '</div></li>';
+			$out .= '</li>';
 			// Link multi-column-handling.
 			$out .= $this->html_multicol_after( $this->link_multicol_settings, $link_col );
 		}

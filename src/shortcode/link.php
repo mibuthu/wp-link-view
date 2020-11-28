@@ -34,7 +34,12 @@ class Link {
 	 * @return string HTML to render link.
 	 */
 	public static function show_html( $link, $shortcode_config, $shortcode_slider = null ) {
-		$out = '';
+		$out = '
+			<div class="lvw-link' . $shortcode_config->class_suffix . '"';
+		if ( 'slider' !== $shortcode_config->view_type && 'std' !== $shortcode_config->vertical_align ) {
+			$out .= ' style="display:inline-block; vertical-align:' . $shortcode_config->vertical_align . ';"';
+		}
+		$out .= '>';
 		if ( empty( $shortcode_config->link_items ) ) {
 			// Simple style (name or image).
 			if ( ! empty( $shortcode_config->show_img ) && ! is_null( $link->link_image ) ) {
@@ -53,6 +58,7 @@ class Link {
 				$out .= 'ERROR while json decoding. There must be an error in your "link_items" json syntax.';
 			}
 		}
+		$out .= '</div>';
 		return $out;
 	}
 
