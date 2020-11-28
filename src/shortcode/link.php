@@ -34,8 +34,26 @@ class Link {
 	 * @return string HTML to render link.
 	 */
 	public static function show_html( $link, $shortcode_config, $shortcode_slider = null ) {
+		$cat_classes = wp_get_object_terms( $link->link_id, 'link_category', [ 'fields' => 'slugs' ] );
+		if ( ! is_array( $cat_classes ) ) {
+			$cat_classes = '';
+		} else {
+			array_walk(
+				$cat_classes,
+				/**
+				 * Prepare the category slug to the form "category-[slug]"
+				 *
+				 * @param string $cat_slug The category slug.
+				 * @return string
+				 */
+				function( $cat_slug ) {
+					return 'category-' . $cat_slug;
+				}
+			);
+			$cat_classes = ' ' . implode( ' ', $cat_classes );
+		}
 		$out = '
-			<div class="lvw-link' . $shortcode_config->class_suffix . '"';
+			<div class="lvw-link' . $shortcode_config->class_suffix . $cat_classes . '"';
 		if ( 'slider' !== $shortcode_config->view_type && 'std' !== $shortcode_config->vertical_align ) {
 			$out .= ' style="display:inline-block; vertical-align:' . $shortcode_config->vertical_align . ';"';
 		}
