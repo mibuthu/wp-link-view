@@ -87,7 +87,7 @@ class Admin {
 	 * @return void
 	 */
 	public function show_about_page() {
-		require_once PLUGIN_PATH . 'admin/includes/about.php';
+		require_once PLUGIN_PATH . 'admin/about.php';
 		$about = new About( $this->config );
 		$about->show_page();
 	}
@@ -99,7 +99,7 @@ class Admin {
 	 * @return void
 	 */
 	public function show_settings_page() {
-		require_once PLUGIN_PATH . 'admin/includes/settings.php';
+		require_once PLUGIN_PATH . 'admin/settings.php';
 		$settings = new Settings( $this->config );
 		$settings->show_page();
 	}
