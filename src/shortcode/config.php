@@ -68,13 +68,13 @@ class Config {
 			'view_type'      => new Option( 'list', [ 'list', 'slider' ] ),
 			'cat_filter'     => new Option( '' ),
 			'exclude_cat'    => new Option( '' ),
-			'cat_grouping'   => new Option( '1', Option::BOOLEAN ),
-			'show_cat_name'  => new Option( '1', Option::BOOLEAN ),
-			'show_num_links' => new Option( '0', Option::BOOLEAN ),
+			'cat_grouping'   => new Option( Option::TRUE, Option::BOOLEAN ),
+			'show_cat_name'  => new Option( Option::TRUE, Option::BOOLEAN ),
+			'show_num_links' => new Option( Option::FALSE, Option::BOOLEAN ),
 			'link_orderby'   => new Option( 'name', [ 'link_id', 'url', 'name', 'owner', 'rating', 'visible', 'length', 'rand' ] ),
 			'link_order'     => new Option( 'asc', [ 'asc', 'desc' ] ),
 			'num_links'      => new Option( '-1' ),
-			'show_img'       => new Option( '0', Option::BOOLEAN ),
+			'show_img'       => new Option( Option::FALSE, Option::BOOLEAN ),
 			'link_items'     => new Option( '' ),
 			'link_item_img'  => new Option( 'show_img_tag', [ 'show_img_tag', 'show_link_name', 'show_link_description', 'show_nothing' ] ),
 			'link_target'    => new Option( 'std', [ 'std', 'blank', 'top', 'self' ] ),
@@ -105,7 +105,7 @@ class Config {
 		foreach ( $atts as $name => $value ) {
 			if ( isset( $this->atts[ $name ] ) ) {
 				// @phan-suppress-next-line PhanPartialTypeMismatchArgumentInternal
-				if ( ! is_array( $this->atts [ $name ]->permitted_values ) || in_array( $value, $this->atts [ $name ]->permitted_values, true ) ) {
+				if ( ! is_array( $this->atts [ $name ]->permitted_values ) || in_array( $value, $this->atts [ $name ]->permitted_values, true ) || $this->atts[ $name ]->is_bool() ) {
 					$this->atts[ $name ]->value = $value;
 				}
 			} else {

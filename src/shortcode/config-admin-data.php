@@ -91,23 +91,20 @@ class ConfigAdminData {
 			],
 
 			'cat_grouping'   => [
-				'section'          => 'general',
-				'permitted_values' => [ '0 &hellip; false', '1 &hellip; true' ],
-				'description'      =>
+				'section'     => 'general',
+				'description' =>
 					__( 'By default the links are grouped by category.', 'link-view' ) . '<br />
-					' . sprintf( __( 'Set this attribute to %1$s to show all links in one list.', 'link-view' ), '<code>0</code>' ),
+					' . __( 'To show all links in one list this option can be disabled.', 'link-view' ),
 			],
 
 			'show_cat_name'  => [
-				'section'          => 'general',
-				'permitted_values' => [ '0 &hellip; false', '1 &hellip; true' ],
-				'description'      => __( 'This attribute specifies if the category name is shown as a headline if category grouping is enabled.', 'link-view' ),
+				'section'     => 'general',
+				'description' => __( 'This attribute specifies if the category name is shown as a headline if category grouping is enabled.', 'link-view' ),
 			],
 
 			'show_num_links' => [
-				'section'          => 'general',
-				'permitted_values' => [ '0 &hellip; false', '1 &hellip; true' ],
-				'description'      =>
+				'section'     => 'general',
+				'description' =>
 					__( 'If enabled the number of links is displayed in brackets next to the category name in the headline.', 'link-view' ) . '<br />
 					' . sprintf( __( 'The shortcode options %1$s and %2$s must be enabled to display the number.', 'link-view' ), '<code>cat_grouping</code>', '<code>show_cat_name</code>' ),
 			],
@@ -142,9 +139,8 @@ class ConfigAdminData {
 			],
 
 			'show_img'       => [
-				'section'          => 'general',
-				'permitted_values' => [ '0 &hellip; false', '1 &hellip; true' ],
-				'description'      =>
+				'section'     => 'general',
+				'description' =>
 					__( 'This attribute specifies if the image shall be displayed instead of the name.', 'link-view' ) .
 					__( 'This attribute is only considered for links where an image is set.', 'link-view' ),
 			],

@@ -79,11 +79,25 @@ class Option {
 
 
 	/**
+	 * The boolean TRUE value option
+	 *
+	 * @var string[]
+	 */
+	public const TRUE = 'true';
+
+	/**
+	 * The boolean FALSE value option
+	 *
+	 * @var string[]
+	 */
+	public const FALSE = 'false';
+
+	/**
 	 * The boolean value options
 	 *
 	 * @var string[]
 	 */
-	public const BOOLEAN = [ '0', '1' ];
+	public const BOOLEAN = [ self::TRUE, self::FALSE ];
 
 
 	/**
@@ -121,13 +135,28 @@ class Option {
 
 
 	/**
+	 * Return a if the option is a boolean value
+	 *
+	 * @return bool
+	 */
+	public function is_bool() {
+		return self::BOOLEAN === $this->permitted_values;
+	}
+
+
+	/**
 	 * Return a boolean value if the option is a boolean, or the value string if not
 	 *
 	 * @return string|bool
 	 */
 	public function bool_value() {
-		if ( self::BOOLEAN === $this->permitted_values ) {
-			return ! empty( $this->value );
+		if ( $this->is_bool() ) {
+			// Numbers > 0 are also accepted as true.
+			if ( 0 < intval( $this->value ) ) {
+				return true;
+			} else {
+				return self::TRUE === $this->value;
+			}
 		} else {
 			return $this->value;
 		}
