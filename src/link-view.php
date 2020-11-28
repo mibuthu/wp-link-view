@@ -60,7 +60,7 @@ class LinkView {
 	/**
 	 * ShortcodeFactory instance used for the whole plugin
 	 *
-	 * @var ShortcodeFactory
+	 * @var Shortcode\Factory
 	 */
 	private $shortcode_factory;
 
