@@ -7,17 +7,18 @@
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 
-namespace WordPress\Plugins\mibuthu\LinkView;
+namespace WordPress\Plugins\mibuthu\LinkView\Shortcode;
 
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/shortcode-config.php';
-require_once PLUGIN_PATH . 'includes/shortcode-link.php';
-require_once PLUGIN_PATH . 'includes/shortcode-slider.php';
+require_once PLUGIN_PATH . 'shortcode/config.php';
+require_once PLUGIN_PATH . 'shortcode/link.php';
+require_once PLUGIN_PATH . 'shortcode/slider.php';
 require_once PLUGIN_PATH . 'includes/links.php';
 
+use WordPress\Plugins\mibuthu\LinkView\Links;
 
 /**
  * LinkView Shortcode Class
@@ -29,7 +30,7 @@ class Shortcode {
 	/**
 	 * Shortcode attributes
 	 *
-	 * @var ShortcodeConfig
+	 * @var Config
 	 */
 	private $config;
 
@@ -64,7 +65,7 @@ class Shortcode {
 	/**
 	 * Sliders used in the shortcode
 	 *
-	 * @var array<int,ShortcodeSlider>
+	 * @var array<int,Slider>
 	 */
 	private $sliders = [];
 
@@ -75,7 +76,7 @@ class Shortcode {
 	 * @param int $sc_id The id of the shortcode.
 	 */
 	public function __construct( $sc_id ) {
-		$this->config = new ShortcodeConfig();
+		$this->config = new Config();
 		$this->sc_id  = $sc_id;
 	}
 
@@ -159,7 +160,7 @@ class Shortcode {
 			// Show links.
 			$list_id = ++ $this->num_lists;
 			if ( 'slider' === $this->config->view_type ) {
-				$this->sliders[ $list_id ] = new ShortcodeSlider(
+				$this->sliders[ $list_id ] = new Slider(
 					$links,
 					$this->config,
 					$this->sc_id . '-' . $list_id
@@ -203,7 +204,7 @@ class Shortcode {
 				$out .= ' style="display:inline-block; vertical-align:' . $this->config->vertical_align . ';"';
 			}
 			$out .= '>';
-			$out .= ShortcodeLink::show_html(
+			$out .= Link::show_html(
 				$link,
 				$this->config,
 				// @phan-suppress-next-line PhanPluginDuplicateConditionalNullCoalescing Cannot use NullCoalescing due to PHP 5.6 support.

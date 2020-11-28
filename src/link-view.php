@@ -113,9 +113,9 @@ class LinkView {
 	 * @return string HTML to display
 	 */
 	public function shortcode_linkview( $atts, $content = '' ) {
-		if ( ! $this->shortcode_factory instanceof ShortcodeFactory ) {
-			require_once PLUGIN_PATH . 'includes/shortcode-factory.php';
-			$this->shortcode_factory = new ShortcodeFactory( $this->config );
+		if ( ! $this->shortcode_factory instanceof Shortcode\Factory ) {
+			require_once PLUGIN_PATH . 'shortcode/factory.php';
+			$this->shortcode_factory = new Shortcode\Factory( $this->config );
 		}
 		return $this->shortcode_factory->add( $atts, $content );
 	}

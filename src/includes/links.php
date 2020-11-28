@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/shortcode-config.php';
+require_once PLUGIN_PATH . 'shortcode/config.php';
 
 
 /**
@@ -27,8 +27,8 @@ class Links {
 	/**
 	 * Get Links
 	 *
-	 * @param \WP_Term        $category Category object.
-	 * @param ShortcodeConfig $shortcode_config Shortcode config object.
+	 * @param \WP_Term         $category Category object.
+	 * @param Shortcode\Config $shortcode_config Shortcode Config object.
 	 * @return object[] Links object array.
 	 */
 	public static function get( $category, $shortcode_config ) {
@@ -45,7 +45,7 @@ class Links {
 	/**
 	 * Get link categories
 	 *
-	 * @param ShortcodeConfig $shortcode_config Shortcode config object.
+	 * @param Shortcode\Config $shortcode_config Shortcode Config object.
 	 * @return \WP_Term[] Link category object array.
 	 */
 	public static function categories( $shortcode_config ) {

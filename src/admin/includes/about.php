@@ -10,7 +10,6 @@
 namespace WordPress\Plugins\mibuthu\LinkView\Admin;
 
 use WordPress\Plugins\mibuthu\LinkView\Config;
-use WordPress\Plugins\mibuthu\LinkView\ShortcodeConfig;
 use WordPress\Plugins\mibuthu\LinkView\Option;
 
 if ( ! defined( 'WP_ADMIN' ) ) {
@@ -192,8 +191,8 @@ class About {
 	 * Show attributes HTML table
 	 */
 	private function show_atts() {
-		require_once PLUGIN_PATH . 'includes/shortcode-config.php';
-		$shortcode_config = new ShortcodeConfig();
+		require_once PLUGIN_PATH . 'shortcode/config.php';
+		$shortcode_config = new \WordPress\Plugins\mibuthu\LinkView\Shortcode\Config();
 		$shortcode_config->load_admin_data();
 		echo wp_kses_post(
 			'

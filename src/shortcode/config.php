@@ -7,13 +7,16 @@
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 
-namespace WordPress\Plugins\mibuthu\LinkView;
+namespace WordPress\Plugins\mibuthu\LinkView\Shortcode;
 
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
 require_once PLUGIN_PATH . 'includes/option.php';
+
+
+use WordPress\Plugins\mibuthu\LinkView\Option;
 
 
 /**
@@ -44,14 +47,14 @@ require_once PLUGIN_PATH . 'includes/option.php';
  * @property string $slider_pause
  * @property string $slider_speed
  */
-class ShortcodeConfig {
+class Config {
 
 	/**
 	 * Shortcode attributes
 	 *
 	 * @var array<string,Option>
 	 */
-	private $shortcode_atts;
+	private $atts;
 
 
 	/**
@@ -60,7 +63,7 @@ class ShortcodeConfig {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->shortcode_atts = [
+		$this->atts = [
 			'view_type'      => new Option( 'list', [ 'list', 'slider' ] ),
 			'cat_filter'     => new Option( '' ),
 			'exclude_cat'    => new Option( '' ),
@@ -98,10 +101,10 @@ class ShortcodeConfig {
 			return;
 		}
 		foreach ( $atts as $name => $value ) {
-			if ( isset( $this->shortcode_atts[ $name ] ) ) {
+			if ( isset( $this->atts[ $name ] ) ) {
 				// @phan-suppress-next-line PhanPartialTypeMismatchArgumentInternal
-				if ( ! is_array( $this->shortcode_atts [ $name ]->permitted_values ) || in_array( $value, $this->shortcode_atts [ $name ]->permitted_values, true ) ) {
-					$this->shortcode_atts[ $name ]->value = $value;
+				if ( ! is_array( $this->atts [ $name ]->permitted_values ) || in_array( $value, $this->atts [ $name ]->permitted_values, true ) ) {
+					$this->atts[ $name ]->value = $value;
 				}
 			} else {
 				// Trigger error is allowed in this case.
@@ -119,8 +122,8 @@ class ShortcodeConfig {
 	 * @return string Attribute value.
 	 */
 	public function __get( $name ) {
-		if ( isset( $this->shortcode_atts[ $name ] ) ) {
-			return $this->shortcode_atts[ $name ]->value;
+		if ( isset( $this->atts[ $name ] ) ) {
+			return $this->atts[ $name ]->value;
 		}
 		// Trigger error is allowed in this case.
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
@@ -136,8 +139,8 @@ class ShortcodeConfig {
 	 * @return void
 	 */
 	public function __set( $name, $value ) {
-		if ( isset( $this->shortcode_atts[ $name ] ) ) {
-			$this->shortcode_atts[ $name ]->value = $value;
+		if ( isset( $this->atts[ $name ] ) ) {
+			$this->atts[ $name ]->value = $value;
 		}
 		// Trigger error is allowed in this case.
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
@@ -152,8 +155,8 @@ class ShortcodeConfig {
 	 * @return Option
 	 */
 	public function get( $name ) {
-		if ( isset( $this->shortcode_atts[ $name ] ) ) {
-			return $this->shortcode_atts[ $name ];
+		if ( isset( $this->atts[ $name ] ) ) {
+			return $this->atts[ $name ];
 		}
 		// Trigger error is allowed in this case.
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
@@ -169,10 +172,10 @@ class ShortcodeConfig {
 	 */
 	public function get_all( $section = null ) {
 		if ( is_null( $section ) ) {
-			return $this->shortcode_atts;
+			return $this->atts;
 		}
 		$atts = [];
-		foreach ( $this->shortcode_atts as $name => $attr ) {
+		foreach ( $this->atts as $name => $attr ) {
 			if ( $attr->section === $section ) {
 				$atts[ $name ] = $attr;
 			}
@@ -187,10 +190,10 @@ class ShortcodeConfig {
 	 * @return void
 	 */
 	public function load_admin_data() {
-		require_once PLUGIN_PATH . 'includes/shortcode-config-admin-data.php';
-		$atts_admin_data = new ShortcodeConfigAdminData();
-		foreach ( array_keys( $this->shortcode_atts ) as $attr_name ) {
-			$this->shortcode_atts[ $attr_name ]->modify( $atts_admin_data->$attr_name );
+		require_once PLUGIN_PATH . 'shortcode/config-admin-data.php';
+		$atts_admin_data = new ConfigAdminData();
+		foreach ( array_keys( $this->atts ) as $attr_name ) {
+			$this->atts[ $attr_name ]->modify( $atts_admin_data->$attr_name );
 		}
 	}
 

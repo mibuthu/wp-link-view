@@ -7,22 +7,23 @@
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 
-namespace WordPress\Plugins\mibuthu\LinkView;
+namespace WordPress\Plugins\mibuthu\LinkView\Shortcode;
 
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
 require_once PLUGIN_PATH . 'includes/config.php';
-require_once PLUGIN_PATH . 'includes/shortcode.php';
+require_once PLUGIN_PATH . 'shortcode/shortcode.php';
 
+use WordPress\Plugins\mibuthu\LinkView\Config;
 
 /**
  * LinkView Shortcodes Class
  *
  * This class handles the shortcode instances and the styles/scripts which are required for all instances.
  */
-class ShortcodeFactory {
+class Factory {
 
 	/**
 	 * Config class instance reference

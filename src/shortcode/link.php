@@ -7,13 +7,13 @@
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 
-namespace WordPress\Plugins\mibuthu\LinkView;
+namespace WordPress\Plugins\mibuthu\LinkView\Shortcode;
 
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/shortcode-config.php';
+require_once PLUGIN_PATH . 'shortcode/config.php';
 require_once PLUGIN_PATH . 'includes/links.php';
 
 
@@ -22,15 +22,15 @@ require_once PLUGIN_PATH . 'includes/links.php';
  *
  * This class handles a link an how to display the link in a shortcode.
  */
-class ShortcodeLink {
+class Link {
 
 
 	/**
 	 * Get HTML for showing a single link
 	 *
-	 * @param \WP_Term             $link Link object.
-	 * @param ShortcodeConfig      $shortcode_config The ShortcodeConfig object.
-	 * @param ShortcodeSlider|null $shortcode_slider The ShortcodeSlider object.
+	 * @param \WP_Term    $link Link object.
+	 * @param Config      $shortcode_config The ShortcodeConfig object.
+	 * @param Slider|null $shortcode_slider The ShortcodeSlider object.
 	 * @return string HTML to render link.
 	 */
 	public static function show_html( $link, $shortcode_config, $shortcode_slider = null ) {
@@ -62,8 +62,8 @@ class ShortcodeLink {
 	 *
 	 * @param object               $link Link object.
 	 * @param array<string,string> $items Link items array included in the section.
-	 * @param ShortcodeConfig      $shortcode_config The ShortcodeConfig object.
-	 * @param ShortcodeSlider|null $shortcode_slider The ShortcodeSlider object.
+	 * @param Config               $shortcode_config The ShortcodeConfig object.
+	 * @param Slider|null          $shortcode_slider The ShortcodeSlider object.
 	 * @return string HTML to render link section.
 	 */
 	private static function html_section( $link, $items, $shortcode_config, $shortcode_slider ) {
@@ -84,11 +84,11 @@ class ShortcodeLink {
 	/**
 	 * Get HTML for showing a link item
 	 *
-	 * @param object               $link Link object.
-	 * @param string               $item Item type to display.
-	 * @param string               $caption Link item caption.
-	 * @param ShortcodeConfig      $shortcode_config The ShortcodeConfig object.
-	 * @param ShortcodeSlider|null $shortcode_slider The ShortcodeSlider object.
+	 * @param object      $link Link object.
+	 * @param string      $item Item type to display.
+	 * @param string      $caption Link item caption.
+	 * @param Config      $shortcode_config The ShortcodeConfig object.
+	 * @param Slider|null $shortcode_slider The ShortcodeSlider object.
 	 * @return string HTML to render link item.
 	 */
 	private static function html_item( $link, $item, $caption, $shortcode_config, $shortcode_slider ) {
@@ -171,9 +171,9 @@ class ShortcodeLink {
 	/**
 	 * Get HTML for showing the image
 	 *
-	 * @param object               $link Link object.
-	 * @param ShortcodeConfig      $shortcode_config The ShortcodeConfig object.
-	 * @param ShortcodeSlider|null $shortcode_slider The ShortcodeSlider object.
+	 * @param object      $link Link object.
+	 * @param Config      $shortcode_config The ShortcodeConfig object.
+	 * @param Slider|null $shortcode_slider The ShortcodeSlider object.
 	 * @return string HTML to render the image.
 	 */
 	private static function html_img_tag( $link, $shortcode_config, $shortcode_slider ) {

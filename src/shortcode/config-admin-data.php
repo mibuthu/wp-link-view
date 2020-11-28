@@ -7,7 +7,7 @@
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 
-namespace WordPress\Plugins\mibuthu\LinkView;
+namespace WordPress\Plugins\mibuthu\LinkView\Shortcode;
 
 if ( ! defined( 'WPINC' ) ) {
 	exit();
@@ -44,7 +44,7 @@ require_once PLUGIN_PATH . 'includes/option.php';
  * @property string $slider_pause
  * @property string $slider_speed
  */
-class ShortcodeConfigAdminData {
+class ConfigAdminData {
 
 	/**
 	 * Additional data for the attributes

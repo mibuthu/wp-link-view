@@ -7,14 +7,14 @@
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 
-namespace WordPress\Plugins\mibuthu\LinkView;
+namespace WordPress\Plugins\mibuthu\LinkView\Shortcode;
 
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once PLUGIN_PATH . 'includes/shortcode-config.php';
-require_once PLUGIN_PATH . 'includes/shortcode-link.php';
+require_once PLUGIN_PATH . 'shortcode/config.php';
+require_once PLUGIN_PATH . 'shortcode/link.php';
 require_once PLUGIN_PATH . 'includes/links.php';
 
 
@@ -23,12 +23,12 @@ require_once PLUGIN_PATH . 'includes/links.php';
  *
  * This class handles the a slider used in a shortcode.
  */
-class ShortcodeSlider {
+class Slider {
 
 	/**
 	 * Shortcode attributes
 	 *
-	 * @var ShortcodeConfig
+	 * @var Config
 	 */
 	private $shortcode_config;
 
@@ -64,9 +64,9 @@ class ShortcodeSlider {
 	/**
 	 * Class constructor which initializes required variables
 	 *
-	 * @param \WP_Term[]      $links The links of the slider.
-	 * @param ShortcodeConfig $shortcode_config The ShortcodeConfig object.
-	 * @param string          $id_string The id string of the slider.
+	 * @param \WP_Term[] $links The links of the slider.
+	 * @param Config     $shortcode_config The ShortcodeConfig object.
+	 * @param string     $id_string The id string of the slider.
 	 */
 	public function __construct( $links, $shortcode_config, $id_string ) {
 		$this->links            = $links;
