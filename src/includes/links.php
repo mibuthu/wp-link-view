@@ -27,17 +27,19 @@ class Links {
 	/**
 	 * Get Links
 	 *
-	 * @param \WP_Term         $category Category object.
 	 * @param Shortcode\Config $shortcode_config Shortcode Config object.
+	 * @param \WP_Term|null    $category Category object.
 	 * @return object[] Links object array.
 	 */
-	public static function get( $category, $shortcode_config ) {
+	public static function get( $shortcode_config, $category = null ) {
 		$args = [
-			'orderby'       => $shortcode_config->link_orderby,
-			'order'         => $shortcode_config->link_order,
-			'limit'         => $shortcode_config->num_links,
-			'category_name' => $category->name,
+			'orderby' => $shortcode_config->link_orderby,
+			'order'   => $shortcode_config->link_order,
+			'limit'   => $shortcode_config->num_links,
 		];
+		if ( $category instanceof \WP_Term ) {
+			$args['category_name'] = $category->name;
+		}
 		return get_bookmarks( $args );
 	}
 

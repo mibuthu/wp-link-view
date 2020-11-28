@@ -85,19 +85,27 @@ class ConfigAdminData {
 			' . __( 'If the category name has spaces, the name must be surrounded by quotes.', 'link-view' ) . '<br />
 			' . sprintf( __( 'To exclude multiple categories, multiple names can be provided seperated by %1$s.', 'link-view' ), '<code>,</code>' ) . '<br />
 			' . __( 'Example', 'link-view' ) . ': <code>[linkview exclude_cat="Blogroll,Social Media"]</code>',
+
+			'cat_grouping'   => [
+				'section'          => 'general',
+				'permitted_values' => [ '0 &hellip; false', '1 &hellip; true' ],
+				'description'      =>
+					__( 'By default the links are grouped by category.', 'link-view' ) . '<br />
+					' . sprintf( __( 'Set this attribute to %1$s to show all links in one list.', 'link-view' ), '<code>0</code>' ),
 			],
 
 			'show_cat_name'  => [
 				'section'          => 'general',
 				'permitted_values' => [ '0 &hellip; false', '1 &hellip; true' ],
-				'description'      => __( 'This attribute specifies if the category name is shown as a headline.', 'link-view' ),
+				'description'      => __( 'This attribute specifies if the category name is shown as a headline if category grouping is enabled.', 'link-view' ),
 			],
 
 			'show_num_links' => [
 				'section'          => 'general',
 				'permitted_values' => [ '0 &hellip; false', '1 &hellip; true' ],
-				'description'      => __( 'This attribute specifies if the number of links shall be displayed in brackets next to the category name in the headline.', 'link-view' ) . '<br />
-			' . sprintf( __( 'The headline with the category name must be displayed (%1$s) to show the number of links.', 'link-view' ), '<code>show_cat_name=true</code>' ),
+				'description'      =>
+					__( 'If enabled the number of links is displayed in brackets next to the category name in the headline.', 'link-view' ) . '<br />
+					' . sprintf( __( 'The shortcode options %1$s and %2$s must be enabled to display the number.', 'link-view' ), '<code>cat_grouping</code>', '<code>show_cat_name</code>' ),
 			],
 
 			'link_orderby'   => [

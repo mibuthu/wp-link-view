@@ -27,6 +27,7 @@ use WordPress\Plugins\mibuthu\LinkView\Option;
  * @property string $view_type
  * @property string $cat_filter
  * @property string $exclude_cat
+ * @property string $cat_grouping
  * @property string $show_cat_name
  * @property string $show_num_links
  * @property string $link_orderby
@@ -67,6 +68,7 @@ class Config {
 			'view_type'      => new Option( 'list', [ 'list', 'slider' ] ),
 			'cat_filter'     => new Option( '' ),
 			'exclude_cat'    => new Option( '' ),
+			'cat_grouping'   => new Option( '1', Option::BOOLEAN ),
 			'show_cat_name'  => new Option( '1', Option::BOOLEAN ),
 			'show_num_links' => new Option( '0', Option::BOOLEAN ),
 			'link_orderby'   => new Option( 'name', [ 'link_id', 'url', 'name', 'owner', 'rating', 'visible', 'length', 'rand' ] ),

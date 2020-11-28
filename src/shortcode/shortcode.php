@@ -90,20 +90,26 @@ class Shortcode {
 	 */
 	public function show_html( $atts, $content = '' ) {
 		$this->prepare_atts( $atts, $content );
-		$categories = Links::categories( $this->config );
-		$cat_column = 0;
-
-		// Wrapper div.
-		$out = '
-				<div class="linkview" id="lvw-sc-id-' . $this->sc_id . '"' . $this->cat_multicol_settings['wrapper_styles'] . '>';
-		// Go through each category.
-		foreach ( $categories as $category ) {
-			$out .= $this->html_category( $category, $cat_column );
-		}
-		// Close last column div if required.
-		if ( ! empty( $cat_column ) ) {
-			$out .= '
-					</div>';
+		if ( $this->config->cat_grouping ) {
+			$categories = Links::categories( $this->config );
+			$cat_column = 0;
+			// Wrapper div.
+			$out = '
+					<div class="linkview" id="lvw-sc-id-' . $this->sc_id . '"' . $this->cat_multicol_settings['wrapper_styles'] . '>';
+			// Go through each category.
+			foreach ( $categories as $category ) {
+				$out .= $this->html_category_list( $category, $cat_column );
+			}
+			// Close last column div if required.
+			if ( ! empty( $cat_column ) ) {
+				$out .= '
+						</div>';
+			}
+		} else {
+			// Wrapper div.
+			$out  = '
+					<div class="linkview" id="lvw-sc-id-' . $this->sc_id . '">';
+			$out .= $this->html_link_list( Links::get( $this->config ) );
 		}
 		// Close wrapper div.
 		$out .= '
@@ -146,8 +152,8 @@ class Shortcode {
 	 * @param int      $cat_column The actual category column.
 	 * @return string HTML to render.
 	 */
-	private function html_category( $category, &$cat_column ) {
-		$links = Links::get( $category, $this->config );
+	private function html_category_list( $category, &$cat_column ) {
+		$links = Links::get( $this->config, $category );
 		$out   = $this->html_multicol_before( $this->cat_multicol_settings, $cat_column );
 		if ( ! empty( $links ) ) {
 			$out .= '
@@ -158,15 +164,7 @@ class Shortcode {
 						<h2 class="lvw-cat-name' . $this->config->class_suffix . '">' . $category->name . $num_links_text . '</h2>';
 			}
 			// Show links.
-			$list_id = ++ $this->num_lists;
-			if ( 'slider' === $this->config->view_type ) {
-				$this->sliders[ $list_id ] = new Slider(
-					$links,
-					$this->config,
-					$this->sc_id . '-' . $list_id
-				);
-			}
-			$out .= $this->html_link_list( $links, $list_id );
+			$out .= $this->html_link_list( $links );
 			$out .= '
 					</div>';
 		}
@@ -179,10 +177,20 @@ class Shortcode {
 	 * Get HTML for showing a link list
 	 *
 	 * @param object[] $links Links object array to show.
-	 * @param int      $list_id Shortcode id.
 	 * @return string HTML to render link list.
 	 */
-	private function html_link_list( $links, $list_id ) {
+	private function html_link_list( $links ) {
+		if ( empty( $links ) ) {
+			return '';
+		}
+		$list_id = ++ $this->num_lists;
+		if ( 'slider' === $this->config->view_type ) {
+			$this->sliders[ $list_id ] = new Slider(
+				$links,
+				$this->config,
+				$this->sc_id . '-' . $list_id
+			);
+		}
 		$link_col = 0;
 		// Wrapper div and list tag.
 		$out = '
