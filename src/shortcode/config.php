@@ -67,12 +67,12 @@ class Config {
 			'view_type'      => new Option( 'list', [ 'list', 'slider' ] ),
 			'cat_filter'     => new Option( '' ),
 			'exclude_cat'    => new Option( '' ),
-			'show_cat_name'  => new Option( '1', [ '0', '1' ] ),
-			'show_num_links' => new Option( '0', [ '0', '1' ] ),
+			'show_cat_name'  => new Option( '1', Option::BOOLEAN ),
+			'show_num_links' => new Option( '0', Option::BOOLEAN ),
 			'link_orderby'   => new Option( 'name', [ 'link_id', 'url', 'name', 'owner', 'rating', 'visible', 'length', 'rand' ] ),
 			'link_order'     => new Option( 'asc', [ 'asc', 'desc' ] ),
 			'num_links'      => new Option( '-1' ),
-			'show_img'       => new Option( '0', [ '0', '1' ] ),
+			'show_img'       => new Option( '0', Option::BOOLEAN ),
 			'link_items'     => new Option( '' ),
 			'link_item_img'  => new Option( 'show_img_tag', [ 'show_img_tag', 'show_link_name', 'show_link_description', 'show_nothing' ] ),
 			'link_target'    => new Option( 'std', [ 'std', 'blank', 'top', 'self' ] ),
@@ -118,12 +118,14 @@ class Config {
 	/**
 	 * Get the value of the given attribute
 	 *
+	 * If the option is a boolean value, a bool is returned.
+	 *
 	 * @param string $name Attribute name.
-	 * @return string Attribute value.
+	 * @return string|bool Attribute value.
 	 */
 	public function __get( $name ) {
 		if ( isset( $this->atts[ $name ] ) ) {
-			return $this->atts[ $name ]->value;
+			return $this->atts[ $name ]->bool_value();
 		}
 		// Trigger error is allowed in this case.
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error

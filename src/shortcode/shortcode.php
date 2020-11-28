@@ -152,8 +152,8 @@ class Shortcode {
 		if ( ! empty( $links ) ) {
 			$out .= '
 					<div' . $this->multicol_classes( $this->cat_multicol_settings, 'lvw-category' . $this->config->class_suffix ) . '>';
-			if ( ! empty( $this->config->show_cat_name ) ) {
-				$num_links_text = ! empty( $this->config->show_num_links ) ? ' <small>(' . count( $links ) . ')</small>' : '';
+			if ( $this->config->show_cat_name ) {
+				$num_links_text = $this->config->show_num_links ? ' <small>(' . count( $links ) . ')</small>' : '';
 				$out           .= '
 						<h2 class="lvw-cat-name' . $this->config->class_suffix . '">' . $category->name . $num_links_text . '</h2>';
 			}

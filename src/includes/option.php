@@ -79,6 +79,14 @@ class Option {
 
 
 	/**
+	 * The boolean value options
+	 *
+	 * @var string[]
+	 */
+	public const BOOLEAN = [ '0', '1' ];
+
+
+	/**
 	 * Class constructor which sets the required variables
 	 *
 	 * @param string            $std_value Standard value for the option.
@@ -108,6 +116,20 @@ class Option {
 				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 				trigger_error( 'The requested field name "' . esc_attr( $field_name ) . '" does not exist!', E_USER_WARNING );
 			}
+		}
+	}
+
+
+	/**
+	 * Return a boolean value if the option is a boolean, or the value string if not
+	 *
+	 * @return string|bool
+	 */
+	public function bool_value() {
+		if ( self::BOOLEAN === $this->permitted_values ) {
+			return ! empty( $this->value );
+		} else {
+			return $this->value;
 		}
 	}
 

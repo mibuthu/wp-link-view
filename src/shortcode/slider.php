@@ -90,7 +90,7 @@ class Slider {
 		$width  = 0;
 		$height = 0;
 		foreach ( $this->links as $link ) {
-			if ( ! empty( $this->shortcode_config->show_img ) && ! empty( $link->link_image ) ) {
+			if ( $this->shortcode_config->show_img && ! empty( $link->link_image ) ) {
 				list($w, $h) = getimagesize( $link->link_image );
 				$width       = max( $width, $w );
 				$height      = max( $height, $h );

@@ -60,7 +60,7 @@ class Link {
 		$out .= '>';
 		if ( empty( $shortcode_config->link_items ) ) {
 			// Simple style (name or image).
-			if ( ! empty( $shortcode_config->show_img ) && ! is_null( $link->link_image ) ) {
+			if ( $shortcode_config->show_img && ! is_null( $link->link_image ) ) {
 				// Image.
 				$out .= self::html_item( $link, 'image_l', '', $shortcode_config, $shortcode_slider );
 			} else {
