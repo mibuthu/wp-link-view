@@ -19,14 +19,9 @@
             <property name="text_domain" type="array" value="link-view,default" />
         </properties>
     </rule>
-    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
-        <properties>
-            <property name="prefixes" type="array" value="lv" />
-        </properties>
-    </rule>
     <rule ref="WordPress.WP.DeprecatedFunctions">
         <properties>
-            <property name="minimum_supported_version" value="4.5" />
+            <property name="minimum_supported_version" value="4.9" />
         </properties>
     </rule>
     <rule ref="WordPress.WP.I18n">
@@ -59,10 +54,15 @@
     <rule ref="WordPress.Security.EscapeOutput">
         <properties>
             <property name="customEscapingFunctions" type="array" value="admin_url" />
-            <property name="customAutoEscapedFunctions" type="array" value="LV_URL" />
+            <property name="customAutoEscapedFunctions" type="array" value="PLUGIN_URL" />
         </properties>
     </rule>
+    <!-- Use short array syntax instead of long array syntax specified in Wordpress -->
+    <rule ref="Generic.Arrays.DisallowShortArraySyntax.Found">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found"/>
 
-    <config name="minimum_supported_wp_version" value="4.5"/>
+    <config name="minimum_supported_wp_version" value="4.9"/>
 
 </ruleset>

@@ -1,29 +1,33 @@
 <?php
 /**
- * LV_Widget class
+ * Widget class
  *
  * @package link-view
  */
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+
+namespace WordPress\Plugins\mibuthu\LinkView\Widget;
+
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once LV_PATH . 'includes/attribute.php';
+require_once PLUGIN_PATH . 'includes/option.php';
+require_once PLUGIN_PATH . 'widget/config.php';
 
 
 /**
  * LinkView Widget class
  */
-class LV_Widget extends WP_Widget {
+class Widget extends \WP_Widget {
 
 	/**
-	 * Widget Items
+	 * Widget Arguments
 	 *
-	 * @var array<string,LV_Attribute>
+	 * @var Config
 	 */
-	private $items;
+	private $config;
 
 
 	/**
@@ -33,15 +37,11 @@ class LV_Widget extends WP_Widget {
 		parent::__construct(
 			'linkview_widget', // Base ID.
 			'LinkView', // Name.
-			array(
+			[
 				'description' => sprintf( __( 'With this widget a %1$s shortcode can be added to a sidebar or widget area.', 'link-view' ), 'LinkView' ),
-			)
+			]
 		);
-		// Define all available items.
-		$this->items = array(
-			'title' => new LV_Attribute( __( 'Links', 'link-view' ) ),
-			'atts'  => new LV_Attribute( '' ),
-		);
+		$this->config = new Config();
 	}
 
 
@@ -57,7 +57,7 @@ class LV_Widget extends WP_Widget {
 	public function widget( $args, $instance ) {
 		echo wp_kses_post( $args['before_widget'] );
 		$title = apply_filters( 'widget_title', $instance['title'] );
-		if ( ! empty( $title ) ) {
+		if ( '' !== $title ) {
 			echo wp_kses_post( $args['before_title'] . $title . $args['after_title'] );
 		}
 		echo do_shortcode( '[linkview ' . $instance['atts'] . ']' );
@@ -77,8 +77,8 @@ class LV_Widget extends WP_Widget {
 	 * @suppress PhanUnusedPublicMethodParameter
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance = array();
-		foreach ( array_keys( $this->items ) as $name ) {
+		$instance = [];
+		foreach ( array_keys( $this->config->get_all() ) as $name ) {
 			if ( isset( $new_instance[ $name ] ) ) {
 				$instance[ $name ] = wp_strip_all_tags( $new_instance[ $name ] );
 			}
@@ -96,8 +96,8 @@ class LV_Widget extends WP_Widget {
 	 * @return string Value used to check if the Safe button is displayed.
 	 */
 	public function form( $instance ) {
-		$this->load_helptexts();
-		foreach ( $this->items as $name => $item ) {
+		$this->config->load_args_admin_data();
+		foreach ( $this->config->get_all() as $name => $item ) {
 			if ( ! isset( $instance[ $name ] ) ) {
 				$instance[ $name ] = $item->value;
 			}
@@ -120,21 +120,6 @@ class LV_Widget extends WP_Widget {
 			}
 		}
 		return '';
-	}
-
-
-	/**
-	 * Load helptexts of widget items
-	 *
-	 * @return void
-	 */
-	private function load_helptexts() {
-		global $lv_widget_items_helptexts;
-		require_once LV_PATH . 'includes/widget-helptexts.php';
-		foreach ( $lv_widget_items_helptexts as $name => $values ) {
-			$this->items[ $name ]->modify( $values );
-		}
-		unset( $lv_widget_items_helptexts );
 	}
 
 }

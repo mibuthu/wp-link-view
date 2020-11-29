@@ -6,11 +6,16 @@
  */
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+
+namespace WordPress\Plugins\mibuthu\LinkView\Admin;
+
+use WordPress\Plugins\mibuthu\LinkView\Config;
+
 if ( ! defined( 'WP_ADMIN' ) ) {
 	exit();
 }
 
-require_once LV_PATH . 'includes/options.php';
+require_once PLUGIN_PATH . 'includes/config.php';
 
 
 /**
@@ -18,42 +23,24 @@ require_once LV_PATH . 'includes/options.php';
  *
  * This class handles the display of the admin settings page
  */
-class LV_Admin_Settings {
+class Settings {
 
 	/**
-	 * Class singleton instance reference
+	 * Config class instance reference
 	 *
-	 * @var self
+	 * @var Config
 	 */
-	private static $instance;
-
-	/**
-	 * Options class instance reference
-	 *
-	 * @var LV_Options
-	 */
-	private $options;
-
-
-	/**
-	 * Singleton provider and setup
-	 *
-	 * @return self
-	 */
-	public static function &get_instance() {
-		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
+	private $config;
 
 
 	/**
 	 * Class constructor which initializes required variables
+	 *
+	 * @param Config $config_instance The Config instance as a reference.
 	 */
-	private function __construct() {
-		$this->options = &LV_Options::get_instance();
-		$this->options->load_helptexts();
+	public function __construct( &$config_instance ) {
+		$this->config = $config_instance;
+		$this->config->load_admin_data();
 	}
 
 
@@ -87,10 +74,10 @@ class LV_Admin_Settings {
 			<div id="posttype-page" class="posttypediv">
 			<form method="post" action="options.php">
 				';
-		settings_fields( 'lv_options' );
+		settings_fields( 'lvw_config' );
 		echo '
 			<table class="form-table">';
-		$this->html_options();
+		$this->html_config();
 		echo '
 			</table>
 			';
@@ -102,12 +89,12 @@ class LV_Admin_Settings {
 
 
 	/**
-	 * Show options
+	 * Show config options
 	 *
 	 * @return void
 	 */
-	private function html_options() {
-		foreach ( $this->options->options as $oname => $o ) {
+	private function html_config() {
+		foreach ( $this->config->get_all() as $oname => $o ) {
 			echo '
 				<tr>
 					<th>';
@@ -118,10 +105,13 @@ class LV_Admin_Settings {
 					<td>';
 			switch ( $o->type ) {
 				case 'radio':
-					$this->show_radio( $oname, $this->options->get( $oname ), (array) $o->caption );
+					$this->show_radio( $oname, $this->config->$oname, (array) $o->caption );
+					break;
+				case 'text':
+					$this->show_text( $oname, $this->config->$oname );
 					break;
 				case 'textarea':
-					$this->show_textarea( $oname, $this->options->get( $oname ) );
+					$this->show_textarea( $oname, $this->config->$oname );
 					break;
 			}
 			echo '
@@ -158,6 +148,19 @@ class LV_Admin_Settings {
 		}
 		echo '
 							</fieldset>';
+	}
+
+
+	/**
+	 * Show a text
+	 *
+	 * @param string $name HTML name attribute.
+	 * @param string $value Value.
+	 * @return void
+	 */
+	private function show_text( $name, $value ) {
+		echo '
+						<input type="text" name="' . esc_attr( $name ) . '" id="' . esc_attr( $name ) . '" value="' . esc_html( $value ) . '" />';
 	}
 
 

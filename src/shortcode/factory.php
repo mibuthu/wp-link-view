@@ -6,65 +6,50 @@
  */
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+
+namespace WordPress\Plugins\mibuthu\LinkView\Shortcode;
+
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
 
-require_once LV_PATH . 'includes/options.php';
-require_once LV_PATH . 'includes/shortcode.php';
+require_once PLUGIN_PATH . 'includes/config.php';
+require_once PLUGIN_PATH . 'shortcode/shortcode.php';
 
+use WordPress\Plugins\mibuthu\LinkView\Config;
 
 /**
  * LinkView Shortcodes Class
  *
  * This class handles the shortcode instances and the styles/scripts which are required for all instances.
  */
-class LV_Shortcodes {
+class Factory {
 
 	/**
-	 * Class singleton instance reference
+	 * Config class instance reference
 	 *
-	 * @var self
+	 * @var Config
 	 */
-	private static $instance;
-
-	/**
-	 * Options class instance reference
-	 *
-	 * @var LV_Options
-	 */
-	private $options;
+	private $config;
 
 	/**
 	 * Shortcode instances
 	 *
-	 * @var array<int,LV_Shortcode>
+	 * @var array<int,Shortcode>
 	 */
-	private $shortcodes = array();
-
-
-	/**
-	 * Singleton provider and setup
-	 *
-	 * @return self
-	 */
-	public static function &get_instance() {
-		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
+	private $shortcodes = [];
 
 
 	/**
 	 * Class constructor which initializes required variables
 	 *
+	 * @param Config $config_instance The Config instance as a reference.
 	 * @return void
 	 */
-	private function __construct() {
-		$this->options = LV_Options::get_instance();
-		add_action( 'print_late_styles', array( &$this, 'print_styles' ) );
-		add_action( 'wp_footer', array( &$this, 'enqueue_scripts' ), 1 );
+	public function __construct( &$config_instance ) {
+		$this->config = $config_instance;
+		add_action( 'print_late_styles', [ &$this, 'print_styles' ] );
+		add_action( 'wp_footer', [ &$this, 'enqueue_scripts' ], 1 );
 	}
 
 
@@ -77,7 +62,7 @@ class LV_Shortcodes {
 	 */
 	public function add( $atts, $content = '' ) {
 		$sc_id              = count( $this->shortcodes ) + 1;
-		$this->shortcodes[] = new LV_Shortcode( $sc_id );
+		$this->shortcodes[] = new Shortcode( $this->config, $sc_id );
 		return $this->shortcodes[ $sc_id - 1 ]->show_html( $atts, $content );
 	}
 
@@ -88,19 +73,19 @@ class LV_Shortcodes {
 	 * @return void
 	 */
 	public function print_styles() {
-		// Default styles for the shortcode and user specific styles from lv_css option.
+		// Default styles for the shortcode and user specific styles from lvw_custom_css option.
 		echo '
 			<style type="text/css">
 				.linkview { overflow:auto; }
 				.linkview > div { overflow:hidden; }
-				.lv-slider ul, .lv-slider li { margin:0; padding:0; list-style-type:none; list-style-image:none; }
-				.lv-slider li { overflow:hidden; text-align:center; }
-				.lv-slider img { max-width:100%; }
-				.lv-multi-column { float:left; }
-				.lv-multi-column li { page-break-inside: avoid; }
-				.lv-row { overflow:auto; }
-				.lv-css-column { break-inside:avoid-column; column-break-inside:avoid; -webkit-column-break-inside:avoid; overflow:hidden; }
-				' . wp_kses_post( $this->options->get( 'lv_css' ) );
+				.lvw-slider ul, .lvw-slider li { margin:0; padding:0; list-style-type:none; list-style-image:none; }
+				.lvw-slider li { overflow:hidden; text-align:center; }
+				.lvw-slider img { max-width:100%; }
+				.lvw-multi-column { float:left; }
+				.lvw-multi-column li { page-break-inside: avoid; }
+				.lvw-row { overflow:auto; }
+				.lvw-css-column { break-inside:avoid-column; column-break-inside:avoid; -webkit-column-break-inside:avoid; overflow:hidden; }
+				' . wp_kses_post( $this->config->custom_css );
 		// Slider styles.
 		foreach ( $this->shortcodes as $shortcode ) {
 			echo wp_kses_post( $shortcode->slider_styles() );
@@ -121,24 +106,24 @@ class LV_Shortcodes {
 		foreach ( $this->shortcodes as $shortcode ) {
 			$slider .= $shortcode->slider_scripts();
 		}
-		if ( ! empty( $slider ) ) {
+		if ( '' !== $slider ) {
 			$slider = '
 				jQuery(document).ready( function() {' . $slider . '
 				});';
-			wp_enqueue_script( 'lv_easySlider' );
-			wp_add_inline_script( 'lv_easySlider', $slider );
+			wp_enqueue_script( 'lvw_easySlider' );
+			wp_add_inline_script( 'lvw_easySlider', $slider );
 		}
 		// Masonry scripts.
 		$masonry = '';
 		foreach ( $this->shortcodes as $shortcode ) {
 			$masonry .= $shortcode->mansonry_scripts();
 		}
-		if ( ! empty( $masonry ) ) {
+		if ( '' !== $masonry ) {
 			$masonry = '
 				jQuery(document).ready( function() {' . $masonry . '
 				});';
-			wp_enqueue_script( 'lv_masonry' );
-			wp_add_inline_script( 'lv_masonry', $masonry );
+			wp_enqueue_script( 'lvw_masonry' );
+			wp_add_inline_script( 'lvw_masonry', $masonry );
 		}
 	}
 

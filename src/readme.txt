@@ -2,10 +2,10 @@
 Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css, multi-column
-Requires at least: 4.5
-Tested up to: 5.4
-Requires PHP: 5.2
-Stable tag: 0.7.3
+Requires at least: 4.9
+Tested up to: 5.6
+Requires PHP: 5.6
+Stable tag: 0.8.0
 Plugin URI: https://wordpress.org/extend/plugins/link-view
 Licence: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -66,6 +66,15 @@ Yes, you can create an instance of the "SC_Linkview" class which located in "php
 
 
 == Changelog ==
+
+= 0.8.0 (2020-11-29) =
+* raise minimum required PHP version to 5.6
+* some internal code refactoring (namespaces, file structure, ...)
+* added setting to add custom css classes
+* added a shortcode attribute to add custom css classes
+* added category css classes for each link
+* change shortcode boolean attributes from '1' and '0' to 'true' and 'false' (numbers are still working)
+* changed css class prefix from 'lv' to 'lvw'. Attention: If you use these class names in your CSS or the custom CSS option you have to update the CSS there!
 
 = 0.7.3 (2020-04-19) =
 * fixed warnings for PHP-versions < 7.0

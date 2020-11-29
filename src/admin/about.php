@@ -6,11 +6,17 @@
  */
 
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+
+namespace WordPress\Plugins\mibuthu\LinkView\Admin;
+
+use WordPress\Plugins\mibuthu\LinkView\Config;
+use WordPress\Plugins\mibuthu\LinkView\Option;
+
 if ( ! defined( 'WP_ADMIN' ) ) {
 	exit();
 }
 
-require_once LV_PATH . 'includes/options.php';
+require_once PLUGIN_PATH . 'includes/config.php';
 
 
 /**
@@ -18,41 +24,23 @@ require_once LV_PATH . 'includes/options.php';
  *
  * This class handles the display of the admin about page
  */
-class LV_Admin_About {
-
-		/**
-		 * Class singleton instance reference
-		 *
-		 * @var self
-		 */
-	private static $instance;
+class About {
 
 	/**
-	 * Options class instance reference
+	 * Config class instance reference
 	 *
-	 * @var LV_Options
+	 * @var Config
 	 */
-	private $options;
-
-
-	/**
-	 * Singleton provider and setup
-	 *
-	 * @return self
-	 */
-	public static function &get_instance() {
-		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
+	private $config;
 
 
 	/**
 	 * Class constructor which initializes required variables
+	 *
+	 * @param Config $config_instance The Config instance as a reference.
 	 */
-	private function __construct() {
-		$this->options = &LV_Options::get_instance();
+	public function __construct( &$config_instance ) {
+		$this->config = $config_instance;
 	}
 
 
@@ -63,8 +51,8 @@ class LV_Admin_About {
 	 */
 	public function show_page() {
 		// Check required privilegs.
-		if ( ! current_user_can( $this->options->get( 'lv_req_cap' ) ) ) {
-			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+		if ( ! current_user_can( $this->config->req_capabilities ) ) {
+			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -95,14 +83,14 @@ class LV_Admin_About {
 	 * @return void
 	 */
 	private function show_tabs( $current = 'general' ) {
-		$tabs = array(
+		$tabs = [
 			'general' => __( 'General', 'link-view' ),
 			'atts'    => __( 'Shortcode Attributes', 'link-view' ),
-		);
+		];
 		echo '<h3 class="nav-tab-wrapper">';
 		foreach ( $tabs as $tab => $name ) {
 			$class = ( $tab === $current ) ? ' nav-tab-active' : '';
-			echo '<a class="nav-tab' . esc_html( $class ) . '" href="?page=lv_admin_about&amp;tab=' . esc_attr( $tab ) . '">' . esc_html( $name ) . '</a>';
+			echo '<a class="nav-tab' . esc_html( $class ) . '" href="?page=lvw_admin_about&amp;tab=' . esc_attr( $tab ) . '">' . esc_html( $name ) . '</a>';
 		}
 		echo '</h3>';
 	}
@@ -134,11 +122,9 @@ class LV_Admin_About {
 					__( 'Goto %1$s and drag the %2$s-Widget into one of the sidebar or widget areas.', 'link-view' ),
 					'<a href="' .
 					admin_url( 'widgets.php' ) . '">' .
-					// Use "default" text domain for translations available in WordPress Core.
-					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
 					__( 'Appearance' ) . ' &rarr; ' .
-					// Use "default" text domain for translations available in WordPress Core.
-					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
 					__( 'Widgets' ) . '</a>',
 					'"LinkView"'
 				) . '<br />
@@ -147,8 +133,7 @@ class LV_Admin_About {
 				sprintf(
 					__( 'Press %1$s to confirm the changes.', 'link-view' ),
 					'"' .
-					// Use "default" text domain for translations available in WordPress Core.
-					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
 					__( 'Save' ) .
 					'"'
 				) . '
@@ -159,9 +144,8 @@ class LV_Admin_About {
 				sprintf(
 					__( 'In the %1$s settings page, available under %2$s, you can find some options to modify the plugin.', 'link-view' ),
 					'LinkView',
-					'<a href="' . admin_url( 'options-general.php?page=lv_admin_options' ) . '">' .
-					// Use "default" text domain for translations available in WordPress Core.
-					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+					'<a href="' . admin_url( 'options-general.php?page=lvw_admin_settings' ) . '">' .
+					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
 					__( 'Settings' ) . ' &rarr; LinkView</a>'
 				) . '
 			</div>'
@@ -182,9 +166,9 @@ class LV_Admin_About {
 				<p>' . sprintf( __( 'This plugin is developed by %1$s, you can find more information about the plugin on the %2$s.', 'link-view' ), 'mibuthu', '<a href="https://wordpress.org/plugins/link-view" target="_blank" rel="noopener">' . __( 'WordPress plugin site', 'link-view' ) . '</a>' ) . '</p>
 				<p>' . sprintf( __( 'If you like the plugin please rate it on the %1$s.', 'link-view' ), '<a href="https://wordpress.org/support/view/plugin-reviews/link-view" target="_blank" rel="noopener">' . __( 'WordPress plugin review site', 'link-view' ) . '</a>' ) . '<br />
 				<p>' . __( 'If you want to support the plugin I would be happy to get a small donation', 'link-view' ) . ':<br />
-				<a class="donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY" target="_blank" rel="noopener"><img src="' . LV_URL . 'admin/images/paypal_btn_donate.gif" alt="PayPal Donation" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'PayPal' ) . '" border="0"></a>
-				<a class="donate" href="https://liberapay.com/mibuthu/donate" target="_blank" rel="noopener"><img src="' . LV_URL . 'admin/images/liberapay-donate.svg" alt="Liberapay Donation" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'Liberapay' ) . '" border="0"></a>
-				<a class="donate" href="https://flattr.com/submit/auto?user_id=mibuthu&url=https%3A%2F%2Fwordpress.org%2Fplugins%2Flink-view" target="_blank" rel="noopener"><img src="' . LV_URL . 'admin/images/flattr-badge-large.png" alt="Flattr this" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'Flattr' ) . '" border="0"></a></p>
+				<a class="donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY" target="_blank" rel="noopener"><img src="' . PLUGIN_URL . 'admin/images/paypal_btn_donate.gif" alt="PayPal Donation" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'PayPal' ) . '" border="0"></a>
+				<a class="donate" href="https://liberapay.com/mibuthu/donate" target="_blank" rel="noopener"><img src="' . PLUGIN_URL . 'admin/images/liberapay-donate.svg" alt="Liberapay Donation" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'Liberapay' ) . '" border="0"></a>
+				<a class="donate" href="https://flattr.com/submit/auto?user_id=mibuthu&url=https%3A%2F%2Fwordpress.org%2Fplugins%2Flink-view" target="_blank" rel="noopener"><img src="' . PLUGIN_URL . 'admin/images/flattr-badge-large.png" alt="Flattr this" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'Flattr' ) . '" border="0"></a></p>
 			</div>'
 		);
 	}
@@ -211,9 +195,9 @@ class LV_Admin_About {
 	 * Show attributes HTML table
 	 */
 	private function show_atts() {
-		require_once LV_PATH . 'includes/shortcode.php';
-		$shortcode = new LV_Shortcode( 0 );
-		$shortcode->load_atts_helptexts();
+		require_once PLUGIN_PATH . 'shortcode/config.php';
+		$shortcode_config = new \WordPress\Plugins\mibuthu\LinkView\Shortcode\Config();
+		$shortcode_config->load_admin_data();
 		echo wp_kses_post(
 			'
 			<h3>' . __( 'Shortcode Attributes', 'link-view' ) . '</h3>
@@ -221,11 +205,11 @@ class LV_Admin_About {
 				' . sprintf( __( 'In the following tables you can find all available shortcode attributes for %1$s', 'link-view' ), '<code>[linkview]</code>' ) . ':'
 		);
 			echo wp_kses_post( '<h4 class="atts-section-title">' . __( 'General', 'link-view' ) . ':</h4>' );
-			$this->html_atts_table( $shortcode->get_atts( 'general' ) );
+			$this->html_atts_table( $shortcode_config->get_all( 'general' ) );
 			echo wp_kses_post( '<h4 class="atts-section-title">' . __( 'Link List', 'link-view' ) . ':</h4>' );
-			$this->html_atts_table( $shortcode->get_atts( 'list' ) );
+			$this->html_atts_table( $shortcode_config->get_all( 'list' ) );
 			echo wp_kses_post( '<h4 class="atts-section-title">' . __( 'Link Slider', 'link-view' ) . ':</h4>' );
-			$this->html_atts_table( $shortcode->get_atts( 'slider' ) );
+			$this->html_atts_table( $shortcode_config->get_all( 'slider' ) );
 			echo wp_kses_post(
 				'<br />
 				<h4 class="atts-section-title">' . __( 'Multi-column layout types and options', 'link-view' ) . ':</h4><a id="multicol"></a>
@@ -244,12 +228,12 @@ class LV_Admin_About {
 					' . __( 'The given attributes will be added to the wrapper div element. Also the prefixed browser specific attributes will be added.', 'link-view' ) . '</td></tr>
 				<tr><td>masonry</td><td>' . sprintf( __( 'This type uses the %1$s to arrange the columns.', 'link-view' ), '<a href="https://masonry.desandro.com/" target="_blank" rel="noopener">' . sprintf( __( '%1$s grid layout javascript library', 'link-view' ), 'Masonry' ) . '</a>' ) . '
 					<h5>' . __( 'available options', 'link-view' ) . ':</h5>
-					' . sprintf( __( 'You can use all Options which are available for the Masonry library (see %1$s for detailed information).', 'link-view' ), '<a href="https://masonry.desandro.com/options.html" target="_blank" rel="noopener">' . __( 'this link', 'link-view' ) . '</a>' ) . '<br />
+					' . sprintf( __( 'You can use all options which are available for the Masonry library (see %1$s for detailed information).', 'link-view' ), '<a href="https://masonry.desandro.com/options.html" target="_blank" rel="noopener">' . __( 'this link', 'link-view' ) . '</a>' ) . '<br />
 					' . __( 'The given options will be forwarded to the javascript library.', 'link-view' ) . '</td></tr>
 				</table>
 				<div class="help-content">
 					<h5>' . __( 'Usage', 'link-view' ) . ':</h5>
-					' . __( 'For the most types and options it is recommended to define a fixed width for the categories and/or links. This width must be set manually e.g. via the css entry:', 'link-view' ) . ' <code>.lv-multi-column { width: 32%; }</code><br />
+					' . __( 'For the most types and options it is recommended to define a fixed width for the categories and/or links. This width must be set manually e.g. via the css entry:', 'link-view' ) . ' <code>.lvw-multi-column { width: 32%; }</code><br />
 					' . __( 'Depending on the type and options there are probably more css modifications required for a correct multi-column layout.', 'link-view' ) . '<br />
 					' .
 					sprintf(
@@ -257,7 +241,7 @@ class LV_Admin_About {
 						'LinkView',
 						'"' .
 						sprintf( __( 'CSS-code for %1$s', 'link-view' ), 'LinkView' ) . '"',
-						'<a href="' . admin_url( 'options-general.php?page=lv_admin_options' ) . '">' .
+						'<a href="' . admin_url( 'options-general.php?page=lvw_admin_settings' ) . '">' .
 						// Use "default" text domain for translations available in WordPress Core.
 						// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
 						__( 'Settings' ) . ' &rarr; LinkView</a>'
@@ -278,7 +262,7 @@ class LV_Admin_About {
 	/**
 	 * Show a single attribute table for a given section
 	 *
-	 * @param array<string,LV_Attribute> $atts Attributes to display.
+	 * @param array<string,Option> $atts Attributes to display.
 	 * @return void
 	 */
 	private function html_atts_table( $atts ) {
@@ -293,12 +277,12 @@ class LV_Admin_About {
 				</tr>'
 		);
 		foreach ( $atts as $name => $attribute ) {
-			$value_options = is_array( $attribute->value_options ) ? implode( '<br />', $attribute->value_options ) : $attribute->value_options;
+			$permitted_values = is_array( $attribute->permitted_values ) ? implode( '<br />', $attribute->permitted_values ) : $attribute->permitted_values;
 			echo wp_kses_post(
 				'
 				<tr>
 					<td>' . $name . '</td>
-					<td>' . $value_options . '</td>
+					<td>' . $permitted_values . '</td>
 					<td>' . $attribute->value . '</td>
 					<td>' . $attribute->description . '</td>
 				</tr>'
