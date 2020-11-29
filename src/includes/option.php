@@ -83,21 +83,21 @@ class Option {
 	 *
 	 * @var string[]
 	 */
-	public const TRUE = 'true';
+	const TRUE = 'true';
 
 	/**
 	 * The boolean FALSE value option
 	 *
 	 * @var string[]
 	 */
-	public const FALSE = 'false';
+	const FALSE = 'false';
 
 	/**
 	 * The boolean value options
 	 *
 	 * @var string[]
 	 */
-	public const BOOLEAN = [ self::TRUE, self::FALSE ];
+	const BOOLEAN = [ self::TRUE, self::FALSE ];
 
 
 	/**
