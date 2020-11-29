@@ -34,6 +34,7 @@ require_once PLUGIN_PATH . 'includes/option.php';
  * @property string $link_item_img
  * @property string $link_target
  * @property string $link_rel
+ * @property string $custom_class
  * @property string $class_suffix
  * @property string $vertical_align
  * @property string $list_symbol
@@ -194,6 +195,14 @@ class ConfigAdminData {
 				'description' =>
 					sprintf( __( 'With this attribute the %1$s attribute for the HTML-links can be set.', 'link-view' ), '<code>rel</code>' ) .
 					' (' . sprintf( __( 'see %1$sthis link%2$s for details', 'link-view' ), '<a href="https://www.w3schools.com/tags/att_a_rel.asp" target="_blank" rel="noopener">', '</a> for details).' ) . ').',
+			],
+
+			'custom_class'   => [
+				'section'          => 'general',
+				'permitted_values' => __( 'String', 'link-view' ),
+				'description'      =>
+					__( 'With this attribute additional CSS classes can be specified. The classes are added to the link-view wrapper div.', 'link-view' ) . '<br />
+					' . sprintf( __( 'Use the %1$s to seperate multiple classes.', 'link-view' ), '<code>,</code>' ),
 			],
 
 			'class_suffix'   => [

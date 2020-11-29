@@ -107,6 +107,9 @@ class Settings {
 				case 'radio':
 					$this->show_radio( $oname, $this->config->$oname, (array) $o->caption );
 					break;
+				case 'text':
+					$this->show_text( $oname, $this->config->$oname );
+					break;
 				case 'textarea':
 					$this->show_textarea( $oname, $this->config->$oname );
 					break;
@@ -145,6 +148,19 @@ class Settings {
 		}
 		echo '
 							</fieldset>';
+	}
+
+
+	/**
+	 * Show a text
+	 *
+	 * @param string $name HTML name attribute.
+	 * @param string $value Value.
+	 * @return void
+	 */
+	private function show_text( $name, $value ) {
+		echo '
+						<input type="text" name="' . esc_attr( $name ) . '" id="' . esc_attr( $name ) . '" value="' . esc_html( $value ) . '" />';
 	}
 
 

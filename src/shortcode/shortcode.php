@@ -28,11 +28,18 @@ use WordPress\Plugins\mibuthu\LinkView\Links;
 class Shortcode {
 
 	/**
+	 * Plugin config instance
+	 *
+	 * @var \WordPress\Plugins\mibuthu\LinkView\Config
+	 */
+	private $config;
+
+	/**
 	 * Shortcode attributes
 	 *
 	 * @var Config
 	 */
-	private $config;
+	private $atts;
 
 	/**
 	 * Shortcode id
@@ -73,10 +80,12 @@ class Shortcode {
 	/**
 	 * Class constructor which initializes required variables
 	 *
-	 * @param int $sc_id The id of the shortcode.
+	 * @param \WordPress\Plugins\mibuthu\LinkView\Config $config The plugin config instance.
+	 * @param int                                        $sc_id The id of the shortcode.
 	 */
-	public function __construct( $sc_id ) {
-		$this->config = new Config();
+	public function __construct( &$config, $sc_id ) {
+		$this->config = $config;
+		$this->atts   = new Config();
 		$this->sc_id  = $sc_id;
 	}
 
@@ -90,12 +99,12 @@ class Shortcode {
 	 */
 	public function show_html( $atts, $content = '' ) {
 		$this->prepare_atts( $atts, $content );
-		if ( $this->config->cat_grouping ) {
-			$categories = Links::categories( $this->config );
+		if ( $this->atts->cat_grouping ) {
+			$categories = Links::categories( $this->atts );
 			$cat_column = 0;
 			// Wrapper div.
 			$out = '
-					<div class="linkview" id="lvw-sc-id-' . $this->sc_id . '"' . $this->cat_multicol_settings['wrapper_styles'] . '>';
+					<div class="linkview' . $this->custom_class_string() . '" id="lvw-sc-id-' . $this->sc_id . '"' . $this->cat_multicol_settings['wrapper_styles'] . '>';
 			// Go through each category.
 			foreach ( $categories as $category ) {
 				$out .= $this->html_category_list( $category, $cat_column );
@@ -108,8 +117,8 @@ class Shortcode {
 		} else {
 			// Wrapper div.
 			$out  = '
-					<div class="linkview" id="lvw-sc-id-' . $this->sc_id . '">';
-			$out .= $this->html_link_list( Links::get( $this->config ) );
+					<div class="linkview' . $this->custom_class_string() . '" id="lvw-sc-id-' . $this->sc_id . '">';
+			$out .= $this->html_link_list( Links::get( $this->atts ) );
 		}
 		// Close wrapper div.
 		$out .= '
@@ -138,10 +147,30 @@ class Shortcode {
 			$atts['link_items'] = $content;
 		}
 		// Set given attributes.
-		$this->config->set_values( $atts );
+		$this->atts->set_values( $atts );
 		// Preparations for multi-column category and link-list.
-		$this->cat_multicol_settings  = $this->multicol_settings( $this->config->cat_columns );
-		$this->link_multicol_settings = $this->multicol_settings( $this->config->link_columns, $this->config->list_symbol );
+		$this->cat_multicol_settings  = $this->multicol_settings( $this->atts->cat_columns );
+		$this->link_multicol_settings = $this->multicol_settings( $this->atts->link_columns, $this->atts->list_symbol );
+	}
+
+
+	/**
+	 * Returns the custom class string including all custom classes set in the options and in shortcode attribute
+	 *
+	 * @return string
+	 */
+	private function custom_class_string() {
+		$custom_class_string = $this->config->custom_class;
+		if ( 0 < strlen( $this->atts->custom_class ) ) {
+			if ( 0 < strlen( $custom_class_string ) ) {
+				$custom_class_string .= ',';
+			}
+			$custom_class_string .= $this->atts->custom_class;
+		}
+		if ( 0 >= strlen( $custom_class_string ) ) {
+			return '';
+		}
+		return ' ' . str_replace( ',', ' ', $custom_class_string );
 	}
 
 
@@ -153,15 +182,15 @@ class Shortcode {
 	 * @return string HTML to render.
 	 */
 	private function html_category_list( $category, &$cat_column ) {
-		$links = Links::get( $this->config, $category );
+		$links = Links::get( $this->atts, $category );
 		$out   = $this->html_multicol_before( $this->cat_multicol_settings, $cat_column );
 		if ( ! empty( $links ) ) {
 			$out .= '
-					<div' . $this->multicol_classes( $this->cat_multicol_settings, 'lvw-category' . $this->config->class_suffix ) . '>';
-			if ( $this->config->show_cat_name ) {
-				$num_links_text = $this->config->show_num_links ? ' <small>(' . count( $links ) . ')</small>' : '';
+					<div' . $this->multicol_classes( $this->cat_multicol_settings, 'lvw-category' . $this->atts->class_suffix ) . '>';
+			if ( $this->atts->show_cat_name ) {
+				$num_links_text = $this->atts->show_num_links ? ' <small>(' . count( $links ) . ')</small>' : '';
 				$out           .= '
-						<h2 class="lvw-cat-name' . $this->config->class_suffix . '">' . $category->name . $num_links_text . '</h2>';
+						<h2 class="lvw-cat-name' . $this->atts->class_suffix . '">' . $category->name . $num_links_text . '</h2>';
 			}
 			// Show links.
 			$out .= $this->html_link_list( $links );
@@ -184,10 +213,10 @@ class Shortcode {
 			return '';
 		}
 		$list_id = ++ $this->num_lists;
-		if ( 'slider' === $this->config->view_type ) {
+		if ( 'slider' === $this->atts->view_type ) {
 			$this->sliders[ $list_id ] = new Slider(
 				$links,
-				$this->config,
+				$this->atts,
 				$this->sc_id . '-' . $list_id
 			);
 		}
@@ -195,21 +224,21 @@ class Shortcode {
 		// Wrapper div and list tag.
 		$out = '
 					<div id="lvw-id-' . $this->sc_id . '-' . $list_id . '"';
-		if ( 'slider' === $this->config->view_type ) {
+		if ( 'slider' === $this->atts->view_type ) {
 			$out .= ' class="lvw-slider"';
 		}
 		$out .= '>
-					<ul class="lvw-link-list' . $this->config->class_suffix . '"' . $this->link_multicol_settings['wrapper_styles'] . '>';
+					<ul class="lvw-link-list' . $this->atts->class_suffix . '"' . $this->link_multicol_settings['wrapper_styles'] . '>';
 		// Iterate over the links.
 		foreach ( $links as $link ) {
 			// Link multi-column handling.
 			$out .= $this->html_multicol_before( $this->link_multicol_settings, $link_col );
 			// Actual link.
 			$out .= '
-						<li' . $this->multicol_classes( $this->link_multicol_settings, 'lvw-list-item' . $this->config->class_suffix ) . '>';
+						<li' . $this->multicol_classes( $this->link_multicol_settings, 'lvw-list-item' . $this->atts->class_suffix ) . '>';
 			$out .= Link::show_html(
 				$link,
-				$this->config,
+				$this->atts,
 				// @phan-suppress-next-line PhanPluginDuplicateConditionalNullCoalescing Cannot use NullCoalescing due to PHP 5.6 support.
 				isset( $this->sliders[ $list_id ] ) ? $this->sliders[ $list_id ] : null
 			);

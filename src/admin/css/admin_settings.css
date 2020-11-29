@@ -3,8 +3,9 @@
 	padding: 15px 10px 15px 0;
 }
 
-#lvw_custom_css {
+input[type="text"], textarea {
 	min-width: 280px;
+	width: 99%;
 }
 
 textarea {

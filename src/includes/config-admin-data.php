@@ -23,6 +23,7 @@ require_once PLUGIN_PATH . 'includes/option.php';
  *
  * @property-read string $lvw_req_capabilities Required capabilities option.
  * @property-read string $lvw_req_manage_links_role Required manage links role option.
+ * @property-read string $lvw_custom_class Custom css option.
  * @property-read string $lvw_custom_css Custom css option.
  */
 final class ConfigAdminData {
@@ -67,6 +68,14 @@ final class ConfigAdminData {
 					__( 'With this option minimum required role to manage links can be set', 'link-view' ) . ' (' . __( 'Capability', 'link-view' ) . ': "manage_links").<br />
 					' . sprintf( __( 'More information can be found in the %1$s.', 'link-view' ), '<a href="https://codex.wordpress.org/Roles_and_Capabilities" target="_blank" rel="noopener">WordPress Codex</a>' ) . '<br />
 					' . sprintf( __( 'Please note that this option also affects the access to the %1$s page if the required capabilities are set to %2$s.', 'link-view' ), '"' . __( 'About', 'link-view' ) . ' LinkView"', '"manage_links"' ),
+			],
+
+			'lvw_custom_class'          => [
+				'type'        => 'text',
+				'label'       => sprintf( __( 'Custom CSS classes for %1$s', 'link-view' ), 'LinkView' ),
+				'description' =>
+					sprintf( __( 'With this option you can specify custom CSS classes which will be added to the wrapper div of the %1$s shortcode.', 'link-view' ), '<code>[link-view]</code>' ) . '<br />
+					' . sprintf( __( 'Use the %1$s to seperate multiple classes', 'link-view' ), '<code>,</code>' ),
 			],
 
 			'lvw_custom_css'            => [

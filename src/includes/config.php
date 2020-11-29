@@ -22,6 +22,7 @@ require_once PLUGIN_PATH . 'includes/option.php';
  *
  * @property-read string $req_capabilities
  * @property-read string $req_manage_links_role
+ * @property-read string $custom_class
  * @property-read string $custom_css
  */
 final class Config {
@@ -41,6 +42,7 @@ final class Config {
 		$this->options = [
 			'lvw_req_capabilities'      => new Option( 'manage_links' ),
 			'lvw_req_manage_links_role' => new Option( 'editor' ),
+			'lvw_custom_class'          => new Option( '' ),
 			'lvw_custom_css'            => new Option( '' ),
 		];
 		add_action( 'admin_init', [ &$this, 'register' ] );

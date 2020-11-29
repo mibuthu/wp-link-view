@@ -38,6 +38,7 @@ use WordPress\Plugins\mibuthu\LinkView\Option;
  * @property string $link_item_img
  * @property string $link_target
  * @property string $link_rel
+ * @property string $custom_class
  * @property string $class_suffix
  * @property string $vertical_align
  * @property string $list_symbol
@@ -79,6 +80,7 @@ class Config {
 			'link_item_img'  => new Option( 'show_img_tag', [ 'show_img_tag', 'show_link_name', 'show_link_description', 'show_nothing' ] ),
 			'link_target'    => new Option( 'std', [ 'std', 'blank', 'top', 'self' ] ),
 			'link_rel'       => new Option( 'noopener', [ '', 'alternate', 'author', 'bookmark', 'external', 'help', 'license', 'next', 'nofollow', 'noreferrer', 'noopener', 'prev', 'search', 'tag' ] ),
+			'custom_class'   => new Option( '' ),
 			'class_suffix'   => new Option( '' ),
 			'vertical_align' => new Option( 'std', [ 'std', 'top', 'bottom', 'middle' ] ),
 			'list_symbol'    => new Option( 'std', [ 'std', 'none', 'circle', 'square', 'disc' ] ),

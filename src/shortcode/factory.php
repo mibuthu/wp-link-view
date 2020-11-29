@@ -62,7 +62,7 @@ class Factory {
 	 */
 	public function add( $atts, $content = '' ) {
 		$sc_id              = count( $this->shortcodes ) + 1;
-		$this->shortcodes[] = new Shortcode( $sc_id );
+		$this->shortcodes[] = new Shortcode( $this->config, $sc_id );
 		return $this->shortcodes[ $sc_id - 1 ]->show_html( $atts, $content );
 	}
 
