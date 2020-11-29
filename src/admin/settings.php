@@ -72,7 +72,7 @@ class Settings {
 	private function html_settings() {
 		echo '
 			<div id="posttype-page" class="posttypediv">
-			<form method="post" action="config.php">
+			<form method="post" action="options.php">
 				';
 		settings_fields( 'lvw_config' );
 		echo '
