@@ -52,7 +52,7 @@ class About {
 	public function show_page() {
 		// Check required privilegs.
 		if ( ! current_user_can( $this->config->req_capabilities ) ) {
-			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
+			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -122,8 +122,10 @@ class About {
 					__( 'Goto %1$s and drag the %2$s-Widget into one of the sidebar or widget areas.', 'link-view' ),
 					'<a href="' .
 					admin_url( 'widgets.php' ) . '">' .
-					__( 'Appearance', 'default' ) . ' &rarr; ' .
-					__( 'Widgets', 'default' ) . '</a>',
+					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
+					__( 'Appearance' ) . ' &rarr; ' .
+					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
+					__( 'Widgets' ) . '</a>',
 					'"LinkView"'
 				) . '<br />
 				' . sprintf( __( 'Enter a title for the widget and add the required shortcode attributes in the appropriate field. All available shortcode attributes for the %1$s-shortcode can be used in the widget too.', 'link-view' ), '"linkview"' ) . '<br />
@@ -131,7 +133,8 @@ class About {
 				sprintf(
 					__( 'Press %1$s to confirm the changes.', 'link-view' ),
 					'"' .
-					__( 'Save', 'default' ) .
+					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
+					__( 'Save' ) .
 					'"'
 				) . '
 			</div>
@@ -142,7 +145,8 @@ class About {
 					__( 'In the %1$s settings page, available under %2$s, you can find some options to modify the plugin.', 'link-view' ),
 					'LinkView',
 					'<a href="' . admin_url( 'options-general.php?page=lvw_admin_settings' ) . '">' .
-					__( 'Settings', 'default' ) . ' &rarr; LinkView</a>'
+					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
+					__( 'Settings' ) . ' &rarr; LinkView</a>'
 				) . '
 			</div>'
 		);

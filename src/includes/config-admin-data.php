@@ -58,11 +58,12 @@ final class ConfigAdminData {
 				'type'        => 'radio',
 				'label'       => __( 'Required role to manage links', 'link-view' ),
 				'caption'     => [
-					// Use "default" text domain for translations available in WordPress Core.
-					'editor'      => __( 'Editor', 'default' ) . ' (WordPress-' . __( 'Default', 'link-view' ) . ')',
-					'author'      => __( 'Author', 'default' ),
-					'contributor' => __( 'Contributor', 'default' ),
-					'subscriber'  => __( 'Subscriber', 'default' ),
+					// phpcs:disable WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
+					'editor'      => __( 'Editor' ) . ' (WordPress-' . __( 'Default', 'link-view' ) . ')',
+					'author'      => __( 'Author' ),
+					'contributor' => __( 'Contributor' ),
+					'subscriber'  => __( 'Subscriber' ),
+					// phpcs:enable WordPress.WP.I18n.MissingArgDomainDefault
 				],
 				'description' =>
 					__( 'With this option minimum required role to manage links can be set', 'link-view' ) . ' (' . __( 'Capability', 'link-view' ) . ': "manage_links").<br />
