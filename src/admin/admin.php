@@ -112,7 +112,7 @@ class Admin {
 	 * @return void
 	 */
 	public function embed_about_styles() {
-		wp_enqueue_style( 'lvw_admin_about', PLUGIN_URL . 'admin/css/admin_about.css', [], '1.0' );
+		wp_enqueue_style( 'lvw_admin_about', PLUGIN_URL . 'admin/css/about.css', [], '1.0' );
 	}
 
 
@@ -123,7 +123,7 @@ class Admin {
 	 * @return void
 	 */
 	public function embed_settings_styles() {
-		wp_enqueue_style( 'lvw_admin_settings', PLUGIN_URL . 'admin/css/admin_settings.css', [], '1.0' );
+		wp_enqueue_style( 'lvw_admin_settings', PLUGIN_URL . 'admin/css/settings.css', [], '1.0' );
 	}
 
 }
