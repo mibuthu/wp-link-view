@@ -57,7 +57,7 @@ class Widget extends \WP_Widget {
 	public function widget( $args, $instance ) {
 		echo wp_kses_post( $args['before_widget'] );
 		$title = apply_filters( 'widget_title', $instance['title'] );
-		if ( ! empty( $title ) ) {
+		if ( '' !== $title ) {
 			echo wp_kses_post( $args['before_title'] . $title . $args['after_title'] );
 		}
 		echo do_shortcode( '[linkview ' . $instance['atts'] . ']' );

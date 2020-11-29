@@ -58,7 +58,7 @@ class Link {
 			$out .= ' style="display:inline-block; vertical-align:' . $shortcode_config->vertical_align . ';"';
 		}
 		$out .= '>';
-		if ( empty( $shortcode_config->link_items ) ) {
+		if ( '' === $shortcode_config->link_items ) {
 			// Simple style (name or image).
 			if ( $shortcode_config->show_img && ! is_null( $link->link_image ) ) {
 				// Image.
@@ -127,7 +127,7 @@ class Link {
 		}
 		// Prepare output.
 		$out = '<div class="lvw-item-' . $item . $shortcode_config->class_suffix . '">';
-		if ( ! empty( $caption ) ) {
+		if ( '' !== $caption ) {
 			$out .= '<span class="lvw-item-caption' . $shortcode_config->class_suffix . '">' . $caption . '</span>';
 		}
 		// Pepare link if required.
@@ -144,13 +144,13 @@ class Link {
 			}
 			// Check description.
 			$description = '';
-			if ( ! empty( $link->link_description ) ) {
+			if ( '' !== $link->link_description ) {
 				$description = ' (' . $link->link_description . ')';
 			}
 			// Check rel attribute.
 			$rel          = '';
 			$combined_rel = $shortcode_config->link_rel . ' ' . $link->link_rel;
-			if ( ! empty( $combined_rel ) ) {
+			if ( '' !== $combined_rel ) {
 				// Check value according to allowed values for HTML5 (see https://www.w3schools.com/tags/att_a_rel.asp).
 				$rels = array_intersect(
 					array_unique( explode( ' ', $combined_rel ) ),

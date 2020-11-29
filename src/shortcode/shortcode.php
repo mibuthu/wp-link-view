@@ -110,7 +110,7 @@ class Shortcode {
 				$out .= $this->html_category_list( $category, $cat_column );
 			}
 			// Close last column div if required.
-			if ( ! empty( $cat_column ) ) {
+			if ( 0 < $cat_column ) {
 				$out .= '
 						</div>';
 			}
@@ -140,7 +140,7 @@ class Shortcode {
 			$atts['class_suffix'] = '-' . $atts['class_suffix'];
 		}
 		// Set attribute link_items to $content if an enclosing shortcode was used.
-		if ( ! empty( $content ) ) {
+		if ( '' !== $content ) {
 			// Replace quotes html code with real quotes.
 			$content = str_replace( [ '&#8220;', '&#8221;', '&#8222;' ], '"', $content );
 			// Set attribute.
@@ -161,13 +161,13 @@ class Shortcode {
 	 */
 	private function custom_class_string() {
 		$custom_class_string = $this->config->custom_class;
-		if ( 0 < strlen( $this->atts->custom_class ) ) {
-			if ( 0 < strlen( $custom_class_string ) ) {
+		if ( '' !== $this->atts->custom_class ) {
+			if ( '' !== $custom_class_string ) {
 				$custom_class_string .= ',';
 			}
 			$custom_class_string .= $this->atts->custom_class;
 		}
-		if ( 0 >= strlen( $custom_class_string ) ) {
+		if ( '' === $custom_class_string ) {
 			return '';
 		}
 		return ' ' . str_replace( ',', ' ', $custom_class_string );
@@ -247,7 +247,7 @@ class Shortcode {
 			$out .= $this->html_multicol_after( $this->link_multicol_settings, $link_col );
 		}
 		// Close last column div if required.
-		if ( ! empty( $link_col ) ) {
+		if ( 0 < $link_col ) {
 			$out .= '
 					</div>';
 		}
@@ -307,7 +307,7 @@ class Shortcode {
 		$ret = [];
 		// Check if multicolumn is enabled.
 		if ( 1 === intval( $column_option ) ) {  // No multicolumn.
-			$ret['type']               = false;
+			$ret['type']               = '';
 			$ret['opt']['num_columns'] = 1;
 		} elseif ( ctype_digit( strval( $column_option ) ) ) {  // Special case for number only (short form of static type).
 			$ret['type']               = 'static';
@@ -334,7 +334,7 @@ class Shortcode {
 						$ret['opt']['num_columns'] = 3;
 						// Disable multi-column if num_columns = 1.
 						if ( 1 === intval( $ret['opt']['num_columns'] ) ) {
-							$ret['type'] = false;
+							$ret['type'] = '';
 						}
 					}
 					break;
@@ -364,10 +364,10 @@ class Shortcode {
 	 */
 	private function multicol_classes( $multicol_settings, $additional_classes = '' ) {
 		$classes = $additional_classes;
-		if ( ! empty( $multicol_settings['type'] ) ) {
+		if ( '' !== $multicol_settings['type'] ) {
 			$classes .= ' lvw-multi-column lvw-' . $multicol_settings['type'] . '-column';
 		}
-		if ( empty( $classes ) ) {
+		if ( '' === $classes ) {
 			return '';
 		} else {
 			return ' class="' . $classes . '"';
@@ -402,7 +402,7 @@ class Shortcode {
 				}
 			}
 		}
-		if ( empty( $styles ) ) {
+		if ( '' === $styles ) {
 			return '';
 		} else {
 			return ' style="' . $styles . '"';

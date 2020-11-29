@@ -53,7 +53,7 @@ class Links {
 	public static function categories( $shortcode_config ) {
 		$catarray = [];
 		// TODO: The cat_filter value "all" is depricated and can be removed in 0.9.
-		if ( ! empty( $shortcode_config->cat_filter ) && 'all' !== $shortcode_config->cat_filter ) {
+		if ( '' !== $shortcode_config->cat_filter && 'all' !== $shortcode_config->cat_filter ) {
 			str_replace( ',', '|', $shortcode_config->cat_filter );
 			$catslugs = array_map( 'trim', array_map( 'strval', (array) explode( '|', $shortcode_config->cat_filter ) ) );
 			foreach ( $catslugs as $catslug ) {
@@ -74,7 +74,7 @@ class Links {
 			if ( is_array( $terms ) ) {
 				$catarray = $terms;
 			}
-			if ( ! empty( $shortcode_config->exclude_cat ) ) {
+			if ( '' !== $shortcode_config->exclude_cat ) {
 				$excludecat = array_map( 'trim', array_map( 'strval', (array) explode( ',', $shortcode_config->exclude_cat ) ) );
 				$diff       = [];
 				foreach ( $catarray as $cat ) {

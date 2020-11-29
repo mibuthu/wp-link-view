@@ -106,7 +106,7 @@ class Factory {
 		foreach ( $this->shortcodes as $shortcode ) {
 			$slider .= $shortcode->slider_scripts();
 		}
-		if ( ! empty( $slider ) ) {
+		if ( '' !== $slider ) {
 			$slider = '
 				jQuery(document).ready( function() {' . $slider . '
 				});';
@@ -118,7 +118,7 @@ class Factory {
 		foreach ( $this->shortcodes as $shortcode ) {
 			$masonry .= $shortcode->mansonry_scripts();
 		}
-		if ( ! empty( $masonry ) ) {
+		if ( '' !== $masonry ) {
 			$masonry = '
 				jQuery(document).ready( function() {' . $masonry . '
 				});';

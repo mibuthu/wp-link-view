@@ -80,10 +80,12 @@ class Slider {
 	 * Get calculated slider size
 	 */
 	private function slider_size() {
+		$config_width  = intval( $this->shortcode_config->slider_width );
+		$config_height = intval( $this->shortcode_config->slider_height );
 		// Use manual size given in the attributes.
-		if ( ! empty( $this->shortcode_config->slider_width ) && ! empty( $this->shortcode_config->slider_height ) ) {
-			$this->width  = intval( $this->shortcode_config->slider_width );
-			$this->height = intval( $this->shortcode_config->slider_height );
+		if ( 0 < $config_width && 0 < $config_height ) {
+			$this->width  = $config_width;
+			$this->height = $config_height;
 		}
 
 		// Get the maximum image size.
@@ -98,18 +100,18 @@ class Slider {
 		}
 		// Get the maximum image size depending on the given size in the attributes.
 		$ratio = 1;
-		if ( ! empty( $this->shortcode_config->slider_width ) ) {
-			$ratio = intval( $this->shortcode_config->slider_width ) / $width;
-		} elseif ( ! empty( $this->shortcode_config->slider_height ) ) {
-			$ratio = intval( $this->shortcode_config->slider_height ) / $height;
+		if ( 0 < $config_width ) {
+			$ratio = $config_width / $width;
+		} elseif ( 0 < $config_height ) {
+			$ratio = $config_height / $height;
 		}
 		$width  = intval( round( $width * $ratio ) );
 		$height = intval( round( $height * $ratio ) );
 		// If no image was in all links, set a manual size.
-		if ( empty( $width ) ) {
+		if ( 0 >= $width ) {
 			$width = 300;
 		}
-		if ( empty( $height ) ) {
+		if ( 0 >= $height ) {
 			$height = 30;
 		}
 		$this->width  = $width;
