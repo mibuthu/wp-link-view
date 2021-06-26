@@ -43,7 +43,7 @@ commands=(
 function tx_help() {
     echo "Usage: $(basename "$0") [option] command [cmd_option]"
     echo ""
-    echo "This script handles all required task for multi localisation support in Wordpress"
+    echo "This script handles all required task for multi localisation support in WordPress"
     echo "plugins and the exchange the language files with Transifex service."
     echo ""
     echo "Options:"
@@ -80,18 +80,18 @@ function tx_update_source() {
     mkdir -p "${lang_path}"
     rm -f "${lang_source}"
     # define the wp keywords
-    # specify all keywords with numargs parmameter (t) to exclude functions without specified text-domain which will be used to use wordpress standard translations
+    # specify all keywords with numargs parmameter (t) to exclude functions without specified text-domain which will be used to use WordPress standard translations
     wp_keywords="-k__:1,2t -k_e:1,2t -k_n:1,2,4t -k_x:1,2c,3t -k_ex:1,2c,3t -k_nx:1,2,4c,5t -kesc_attr__:1,2t -kesc_attr_e:1,2t -kesc_attr_x:1,2c,3t -kesc_html__:1,2t -kesc_html_e:1,2t -kesc_html_x:1,2c,3t -k_n_noop:1,2,3t -k_nx_noop:1,2,3c,4t"
     cd "${plugin_path}" || exit;
     find "." -iname "*.php" | sort | xargs xgettext --from-code=UTF-8 --default-domain="${plugin_slug}" --output="${lang_source}" --language=PHP --no-wrap --copyright-holder="${plugin_author}" --msgid-bugs-address="https://wordpress.org/support/plugin/${plugin_slug}/" ${wp_keywords}
-    
+
     # fix the header comments in the file
     now=$(date +%Y)
     sed -i "s/SOME DESCRIPTIVE TITLE./Translation file for the '${plugin_name}' WordPress plugin/g" "${lang_source}"
     sed -i "s/(C) YEAR/(C) ${now} by/g" "${lang_source}"
-    sed -i "s/the PACKAGE package./the corresponding wordpress plugin./g" "${lang_source}"
+    sed -i "s/the PACKAGE package./the corresponding WordPress plugin./g" "${lang_source}"
     sed -i "/# FIRST AUTHOR*/d" "${lang_source}"
-    
+
     # fix the header entries in the file
     sed -i '/^"Project-Id-Version*/d' "${lang_source}"
     sed -i '/^"PO-Revision-Date*/d' "${lang_source}"

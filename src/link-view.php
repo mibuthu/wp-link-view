@@ -3,14 +3,14 @@
  * Plugin Name: Link View
  * Plugin URI: https://wordpress.org/plugins/link-view/
  * Description: Display a link-list or link-slider in a post or page by using a shortcode.
- * Version: 0.8.0
+ * Version: 0.8.1
  * Author: mibuthu
  * Author URI: https://wordpress.org/plugins/link-view/
  * Text Domain: link-view
  * License: GPLv2
  *
  * A plugin for the blogging MySQL/PHP-based WordPress.
- * Copyright 2012-2020 mibuthu
+ * Copyright 2012-2021 mibuthu
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNUs General Public License

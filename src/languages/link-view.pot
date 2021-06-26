@@ -1,6 +1,6 @@
 # Translation file for the 'Link View' WordPress plugin
 # Copyright (C) 2020 by mibuthu
-# This file is distributed under the same license as the corresponding wordpress plugin.
+# This file is distributed under the same license as the corresponding WordPress plugin.
 #
 #, fuzzy
 msgid ""
