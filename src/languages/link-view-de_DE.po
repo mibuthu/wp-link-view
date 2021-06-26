@@ -360,7 +360,7 @@ msgstr "CSS-Code für %1$s"
 #, php-format
 msgid ""
 "The optional type options must be added in brackets in the format "
-"\"option_name=value\", multiple options can be added seperated by a pipe "
+"\"option_name=value\", multiple options can be added separated by a pipe "
 "%1$s."
 msgstr ""
 "Die optionalen Typ-Einstellungen müssen in Klammern im Format "
@@ -576,7 +576,7 @@ msgstr ""
 #: shortcode/config-admin-data.php:77
 #, php-format
 msgid ""
-"To show multiple categories, multiple slugs can be provided seperated by "
+"To show multiple categories, multiple slugs can be provided separated by "
 "%1$s or %2$s."
 msgstr ""
 "Um mehrere Kategorien anzuzeigen können mehrere Kategorie-Slugs, die durch "
@@ -614,7 +614,7 @@ msgstr ""
 #: shortcode/config-admin-data.php:90
 #, php-format
 msgid ""
-"To exclude multiple categories, multiple names can be provided seperated by "
+"To exclude multiple categories, multiple names can be provided separated by "
 "%1$s."
 msgstr ""
 "Um mehrere Kategorien auszuschließen können mehrere Kategorie-Namen, die "

@@ -246,7 +246,7 @@ class About {
 						// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
 						__( 'Settings' ) . ' &rarr; LinkView</a>'
 					) . '<br />
-					' . sprintf( __( 'The optional type options must be added in brackets in the format "option_name=value", multiple options can be added seperated by a pipe %1$s.', 'link-view' ), '("<strong>|</strong>")' ) . '
+					' . sprintf( __( 'The optional type options must be added in brackets in the format "option_name=value", multiple options can be added separated by a pipe %1$s.', 'link-view' ), '("<strong>|</strong>")' ) . '
 					<h5>' . __( 'Examples', 'link-view' ) . ':</h5>
 					<p><code>[linkview cat_columns=3]</code> &hellip; ' . __( 'show the categories in 3 static columns', 'link-view' ) . '</p>
 					<p><code>[linkview link_columns="static(num_columns=2)"]</code> &hellip; ' . __( 'show the link-lists in 2 static columns', 'link-view' ) . '</p>

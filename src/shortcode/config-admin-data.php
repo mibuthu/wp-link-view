@@ -74,7 +74,7 @@ class ConfigAdminData {
 					__( 'This attribute specifies the displayed link categories. Default is an empty string to show all categories.', 'link-view' ) . '<br />
 					' . __( 'Links with categories that doesn´t match the filter will not be displayed.', 'link-view' ) . '<br />
 					' . __( 'The filter is specified via the given category slug. The simplest version is a single slug to only show links from this category.', 'link-view' ) . '<br />
-					' . sprintf( __( 'To show multiple categories, multiple slugs can be provided seperated by %1$s or %2$s.', 'link-view' ), '<code>|</code>', '<code>,</code>' ) . '<br />
+					' . sprintf( __( 'To show multiple categories, multiple slugs can be provided separated by %1$s or %2$s.', 'link-view' ), '<code>|</code>', '<code>,</code>' ) . '<br />
 					' . __( 'Examples', 'link-view' ) . ':<br />
 					<code>[linkview cat_filter="social-media"]</code> &hellip; ' . sprintf( __( 'Show all links with category %1$s.', 'link-view' ), '"social-media"' ) . '<br />
 					<code>[linkview cat_filter="blogroll&comma;social-media"]</code> &hellip; ' . sprintf( __( 'Show all links with category %1$s or %2$s.', 'link-view' ), '"blogroll"', '"social-media"' ),
@@ -87,7 +87,7 @@ class ConfigAdminData {
 					__( 'This attribute specifies which categories should be excluded.', 'link-view' )
 					. sprintf( __( 'This attribute is only considered if the attribute %1$s is not set.', 'link-view' ), '<code>cat_filter</code>' ) . '<br />
 					' . __( 'If the category name has spaces, the name must be surrounded by quotes.', 'link-view' ) . '<br />
-					' . sprintf( __( 'To exclude multiple categories, multiple names can be provided seperated by %1$s.', 'link-view' ), '<code>,</code>' ) . '<br />
+					' . sprintf( __( 'To exclude multiple categories, multiple names can be provided separated by %1$s.', 'link-view' ), '<code>,</code>' ) . '<br />
 					' . __( 'Example', 'link-view' ) . ': <code>[linkview exclude_cat="Blogroll,Social Media"]</code>',
 			],
 
