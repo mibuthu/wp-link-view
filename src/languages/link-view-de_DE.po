@@ -301,7 +301,7 @@ msgstr ""
 
 #: admin/about.php:229
 #, php-format
-msgid "%1$s grid layout javascript library"
+msgid "%1$s grid layout JavaScript library"
 msgstr "%1$s Raster Layout Javascript Bibliothek"
 
 #: admin/about.php:231
@@ -314,7 +314,7 @@ msgstr ""
 "Bibliothek verfügbar sind (siehe %1$s für weitere Informationen)."
 
 #: admin/about.php:232
-msgid "The given options will be forwarded to the javascript library."
+msgid "The given options will be forwarded to the JavaScript library."
 msgstr ""
 "Die angegebenen Einstellungen werden an die Javascript Bibliothek "
 "weitergeleitet."

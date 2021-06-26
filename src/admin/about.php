@@ -226,10 +226,10 @@ class About {
 					<h5>' . __( 'available options', 'link-view' ) . ':</h5>
 					' . sprintf( __( 'You can use all available properties for CSS3 Multi-column Layout (see %1$s for detailed information).', 'link-view' ), '<a href="https://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">' . __( 'this link', 'link-view' ) . '</a>' ) . '<br />
 					' . __( 'The given attributes will be added to the wrapper div element. Also the prefixed browser specific attributes will be added.', 'link-view' ) . '</td></tr>
-				<tr><td>masonry</td><td>' . sprintf( __( 'This type uses the %1$s to arrange the columns.', 'link-view' ), '<a href="https://masonry.desandro.com/" target="_blank" rel="noopener">' . sprintf( __( '%1$s grid layout javascript library', 'link-view' ), 'Masonry' ) . '</a>' ) . '
+				<tr><td>masonry</td><td>' . sprintf( __( 'This type uses the %1$s to arrange the columns.', 'link-view' ), '<a href="https://masonry.desandro.com/" target="_blank" rel="noopener">' . sprintf( __( '%1$s grid layout JavaScript library', 'link-view' ), 'Masonry' ) . '</a>' ) . '
 					<h5>' . __( 'available options', 'link-view' ) . ':</h5>
 					' . sprintf( __( 'You can use all options which are available for the Masonry library (see %1$s for detailed information).', 'link-view' ), '<a href="https://masonry.desandro.com/options.html" target="_blank" rel="noopener">' . __( 'this link', 'link-view' ) . '</a>' ) . '<br />
-					' . __( 'The given options will be forwarded to the javascript library.', 'link-view' ) . '</td></tr>
+					' . __( 'The given options will be forwarded to the JavaScript library.', 'link-view' ) . '</td></tr>
 				</table>
 				<div class="help-content">
 					<h5>' . __( 'Usage', 'link-view' ) . ':</h5>

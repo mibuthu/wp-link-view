@@ -219,7 +219,7 @@ msgstr ""
 
 #: admin/about.php:229
 #, php-format
-msgid "%1$s grid layout javascript library"
+msgid "%1$s grid layout JavaScript library"
 msgstr ""
 
 #: admin/about.php:231
@@ -228,7 +228,7 @@ msgid "You can use all options which are available for the Masonry library (see 
 msgstr ""
 
 #: admin/about.php:232
-msgid "The given options will be forwarded to the javascript library."
+msgid "The given options will be forwarded to the JavaScript library."
 msgstr ""
 
 #: admin/about.php:235
