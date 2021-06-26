@@ -64,11 +64,11 @@ Yes, you can create an instance of the `SC_Linkview` class which is located in `
 
 == Changelog ==
 
-= 0.8.1 (2021-01-26) =
-* Raise minimum required PHP version to 7.0, to catch some fatal errors which used to be simple deprecation notices
-* Tested up to 5.7.2
-* Minor spelling changes (ex. writing *WordPress* according to Automattic's trademark)
-* Added Portuguese translation
+= 0.8.1 (2021-06-26) =
+* raise minimum required PHP version to 7.0, to catch some fatal errors which used to be simple deprecation notices
+* tested up to 5.7.2
+* minor spelling changes (ex. writing *WordPress* according to Automattic's trademark)
+* added Portuguese (European) translation
 
 = 0.8.0 (2020-11-29) =
 * raise minimum required PHP version to 5.6
