@@ -109,7 +109,7 @@ class About {
 			<div class="help-content">
 				<p>' . sprintf( __( 'To show links in a post or page the shortcode %1$s must be added in the post or page content text.', 'link-view' ), '<code>[linkview]</code>' ) . '</p>
 				<p>' . __( 'The listed links and their styles can be modified with the available attributes for the shortcode.', 'link-view' ) . '<br />
-				' . __( 'You can combine as much attributes as you want.', 'link-view' ) . '
+				' . __( 'You can combine as many attributes as you want.', 'link-view' ) . '
 				' . sprintf( __( 'E.g. the shortcode including the attributes %1$s and %2$s would look like this', 'link-view' ), '"cat_filter"', '"show_img"' ) . ':<br />
 				<code>[linkview cat_filter=Sponsors show_img=1]</code><br />
 				' . __( 'Below you can find tables with all supported attributes, their descriptions and available options.', 'link-view' ) . '</p>

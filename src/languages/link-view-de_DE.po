@@ -57,7 +57,7 @@ msgstr ""
 "Shortcode-Attribute angepasst werden."
 
 #: admin/about.php:112
-msgid "You can combine as much attributes as you want."
+msgid "You can combine as many attributes as you want."
 msgstr ""
 "Es können beliebig viele dieser Attribute kombiniert und gleichzeitig "
 "verwendet werden."
