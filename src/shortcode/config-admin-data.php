@@ -164,7 +164,7 @@ class ConfigAdminData {
 							. sprintf( __( 'The key defines one of the available items (see "%1$s"), the value defines an optional heading for the item.', 'link-view' ), __( 'Value options', 'link-view' ) )
 							. sprintf( __( 'If no heading is required leave the value empty (%1$s).', 'link-view' ), '<code>""</code>' ) . '<br />
 					' . sprintf( __( 'The list must be enclosed in curly braces (%1$s) to have valid JSON data. Double quotes must be added around the key and the value.', 'link-view' ), '<code>{}</code>' )
-							. sprintf( __( 'The %1$s character separats the key and the value, multiple objects are separated via comma (%2$s).', 'link-view' ), '<code>:</code>', '<code>,</code>' ) . '<br />
+							. sprintf( __( 'The %1$s character separates the key and the value, multiple objects are separated via comma (%2$s).', 'link-view' ), '<code>:</code>', '<code>,</code>' ) . '<br />
 					<p><code>{ "name": "", "image_l": "", "address_l": "URL :" }</code><br />
 					' . sprintf( __( 'Add a %1$s at the end of the item name to include a link to the link target.', 'link-view' ), '<code>_l</code>' ) . '</p>
 					<code>{ "name": "", "left": { image_l": "", "address_l": "URL :" }, "right": { "description": "Description :", "notes": "Notes: " } }</code><br />

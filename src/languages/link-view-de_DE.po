@@ -806,7 +806,7 @@ msgstr ""
 #: shortcode/config-admin-data.php:167
 #, php-format
 msgid ""
-"The %1$s character separats the key and the value, multiple objects are "
+"The %1$s character separates the key and the value, multiple objects are "
 "separated via comma (%2$s)."
 msgstr ""
 "Das Zeichen %1$s trennt den Schlüssel vom Wert, mehrere Objekt-Paare werden "

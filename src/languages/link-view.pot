@@ -566,7 +566,7 @@ msgstr ""
 
 #: shortcode/config-admin-data.php:167
 #, php-format
-msgid "The %1$s character separats the key and the value, multiple objects are separated via comma (%2$s)."
+msgid "The %1$s character separates the key and the value, multiple objects are separated via comma (%2$s)."
 msgstr ""
 
 #: shortcode/config-admin-data.php:169
@@ -639,7 +639,7 @@ msgid "This attribute specifies the vertical alignment of the links. Changing th
 msgstr ""
 
 #: shortcode/config-admin-data.php:218
-msgid "With this option e.g. the vertical alignment of the list symbol relativ to the image or the vertical alignment of images with different height in a slider can be changed."
+msgid "With this option e.g. the vertical alignment of the list symbol relatively to the image or the vertical alignment of images with different height in a slider can be changed."
 msgstr ""
 
 #: shortcode/config-admin-data.php:224
