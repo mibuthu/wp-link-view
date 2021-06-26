@@ -926,7 +926,7 @@ msgstr ""
 
 #: shortcode/config-admin-data.php:218
 msgid ""
-"With this option e.g. the vertical alignment of the list symbol relativ to "
+"With this option e.g. the vertical alignment of the list symbol relatively to "
 "the image or the vertical alignment of images with different height in a "
 "slider can be changed."
 msgstr ""

@@ -215,7 +215,7 @@ class ConfigAdminData {
 				'section'     => 'general',
 				'description' =>
 					__( 'This attribute specifies the vertical alignment of the links. Changing this attribute normally only make sense if the link-images are displayed.', 'link-view' ) . '<br />
-					' . __( 'With this option e.g. the vertical alignment of the list symbol relativ to the image or the vertical alignment of images with different height in a slider can be changed.', 'link-view' ),
+					' . __( 'With this option e.g. the vertical alignment of the list symbol relatively to the image or the vertical alignment of images with different height in a slider can be changed.', 'link-view' ),
 			],
 
 			'list_symbol'    => [
