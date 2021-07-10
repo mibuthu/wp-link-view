@@ -37,9 +37,8 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // General definitions.
-define( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
-
+define( __NAMESPACE__ . '\PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( __NAMESPACE__ . '\PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
 require_once PLUGIN_PATH . 'includes/config.php';
 

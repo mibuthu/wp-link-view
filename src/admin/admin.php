@@ -9,6 +9,8 @@
 
 namespace WordPress\Plugins\mibuthu\LinkView\Admin;
 
+use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_URL;
+use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
 use WordPress\Plugins\mibuthu\LinkView\Config;
 
 if ( ! defined( 'WP_ADMIN' ) ) {

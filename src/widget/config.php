@@ -9,6 +9,8 @@
 
 namespace WordPress\Plugins\mibuthu\LinkView\Widget;
 
+use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
+
 if ( ! defined( 'WPINC' ) ) {
 	exit();
 }
