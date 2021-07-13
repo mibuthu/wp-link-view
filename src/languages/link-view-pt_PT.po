@@ -1,0 +1,1046 @@
+# Translation file for the 'Link View' WordPress plugin
+# Copyright (C) 2021 by mibuthu
+# This file is distributed under the same license as the corresponding WordPress plugin.
+# 
+# Translators:
+# mibuthu, 2021
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/link-view/\n"
+"POT-Creation-Date: 2021-07-13 19:14+0200\n"
+"Last-Translator: mibuthu, 2021\n"
+"Language-Team: Portuguese (Portugal) (https://www.transifex.com/mibuthu/teams/70724/pt_PT/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_PT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: admin/about.php:66 admin/admin.php:67 admin/admin.php:68
+#, php-format
+msgid "About %1$s"
+msgstr "Sobre %1$s"
+
+#: admin/about.php:89 admin/about.php:209
+msgid "General"
+msgstr "Geral"
+
+#: admin/about.php:90 admin/about.php:205
+msgid "Shortcode Attributes"
+msgstr "Atributos do shortcode"
+
+#: admin/about.php:109
+msgid "Help and Instructions"
+msgstr "Ajuda e instruções"
+
+#: admin/about.php:110
+msgid "Show links in posts or pages"
+msgstr "Mostrar links em artigos ou páginas"
+
+#: admin/about.php:112
+#, php-format
+msgid ""
+"To show links in a post or page the shortcode %1$s must be added in the post"
+" or page content text."
+msgstr ""
+"Para mostrar links num artigo ou página, o shortcode %1$s deve ser "
+"adicionado ao conteúdo do mesmo."
+
+#: admin/about.php:113
+msgid ""
+"The listed links and their styles can be modified with the available "
+"attributes for the shortcode."
+msgstr ""
+"Os links apresentados e respectivos estilos podem ser modificados com os "
+"atributos disponíveis para o shortcode."
+
+#: admin/about.php:114
+msgid "You can combine as many attributes as you want."
+msgstr "Pode combinar quantos atributos quiser."
+
+#: admin/about.php:115
+#, php-format
+msgid ""
+"E.g. the shortcode including the attributes %1$s and %2$s would look like "
+"this"
+msgstr ""
+"Por exemplo, se o shortcode incluir os atributos %1$s e %2$s, teria o "
+"seguinte aspecto"
+
+#: admin/about.php:117
+msgid ""
+"Below you can find tables with all supported attributes, their descriptions "
+"and available options."
+msgstr ""
+"Abaixo pode encontrar tabelas com todos os atributos suportados com as "
+"respectivas descrições e opções disponíveis."
+
+#: admin/about.php:119
+msgid "Show links in sidebars and widget areas"
+msgstr "Mostrar links nas áreas das barras laterais e dos widgets"
+
+#: admin/about.php:121
+#, php-format
+msgid "With the %1$s Widget you can add links in sidebars and widget areas."
+msgstr ""
+"Com o widget %1$s pode adicionar links nas áreas das barras laterais e dos "
+"widgets."
+
+#: admin/about.php:124
+#, php-format
+msgid ""
+"Goto %1$s and drag the %2$s-Widget into one of the sidebar or widget areas."
+msgstr ""
+"Vá para %1$s e arraste o widget %2$s-Widget para uma das áreas da barra "
+"lateral ou dos widgets."
+
+#: admin/about.php:133
+#, php-format
+msgid ""
+"Enter a title for the widget and add the required shortcode attributes in "
+"the appropriate field. All available shortcode attributes for the "
+"%1$s-shortcode can be used in the widget too."
+msgstr ""
+"Digite um título para o widget e adicione os atributos necessários do "
+"shortcode no campo apropriado. Todos os atributos disponíveis para o "
+"shortcode %1$s também podem ser usados no widget."
+
+#: admin/about.php:136
+#, php-format
+msgid "Press %1$s to confirm the changes."
+msgstr "Pressione %1$s para confirmar as mudanças."
+
+#: admin/about.php:143 admin/admin.php:76 admin/settings.php:63
+#, php-format
+msgid "%1$s Settings"
+msgstr "%1$s configurações"
+
+#: admin/about.php:147
+#, php-format
+msgid ""
+"In the %1$s settings page, available under %2$s, you can find some options "
+"to modify the plugin."
+msgstr ""
+"Na página de configurações %1$s, disponível em %2$s, pode encontrar algumas "
+"opções para modificar o plugin."
+
+#: admin/about.php:166
+msgid "About the plugin author"
+msgstr "Sobre o autor do plugin"
+
+#: admin/about.php:168
+#, php-format
+msgid ""
+"This plugin is developed by %1$s, you can find more information about the "
+"plugin on the %2$s."
+msgstr ""
+"Este plugin foi desenvolvido por %1$s; pode encontrar mais informações sobre"
+" o plugin em %2$s."
+
+#: admin/about.php:168
+msgid "WordPress plugin site"
+msgstr "Site de plugins do WordPress"
+
+#: admin/about.php:169
+#, php-format
+msgid "If you like the plugin please rate it on the %1$s."
+msgstr ""
+"Se gostou deste plugin, por favor, dê-lhe uma classificação positiva em "
+"%1$s."
+
+#: admin/about.php:169
+msgid "WordPress plugin review site"
+msgstr "Site de revisão de plugins do WordPress"
+
+#: admin/about.php:170
+msgid ""
+"If you want to support the plugin I would be happy to get a small donation"
+msgstr ""
+"Se quiser apoiar o desenvolvimento deste plugin, eu ficaria feliz em receber"
+" um pequeno donativo"
+
+#: admin/about.php:171 admin/about.php:172 admin/about.php:173
+#, php-format
+msgid "Donate with %1$s"
+msgstr "Fazer donativo com %1$s"
+
+#: admin/about.php:187
+msgid "Translations"
+msgstr "Traduções"
+
+#: admin/about.php:189
+msgid "Please help translating this plugin into your language."
+msgstr "Por favor, ajude a traduzir este plugin na sua língua."
+
+#: admin/about.php:190
+#, php-format
+msgid "You can submit your translations at %1$s."
+msgstr "Pode enviar suas traduções em %1$s."
+
+#: admin/about.php:191
+msgid ""
+"There the source strings will be kept in sync with the actual development "
+"version. And in each plugin release the available translation files will be "
+"updated."
+msgstr ""
+"As cadeias de caracteres de origem serão mantidas em sincronia com a versão "
+"de desenvolvimento actual. E em cada versão nova do plugin, os arquivos de "
+"tradução disponíveis serão actualizados."
+
+#: admin/about.php:207
+#, php-format
+msgid ""
+"In the following tables you can find all available shortcode attributes for "
+"%1$s"
+msgstr ""
+"Nas tabelas que se seguem, pode encontrar todos os atributos disponíveis "
+"para o shortcode %1$s"
+
+#: admin/about.php:211
+msgid "Link List"
+msgstr "Lista de links"
+
+#: admin/about.php:213
+msgid "Link Slider"
+msgstr "Slider de links"
+
+#: admin/about.php:217 shortcode/config-admin-data.php:240
+#: shortcode/config-admin-data.php:252
+msgid "Multi-column layout types and options"
+msgstr "Tipos e opções do layout de várias colunas"
+
+#: admin/about.php:218
+msgid ""
+"There are 3 different types of multiple column layouts for category or link-"
+"lists available. Each type has some advantages but also some disadvantages "
+"compared to the others."
+msgstr ""
+"Existem 3 tipos diferentes de layouts de várias colunas para categorias ou "
+"listas de links. Cada tipo tem algumas vantagens, mas também algumas "
+"desvantagens em relação aos outros."
+
+#: admin/about.php:219
+msgid "Additionally the available layouts can be modified with their options"
+msgstr ""
+"Além disso, os layouts disponíveis podem ser modificados com as respectivas "
+"opções"
+
+#: admin/about.php:221
+msgid "layout type"
+msgstr "tipo de layout"
+
+#: admin/about.php:221
+msgid "type description"
+msgstr "descrição do tipo"
+
+#: admin/about.php:222 shortcode/config-admin-data.php:138
+msgid "Number"
+msgstr "Número"
+
+#: admin/about.php:222
+msgid "Use a single number to specify a static number of columns."
+msgstr ""
+"Introduza um único dígito para especificar o número estático de colunas."
+
+#: admin/about.php:223
+msgid "This is a short form of the static layout type (see below)."
+msgstr "Esta é uma forma curta do tipo de layout estático (veja abaixo)."
+
+#: admin/about.php:224
+msgid ""
+"Set a static number of columns. The categories or links will be arranged in "
+"rows."
+msgstr ""
+"Defina um número estático de colunas. As categorias ou links serão "
+"organizados em linhas."
+
+#: admin/about.php:225 admin/about.php:228 admin/about.php:232
+msgid "available options"
+msgstr "opções disponíveis"
+
+#: admin/about.php:226
+msgid ""
+"Provide a single number which specifys the number of columns. If no value is"
+" given 3 columns will be displayed by default."
+msgstr ""
+"Introduza o número de colunas (apenas um dígito). Se não for introduzido "
+"nenhum valor, serão exibidas, por omissão, 3 colunas."
+
+#: admin/about.php:227 admin/about.php:231
+#, php-format
+msgid "This type uses the %1$s to arrange the columns."
+msgstr "Este tipo usa o %1$s para organizar as colunas."
+
+#: admin/about.php:227
+msgid "multi-column feature of CSS"
+msgstr "funcionalidade multi-coluna do CSS"
+
+#: admin/about.php:229
+#, php-format
+msgid ""
+"You can use all available properties for CSS3 Multi-column Layout (see %1$s "
+"for detailed information)."
+msgstr ""
+"Pode usar todas as propriedades disponíveis para layout multi-coluna CSS3 "
+"(consulte %1$s para obter informações detalhadas)."
+
+#: admin/about.php:229 admin/about.php:233
+msgid "this link"
+msgstr "este link"
+
+#: admin/about.php:230
+msgid ""
+"The given attributes will be added to the wrapper div element. Also the "
+"prefixed browser specific attributes will be added."
+msgstr ""
+"Os atributos indicados serão adicionados ao elemento div envolvente. Além "
+"disso, serão adicionados os atributos prefixados específicos do navegador ."
+
+#: admin/about.php:231
+#, php-format
+msgid "%1$s grid layout JavaScript library"
+msgstr "%1$s biblioteca JavaScript de layout de grelha"
+
+#: admin/about.php:233
+#, php-format
+msgid ""
+"You can use all options which are available for the Masonry library (see "
+"%1$s for detailed information)."
+msgstr ""
+"Pode usar todas as opções disponíveis para a biblioteca do layout tipo "
+"tijolos (veja %1$s para obter informações detalhadas)."
+
+#: admin/about.php:234
+msgid "The given options will be forwarded to the JavaScript library."
+msgstr "As opções dadas serão encaminhadas para a biblioteca JavaScript."
+
+#: admin/about.php:237
+msgid "Usage"
+msgstr "Utilização"
+
+#: admin/about.php:238
+msgid ""
+"For the most types and options it is recommended to define a fixed width for"
+" the categories and/or links. This width must be set manually e.g. via the "
+"css entry:"
+msgstr ""
+"Para a maioria dos tipos e opções é recomendado definir uma largura fixa "
+"para as categorias e/ou links. Esta largura deve ser definida manualmente, "
+"por exemplo, através do seguinte código CSS:"
+
+#: admin/about.php:239
+msgid ""
+"Depending on the type and options there are probably more css modifications "
+"required for a correct multi-column layout."
+msgstr ""
+"Dependendo do tipo e das opções, provavelmente será necessário fazer mais "
+"modificações ao CSS para obter um layout correcto com várias colunas."
+
+#: admin/about.php:242
+#, php-format
+msgid ""
+"There are several ways to add the required css code. One method is the %1$s "
+"setting %2$s which can be found in %3$s."
+msgstr ""
+"Existem várias maneiras de adicionar o código CSS necessário. Um método é a "
+"opção de configuração %1$s %2$s que pode ser encontrada em %3$s."
+
+#: admin/about.php:245
+#, php-format
+msgid "CSS-code for %1$s"
+msgstr "Código CSS para %1$s"
+
+#: admin/about.php:251
+#, php-format
+msgid ""
+"The optional type options must be added in brackets in the format "
+"\"option_name=value\", multiple options can be added separated by a pipe "
+"%1$s."
+msgstr ""
+"As opções opcionais de tipo têm de ser adicionadas entre parênteses rectos "
+"com o formato «option_name=valor»; podem ser adicionadas múltiplas opções "
+"separadas pelo símbolo %1$s (Shift-\\\\)."
+
+#: admin/about.php:252 includes/config-admin-data.php:91
+#: shortcode/config-admin-data.php:80
+msgid "Examples"
+msgstr "Exemplos"
+
+#: admin/about.php:253
+msgid "show the categories in 3 static columns"
+msgstr "mostrar as categorias em 3 colunas estáticas"
+
+#: admin/about.php:254
+msgid "show the link-lists in 2 static columns"
+msgstr "mostrar as listas de links em 2 colunas estáticas"
+
+#: admin/about.php:255
+msgid ""
+"show the categories in columns with the css column properties with a fixed "
+"width per category"
+msgstr ""
+"mostrar as categorias em colunas com as propriedades CSS da coluna com "
+"largura fixa por categoria"
+
+#: admin/about.php:256
+msgid ""
+"show the link-lists in 4 columns by using the CSS multi column properties"
+msgstr ""
+"mostrar as listas de links em 4 colunas usando as propriedades CSS de coluna"
+" múltipla"
+
+#: admin/about.php:257
+msgid ""
+"show the categories in columns by using the masonry script (with some "
+"specific masonry options)"
+msgstr ""
+"mostrar as categorias em colunas usando o script de layout tipo tijolos (com"
+" algumas opções específicas)"
+
+#: admin/about.php:275
+msgid "Attribute name"
+msgstr "Nome do atributo"
+
+#: admin/about.php:276 shortcode/config-admin-data.php:166
+msgid "Value options"
+msgstr "Opções do valor"
+
+#: admin/about.php:277
+msgid "Default value"
+msgstr "Valor por omissão"
+
+#: admin/about.php:278
+msgid "Description"
+msgstr "Descrição"
+
+#: includes/config-admin-data.php:46
+#, php-format
+msgid "Required capabilities to show the %1$s page"
+msgstr "Capacidades necessárias para mostrar a página %1$s"
+
+#: includes/config-admin-data.php:46 includes/config-admin-data.php:53
+#: includes/config-admin-data.php:71
+msgid "About"
+msgstr "Sobre"
+
+#: includes/config-admin-data.php:48 includes/config-admin-data.php:62
+msgid "Default"
+msgstr "Por omissão"
+
+#: includes/config-admin-data.php:53
+#, php-format
+msgid ""
+"With this option you can specify the required capabilities to show the %1$s "
+"page."
+msgstr ""
+"Com esta opção pode especificar as capacidades necessárias para mostrar a "
+"página %1$s."
+
+#: includes/config-admin-data.php:54 includes/config-admin-data.php:70
+#, php-format
+msgid "More information can be found in the %1$s."
+msgstr "Mais informações podem ser encontradas em %1$s."
+
+#: includes/config-admin-data.php:59
+msgid "Required role to manage links"
+msgstr "Papel necessário para gerir links"
+
+#: includes/config-admin-data.php:69
+msgid "With this option minimum required role to manage links can be set"
+msgstr ""
+"Com esta opção, pode-se definir qual o papel mínimo necessário para gerir "
+"links"
+
+#: includes/config-admin-data.php:69
+msgid "Capability"
+msgstr "Capacidade"
+
+#: includes/config-admin-data.php:71
+#, php-format
+msgid ""
+"Please note that this option also affects the access to the %1$s page if the"
+" required capabilities are set to %2$s."
+msgstr ""
+"Note que esta opção também afecta o acesso à página %1$s se as capacidades "
+"necessárias forem definidas como %2$s."
+
+#: includes/config-admin-data.php:76
+#, php-format
+msgid "Custom CSS classes for %1$s"
+msgstr "Classes de CSS personalizadas para %1$s"
+
+#: includes/config-admin-data.php:78
+#, php-format
+msgid ""
+"With this option you can specify custom CSS classes which will be added to "
+"the wrapper div of the %1$s shortcode."
+msgstr ""
+"Com esta opção pode especificar classes CSS personalizadas que serão "
+"adicionadas ao div do shortcode %1$s."
+
+#: includes/config-admin-data.php:79 shortcode/config-admin-data.php:207
+#, php-format
+msgid "Use the %1$s to seperate multiple classes."
+msgstr "Use %1$s para separar várias classes."
+
+#: includes/config-admin-data.php:84
+#, php-format
+msgid "Custom CSS for %1$s"
+msgstr "CSS personalizado para %1$s"
+
+#: includes/config-admin-data.php:86
+#, php-format
+msgid ""
+"With this option you can specify custom CSS for the links displayed by the "
+"%1$s shortcode."
+msgstr ""
+"Com esta opção, pode personalizar o CSS para os links exibidos pelo "
+"shortcode %1$s."
+
+#: includes/config-admin-data.php:87
+#, php-format
+msgid ""
+"There are a lot of CSS classes available which are automatically added by "
+"the %1$s shortcode"
+msgstr ""
+"Existem muitas classes CSS disponíveis que são automaticamente adicionadas "
+"pelo shortcode %1$s"
+
+#: includes/config-admin-data.php:87 includes/config-admin-data.php:90
+msgid "e.g."
+msgstr "por ex."
+
+#: includes/config-admin-data.php:88
+msgid ""
+"All available classes can be found in the sourcecode of a post or page where"
+" the shortcode is included."
+msgstr ""
+"Todas as classes disponíveis podem ser encontradas no código-fonte de um "
+"artigo ou página onde o shortcode tenha sido incluído."
+
+#: includes/config-admin-data.php:89
+#, php-format
+msgid ""
+"To differ between different shortcodes you can set the attribute %1$s and "
+"add CSS-code for these special classes"
+msgstr ""
+"Para diferenciar entre as várias instâncias de shortcodes, pode definir o "
+"atributo %1$s e adicionar código CSS para essas classes especiais"
+
+#: shortcode/config-admin-data.php:68
+msgid "This attribute specifies how the links are displayed."
+msgstr "Este atributo especifica como os links são exibidos."
+
+#: shortcode/config-admin-data.php:69
+msgid ""
+"Showing the links in a list is the default, alternatively the links can be "
+"displayed in a slider."
+msgstr ""
+"Por omissão, são mostrados os links numa lista; alternativamente, os links "
+"podem ser exibidos num slider."
+
+#: shortcode/config-admin-data.php:74
+msgid "category slugs"
+msgstr "slugs de categoria"
+
+#: shortcode/config-admin-data.php:76
+msgid ""
+"This attribute specifies the displayed link categories. Default is an empty "
+"string to show all categories."
+msgstr ""
+"Este atributo especifica as categorias de link exibidos. Por omissão, é uma "
+"sequência vazia, o que mostra todas as categorias."
+
+#: shortcode/config-admin-data.php:77
+msgid ""
+"Links with categories that doesn´t match the filter will not be displayed."
+msgstr ""
+"Links com categorias que não correspondem ao filtro não serão exibidos."
+
+#: shortcode/config-admin-data.php:78
+msgid ""
+"The filter is specified via the given category slug. The simplest version is"
+" a single slug to only show links from this category."
+msgstr ""
+"O filtro é especificado através do slug da categoria. A versão mais simples "
+"é um único slug para mostrar apenas os links dessa categoria."
+
+#: shortcode/config-admin-data.php:79
+#, php-format
+msgid ""
+"To show multiple categories, multiple slugs can be provided separated by "
+"%1$s or %2$s."
+msgstr ""
+"Para mostrar várias categorias, podem ser indicados diferentes slugs, "
+"separados por %1$s ou %2$s."
+
+#: shortcode/config-admin-data.php:81
+#, php-format
+msgid "Show all links with category %1$s."
+msgstr "Mostrar todos os links com a categoria %1$s."
+
+#: shortcode/config-admin-data.php:82
+#, php-format
+msgid "Show all links with category %1$s or %2$s."
+msgstr "Mostrar todos os links com a categoria %1$s ou %2$s."
+
+#: shortcode/config-admin-data.php:89
+msgid "This attribute specifies which categories should be excluded."
+msgstr "Este atributo especifica quais as categorias que devem ser excluídas."
+
+#: shortcode/config-admin-data.php:90
+#, php-format
+msgid "This attribute is only considered if the attribute %1$s is not set."
+msgstr ""
+"Esse atributo só é considerado se o atributo %1$s não estiver definido."
+
+#: shortcode/config-admin-data.php:91
+msgid ""
+"If the category name has spaces, the name must be surrounded by quotes."
+msgstr ""
+"Se o nome da categoria tiver espaços, o nome deve ser colocado entre aspas."
+
+#: shortcode/config-admin-data.php:92
+#, php-format
+msgid ""
+"To exclude multiple categories, multiple names can be provided separated by "
+"%1$s."
+msgstr ""
+"Para excluir várias categorias, podem ser escolhidos vários nomes, separados"
+" por %1$s."
+
+#: shortcode/config-admin-data.php:93
+msgid "Example"
+msgstr "Exemplo"
+
+#: shortcode/config-admin-data.php:99
+msgid "By default the links are grouped by category."
+msgstr "Por omissão, os links são agrupados por categoria."
+
+#: shortcode/config-admin-data.php:100
+msgid "To show all links in one list this option can be disabled."
+msgstr ""
+"Para mostrar todos os links numa lista, esta opção pode ser desactivada."
+
+#: shortcode/config-admin-data.php:105
+msgid ""
+"This attribute specifies if the category name is shown as a headline if "
+"category grouping is enabled."
+msgstr ""
+"Este atributo especifica se o nome da categoria é mostrado como um título "
+"quando activado o agrupamento da categoria."
+
+#: shortcode/config-admin-data.php:111
+msgid ""
+"If enabled the number of links is displayed in brackets next to the category"
+" name in the headline."
+msgstr ""
+"Se activado, o número de links será exibido no título, entre parênteses "
+"rectos a seguir ao nome da categoria."
+
+#: shortcode/config-admin-data.php:112
+#, php-format
+msgid ""
+"The shortcode options %1$s and %2$s must be enabled to display the number."
+msgstr ""
+"As opções de shortcode %1$s e %2$s devem ser activadas para mostrar o "
+"número."
+
+#: shortcode/config-admin-data.php:118
+msgid ""
+"This attribute specifies the sort parameter of the links for each category."
+msgstr ""
+"Este atributo especifica o parâmetro de ordenação dos links para cada "
+"categoria."
+
+#: shortcode/config-admin-data.php:119
+msgid "By default the links are sorted according the link name."
+msgstr "Por omissão, os links são classificados de acordo com o nome do link."
+
+#: shortcode/config-admin-data.php:120
+#, php-format
+msgid "A random order can be specify by %1$s."
+msgstr "Pode-se especificar uma ordenação aleatória com %1$s."
+
+#: shortcode/config-admin-data.php:122
+#, php-format
+msgid ""
+"A detailed description of all available options is available in the "
+"%1$sWordPress codex%2$s."
+msgstr ""
+"Uma descrição detalhada de todas as opções disponíveis está disponível no "
+"%1$sWordPress codex%2$s."
+
+#: shortcode/config-admin-data.php:126
+#, php-format
+msgid "See also the attribute %1$s to specify the order direction."
+msgstr "Veja também o atributo %1$s para especificar a direcção da ordenação."
+
+#: shortcode/config-admin-data.php:132
+#, php-format
+msgid "This attribute sets the order direction for the %1$s attribute."
+msgstr "Este atributo define a ordenação do atributo %1$s."
+
+#: shortcode/config-admin-data.php:133
+#, php-format
+msgid "The available options are %1$s (default) and %2$s."
+msgstr "As opções disponíveis são %1$s (por omissão) e %2$s."
+
+#: shortcode/config-admin-data.php:140
+msgid "This attribute sets the number of displayed links for each category."
+msgstr "Este atributo define o número de links exibidos para cada categoria."
+
+#: shortcode/config-admin-data.php:141
+msgid "A number smaller than 0 displays all links."
+msgstr "Um número menor que 0 exibe todos os links."
+
+#: shortcode/config-admin-data.php:147
+msgid ""
+"This attribute specifies if the image shall be displayed instead of the "
+"name."
+msgstr "Este atributo especifica se a imagem deve ser exibida em vez do nome."
+
+#: shortcode/config-admin-data.php:148
+msgid "This attribute is only considered for links where an image is set."
+msgstr ""
+"Este atributo é apenas tido em conta nos links em que seja definida uma "
+"imagem."
+
+#: shortcode/config-admin-data.php:155
+msgid "With this attribute more complex display options can be defined."
+msgstr ""
+"Com este atributo podem ser definidas opções de exibição mais complexas."
+
+#: shortcode/config-admin-data.php:156
+#, php-format
+msgid ""
+"By default (empty string) only the link name or the link image (see "
+"attribute %1$s) is shown."
+msgstr ""
+"Por omissão (sequência vazia) apenasé mostrado o nome do link ou a imagem do"
+" link (ver atributo %1$s)."
+
+#: shortcode/config-admin-data.php:157
+msgid ""
+"By specifying the below described JSON structure complex display options can"
+" be defined."
+msgstr ""
+"Ao especificar as opções abaixo descritas da estrutura JSON, podem ser "
+"definidas opções complexas de exibição."
+
+#: shortcode/config-admin-data.php:158
+msgid ""
+"Please use single quotes for defining this attribute because the double "
+"quotes are required to define the JSON code."
+msgstr ""
+"Por favor, use plicas para definir este atributo porque as aspas são "
+"necessárias para definir o código JSON."
+
+#: shortcode/config-admin-data.php:160
+#, php-format
+msgid ""
+"This attribute can also be defined as the content of an enclosed shortcode "
+"e.g. %1$s."
+msgstr ""
+"Este atributo também pode ser definido como o conteúdo de um shortcode, "
+"como, por exemplo, %1$s."
+
+#: shortcode/config-admin-data.php:161
+msgid "JSON data"
+msgstr "Dados JSON"
+
+#: shortcode/config-admin-data.php:163
+msgid "Examples with all possible options"
+msgstr "Exemplos com todas as opções possíveis"
+
+#: shortcode/config-admin-data.php:165
+#, php-format
+msgid ""
+"Defining a list of JSON Objects (%1$s pairs) is the simplest version of "
+"usage."
+msgstr ""
+"A forma mais simples de utilização é definir uma lista de objectos JSON "
+"(%1$s pares)."
+
+#: shortcode/config-admin-data.php:166
+#, php-format
+msgid ""
+"The key defines one of the available items (see \"%1$s\"), the value defines"
+" an optional heading for the item."
+msgstr ""
+"A chave define um dos itens disponíveis (ver «%1$s»), o valor define uma "
+"posição opcional para o item."
+
+#: shortcode/config-admin-data.php:167
+#, php-format
+msgid "If no heading is required leave the value empty (%1$s)."
+msgstr "Se não for necessário nenhum título, deixe o valor vazio (%1$s)."
+
+#: shortcode/config-admin-data.php:168
+#, php-format
+msgid ""
+"The list must be enclosed in curly braces (%1$s) to have valid JSON data. "
+"Double quotes must be added around the key and the value."
+msgstr ""
+"A lista deve ser rodeada de chavetas (%1$s) para os dados JSON serem "
+"válidos. Devem ser adicionadas aspas em torno da chave e do valor."
+
+#: shortcode/config-admin-data.php:169
+#, php-format
+msgid ""
+"The %1$s character separates the key and the value, multiple objects are "
+"separated via comma (%2$s)."
+msgstr ""
+"O carácter %1$s separa a chave do valor; vários objectos são separados por "
+"uma vírgula (%2$s)."
+
+#: shortcode/config-admin-data.php:171
+#, php-format
+msgid ""
+"Add a %1$s at the end of the item name to include a link to the link target."
+msgstr ""
+"Adicione um %1$s no final do nome do item para incluir um link para o "
+"destino do link."
+
+#: shortcode/config-admin-data.php:174
+#, php-format
+msgid ""
+"Multiple items can be grouped by using sub-object. The key of the sub-object"
+" defines the name of the group which also will be added as a css-class (e.g."
+" %1$s)."
+msgstr ""
+"Vários itens podem ser agrupados usando um sub-objecto. A chave do sub-"
+"objecto define o nome do grupo que também será adicionado como uma classe "
+"CSS (por exemplo, %1$s)."
+
+#: shortcode/config-admin-data.php:182
+msgid ""
+"With this attribute the display option for link images can be set, if no "
+"link image is available."
+msgstr ""
+"Com este atributo, a opção de exibição de imagens de link pode ser definida,"
+" se nenhuma imagem de link estiver disponível."
+
+#: shortcode/config-admin-data.php:183
+#, php-format
+msgid "This option is only considered if the %1$s item is used in %2$s."
+msgstr "Esta opção só é considerada se o item %1$s for usado em %2$s."
+
+#: shortcode/config-admin-data.php:184
+#, php-format
+msgid "With %1$s an %2$s tag is still added."
+msgstr "Com %1$s ainda será adicionada a etiqueta %2$s."
+
+#: shortcode/config-admin-data.php:185
+#, php-format
+msgid ""
+"Due to the empty link address of the image the %1$s attribute will be "
+"displayed."
+msgstr ""
+"Como o endereço de link da imagem não foi preenchido, será exibido o "
+"atributo %1$s."
+
+#: shortcode/config-admin-data.php:186
+#, php-format
+msgid "With %1$s the complete link item will be removed."
+msgstr "Com %1$s será removido o item completo do link."
+
+#: shortcode/config-admin-data.php:187
+#, php-format
+msgid ""
+"With the other options only the %1$s tag will be removed and an alternative "
+"text (link name or description) will be displayed."
+msgstr ""
+"Com as outras opções, apenas a etiqueta %1$s será removida e um texto "
+"alternativo (nome do link ou descrição) será exibido."
+
+#: shortcode/config-admin-data.php:192
+msgid ""
+"Set one of the available options to override the default value defined for "
+"the link."
+msgstr ""
+"Escolha uma das opções disponíveis para substituir o valor por omissão "
+"definido para o link."
+
+#: shortcode/config-admin-data.php:198
+#, php-format
+msgid "With this attribute the %1$s attribute for the HTML-links can be set."
+msgstr "Com este atributo pode-se definir o atributo %1$s para os links HTML."
+
+#: shortcode/config-admin-data.php:199
+#, php-format
+msgid "see %1$sthis link%2$s for details"
+msgstr "consulte %1$seste este link%2$s para obter detalhes"
+
+#: shortcode/config-admin-data.php:204 shortcode/config-admin-data.php:212
+msgid "String"
+msgstr "String"
+
+#: shortcode/config-admin-data.php:206
+msgid ""
+"With this attribute additional CSS classes can be specified. The classes are"
+" added to the link-view wrapper div."
+msgstr ""
+"Com este atributo, podem ser especificadas classes adicionais de CSS. As "
+"classes são adicionadas ao div do link-view."
+
+#: shortcode/config-admin-data.php:213
+msgid ""
+"With this attribute a css class suffix can be specified. This allows using "
+"different css styles for different link lists or sliders on the same site."
+msgstr ""
+"Com este atributo pode ser especificado um sufixo de classe CSS. Isso "
+"permite utilizar diferentes estilos CSS para diferentes listas de links ou "
+"sliders no mesmo site."
+
+#: shortcode/config-admin-data.php:219
+msgid ""
+"This attribute specifies the vertical alignment of the links. Changing this "
+"attribute normally only make sense if the link-images are displayed."
+msgstr ""
+"Este atributo especifica o alinhamento vertical dos links. Normalmente só "
+"faz sentido alterar este atributo se as imagens do link forem exibidas."
+
+#: shortcode/config-admin-data.php:220
+msgid ""
+"With this option e.g. the vertical alignment of the list symbol relatively "
+"to the image or the vertical alignment of images with different height in a "
+"slider can be changed."
+msgstr ""
+"Com esta opção podem ser alterados, por exemplo, o alinhamento vertical do "
+"símbolo da lista relativamente à imagem ou ao alinhamento vertical de "
+"imagens com diferentes alturas num slider."
+
+#: shortcode/config-admin-data.php:226
+msgid "This attribute sets the style type of the list symbol."
+msgstr "Este atributo define o tipo de estilo do símbolo da lista."
+
+#: shortcode/config-admin-data.php:227
+#, php-format
+msgid ""
+"With the default value %1$s the standard type which is set in your theme "
+"will be used."
+msgstr ""
+"Com o valor por omissão %1$s, será usado o tipo padrão definido pelo seu "
+"tema."
+
+#: shortcode/config-admin-data.php:228
+msgid "All other available options overide this standard."
+msgstr "Todas as outras opções disponíveis sobrepõe-se a este padrão."
+
+#: shortcode/config-admin-data.php:229
+#, php-format
+msgid "For example setting the value to %1$s will hide the list symbols."
+msgstr ""
+"Por exemplo, definindo o valor como %1$s ocultará os símbolos da lista."
+
+#: shortcode/config-admin-data.php:236
+msgid ""
+"This attribute specifies column layout for the categories in list view."
+msgstr ""
+"Este atributo especifica o layout da coluna para as categorias no modo de "
+"exibição «lista»."
+
+#: shortcode/config-admin-data.php:237 shortcode/config-admin-data.php:249
+msgid "There are 3 different types of multiple column layouts available."
+msgstr ""
+"Estão disponíveis 3 tipos diferentes de layouts, cada qual com um número "
+"diferente de colunas."
+
+#: shortcode/config-admin-data.php:239 shortcode/config-admin-data.php:251
+#, php-format
+msgid ""
+"Find more information regarding the types and options in the chapter %1$s."
+msgstr "Encontre mais informações sobre os tipos e opções no capítulo %1$s."
+
+#: shortcode/config-admin-data.php:248
+msgid "This attribute specifies column layout for the links in list view."
+msgstr ""
+"Este atributo especifica o layout da coluna para os links no modo de "
+"exibição «lista»."
+
+#: shortcode/config-admin-data.php:260
+msgid "This attribute sets the fix width of the slider."
+msgstr "Este atributo define a largura fixa do slider."
+
+#: shortcode/config-admin-data.php:261
+#, php-format
+msgid ""
+"If the attribute is set to %1$s the width will be calculated automatically "
+"due to the given image sizes."
+msgstr ""
+"Se o atributo for definido como %1$s a largura será calculada "
+"automaticamente de acordo com o tamanho da imagem."
+
+#: shortcode/config-admin-data.php:262 shortcode/config-admin-data.php:271
+#: shortcode/config-admin-data.php:280 shortcode/config-admin-data.php:288
+#, php-format
+msgid "This attribute is only considered if the view type %1$s is selected."
+msgstr ""
+"Este atributo só é considerado se o tipo de exibição %1$s for seleccionado."
+
+#: shortcode/config-admin-data.php:269
+msgid "This attribute sets the fix height of the slider."
+msgstr "Este atributo define a altura fixa do slider."
+
+#: shortcode/config-admin-data.php:270
+#, php-format
+msgid ""
+"If the attribute is set to %1$s the height will be calculated automatically "
+"due to the given image sizes."
+msgstr ""
+"Se o atributo for definido como %1$s, a altura será calculada "
+"automaticamente de acordo com o tamanho da imagem."
+
+#: shortcode/config-admin-data.php:278
+msgid ""
+"This attribute sets the duration between the the slides in milliseconds."
+msgstr "Este atributo define a duração entre os slides em milisegundos."
+
+#: shortcode/config-admin-data.php:279
+msgid ""
+"The link stands still for this time and afterwards the sliding animation to "
+"the next link starts."
+msgstr ""
+"A animação do link fica parada durante este tempo e depois começa a animação"
+" deslizante para o próximo link."
+
+#: shortcode/config-admin-data.php:287
+msgid ""
+"This attribute sets the duration of the animation for switching from one "
+"link to the next in milliseconds."
+msgstr ""
+"Este atributo define a duração, em milisegundos, da animação para alternar "
+"de um link para o próximo."
+
+#: widget/config-admin-data.php:46
+msgid "Title"
+msgstr "Título"
+
+#: widget/config-admin-data.php:47
+msgid "This option defines the displayed title for the widget."
+msgstr "Esta opção define o título que é mostrado para o widget."
+
+#: widget/config-admin-data.php:52
+msgid "Shortcode attributes"
+msgstr "Atributos do shortcode"
+
+#: widget/config-admin-data.php:53
+#, php-format
+msgid "All attributes which are available for the %1$s shortcode can be used."
+msgstr ""
+"Podem ser usados todos os atributos disponíveis para o shortcode %1$s."
+
+#: widget/config.php:44
+msgid "Links"
+msgstr "Links"
+
+#: widget/widget.php:43
+#, php-format
+msgid ""
+"With this widget a %1$s shortcode can be added to a sidebar or widget area."
+msgstr ""
+"Com este widget é possível adicionar um shortcode %1$s a uma barra lateral "
+"ou área de widgets."
