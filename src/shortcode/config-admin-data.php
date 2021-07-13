@@ -76,7 +76,7 @@ class ConfigAdminData {
 					__( 'This attribute specifies the displayed link categories. Default is an empty string to show all categories.', 'link-view' ) . '<br />
 					' . __( 'Links with categories that doesn´t match the filter will not be displayed.', 'link-view' ) . '<br />
 					' . __( 'The filter is specified via the given category slug. The simplest version is a single slug to only show links from this category.', 'link-view' ) . '<br />
-					' . sprintf( __( 'To show multiple categories, multiple slugs can be provided seperated by %1$s or %2$s.', 'link-view' ), '<code>|</code>', '<code>,</code>' ) . '<br />
+					' . sprintf( __( 'To show multiple categories, multiple slugs can be provided separated by %1$s or %2$s.', 'link-view' ), '<code>|</code>', '<code>,</code>' ) . '<br />
 					' . __( 'Examples', 'link-view' ) . ':<br />
 					<code>[linkview cat_filter="social-media"]</code> &hellip; ' . sprintf( __( 'Show all links with category %1$s.', 'link-view' ), '"social-media"' ) . '<br />
 					<code>[linkview cat_filter="blogroll&comma;social-media"]</code> &hellip; ' . sprintf( __( 'Show all links with category %1$s or %2$s.', 'link-view' ), '"blogroll"', '"social-media"' ),
@@ -89,7 +89,7 @@ class ConfigAdminData {
 					__( 'This attribute specifies which categories should be excluded.', 'link-view' )
 					. sprintf( __( 'This attribute is only considered if the attribute %1$s is not set.', 'link-view' ), '<code>cat_filter</code>' ) . '<br />
 					' . __( 'If the category name has spaces, the name must be surrounded by quotes.', 'link-view' ) . '<br />
-					' . sprintf( __( 'To exclude multiple categories, multiple names can be provided seperated by %1$s.', 'link-view' ), '<code>,</code>' ) . '<br />
+					' . sprintf( __( 'To exclude multiple categories, multiple names can be provided separated by %1$s.', 'link-view' ), '<code>,</code>' ) . '<br />
 					' . __( 'Example', 'link-view' ) . ': <code>[linkview exclude_cat="Blogroll,Social Media"]</code>',
 			],
 
@@ -166,7 +166,7 @@ class ConfigAdminData {
 							. sprintf( __( 'The key defines one of the available items (see "%1$s"), the value defines an optional heading for the item.', 'link-view' ), __( 'Value options', 'link-view' ) )
 							. sprintf( __( 'If no heading is required leave the value empty (%1$s).', 'link-view' ), '<code>""</code>' ) . '<br />
 					' . sprintf( __( 'The list must be enclosed in curly braces (%1$s) to have valid JSON data. Double quotes must be added around the key and the value.', 'link-view' ), '<code>{}</code>' )
-							. sprintf( __( 'The %1$s character separats the key and the value, multiple objects are separated via comma (%2$s).', 'link-view' ), '<code>:</code>', '<code>,</code>' ) . '<br />
+							. sprintf( __( 'The %1$s character separates the key and the value, multiple objects are separated via comma (%2$s).', 'link-view' ), '<code>:</code>', '<code>,</code>' ) . '<br />
 					<p><code>{ "name": "", "image_l": "", "address_l": "URL :" }</code><br />
 					' . sprintf( __( 'Add a %1$s at the end of the item name to include a link to the link target.', 'link-view' ), '<code>_l</code>' ) . '</p>
 					<code>{ "name": "", "left": { image_l": "", "address_l": "URL :" }, "right": { "description": "Description :", "notes": "Notes: " } }</code><br />
@@ -217,7 +217,7 @@ class ConfigAdminData {
 				'section'     => 'general',
 				'description' =>
 					__( 'This attribute specifies the vertical alignment of the links. Changing this attribute normally only make sense if the link-images are displayed.', 'link-view' ) . '<br />
-					' . __( 'With this option e.g. the vertical alignment of the list symbol relativ to the image or the vertical alignment of images with different height in a slider can be changed.', 'link-view' ),
+					' . __( 'With this option e.g. the vertical alignment of the list symbol relatively to the image or the vertical alignment of images with different height in a slider can be changed.', 'link-view' ),
 			],
 
 			'list_symbol'    => [
