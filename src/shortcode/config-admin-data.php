@@ -102,7 +102,7 @@ class ConfigAdminData {
 
 			'show_cat_name'  => [
 				'section'     => 'general',
-				'description' => __( 'This attribute specifies if the category name is shown as a headline if category grouping is enabled.', 'link-view' ),
+				'description' => __( 'This attribute specifies if the category name is shown as a headline when category grouping is enabled.', 'link-view' ),
 			],
 
 			'show_num_links' => [
