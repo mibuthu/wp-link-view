@@ -58,14 +58,14 @@ class Shortcode {
 	private $num_lists = 0;
 
 	/**
-	 * Category multicolumn settings
+	 * Category multi-column settings
 	 *
 	 * @var array
 	 */
 	private $cat_multicol_settings = [];
 
 	/**
-	 * Link multicolumn settings
+	 * Link multi-column settings
 	 *
 	 * @var array
 	 */
@@ -262,11 +262,11 @@ class Shortcode {
 
 
 	/**
-	 * Helper function for multicolumn handling (opening)
+	 * Helper function for multi-column handling (opening)
 	 *
-	 * @param array<string, string|array> $multicol_settings Multicolumn settings.
-	 * @param int                         $column Acual column.
-	 * @return string Required HTML which is required before the element for multicolumns.
+	 * @param array<string, string|array> $multicol_settings Multi-column settings.
+	 * @param int                         $column Actual column.
+	 * @return string Required HTML which is required before the element for multi-columns.
 	 */
 	private function html_multicol_before( $multicol_settings, &$column ) {
 		$column = intval( $column );
@@ -282,11 +282,11 @@ class Shortcode {
 
 
 	/**
-	 * Helper function for multicolumn handling (closing)
+	 * Helper function for multi-column handling (closing)
 	 *
-	 * @param array<string, string|array> $multicol_settings Multicolumn settings.
-	 * @param int                         $column Acual column.
-	 * @return string Required HTML which is required after the element for multicolumns.
+	 * @param array<string, string|array> $multicol_settings Multi-column settings.
+	 * @param int                         $column Actual column.
+	 * @return string Required HTML which is required after the element for multi-columns.
 	 */
 	private function html_multicol_after( $multicol_settings, &$column ) {
 		if ( 'static' === $multicol_settings['type'] && intval( $column ) === intval( $multicol_settings['opt']['num_columns'] ) ) {   // Last column.
@@ -299,16 +299,16 @@ class Shortcode {
 
 
 	/**
-	 * Get all Settings for multicolumn handling
+	 * Get all Settings for multi-column handling
 	 *
 	 * @param string      $column_option The value of the category or link column option.
 	 * @param null|string $list_symbol The list symbol type (if required).
-	 * @return array<string,string|array> Multicolumn settings.
+	 * @return array<string,string|array> Multi-column settings.
 	 */
 	private function multicol_settings( $column_option, $list_symbol = null ) {
 		$ret = [];
-		// Check if multicolumn is enabled.
-		if ( 1 === intval( $column_option ) ) {  // No multicolumn.
+		// Check if multi-column is enabled.
+		if ( 1 === intval( $column_option ) ) {  // No multi-column.
 			$ret['type']               = '';
 			$ret['opt']['num_columns'] = 1;
 		} elseif ( ctype_digit( strval( $column_option ) ) ) {  // Special case for number only (short form of static type).
@@ -358,9 +358,9 @@ class Shortcode {
 
 
 	/**
-	 * Get required HTML classes for Multicolumn handling
+	 * Get required HTML classes for Multi-column handling
 	 *
-	 * @param array<string|array> $multicol_settings Multicolumn settings.
+	 * @param array<string|array> $multicol_settings Multi-column settings.
 	 * @param string              $additional_classes Additional classes to include.
 	 * @return string HTML class string.
 	 */
@@ -378,9 +378,9 @@ class Shortcode {
 
 
 	/**
-	 * Get required wrapper styles for Multicolumn handling
+	 * Get required wrapper styles for Multi-column handling
 	 *
-	 * @param array<string, string|array> $multicol_settings Multicolumn settings.
+	 * @param array<string, string|array> $multicol_settings Multi-column settings.
 	 * @param null|string                 $list_symbol The list symbol type (if required).
 	 * @return string HTML style text.
 	 */
@@ -445,7 +445,7 @@ class Shortcode {
 	 *
 	 * @return string The Masonry script text (if required) or an empty string.
 	 */
-	public function mansonry_scripts() {
+	public function masonry_scripts() {
 		$ret = '';
 		// Scripts for categories.
 		if ( 'masonry' === $this->cat_multicol_settings['type'] ) {

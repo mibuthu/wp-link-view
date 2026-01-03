@@ -132,7 +132,7 @@ class Link {
 		if ( '' !== $caption ) {
 			$out .= '<span class="lvw-item-caption' . $shortcode_config->class_suffix . '">' . $caption . '</span>';
 		}
-		// Pepare link if required.
+		// Prepare link if required.
 		if ( $is_link ) {
 			// Check target.
 			if ( 'std' !== $shortcode_config->link_target ) {

@@ -5,6 +5,8 @@
  * @package link-view
  */
 
+// cspell:ignore nosubsub posttype posttypediv
+
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 
 namespace WordPress\Plugins\mibuthu\LinkView\Admin;
@@ -51,7 +53,7 @@ class Settings {
 	 * @return void
 	 */
 	public function show_page() {
-		// Check required privilegs.
+		// Check required privileges.
 		if ( ! current_user_can( 'manage_options' ) ) {
 			// Use "default" text domain for translations available in WordPress Core.
 			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
@@ -128,22 +130,22 @@ class Settings {
 	 *
 	 * @param string               $name HTML name attribute.
 	 * @param string               $value HTML value attribute.
-	 * @param array<string,string> $caption List of captions.
+	 * @param array<string,string> $captions List of captions.
 	 * @param bool                 $disabled Disable the radio buttons.
 	 * @return void
 	 * Parameter $disabled not implemented yet.
 	 * TODO: Implement or remove parameter $disabled.
 	 * @phan-suppress PhanUnusedPrivateMethodParameter.
 	 */
-	private function show_radio( $name, $value, $caption, $disabled = false ) {
+	private function show_radio( $name, $value, $captions, $disabled = false ) {
 		echo '
 							<fieldset>';
-		foreach ( $caption as $okey => $ocaption ) {
-			$checked = ( $value === $okey ) ? 'checked="checked" ' : '';
+		foreach ( $captions as $key => $caption ) {
+			$checked = ( $value === $key ) ? 'checked="checked" ' : '';
 			echo '
-								<label title="' . esc_attr( $ocaption ) . '">
-									<input type="radio" ' . wp_kses_post( $checked ) . 'value="' . esc_attr( $okey ) . '" name="' . esc_attr( $name ) . '">
-									<span>' . esc_html( $ocaption ) . '</span>
+								<label title="' . esc_attr( $caption ) . '">
+									<input type="radio" ' . wp_kses_post( $checked ) . 'value="' . esc_attr( $key ) . '" name="' . esc_attr( $name ) . '">
+									<span>' . esc_html( $caption ) . '</span>
 								</label>
 								<br />';
 		}

@@ -1,6 +1,6 @@
 <?php
 /**
- * Additional data for the cofig required for the settings help page.
+ * Additional data for the config required for the settings help page.
  *
  * @package link-view
  */
@@ -76,7 +76,7 @@ final class ConfigAdminData {
 				'label'       => sprintf( __( 'Custom CSS classes for %1$s', 'link-view' ), 'LinkView' ),
 				'description' =>
 					sprintf( __( 'With this option you can specify custom CSS classes which will be added to the wrapper div of the %1$s shortcode.', 'link-view' ), '<code>[link-view]</code>' ) . '<br />
-					' . sprintf( __( 'Use the %1$s to seperate multiple classes.', 'link-view' ), '<code>,</code>' ),
+					' . sprintf( __( 'Use the %1$s to separate multiple classes.', 'link-view' ), '<code>,</code>' ),
 			],
 
 			'lvw_custom_css'            => [

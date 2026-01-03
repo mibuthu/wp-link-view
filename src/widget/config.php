@@ -74,7 +74,7 @@ class Config {
 
 
 	/**
-	 * Load helptexts of widget args
+	 * Load help-texts of widget args
 	 *
 	 * @return void
 	 */

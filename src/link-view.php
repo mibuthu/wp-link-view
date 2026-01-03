@@ -28,6 +28,8 @@
  * @package link-view
  */
 
+// cspell:ignore pkgd
+
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 
 namespace WordPress\Plugins\mibuthu\LinkView;

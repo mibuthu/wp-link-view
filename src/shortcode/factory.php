@@ -118,7 +118,7 @@ class Factory {
 		// Masonry scripts.
 		$masonry = '';
 		foreach ( $this->shortcodes as $shortcode ) {
-			$masonry .= $shortcode->mansonry_scripts();
+			$masonry .= $shortcode->masonry_scripts();
 		}
 		if ( '' !== $masonry ) {
 			$masonry = '

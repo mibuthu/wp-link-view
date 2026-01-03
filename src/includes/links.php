@@ -51,15 +51,15 @@ class Links {
 	 * @return \WP_Term[] Link category object array.
 	 */
 	public static function categories( $shortcode_config ) {
-		$catarray = [];
-		// TODO: The cat_filter value "all" is depricated and can be removed in 0.9.
+		$cat_array = [];
+		// TODO: The cat_filter value "all" is deprecated and can be removed in 0.9.
 		if ( '' !== $shortcode_config->cat_filter && 'all' !== $shortcode_config->cat_filter ) {
 			str_replace( ',', '|', $shortcode_config->cat_filter );
-			$catslugs = array_map( 'trim', array_map( 'strval', (array) explode( '|', $shortcode_config->cat_filter ) ) );
-			foreach ( $catslugs as $catslug ) {
-				$term = get_term_by( 'slug', $catslug, 'link_category' );
+			$cat_slugs = array_map( 'trim', array_map( 'strval', (array) explode( '|', $shortcode_config->cat_filter ) ) );
+			foreach ( $cat_slugs as $cat_slug ) {
+				$term = get_term_by( 'slug', $cat_slug, 'link_category' );
 				if ( $term instanceof \WP_Term ) {
-					$catarray[] = $term;
+					$cat_array[] = $term;
 				}
 			}
 		} else {
@@ -72,21 +72,21 @@ class Links {
 				]
 			);
 			if ( is_array( $terms ) ) {
-				$catarray = $terms;
+				$cat_array = $terms;
 			}
 			if ( '' !== $shortcode_config->exclude_cat ) {
-				$excludecat = array_map( 'trim', array_map( 'strval', (array) explode( ',', $shortcode_config->exclude_cat ) ) );
+				$exclude_cat = array_map( 'trim', array_map( 'strval', (array) explode( ',', $shortcode_config->exclude_cat ) ) );
 				$diff       = [];
-				foreach ( $catarray as $cat ) {
-					if ( false === array_search( $cat->name, $excludecat, true ) ) {
+				foreach ( $cat_array as $cat ) {
+					if ( false === array_search( $cat->name, $exclude_cat, true ) ) {
 						array_push( $diff, $cat );
 					}
 				}
-				$catarray = $diff;
+				$cat_array = $diff;
 				unset( $diff );
 			}
 		}
-		return $catarray;
+		return $cat_array;
 	}
 
 }

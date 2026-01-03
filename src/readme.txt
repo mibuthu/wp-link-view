@@ -7,7 +7,7 @@ Tested up to: 5.6
 Requires PHP: 5.6
 Stable tag: 0.8.0
 Plugin URI: https://wordpress.org/plugins/link-view
-Licence: GPLv2
+License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Display a link-list or link-slider in a post or page by using a shortcode.
@@ -22,7 +22,7 @@ The purpose of this plugin is to to show the WordPress integrated links in a lis
 * the links can be displayed in a list or in a slider
 * there are many options available to adjust the output of the links (see shortcode options in the "About LinkView" page)
 * the image of the link can also be displayed
-* categories and/or links can be displayed in multicolumn layout
+* categories and/or links can be displayed in multi-column layout
 * option to set additional CSS styles for the link-lists and link-sliders
 * the required user roles to edit links can be adjusted in the settings page
 
@@ -82,7 +82,7 @@ Yes, you can create an instance of the `SC_Linkview` class which is located in `
 = 0.7.3 (2020-04-19) =
 * fixed warnings for PHP-versions < 7.0
 * small improvement in `link_rel` handling
-* prepare missing texts for translation and improve helptexts
+* prepare missing texts for translation and improve help texts
 * updated German translation
 
 = 0.7.2 (2018-11-25) =
@@ -95,17 +95,17 @@ Yes, you can create an instance of the `SC_Linkview` class which is located in `
 = 0.7.1 (2017-08-13) =
 * added shortcode attribute `show_num_links`
 * changed default value for `cat_filter` from `all` to an empty string (`all` is deprecated now)
-* splitted admin about page in 2 tabs (general and shortcode attributes)
+* split admin about page in 2 tabs (general and shortcode attributes)
 * added information about translations
 * updated masonry script to version 4.2
 * prepare more strings for translation and added German translations for them
-* Rise mimimum required WordPress version to 3.8
+* Rise minimum required WordPress version to 3.8
 * moved screenshots to assets folder
 
 = 0.7.0 (2017-01-20) =
 * added multi-language-support (not all strings translatable yet)
 * added German translation
-* moved helptexts into separate file and only load them if required
+* moved help texts into separate file and only load them if required
 * updated masonry script from version 3.2.2 to 4.1.1
 * removed deprecated shortcode attributes `cat_name` and `target`
 * changed link to renamed github-repository
@@ -151,11 +151,11 @@ Attention: The shortcode attribute `target` is deprecated since this version and
 = 0.5.0 (2014-03-31) =
 * changed plugin dir structure
 * some internal code changes
-* splitted admin page in about and settings page
+* split admin page in about and settings page
 * some CSS improvements
 
 = 0.4.4 (2013-11-11) =
-* fixed required privilegs to show admin page and to edit CSS styles
+* fixed required privileges to show admin page and to edit CSS styles
 
 = 0.4.3 (2013-09-01) =
 * added shortcode attribute `num_links` to limit the number of displayed links
@@ -163,7 +163,7 @@ Attention: The shortcode attribute `target` is deprecated since this version and
 
 = 0.4.2 (2013-06-29) =
 * added info message after changing the CSS settings
-* don't use name as link item default when a not available item was choosen
+* don't use name as link item default when a not available item was chosen
 * added tooltips for widget options on admin page
 
 = 0.4.1 (2013-02-16) =
@@ -175,7 +175,7 @@ Attention: The shortcode attribute `target` is deprecated since this version and
 = 0.4.0 (2012-12-26) =
 * Internal code changes
 * Changed admin page layout and help texts
-* Splitted attributes table on admin page into different sections
+* Split attributes table on admin page into different sections
 * Added attributes `css_suffix` and `link_items`
 * Added option `css for linkview`
 * Fixed target in links

@@ -52,7 +52,7 @@ class About {
 	 * @return void
 	 */
 	public function show_page() {
-		// Check required privilegs.
+		// Check required privileges.
 		if ( ! current_user_can( $this->config->req_capabilities ) ) {
 			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
@@ -223,7 +223,7 @@ class About {
 				' . __( 'This is a short form of the static layout type (see below).', 'link-view' ) . '</td></tr>
 			<tr><td>static</td><td>' . __( 'Set a static number of columns. The categories or links will be arranged in rows.', 'link-view' ) . '
 				<h5>' . __( 'available options', 'link-view' ) . ':</h5>
-				<em>num_columns</em>: ' . __( 'Provide a single number which specifys the number of columns. If no value is given 3 columns will be displayed by default.', 'link-view' ) . '</td></tr>
+				<em>num_columns</em>: ' . __( 'Provide a single number which specifies the number of columns. If no value is given 3 columns will be displayed by default.', 'link-view' ) . '</td></tr>
 			<tr><td>css</td><td>' . sprintf( __( 'This type uses the %1$s to arrange the columns.', 'link-view' ), '<a href="https://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">' . __( 'multi-column feature of CSS', 'link-view' ) . '</a>' ) . '
 				<h5>' . __( 'available options', 'link-view' ) . ':</h5>
 				' . sprintf( __( 'You can use all available properties for CSS3 Multi-column Layout (see %1$s for detailed information).', 'link-view' ), '<a href="https://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">' . __( 'this link', 'link-view' ) . '</a>' ) . '<br />

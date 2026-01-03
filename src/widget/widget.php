@@ -5,6 +5,8 @@
  * @package link-view
  */
 
+// cspell:ignore widefat
+
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 
 namespace WordPress\Plugins\mibuthu\LinkView\Widget;

@@ -5,6 +5,8 @@
  * @package link-view
  */
 
+// cspell:ignore sthis
+
 // declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
 
 namespace WordPress\Plugins\mibuthu\LinkView\Shortcode;
@@ -74,7 +76,7 @@ class ConfigAdminData {
 				'permitted_values' => __( 'category slugs', 'link-view' ),
 				'description'      =>
 					__( 'This attribute specifies the displayed link categories. Default is an empty string to show all categories.', 'link-view' ) . '<br />
-					' . __( 'Links with categories that doesn´t match the filter will not be displayed.', 'link-view' ) . '<br />
+					' . __( 'Links with categories that do not match the filter will be hidden.', 'link-view' ) . '<br />
 					' . __( 'The filter is specified via the given category slug. The simplest version is a single slug to only show links from this category.', 'link-view' ) . '<br />
 					' . sprintf( __( 'To show multiple categories, multiple slugs can be provided separated by %1$s or %2$s.', 'link-view' ), '<code>|</code>', '<code>,</code>' ) . '<br />
 					' . __( 'Examples', 'link-view' ) . ':<br />
@@ -180,7 +182,7 @@ class ConfigAdminData {
 				'section'     => 'general',
 				'description' =>
 					__( 'With this attribute the display option for link images can be set, if no link image is available.', 'link-view' ) . '<br />
-					' . sprintf( __( 'This option is only considered if the %1$s item is used in %2$s.', 'link-view' ), '<coee>link_image</code>', '<code>link_items</code>' ) . '<br />
+					' . sprintf( __( 'This option is only considered if the %1$s item is used in %2$s.', 'link-view' ), '<code>link_image</code>', '<code>link_items</code>' ) . '<br />
 					' . sprintf( __( 'With %1$s an %2$s tag is still added.', 'link-view' ), '<code>show_img_tag</code>', '<code>&lt;img&gt;</code>' ) . ' '
 							. sprintf( __( 'Due to the empty link address of the image the %1$s attribute will be displayed.', 'link-view' ), '<code>alt</code>' ) . '<br />
 					' . sprintf( __( 'With %1$s the complete link item will be removed.', 'link-view' ), '<code>show_nothing</code>' ) . '<br />
@@ -204,7 +206,7 @@ class ConfigAdminData {
 				'permitted_values' => __( 'String', 'link-view' ),
 				'description'      =>
 					__( 'With this attribute additional CSS classes can be specified. The classes are added to the link-view wrapper div.', 'link-view' ) . '<br />
-					' . sprintf( __( 'Use the %1$s to seperate multiple classes.', 'link-view' ), '<code>,</code>' ),
+					' . sprintf( __( 'Use the %1$s to separate multiple classes.', 'link-view' ), '<code>,</code>' ),
 			],
 
 			'class_suffix'   => [
@@ -225,7 +227,7 @@ class ConfigAdminData {
 				'description' =>
 					__( 'This attribute sets the style type of the list symbol.', 'link-view' ) . '<br />
 					' . sprintf( __( 'With the default value %1$s the standard type which is set in your theme will be used.', 'link-view' ), '<code>std</code>' ) .
-					__( 'All other available options overide this standard.', 'link-view' ) . '<br />
+					__( 'All other available options override this standard.', 'link-view' ) . '<br />
 					' . sprintf( __( 'For example setting the value to %1$s will hide the list symbols.', 'link-view' ), '<code>none</code>' ),
 			],
 
