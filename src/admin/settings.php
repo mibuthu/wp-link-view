@@ -11,8 +11,8 @@
 
 namespace WordPress\Plugins\mibuthu\LinkView\Admin;
 
-use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
 use WordPress\Plugins\mibuthu\LinkView\Config;
+use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
 
 if ( ! defined( 'WP_ADMIN' ) ) {
 	exit();
@@ -131,13 +131,14 @@ class Settings {
 	 * @param string               $name HTML name attribute.
 	 * @param string               $value HTML value attribute.
 	 * @param array<string,string> $captions List of captions.
-	 * @param bool                 $disabled Disable the radio buttons.
+	 * @param bool                 $_disabled Disable the radio buttons.
 	 * @return void
+	 *
 	 * Parameter $disabled not implemented yet.
 	 * TODO: Implement or remove parameter $disabled.
-	 * @phan-suppress PhanUnusedPrivateMethodParameter.
 	 */
-	private function show_radio( $name, $value, $captions, $disabled = false ) {
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter, Squiz.Commenting.FunctionComment.Missing -- Parameter $disabled not implemented / used
+	private function show_radio( $name, $value, $captions, $_disabled = false ) {
 		echo '
 							<fieldset>';
 		foreach ( $captions as $key => $caption ) {

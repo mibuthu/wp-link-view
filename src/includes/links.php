@@ -76,7 +76,7 @@ class Links {
 			}
 			if ( '' !== $shortcode_config->exclude_cat ) {
 				$exclude_cat = array_map( 'trim', array_map( 'strval', (array) explode( ',', $shortcode_config->exclude_cat ) ) );
-				$diff       = [];
+				$diff        = [];
 				foreach ( $cat_array as $cat ) {
 					if ( false === array_search( $cat->name, $exclude_cat, true ) ) {
 						array_push( $diff, $cat );

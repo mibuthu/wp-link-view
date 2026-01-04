@@ -48,7 +48,7 @@ class Link {
 				 * @param string $cat_slug The category slug.
 				 * @return string
 				 */
-				function( $cat_slug ) {
+				function ( $cat_slug ) {
 					return 'category-' . $cat_slug;
 				}
 			);

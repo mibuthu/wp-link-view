@@ -214,7 +214,7 @@ class Shortcode {
 		if ( empty( $links ) ) {
 			return '';
 		}
-		$list_id = ++ $this->num_lists;
+		$list_id = ++$this->num_lists;
 		if ( 'slider' === $this->atts->view_type ) {
 			$this->sliders[ $list_id ] = new Slider(
 				$links,
@@ -271,7 +271,7 @@ class Shortcode {
 	private function html_multicol_before( $multicol_settings, &$column ) {
 		$column = intval( $column );
 		if ( 'static' === $multicol_settings['type'] ) {
-			$column++;
+			++$column;
 			if ( 1 === $column ) {   // First column.
 				return '
 				<div class="lvw-row">';

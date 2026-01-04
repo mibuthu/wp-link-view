@@ -26,8 +26,9 @@
         "phan",
         "phpcs",
         "rels",
+        "Squiz",
         "transifex",
         "unslash",
-        "WPINC",
+        "WPINC"
     ]
 }

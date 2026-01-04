@@ -1,20 +1,33 @@
 <?xml version="1.0"?>
-<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="WordPress-mibuthu" xsi:noNamespaceSchemaLocation="phpcs.xsd">
+
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="phpcs.xsd" name="WordPress-plugin-link-view">
+
+    <!-- Settings -->
     <description>WordPress Coding Standards with some adaptions</description>
-
     <file>src</file>
-    <file>.phan</file>
-    <!-- <exclude-pattern>*/src/Standards/*/Tests/*\.(inc|css|js)$</exclude-pattern> -->
-    <arg name="basepath" value="."/>
-    <arg name="colors"/>
-    <arg name="extensions" value="php,inc" />
-    <arg name="report" value="full"/>
-    <arg name="parallel" value="8"/>
+    <arg name="basepath" value="." />
+    <arg name="colors" />
+    <arg name="extensions" value="php" />
+    <arg name="report" value="full" />
+    <arg name="parallel" value="8" />
 
-
+    <!-- Rules -->
     <rule ref="WordPress">
+        <exclude name="WordPress.WP.I18n.TranslatorsCommentWrongStyle" />
+	    <exclude name="WordPress.WP.I18n.MissingTranslatorsComment" />
+        <exclude name="Universal.Arrays.DisallowShortArraySyntax" />
+        <exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
+        <exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
+        <exclude name="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody" />
     </rule>
+    <rule ref="PHPCompatibilityWP" />
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
 
+    <!-- Rule settings -->
+    <config name="minimum_wp_version" value="6.9" /> <!-- for WordPress -->
+    <config name="testVersion" value="8.4-"/> <!-- for PHPCompatibilityWP -->
+
+    <!-- Rule properties -->
     <rule ref="WordPress.Files.FileName">
         <properties>
             <property name="strict_class_file_names" type="bool" value="false" />
@@ -22,17 +35,15 @@
     </rule>
     <rule ref="WordPress.WP.I18n">
         <properties>
-            <property name="text_domain" type="array" value="link-view,default" />
+            <property name="text_domain" type="array">
+                <element value="link-view" />
+                <element value="default" />
+            </property>
         </properties>
     </rule>
     <rule ref="WordPress.WP.DeprecatedFunctions">
         <properties>
-            <property name="minimum_supported_version" value="4.9" />
-        </properties>
-    </rule>
-    <rule ref="WordPress.WP.I18n">
-        <properties>
-            <property name="check_translator_comments" value="false" />
+            <property name="minimum_wp_version" value="6.9" />
         </properties>
     </rule>
     <rule ref="WordPress.WhiteSpace.ControlStructureSpacing">
@@ -59,16 +70,13 @@
     </rule>
     <rule ref="WordPress.Security.EscapeOutput">
         <properties>
-            <property name="customEscapingFunctions" type="array" value="admin_url" />
-            <property name="customAutoEscapedFunctions" type="array" value="PLUGIN_URL" />
+            <property name="customEscapingFunctions" type="array">
+                <element value="admin_url" />
+            </property>
+            <property name="customAutoEscapedFunctions" type="array">
+                <element value="PLUGIN_URL" />
+            </property>
         </properties>
     </rule>
-    <!-- Use short array syntax instead of long array syntax specified in Wordpress -->
-    <rule ref="Generic.Arrays.DisallowShortArraySyntax.Found">
-        <severity>0</severity>
-    </rule>
-    <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found"/>
-
-    <config name="minimum_supported_wp_version" value="4.9"/>
 
 </ruleset>
