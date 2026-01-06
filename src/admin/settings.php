@@ -14,9 +14,7 @@ namespace WordPress\Plugins\mibuthu\LinkView\Admin;
 use WordPress\Plugins\mibuthu\LinkView\Config;
 use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
 
-if ( ! defined( 'WP_ADMIN' ) ) {
-	exit();
-}
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
 require_once PLUGIN_PATH . 'includes/config.php';
 

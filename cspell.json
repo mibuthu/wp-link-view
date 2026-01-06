@@ -18,6 +18,7 @@
     ],
     // List of words to be always considered correct
     "words": [
+        "ABSPATH",
         "atts",
         "blogroll",
         "kses",
@@ -28,7 +29,6 @@
         "rels",
         "Squiz",
         "transifex",
-        "unslash",
-        "WPINC"
+        "unslash"
     ]
 }

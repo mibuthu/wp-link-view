@@ -9,9 +9,7 @@ declare( strict_types=1 );
 
 namespace WordPress\Plugins\mibuthu\LinkView;
 
-if ( ! defined( 'WPINC' ) ) {
-	exit();
-}
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
 
 /**

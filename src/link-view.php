@@ -34,9 +34,7 @@ declare( strict_types=1 );
 
 namespace WordPress\Plugins\mibuthu\LinkView;
 
-if ( ! defined( 'WPINC' ) ) {
-	exit();
-}
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
 // General definitions.
 define( 'WordPress\Plugins\mibuthu\LinkView\PLUGIN_URL', plugin_dir_url( __FILE__ ) );

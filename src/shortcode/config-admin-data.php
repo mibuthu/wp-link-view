@@ -13,9 +13,7 @@ namespace WordPress\Plugins\mibuthu\LinkView\Shortcode;
 
 use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
 
-if ( ! defined( 'WPINC' ) ) {
-	exit();
-}
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
 require_once PLUGIN_PATH . 'includes/option.php';
 
