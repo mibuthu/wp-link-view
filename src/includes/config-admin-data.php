@@ -118,10 +118,7 @@ final class ConfigAdminData {
 	 * @return array<string,string|array>
 	 */
 	public function __get( string $option_name ): array {
-		if ( isset( $this->config_data[ $option_name ] ) ) {
-			return $this->config_data[ $option_name ];
-		}
-		return [];
+		return $this->config_data[ $option_name ] ?? [];
 	}
 
 }

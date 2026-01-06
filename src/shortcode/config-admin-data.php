@@ -299,10 +299,7 @@ class ConfigAdminData {
 	 * @return array<string,string|array>
 	 */
 	public function __get( string $attribute_name ): array {
-		if ( isset( $this->atts_data[ $attribute_name ] ) ) {
-			return $this->atts_data[ $attribute_name ];
-		}
-		return [];
+		return $this->atts_data[ $attribute_name ] ?? [];
 	}
 
 }

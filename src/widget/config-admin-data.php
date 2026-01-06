@@ -62,10 +62,7 @@ class ConfigAdminData {
 	 * @return array<string,string|array>
 	 */
 	public function __get( string $arg_name ): array {
-		if ( isset( $this->args_data[ $arg_name ] ) ) {
-			return $this->args_data[ $arg_name ];
-		}
-		return [];
+		return $this->args_data[ $arg_name ] ?? [];
 	}
 
 }
