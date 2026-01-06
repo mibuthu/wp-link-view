@@ -161,7 +161,7 @@ class Shortcode {
 	private function html_category_list( \WP_Term $category, int &$cat_column ): string {
 		$links = Links::get( $this->atts, $category );
 		$out   = $this->html_multicol_before( $this->cat_multicol_settings, $cat_column );
-		if ( ! empty( $links ) ) {
+		if ( [] !== $links ) {
 			$out .= '
 					<div' . $this->multicol_classes( $this->cat_multicol_settings, 'lvw-category' . $this->atts->class_suffix ) . '>';
 			if ( $this->atts->show_cat_name ) {
@@ -184,7 +184,7 @@ class Shortcode {
 	 * @param object[] $links Links object array to show.
 	 */
 	private function html_link_list( array $links ): string {
-		if ( empty( $links ) ) {
+		if ( [] !== $links ) {
 			return '';
 		}
 		$list_id = ++$this->num_lists;

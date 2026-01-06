@@ -4,6 +4,7 @@ declare(strict_types=1);
 use Rector\Config\RectorConfig;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Fsylum\RectorWordPress\Set\WordPressSetList;
+use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -12,7 +13,7 @@ return RectorConfig::configure()
     ->withPhpSets()
     ->withAttributesSets()
     ->withPreparedSets(
-        codeQuality: false,
+        codeQuality: true,
         codingStyle: false,
         deadCode: true,
         instanceOf: false,
@@ -28,5 +29,6 @@ return RectorConfig::configure()
     ])
     ->withSkip([
         ClassPropertyAssignToConstructorPromotionRector::class,
+        DisallowedEmptyRuleFixerRector::class,
     ])
 ;
