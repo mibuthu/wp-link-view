@@ -145,30 +145,15 @@ class Link {
 			$rel  = ' rel="' . implode( ' ', $rels ) . '"';
 			$out .= '<a class="lvw-anchor' . $config->class_suffix . '" href="' . $link->link_url . '" target="' . $target . '" title="' . $link->link_name . $description . '"' . $rel . '>';
 		}
-		// TODO: Replace switch with match
-		switch ( $item ) {
-			case 'name':
-				$out .= $link->link_name;
-				break;
-			case 'address':
-				$out .= $link->link_url;
-				break;
-			case 'description':
-				$out .= $link->link_description;
-				break;
-			case 'image':
-				$out .= self::html_img_tag( $link, $config, $slider );
-				break;
-			case 'rss':
-				$out .= $link->link_rss;
-				break;
-			case 'notes':
-				$out .= $link->link_notes;
-				break;
-			case 'rating':
-				$out .= $link->link_rating;
-				break;
-		}
+		$out .= match ( $item ) {
+			'name' => $link->link_name,
+			'address' => $link->link_url,
+			'description' => $link->link_description,
+			'image' =>  self::html_img_tag( $link, $config, $slider ),
+			'rss' =>  $link->link_rss,
+			'notes' => $link->link_notes,
+			'rating' => $link->link_rating,
+		};
 		if ( $is_link ) {
 			$out .= '</a>';
 		}

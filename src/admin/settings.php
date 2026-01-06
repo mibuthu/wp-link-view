@@ -95,17 +95,11 @@ class Settings {
 			}
 			echo '</th>
 					<td>';
-			switch ( $option->type ) {
-				case 'radio':
-					$this->show_radio( $option_name, $this->config->$option_name, (array) $option->caption );
-					break;
-				case 'text':
-					$this->show_text( $option_name, $this->config->$option_name );
-					break;
-				case 'textarea':
-					$this->show_textarea( $option_name, $this->config->$option_name );
-					break;
-			}
+			match ( $option->type ) {
+				'radio' => $this->show_radio( $option_name, $this->config->$option_name, (array) $option->caption ),
+				'text' => $this->show_text( $option_name, $this->config->$option_name ),
+				'textarea' => $this->show_textarea( $option_name, $this->config->$option_name ),
+			};
 			echo '
 					</td>
 					<td class="description">' . wp_kses_post( $option->description ) . '</td>
