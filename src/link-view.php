@@ -39,8 +39,8 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // General definitions.
-define( __NAMESPACE__ . '\PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( __NAMESPACE__ . '\PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'WordPress\Plugins\mibuthu\LinkView\PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
 require_once PLUGIN_PATH . 'includes/config.php';
 
