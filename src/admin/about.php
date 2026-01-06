@@ -28,22 +28,20 @@ require_once PLUGIN_PATH . 'includes/config.php';
  */
 class About {
 
-	/**
-	 * Config class instance reference
-	 *
-	 * @var Config
-	 */
-	private $config;
-
 
 	/**
 	 * Class constructor which initializes required variables
 	 *
-	 * @param Config $config_instance The Config instance as a reference.
+	 * @param Config $config The Config instance as a reference.
 	 */
-	public function __construct( &$config_instance ) {
-		$this->config = $config_instance;
-	}
+	public function __construct(
+		/**
+		 * Config class instance reference
+		 *
+		 * @var Config
+		 */
+		private $config
+	) {}
 
 
 	/**
