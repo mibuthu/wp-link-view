@@ -54,8 +54,10 @@ class Widget extends \WP_Widget {
 	 *
 	 * @param array<string,string> $args Widget arguments.
 	 * @param array<string,string> $instance Saved values from database.
+	 *
+	 * TODO: Currently no type declarations are allowed for the function arguments, because the parent class WP_Widget does not define them
 	 */
-	public function widget( array $args, array $instance ): void {
+	public function widget( $args, $instance ): void {
 		echo wp_kses_post( $args['before_widget'] );
 		$title = apply_filters( 'widget_title', $instance['title'] );
 		if ( '' !== $title ) {
@@ -75,9 +77,11 @@ class Widget extends \WP_Widget {
 	 * @param array<string,string> $old_instance Previously saved values from database (not used).
 	 * @return array<string,string> Updated values to be saved.
 	 *
+	 * TODO: Currently no type declarations are allowed for the function arguments, because the parent class WP_Widget does not define them
+	 *
 	 * @suppress PhanUnusedPublicMethodParameter
 	 */
-	public function update( array $new_instance, array $old_instance ): array {
+	public function update( $new_instance, $old_instance ): array {
 		$instance = [];
 		foreach ( array_keys( $this->config->get_all() ) as $name ) {
 			if ( isset( $new_instance[ $name ] ) ) {
@@ -94,8 +98,10 @@ class Widget extends \WP_Widget {
 	 * @see WP_Widget::form()
 	 *
 	 * @param array<string,string> $instance Previously saved values from database.
+	 *
+	 * TODO: Currently no type declarations are allowed for the function arguments, because the parent class WP_Widget does not define them
 	 */
-	public function form( array $instance ): string {
+	public function form( $instance ): string {
 		$this->config->load_args_admin_data();
 		foreach ( $this->config->get_all() as $option_name => $option ) {
 			if ( ! isset( $instance[ $option_name ] ) ) {
