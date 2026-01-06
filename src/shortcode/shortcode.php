@@ -384,11 +384,7 @@ class Shortcode {
 	 * @return string HTML style text.
 	 */
 	private function multicol_wrapper_styles( $multicol_settings, $list_symbol = null ) {
-		if ( ! empty( $list_symbol ) && 'std' !== $list_symbol ) {
-			$styles = 'list-style-type:' . $list_symbol . ';';
-		} else {
-			$styles = '';
-		}
+		$styles = ! empty( $list_symbol ) && 'std' !== $list_symbol ? 'list-style-type:' . $list_symbol . ';' : '';
 		// Prepare multi-column css options.
 		if ( 'css' === $multicol_settings['type'] ) {
 			foreach ( $multicol_settings['opt'] as $name => $value ) {

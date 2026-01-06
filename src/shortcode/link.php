@@ -224,12 +224,8 @@ class Link {
 				$slider_ratio             = $slider_width / $slider_height;
 				[$img_width, $img_height] = getimagesize( $link->link_image );
 				$img_ratio                = $img_width / $img_height;
-				if ( $slider_ratio > $img_ratio ) {
-					$scale = $slider_height / $img_height;
-				} else {
-					$scale = $slider_width / $img_width;
-				}
-				$size_text = ' width=' . round( $img_width * $scale ) . ' height=' . round( $img_height * $scale );
+				$scale                    = $slider_ratio > $img_ratio ? $slider_height / $img_height : $slider_width / $img_width;
+				$size_text                = ' width=' . round( $img_width * $scale ) . ' height=' . round( $img_height * $scale );
 			}
 		}
 		return '<img src="' . $link->link_image . '"' . $size_text . ' alt="' . $link->link_name . '" />';
