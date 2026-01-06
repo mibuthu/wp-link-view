@@ -30,7 +30,7 @@
 
 // cspell:ignore pkgd
 
-// declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+declare( strict_types=1 );
 
 namespace WordPress\Plugins\mibuthu\LinkView;
 

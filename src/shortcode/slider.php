@@ -5,7 +5,7 @@
  * @package link-view
  */
 
-// declare( strict_types=1 ); Remove for now due to warnings in php <7.0!
+declare( strict_types=1 );
 
 namespace WordPress\Plugins\mibuthu\LinkView\Shortcode;
 
@@ -59,8 +59,6 @@ class Slider {
 	 * Class constructor which initializes required variables
 	 *
 	 * @param \WP_Term[] $links The links of the slider.
-	 * @param Config     $shortcode_config The ShortcodeConfig object.
-	 * @param string     $id_string The id string of the slider.
 	 */
 	public function __construct( array $links, Config $shortcode_config, string $id_string ) {
 		$this->links            = $links;
