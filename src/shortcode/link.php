@@ -223,9 +223,9 @@ class Link {
 			if ( empty( $slider_width ) || empty( $slider_height ) ) {
 				$size_text = '';
 			} else {
-				$slider_ratio                 = $slider_width / $slider_height;
-				list($img_width, $img_height) = getimagesize( $link->link_image );
-				$img_ratio                    = $img_width / $img_height;
+				$slider_ratio             = $slider_width / $slider_height;
+				[$img_width, $img_height] = getimagesize( $link->link_image );
+				$img_ratio                = $img_width / $img_height;
 				if ( $slider_ratio > $img_ratio ) {
 					$scale = $slider_height / $img_height;
 				} else {

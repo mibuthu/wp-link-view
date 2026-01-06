@@ -95,9 +95,9 @@ class Slider {
 		$height = 0;
 		foreach ( $this->links as $link ) {
 			if ( $this->shortcode_config->show_img && ! empty( $link->link_image ) ) {
-				list($w, $h) = getimagesize( $link->link_image );
-				$width       = max( $width, $w );
-				$height      = max( $height, $h );
+				[$w, $h] = getimagesize( $link->link_image );
+				$width   = max( $width, $w );
+				$height  = max( $height, $h );
 			}
 		}
 		// Get the maximum image size depending on the given size in the attributes.
