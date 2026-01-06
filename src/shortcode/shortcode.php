@@ -241,8 +241,7 @@ class Shortcode {
 			$out .= Link::show_html(
 				$link,
 				$this->atts,
-				// @phan-suppress-next-line PhanPluginDuplicateConditionalNullCoalescing Cannot use NullCoalescing due to PHP 5.6 support.
-				isset( $this->sliders[ $list_id ] ) ? $this->sliders[ $list_id ] : null
+				$this->sliders[ $list_id ] ?? null
 			);
 			$out .= '</li>';
 			// Link multi-column-handling.

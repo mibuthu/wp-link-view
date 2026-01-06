@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-use Rector\Php71\Rector\List_\ListToArrayDestructRector;
+use Rector\Php70\Rector\Ternary\TernaryToNullCoalescingRector;
 // use Rector\Set\ValueObject\SetList;
 
 return RectorConfig::configure()
@@ -10,7 +10,7 @@ return RectorConfig::configure()
         __DIR__ . '/src',
     ])
     ->withRules([
-        ListToArrayDestructRector::class
+        TernaryToNullCoalescingRector::class
     ])
     // ->withPhpSets()
     // ->withTypeCoverageLevel(0)
