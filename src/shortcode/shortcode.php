@@ -331,9 +331,8 @@ class Shortcode {
 		}
 		if ( '' === $classes ) {
 			return '';
-		} else {
-			return ' class="' . $classes . '"';
 		}
+		return ' class="' . $classes . '"';
 	}
 
 
@@ -360,9 +359,8 @@ class Shortcode {
 		}
 		if ( '' === $styles ) {
 			return '';
-		} else {
-			return ' style="' . $styles . '"';
 		}
+		return ' style="' . $styles . '"';
 	}
 
 

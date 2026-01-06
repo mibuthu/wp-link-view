@@ -121,16 +121,14 @@ class Option {
 	 * Return a boolean value if the option is a boolean, or the value string if not
 	 */
 	public function bool_value(): bool|string {
-		if ( $this->is_bool() ) {
-			// Numbers > 0 are also accepted as true.
-			if ( 0 < intval( $this->value ) ) {
-				return true;
-			} else {
-				return self::TRUE === $this->value;
-			}
-		} else {
+		if ( ! $this->is_bool() ) {
 			return $this->value;
 		}
+		// Numbers > 0 are also accepted as true.
+		if ( 0 < intval( $this->value ) ) {
+			return true;
+		}
+		return self::TRUE === $this->value;
 	}
 
 }

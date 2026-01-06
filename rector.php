@@ -17,7 +17,7 @@ return RectorConfig::configure()
         codingStyle: false,
         deadCode: true,
         instanceOf: false,
-        earlyReturn: false,
+        earlyReturn: true,
         naming: false,
         privatization: false,
         rectorPreset: true,
