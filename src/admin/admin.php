@@ -49,8 +49,8 @@ class Admin {
 	 * @return void
 	 */
 	public function init() {
-		add_action( 'admin_menu', [ $this, 'register_pages' ] );
-		add_action( 'plugins_loaded', [ $this->config, 'version_upgrade' ] );
+		add_action( 'admin_menu', $this->register_pages( ... ) );
+		add_action( 'plugins_loaded', $this->config->version_upgrade( ... ) );
 	}
 
 
@@ -66,18 +66,18 @@ class Admin {
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
 			$this->config->req_capabilities,
 			'lvw_admin_about',
-			[ $this, 'show_about_page' ]
+			$this->show_about_page( ... )
 		);
-		add_action( 'admin_print_scripts-' . $page, [ $this, 'embed_about_styles' ] );
+		add_action( 'admin_print_scripts-' . $page, $this->embed_about_styles( ... ) );
 		$page = add_submenu_page(
 			'options-general.php',
 			sprintf( __( '%1$s Settings', 'link-view' ), 'LinkView' ),
 			'LinkView',
 			'manage_options',
 			'lvw_admin_settings',
-			[ &$this, 'show_settings_page' ]
+			$this->show_settings_page( ... )
 		);
-		add_action( 'admin_print_scripts-' . $page, [ &$this, 'embed_settings_styles' ] );
+		add_action( 'admin_print_scripts-' . $page, $this->embed_settings_styles( ... ) );
 	}
 
 

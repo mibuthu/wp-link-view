@@ -50,8 +50,8 @@ class Factory {
 	 */
 	public function __construct( &$config_instance ) {
 		$this->config = $config_instance;
-		add_action( 'print_late_styles', [ &$this, 'print_styles' ] );
-		add_action( 'wp_footer', [ &$this, 'enqueue_scripts' ], 1 );
+		add_action( 'print_late_styles', $this->print_styles( ... ) );
+		add_action( 'wp_footer', $this->enqueue_scripts( ... ), 1 );
 	}
 
 

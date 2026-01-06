@@ -45,8 +45,8 @@ final class Config {
 			'lvw_custom_class'          => new Option( '' ),
 			'lvw_custom_css'            => new Option( '' ),
 		];
-		add_action( 'admin_init', [ &$this, 'register' ] );
-		add_filter( 'pre_update_option_lvw_req_manages_link_role', [ &$this, 'update_manage_links_role' ] );
+		add_action( 'admin_init', $this->register( ... ) );
+		add_filter( 'pre_update_option_lvw_req_manages_link_role', $this->update_manage_links_role( ... ) );
 	}
 
 

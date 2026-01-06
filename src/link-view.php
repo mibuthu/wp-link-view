@@ -77,9 +77,9 @@ class LinkView {
 		// Create Config instance which is used for the whole plugin.
 		$this->config = new Config();
 		// Shortcodes, actions and filters.
-		add_action( 'plugins_loaded', [ &$this, 'load_textdomain' ] );
-		add_shortcode( 'linkview', [ &$this, 'shortcode_linkview' ] );
-		add_action( 'widgets_init', [ &$this, 'widget_init' ] );
+		add_action( 'plugins_loaded', $this->load_textdomain( ... ) );
+		add_shortcode( 'linkview', $this->shortcode_linkview( ... ) );
+		add_action( 'widgets_init', $this->widget_init( ... ) );
 		// Enable WordPress link manager (disabled by default since version 3.5).
 		if ( false !== get_option( 'link_manager_enabled' ) ) {
 			add_filter( 'pre_option_link_manager_enabled', '__return_true' );
@@ -91,7 +91,7 @@ class LinkView {
 			$admin = new Admin\Admin( $this->config );
 			$admin->init();
 		} else { // Front page.
-			add_action( 'wp_enqueue_scripts', [ &$this, 'register_scripts' ] );
+			add_action( 'wp_enqueue_scripts', $this->register_scripts( ... ) );
 		}
 	}
 
