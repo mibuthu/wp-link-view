@@ -2,14 +2,14 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-use Rector\Php81\Rector\Array_\ArrayToFirstClassCallableRector;
+use Rector\CodingStyle\Rector\FuncCall\FunctionFirstClassCallableRector;
 
 return RectorConfig::configure()
     ->withPaths([
         __DIR__ . '/src',
     ])
     ->withRules([
-        ArrayToFirstClassCallableRector::class,
+        FunctionFirstClassCallableRector::class,
     ])
     // ->withPhpSets()
     // ->withTypeCoverageLevel(0)
