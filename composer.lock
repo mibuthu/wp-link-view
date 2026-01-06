@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c4d5af5e3fccb153175afd67b5b8dee6",
+    "content-hash": "4799457257f580faa39597839146b3f7",
     "packages": [],
     "packages-dev": [
         {
@@ -102,6 +102,57 @@
                 }
             ],
             "time": "2025-11-11T04:32:07+00:00"
+        },
+        {
+            "name": "fsylum/rector-wordpress",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fsylum/rector-wordpress.git",
+                "reference": "193cc57903712844dd3467580bfbc0c28ff1c6a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fsylum/rector-wordpress/zipball/193cc57903712844dd3467580bfbc0c28ff1c6a6",
+                "reference": "193cc57903712844dd3467580bfbc0c28ff1c6a6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "rector/rector": "^2.0",
+                "webmozart/assert": "^1.11"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.41",
+                "laravel/pint": "^1.25",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan-strict-rules": "^2.0",
+                "phpstan/phpstan-webmozart-assert": "^2.0",
+                "phpunit/phpunit": "^10.5"
+            },
+            "type": "rector-extension",
+            "extra": {
+                "composer-normalize": {
+                    "indent-size": 4,
+                    "indent-style": "space"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fsylum\\RectorWordPress\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Rector upgrades rules for WordPress",
+            "support": {
+                "issues": "https://github.com/fsylum/rector-wordpress/issues",
+                "source": "https://github.com/fsylum/rector-wordpress/tree/1.0.0"
+            },
+            "time": "2026-01-05T13:21:05+00:00"
         },
         {
             "name": "php-stubs/wordpress-globals",
@@ -774,6 +825,64 @@
                 }
             ],
             "time": "2025-11-04T16:30:35+00:00"
+        },
+        {
+            "name": "webmozart/assert",
+            "version": "1.12.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webmozarts/assert.git",
+                "reference": "9be6926d8b485f55b9229203f962b51ed377ba68"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/9be6926d8b485f55b9229203f962b51ed377ba68",
+                "reference": "9be6926d8b485f55b9229203f962b51ed377ba68",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-date": "*",
+                "ext-filter": "*",
+                "php": "^7.2 || ^8.0"
+            },
+            "suggest": {
+                "ext-intl": "",
+                "ext-simplexml": "",
+                "ext-spl": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.10-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Webmozart\\Assert\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bernhard Schussek",
+                    "email": "bschussek@gmail.com"
+                }
+            ],
+            "description": "Assertions to validate method input/output with nice error messages.",
+            "keywords": [
+                "assert",
+                "check",
+                "validate"
+            ],
+            "support": {
+                "issues": "https://github.com/webmozarts/assert/issues",
+                "source": "https://github.com/webmozarts/assert/tree/1.12.1"
+            },
+            "time": "2025-10-29T15:56:20+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",

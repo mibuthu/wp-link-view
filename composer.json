@@ -6,7 +6,8 @@
         "phpcompatibility/phpcompatibility-wp": "^2.1",
         "php-stubs/wordpress-stubs": "^6.9",
         "php-stubs/wordpress-globals": "^0.2",
-        "rector/rector": "^2.3"
+        "rector/rector": "^2.3",
+        "fsylum/rector-wordpress": "^1.0"
     },
     "require": {
         "php": ">=8.4"
