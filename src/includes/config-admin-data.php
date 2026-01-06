@@ -121,6 +121,7 @@ final class ConfigAdminData {
 		if ( isset( $this->config_data[ $option_name ] ) ) {
 			return $this->config_data[ $option_name ];
 		}
+		return [];
 	}
 
 }

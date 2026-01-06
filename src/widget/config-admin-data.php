@@ -65,6 +65,7 @@ class ConfigAdminData {
 		if ( isset( $this->args_data[ $arg_name ] ) ) {
 			return $this->args_data[ $arg_name ];
 		}
+		return [];
 	}
 
 }

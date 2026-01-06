@@ -302,6 +302,7 @@ class ConfigAdminData {
 		if ( isset( $this->atts_data[ $attribute_name ] ) ) {
 			return $this->atts_data[ $attribute_name ];
 		}
+		return [];
 	}
 
 }

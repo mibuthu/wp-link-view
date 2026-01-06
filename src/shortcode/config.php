@@ -130,6 +130,7 @@ class Config {
 		// Trigger error is allowed in this case.
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 		trigger_error( 'Shortcode attribute "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
+		return '';
 	}
 
 
@@ -149,13 +150,14 @@ class Config {
 	/**
 	 * Get a complete attribute
 	 */
-	public function get( string $name ): Option {
+	public function get( string $name ): ?Option {
 		if ( isset( $this->atts[ $name ] ) ) {
 			return $this->atts[ $name ];
 		}
 		// Trigger error is allowed in this case.
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 		trigger_error( 'Shortcode attribute "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
+		return null;
 	}
 
 

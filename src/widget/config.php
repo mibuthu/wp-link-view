@@ -57,6 +57,7 @@ class Config {
 		// Trigger error is allowed in this case.
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 		trigger_error( 'Widget argument "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
+		return '';
 	}
 
 
