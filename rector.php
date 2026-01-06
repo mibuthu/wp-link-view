@@ -1,6 +1,7 @@
 <?php // phpcs:disable
 declare(strict_types=1);
 
+use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\Config\RectorConfig;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Fsylum\RectorWordPress\Set\WordPressSetList;
@@ -14,7 +15,7 @@ return RectorConfig::configure()
     ->withAttributesSets()
     ->withPreparedSets(
         codeQuality: true,
-        codingStyle: false,
+        codingStyle: true,
         deadCode: true,
         instanceOf: true,
         earlyReturn: true,
@@ -29,5 +30,6 @@ return RectorConfig::configure()
     ->withSkip([
         ClassPropertyAssignToConstructorPromotionRector::class,
         DisallowedEmptyRuleFixerRector::class,
+        NewlineAfterStatementRector::class,
     ])
 ;
