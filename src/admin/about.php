@@ -46,8 +46,7 @@ class About {
 	public function show_page(): void {
 		// Check required privileges.
 		if ( ! current_user_can( $this->config->req_capabilities ) ) {
-			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'default' ) );
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$tab = ! empty( $_GET['tab'] ) && 'atts' === sanitize_title( (string) wp_unslash( (string) $_GET['tab'] ) ) ? 'atts' : 'general';
@@ -111,10 +110,8 @@ class About {
 					__( 'Goto %1$s and drag the %2$s-Widget into one of the sidebar or widget areas.', 'link-view' ),
 					'<a href="' .
 					admin_url( 'widgets.php' ) . '">' .
-					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
-					__( 'Appearance' ) . ' &rarr; ' .
-					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
-					__( 'Widgets' ) . '</a>',
+					__( 'Appearance', 'default' ) . ' &rarr; ' .
+					__( 'Widgets', 'default' ) . '</a>',
 					'"LinkView"'
 				) . '<br />
 				' . sprintf( __( 'Enter a title for the widget and add the required shortcode attributes in the appropriate field. All available shortcode attributes for the %1$s-shortcode can be used in the widget too.', 'link-view' ), '"linkview"' ) . '<br />
@@ -122,8 +119,7 @@ class About {
 				sprintf(
 					__( 'Press %1$s to confirm the changes.', 'link-view' ),
 					'"' .
-					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
-					__( 'Save' ) .
+					__( 'Save', 'default' ) .
 					'"'
 				) . '
 			</div>
@@ -134,8 +130,7 @@ class About {
 					__( 'In the %1$s settings page, available under %2$s, you can find some options to modify the plugin.', 'link-view' ),
 					'LinkView',
 					'<a href="' . admin_url( 'options-general.php?page=lvw_admin_settings' ) . '">' .
-					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
-					__( 'Settings' ) . ' &rarr; LinkView</a>'
+					__( 'Settings', 'default' ) . ' &rarr; LinkView</a>'
 				) . '
 			</div>'
 		);
@@ -226,9 +221,7 @@ class About {
 					'"' .
 					sprintf( __( 'CSS-code for %1$s', 'link-view' ), 'LinkView' ) . '"',
 					'<a href="' . admin_url( 'options-general.php?page=lvw_admin_settings' ) . '">' .
-					// Use "default" text domain for translations available in WordPress Core.
-					// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
-					__( 'Settings' ) . ' &rarr; LinkView</a>'
+					__( 'Settings', 'default' ) . ' &rarr; LinkView</a>'
 				) . '<br />
 				' . sprintf( __( 'The optional type options must be added in brackets in the format "option_name=value", multiple options can be added separated by a pipe %1$s.', 'link-view' ), '("<strong>|</strong>")' ) . '
 				<h5>' . __( 'Examples', 'link-view' ) . ':</h5>

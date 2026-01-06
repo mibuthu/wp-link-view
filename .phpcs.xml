@@ -35,7 +35,7 @@
             <property name="strict_class_file_names" type="bool" value="false" />
         </properties>
     </rule>
-    <rule ref="WordPress.WP.I18n">
+    <rule ref="WordPress.WP.I18n.TextDomainMismatch">
         <properties>
             <property name="text_domain" type="array">
                 <element value="link-view" />

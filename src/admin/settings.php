@@ -49,8 +49,7 @@ class Settings {
 		// Check required privileges.
 		if ( ! current_user_can( 'manage_options' ) ) {
 			// Use "default" text domain for translations available in WordPress Core.
-			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'default' ) );
 		}
 		// Create content.
 		echo '
