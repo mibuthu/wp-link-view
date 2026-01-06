@@ -107,7 +107,7 @@ final class Config {
 	 * @return string Option value.
 	 */
 	public function __get( $name ) {
-		if ( 'lvw_' !== substr( $name, 0, 4 ) ) {
+		if ( ! str_starts_with( $name, 'lvw_' ) ) {
 			$name = 'lvw_' . $name;
 		}
 		if ( ! isset( $this->options[ $name ] ) ) {

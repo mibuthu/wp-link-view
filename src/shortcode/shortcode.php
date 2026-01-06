@@ -398,7 +398,7 @@ class Shortcode {
 				// Add attribute.
 				$styles .= $name . ':' . $value . ';';
 				// Add prefixed browser specific attributes.
-				if ( 'column' === substr( $name, 0, 6 ) ) {
+				if ( str_starts_with( $name, 'column' ) ) {
 					$styles .= '-moz-' . $name . ':' . $value . ';-webkit-' . $name . ':' . $value . ';';
 				}
 			}

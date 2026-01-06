@@ -117,7 +117,7 @@ class Link {
 	 */
 	private static function html_item( $link, $item, $caption, $shortcode_config, $shortcode_slider ) {
 		// Check if a hyperlink shall be added.
-		$is_link = ( '_l' === substr( $item, -2 ) );
+		$is_link = ( str_ends_with( $item, '_l' ) );
 		if ( $is_link ) {
 			$item = substr( $item, 0, -2 );
 		}
