@@ -2,10 +2,10 @@
 Contributors: mibuthu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY
 Tags: link, links, blogroll, view, linkview, list, slider, slideshow, images, pictures, banner, integrated, page, category, categories, admin, setting, option, attribute, widget, sidebar, css, multi-column
-Requires at least: 4.9
-Tested up to: 5.6
-Requires PHP: 5.6
-Stable tag: 0.8.0
+Requires at least: 6.9
+Tested up to: 6.9
+Requires PHP: 8.4
+Stable tag: 0.9.0-dev
 Plugin URI: https://wordpress.org/plugins/link-view
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
