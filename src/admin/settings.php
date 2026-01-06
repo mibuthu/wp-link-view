@@ -130,14 +130,9 @@ class Settings {
 	 * @param string               $name HTML name attribute.
 	 * @param string               $value HTML value attribute.
 	 * @param array<string,string> $captions List of captions.
-	 * @param bool                 $_disabled Disable the radio buttons.
 	 * @return void
-	 *
-	 * Parameter $disabled not implemented yet.
-	 * TODO: Implement or remove parameter $disabled.
 	 */
-	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter, Squiz.Commenting.FunctionComment.Missing -- Parameter $disabled not implemented / used
-	private function show_radio( $name, $value, $captions, $_disabled = false ) {
+	private function show_radio( $name, $value, $captions ) {
 		echo '
 							<fieldset>';
 		foreach ( $captions as $key => $caption ) {

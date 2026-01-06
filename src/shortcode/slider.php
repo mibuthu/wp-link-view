@@ -154,8 +154,7 @@ class Slider {
 		$ret .= 'auto: true, continuous: true, controlsShow: false';
 		$ret .= ', pause: ' . $this->shortcode_config->slider_pause;
 		$ret .= ', speed: ' . $this->shortcode_config->slider_speed;
-		$ret .= '});';
-		return $ret;
+		return $ret . '});';
 	}
 
 }

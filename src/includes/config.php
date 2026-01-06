@@ -66,11 +66,9 @@ final class Config {
 	 * Update the role to manage links
 	 *
 	 * @param string $new_value New role.
-	 * @param null   $_old_value Old role (not required)
 	 * @return string The $new_value string.
 	 */
-	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter, Squiz.Commenting.FunctionComment.Missing -- Parameter $old_value not used
-	public function update_manage_links_role( $new_value, $_old_value = null ) {
+	public function update_manage_links_role( $new_value ) {
 		global $wp_roles;
 		switch ( $new_value ) {
 			case 'subscriber':

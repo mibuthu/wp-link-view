@@ -10,7 +10,7 @@ return RectorConfig::configure()
     ])
     ->withPhpSets()
     // ->withTypeCoverageLevel(0)
-    // ->withDeadCodeLevel(0)
+    ->withDeadCodeLevel(50)
     ->withCodeQualityLevel(50)
     ->withSkip([
         ClassPropertyAssignToConstructorPromotionRector::class,

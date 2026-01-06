@@ -55,7 +55,7 @@ class Links {
 		// TODO: The cat_filter value "all" is deprecated and can be removed in 0.9.
 		if ( '' !== $shortcode_config->cat_filter && 'all' !== $shortcode_config->cat_filter ) {
 			str_replace( ',', '|', $shortcode_config->cat_filter );
-			$cat_slugs = array_map( trim( ... ), array_map( strval( ... ), (array) explode( '|', $shortcode_config->cat_filter ) ) );
+			$cat_slugs = array_map( trim( ... ), array_map( strval( ... ), explode( '|', (string) $shortcode_config->cat_filter ) ) );
 			foreach ( $cat_slugs as $cat_slug ) {
 				$term = get_term_by( 'slug', $cat_slug, 'link_category' );
 				if ( $term instanceof \WP_Term ) {
@@ -75,7 +75,7 @@ class Links {
 				$cat_array = $terms;
 			}
 			if ( '' !== $shortcode_config->exclude_cat ) {
-				$exclude_cat = array_map( trim( ... ), array_map( strval( ... ), (array) explode( ',', $shortcode_config->exclude_cat ) ) );
+				$exclude_cat = array_map( trim( ... ), array_map( strval( ... ), explode( ',', (string) $shortcode_config->exclude_cat ) ) );
 				$diff        = [];
 				foreach ( $cat_array as $cat ) {
 					if ( ! in_array( $cat->name, $exclude_cat, true ) ) {

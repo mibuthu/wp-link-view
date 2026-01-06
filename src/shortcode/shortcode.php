@@ -199,8 +199,7 @@ class Shortcode {
 			$out .= '
 					</div>';
 		}
-		$out .= $this->html_multicol_after( $this->cat_multicol_settings, $cat_column );
-		return $out;
+		return $out . $this->html_multicol_after( $this->cat_multicol_settings, $cat_column );
 	}
 
 
@@ -322,7 +321,7 @@ class Shortcode {
 				$ret['type'] = 'static';
 			}
 			if ( ! empty( $options[1] ) ) {
-				$option_array = explode( '|', (string) substr( $options[1], 0, -1 ) );
+				$option_array = explode( '|', substr( $options[1], 0, -1 ) );
 				foreach ( $option_array as $option_text ) {
 					$o                   = explode( '=', $option_text );
 					$ret['opt'][ $o[0] ] = $o[1];
@@ -339,12 +338,8 @@ class Shortcode {
 						}
 					}
 					break;
-				case 'css':
+				case 'css' | 'masonry':
 					// No requirements.
-					break;
-				case 'masonry':
-					// No requirements.
-					break;
 			}
 			if ( ! isset( $ret['opt']['num_columns'] ) ) {
 				$ret['opt']['num_columns'] = 0;

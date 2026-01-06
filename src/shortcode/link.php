@@ -69,15 +69,14 @@ class Link {
 			}
 		} else {
 			// Enhanced style (all items given in link_items attribute).
-			$items = json_decode( $shortcode_config->link_items, true );
+			$items = json_decode( (string) $shortcode_config->link_items, true );
 			if ( is_array( $items ) ) {
 				$out .= self::html_section( $link, $items, $shortcode_config, $shortcode_slider );
 			} else {
 				$out .= 'ERROR while json decoding. There must be an error in your "link_items" json syntax.';
 			}
 		}
-		$out .= '</div>';
-		return $out;
+		return $out . '</div>';
 	}
 
 
@@ -150,15 +149,12 @@ class Link {
 			// Check rel attribute.
 			$rel          = '';
 			$combined_rel = $shortcode_config->link_rel . ' ' . $link->link_rel;
-			if ( '' !== $combined_rel ) {
-				// Check value according to allowed values for HTML5 (see https://www.w3schools.com/tags/att_a_rel.asp).
-				$rels = array_intersect(
-					array_unique( explode( ' ', $combined_rel ) ),
-					(array) $shortcode_config->get( 'link_rel' )->permitted_values
-				);
-
-				$rel = ' rel="' . implode( ' ', $rels ) . '"';
-			}
+			// Check value according to allowed values for HTML5 (see https://www.w3schools.com/tags/att_a_rel.asp).
+			$rels = array_intersect(
+				array_unique( explode( ' ', $combined_rel ) ),
+				(array) $shortcode_config->get( 'link_rel' )->permitted_values
+			);
+			$rel = ' rel="' . implode( ' ', $rels ) . '"';
 			$out .= '<a class="lvw-anchor' . $shortcode_config->class_suffix . '" href="' . $link->link_url . '" target="' . $target . '" title="' . $link->link_name . $description . '"' . $rel . '>';
 		}
 		switch ( $item ) {
@@ -187,8 +183,7 @@ class Link {
 		if ( $is_link ) {
 			$out .= '</a>';
 		}
-		$out .= '</div>';
-		return $out;
+		return $out . '</div>';
 	}
 
 
