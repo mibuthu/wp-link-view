@@ -157,9 +157,11 @@ class Shortcode {
 
 	/**
 	 * Get HTML for showing a single category
+	 *
+	 * phpcs:disable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase -- wpTerm is in CamelCase due to rector rule RenameParamToMatchTypeRector
 	 */
-	private function html_category_list( \WP_Term $category, int &$cat_column ): string {
-		$links = Links::get( $this->atts, $category );
+	private function html_category_list( \WP_Term $wpTerm, int &$cat_column ): string {
+		$links = Links::get( $this->atts, $wpTerm );
 		$out   = $this->html_multicol_before( $this->cat_multicol_settings, $cat_column );
 		if ( [] !== $links ) {
 			$out .= '
@@ -167,7 +169,7 @@ class Shortcode {
 			if ( $this->atts->show_cat_name ) {
 				$num_links_text = $this->atts->show_num_links ? ' <small>(' . count( $links ) . ')</small>' : '';
 				$out           .= '
-						<h2 class="lvw-cat-name' . $this->atts->class_suffix . '">' . $category->name . $num_links_text . '</h2>';
+						<h2 class="lvw-cat-name' . $this->atts->class_suffix . '">' . $wpTerm->name . $num_links_text . '</h2>';
 			}
 			// Show links.
 			$out .= $this->html_link_list( $links );
@@ -175,6 +177,7 @@ class Shortcode {
 					</div>';
 		}
 		return $out . $this->html_multicol_after( $this->cat_multicol_settings, $cat_column );
+		// phpcs:enable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 	}
 
 

@@ -60,9 +60,9 @@ class Slider {
 	 *
 	 * @param \WP_Term[] $links The links of the slider.
 	 */
-	public function __construct( array $links, Config $shortcode_config, string $id_string ) {
+	public function __construct( array $links, Config $config, string $id_string ) {
 		$this->links            = $links;
-		$this->shortcode_config = $shortcode_config;
+		$this->shortcode_config = $config;
 		$this->id_string        = $id_string;
 		$this->slider_size();
 	}

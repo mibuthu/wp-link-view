@@ -16,12 +16,11 @@ return RectorConfig::configure()
         codeQuality: true,
         codingStyle: false,
         deadCode: true,
-        instanceOf: false,
+        instanceOf: true,
         earlyReturn: true,
-        naming: false,
-        privatization: false,
+        naming: true,
+        privatization: true,
         rectorPreset: true,
-        strictBooleans: false,
         typeDeclarations: true,
     )
     ->withSets([

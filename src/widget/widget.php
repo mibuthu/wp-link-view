@@ -97,25 +97,25 @@ class Widget extends \WP_Widget {
 	 */
 	public function form( array $instance ): string {
 		$this->config->load_args_admin_data();
-		foreach ( $this->config->get_all() as $name => $item ) {
-			if ( ! isset( $instance[ $name ] ) ) {
-				$instance[ $name ] = $item->value;
+		foreach ( $this->config->get_all() as $option_name => $option ) {
+			if ( ! isset( $instance[ $option_name ] ) ) {
+				$instance[ $option_name ] = $option->value;
 			}
-			if ( 'textarea' === $item->type ) {
+			if ( 'textarea' === $option->type ) {
 				echo '
-					<p' . ' title="' . esc_attr( $item->tooltip ) . '">
-						<label for="' . esc_attr( $this->get_field_id( $name ) ) . '">' . esc_html( (string) $item->caption ) . ' </label>
-						<textarea class="widefat" id="' . esc_attr( $this->get_field_id( $name ) )
-							. '" name="' . esc_attr( $this->get_field_name( $name ) )
-							. '" rows="5">' . esc_attr( $instance[ $name ] ) . '</textarea>
+					<p' . ' title="' . esc_attr( $option->tooltip ) . '">
+						<label for="' . esc_attr( $this->get_field_id( $option_name ) ) . '">' . esc_html( (string) $option->caption ) . ' </label>
+						<textarea class="widefat" id="' . esc_attr( $this->get_field_id( $option_name ) )
+							. '" name="' . esc_attr( $this->get_field_name( $option_name ) )
+							. '" rows="5">' . esc_attr( $instance[ $option_name ] ) . '</textarea>
 					</p>';
 			} else { // 'text'
 				echo '
-					<p' . ' title="' . esc_attr( $item->tooltip ) . '">
-						<label for="' . esc_attr( $this->get_field_id( $name ) ) . '">' . esc_html( (string) $item->caption ) . ' </label>
-						<input class="widefat" id="' . esc_attr( $this->get_field_id( $name ) )
-							. '" name="' . esc_attr( $this->get_field_name( $name ) )
-							. '" type="text" value="' . esc_attr( $instance[ $name ] ) . '" />
+					<p' . ' title="' . esc_attr( $option->tooltip ) . '">
+						<label for="' . esc_attr( $this->get_field_id( $option_name ) ) . '">' . esc_html( (string) $option->caption ) . ' </label>
+						<input class="widefat" id="' . esc_attr( $this->get_field_id( $option_name ) )
+							. '" name="' . esc_attr( $this->get_field_name( $option_name ) )
+							. '" type="text" value="' . esc_attr( $instance[ $option_name ] ) . '" />
 					</p>';
 			}
 		}

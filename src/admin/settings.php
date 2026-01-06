@@ -86,29 +86,29 @@ class Settings {
 	 * Show config options
 	 */
 	private function html_config(): void {
-		foreach ( $this->config->get_all() as $oname => $o ) {
+		foreach ( $this->config->get_all() as $option_name => $option ) {
 			echo '
 				<tr>
 					<th>';
-			if ( '' !== $o->label ) {
-				echo '<label for="' . esc_attr( $oname ) . '">' . esc_html( $o->label ) . ':</label>';
+			if ( '' !== $option->label ) {
+				echo '<label for="' . esc_attr( $option_name ) . '">' . esc_html( $option->label ) . ':</label>';
 			}
 			echo '</th>
 					<td>';
-			switch ( $o->type ) {
+			switch ( $option->type ) {
 				case 'radio':
-					$this->show_radio( $oname, $this->config->$oname, (array) $o->caption );
+					$this->show_radio( $option_name, $this->config->$option_name, (array) $option->caption );
 					break;
 				case 'text':
-					$this->show_text( $oname, $this->config->$oname );
+					$this->show_text( $option_name, $this->config->$option_name );
 					break;
 				case 'textarea':
-					$this->show_textarea( $oname, $this->config->$oname );
+					$this->show_textarea( $option_name, $this->config->$option_name );
 					break;
 			}
 			echo '
 					</td>
-					<td class="description">' . wp_kses_post( $o->description ) . '</td>
+					<td class="description">' . wp_kses_post( $option->description ) . '</td>
 				</tr>';
 		}
 	}

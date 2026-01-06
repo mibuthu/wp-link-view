@@ -43,8 +43,8 @@ class Factory {
 	/**
 	 * Class constructor which initializes required variables
 	 */
-	public function __construct( Config &$config_instance ) {
-		$this->config = $config_instance;
+	public function __construct( Config &$config ) {
+		$this->config = $config;
 		add_action( 'print_late_styles', $this->print_styles( ... ) );
 		add_action( 'wp_footer', $this->enqueue_scripts( ... ), 1 );
 	}

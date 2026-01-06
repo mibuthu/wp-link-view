@@ -54,8 +54,8 @@ final class Config {
 	 * Register all settings in WordPress
 	 */
 	public function register(): void {
-		foreach ( array_keys( $this->options ) as $oname ) {
-			register_setting( 'lvw_config', $oname );
+		foreach ( array_keys( $this->options ) as $option_name ) {
+			register_setting( 'lvw_config', $option_name );
 		}
 	}
 
