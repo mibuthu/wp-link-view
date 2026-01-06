@@ -33,7 +33,7 @@ class Config {
 	 *
 	 * @var array<string,Option>
 	 */
-	private $args;
+	private array $args;
 
 
 	/**
@@ -49,11 +49,8 @@ class Config {
 
 	/**
 	 * Get the value of the given arguments
-	 *
-	 * @param string $name Argument name.
-	 * @return string Argument value.
 	 */
-	public function __get( $name ) {
+	public function __get( string $name ): string {
 		if ( isset( $this->args[ $name ] ) ) {
 			return $this->args[ $name ]->value;
 		}
@@ -68,17 +65,15 @@ class Config {
 	 *
 	 * @return array<string,Option>
 	 */
-	public function get_all() {
+	public function get_all(): array {
 		return $this->args;
 	}
 
 
 	/**
 	 * Load help-texts of widget args
-	 *
-	 * @return void
 	 */
-	public function load_args_admin_data() {
+	public function load_args_admin_data(): void {
 		require_once PLUGIN_PATH . 'widget/config-admin-data.php';
 		$args_admin_data = new ConfigAdminData();
 		foreach ( array_keys( $this->args ) as $arg_name ) {

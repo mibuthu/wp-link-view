@@ -32,7 +32,7 @@ final class Config {
 	 *
 	 * @var array<string, Option>
 	 */
-	private $options;
+	private array $options;
 
 
 	/**
@@ -52,10 +52,8 @@ final class Config {
 
 	/**
 	 * Register all settings in WordPress
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		foreach ( array_keys( $this->options ) as $oname ) {
 			register_setting( 'lvw_config', $oname );
 		}
@@ -64,11 +62,8 @@ final class Config {
 
 	/**
 	 * Update the role to manage links
-	 *
-	 * @param string $new_value New role.
-	 * @return string The $new_value string.
 	 */
-	public function update_manage_links_role( $new_value ) {
+	public function update_manage_links_role( string $new_value ): string {
 		global $wp_roles;
 		switch ( $new_value ) {
 			case 'subscriber':
@@ -100,11 +95,8 @@ final class Config {
 	 * Get the value of the specified option
 	 *
 	 * The "lvw_" prefix in the option name is optional.
-	 *
-	 * @param string $name Option name.
-	 * @return string Option value.
 	 */
-	public function __get( $name ) {
+	public function __get( string $name ): string {
 		if ( ! str_starts_with( $name, 'lvw_' ) ) {
 			$name = 'lvw_' . $name;
 		}
@@ -123,17 +115,15 @@ final class Config {
 	 *
 	 * @return array<string,Option>
 	 */
-	public function get_all() {
+	public function get_all(): array {
 		return $this->options;
 	}
 
 
 	/**
 	 * Load the additional option data
-	 *
-	 * @return void
 	 */
-	public function load_admin_data() {
+	public function load_admin_data(): void {
 		require_once PLUGIN_PATH . 'includes/config-admin-data.php';
 		$config_admin_data = new ConfigAdminData();
 		foreach ( array_keys( $this->options ) as $option_name ) {
@@ -149,10 +139,8 @@ final class Config {
 	 *  * lv_req_cap -> lvw_req_capabilities
 	 *  * lv_ml_role -> lvw_req_manages_links_role
 	 *  * lv_css -> lvw_custom_css
-	 *
-	 * @return void
 	 */
-	public function version_upgrade() {
+	public function version_upgrade(): void {
 		$this->rename_option( 'lv_req_cap', 'lvw_req_capabilities' );
 		$this->rename_option( 'lv_ml_role', 'lvw_req_manage_links_role' );
 		$this->rename_option( 'lv_css', 'lvw_custom_css' );
@@ -161,12 +149,8 @@ final class Config {
 
 	/**
 	 * Rename an existing option
-	 *
-	 * @param string $old_name The old option name.
-	 * @param string $new_name The new option name.
-	 * @return void
 	 */
-	private function rename_option( $old_name, $new_name ) {
+	private function rename_option( string $old_name, string $new_name ): void {
 		$value = get_option( $old_name, null );
 		if ( null !== $value ) {
 			add_option( $new_name, $value );

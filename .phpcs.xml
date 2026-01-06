@@ -19,6 +19,8 @@
         <exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
         <exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
         <exclude name="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody" />
+        <exclude name="Squiz.Commenting.FunctionComment.MissingParamTag" />
+        <exclude name="Squiz.Commenting.VariableComment.MissingVar" />
     </rule>
     <rule ref="PHPCompatibilityWP" />
     <rule ref="Generic.Arrays.DisallowLongArraySyntax" />

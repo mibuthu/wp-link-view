@@ -28,10 +28,8 @@ class Widget extends \WP_Widget {
 
 	/**
 	 * Widget Arguments
-	 *
-	 * @var Config
 	 */
-	private $config;
+	private readonly Config $config;
 
 
 	/**
@@ -56,9 +54,8 @@ class Widget extends \WP_Widget {
 	 *
 	 * @param array<string,string> $args Widget arguments.
 	 * @param array<string,string> $instance Saved values from database.
-	 * @return void
 	 */
-	public function widget( $args, $instance ) {
+	public function widget( array $args, array $instance ): void {
 		echo wp_kses_post( $args['before_widget'] );
 		$title = apply_filters( 'widget_title', $instance['title'] );
 		if ( '' !== $title ) {
@@ -80,7 +77,7 @@ class Widget extends \WP_Widget {
 	 *
 	 * @suppress PhanUnusedPublicMethodParameter
 	 */
-	public function update( $new_instance, $old_instance ) {
+	public function update( array $new_instance, array $old_instance ): array {
 		$instance = [];
 		foreach ( array_keys( $this->config->get_all() ) as $name ) {
 			if ( isset( $new_instance[ $name ] ) ) {
@@ -97,9 +94,8 @@ class Widget extends \WP_Widget {
 	 * @see WP_Widget::form()
 	 *
 	 * @param array<string,string> $instance Previously saved values from database.
-	 * @return string Value used to check if the Safe button is displayed.
 	 */
-	public function form( $instance ) {
+	public function form( array $instance ): string {
 		$this->config->load_args_admin_data();
 		foreach ( $this->config->get_all() as $name => $item ) {
 			if ( ! isset( $instance[ $name ] ) ) {

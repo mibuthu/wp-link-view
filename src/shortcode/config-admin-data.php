@@ -56,7 +56,7 @@ class ConfigAdminData {
 	 *
 	 * @var array<string,array<string,string|array>>
 	 */
-	private $atts_data;
+	private array $atts_data;
 
 
 	/**
@@ -296,10 +296,9 @@ class ConfigAdminData {
 	/**
 	 * Get the data for a given attribute
 	 *
-	 * @param string $attribute_name The name of the option.
 	 * @return array<string,string|array>
 	 */
-	public function __get( $attribute_name ) {
+	public function __get( string $attribute_name ): array {
 		if ( isset( $this->atts_data[ $attribute_name ] ) ) {
 			return $this->atts_data[ $attribute_name ];
 		}

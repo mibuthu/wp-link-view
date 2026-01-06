@@ -31,25 +31,19 @@ class About {
 
 	/**
 	 * Class constructor which initializes required variables
-	 *
-	 * @param Config $config The Config instance as a reference.
 	 */
 	public function __construct(
 		/**
 		 * Config class instance reference
-		 *
-		 * @var Config
 		 */
-		private $config
+		private readonly Config $config
 	) {}
 
 
 	/**
 	 * Show the admin about page
-	 *
-	 * @return void
 	 */
-	public function show_page() {
+	public function show_page(): void {
 		// Check required privileges.
 		if ( ! current_user_can( $this->config->req_capabilities ) ) {
 			// phpcs:ignore WordPress.WP.I18n.MissingArgDomainDefault -- Use the WordPress translation ('default' textdomain).
@@ -78,11 +72,8 @@ class About {
 
 	/**
 	 * Show the tab bar
-	 *
-	 * @param string $current The current tab.
-	 * @return void
 	 */
-	private function show_tabs( $current = 'general' ) {
+	private function show_tabs( string $current = 'general' ): void {
 		$tabs = [
 			'general' => __( 'General', 'link-view' ),
 			'atts'    => __( 'Shortcode Attributes', 'link-view' ),
@@ -98,10 +89,8 @@ class About {
 
 	/**
 	 * Show help HTML
-	 *
-	 * @return void
 	 */
-	private function show_help() {
+	private function show_help(): void {
 		echo wp_kses_post(
 			'
 			<h3>' . __( 'Help and Instructions', 'link-view' ) . '</h3>
@@ -155,10 +144,8 @@ class About {
 
 	/**
 	 * Show author HTML
-	 *
-	 * @return void
 	 */
-	private function show_author() {
+	private function show_author(): void {
 		echo wp_kses_post(
 			'
 			<h3>' . __( 'About the plugin author', 'link-view' ) . '</h3>
@@ -176,10 +163,8 @@ class About {
 
 	/**
 	 * Show translation info HTML
-	 *
-	 * @return void
 	 */
-	private function show_translation_info() {
+	private function show_translation_info(): void {
 		echo wp_kses_post(
 			'
 			<h3>' . __( 'Translations', 'link-view' ) . '</h3>
@@ -194,7 +179,7 @@ class About {
 	/**
 	 * Show attributes HTML table
 	 */
-	private function show_atts() {
+	private function show_atts(): void {
 		require_once PLUGIN_PATH . 'shortcode/config.php';
 		$shortcode_config = new \WordPress\Plugins\mibuthu\LinkView\Shortcode\Config();
 		$shortcode_config->load_admin_data();
@@ -263,9 +248,8 @@ class About {
 	 * Show a single attribute table for a given section
 	 *
 	 * @param array<string,Option> $atts Attributes to display.
-	 * @return void
 	 */
-	private function html_atts_table( $atts ) {
+	private function html_atts_table( array $atts ): void {
 		echo wp_kses_post(
 			'
 			<table class="atts-table">

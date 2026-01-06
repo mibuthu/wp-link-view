@@ -31,16 +31,12 @@ class Settings {
 
 	/**
 	 * Class constructor which initializes required variables
-	 *
-	 * @param Config $config The Config instance as a reference.
 	 */
 	public function __construct(
 		/**
 		 * Config class instance reference
-		 *
-		 * @var Config
 		 */
-		private $config
+		private readonly Config $config
 	) {
 		$this->config->load_admin_data();
 	}
@@ -48,10 +44,8 @@ class Settings {
 
 	/**
 	 * Show the admin settings page
-	 *
-	 * @return void
 	 */
-	public function show_page() {
+	public function show_page(): void {
 		// Check required privileges.
 		if ( ! current_user_can( 'manage_options' ) ) {
 			// Use "default" text domain for translations available in WordPress Core.
@@ -68,10 +62,8 @@ class Settings {
 
 	/**
 	 * Show the settings table
-	 *
-	 * @return void
 	 */
-	private function html_settings() {
+	private function html_settings(): void {
 		echo '
 			<div id="posttype-page" class="posttypediv">
 			<form method="post" action="options.php">
@@ -92,10 +84,8 @@ class Settings {
 
 	/**
 	 * Show config options
-	 *
-	 * @return void
 	 */
-	private function html_config() {
+	private function html_config(): void {
 		foreach ( $this->config->get_all() as $oname => $o ) {
 			echo '
 				<tr>
@@ -130,9 +120,8 @@ class Settings {
 	 * @param string               $name HTML name attribute.
 	 * @param string               $value HTML value attribute.
 	 * @param array<string,string> $captions List of captions.
-	 * @return void
 	 */
-	private function show_radio( $name, $value, $captions ) {
+	private function show_radio( string $name, string $value, array $captions ): void {
 		echo '
 							<fieldset>';
 		foreach ( $captions as $key => $caption ) {
@@ -151,12 +140,8 @@ class Settings {
 
 	/**
 	 * Show a text
-	 *
-	 * @param string $name HTML name attribute.
-	 * @param string $value Value.
-	 * @return void
 	 */
-	private function show_text( $name, $value ) {
+	private function show_text( string $name, string $value ): void {
 		echo '
 						<input type="text" name="' . esc_attr( $name ) . '" id="' . esc_attr( $name ) . '" value="' . esc_html( $value ) . '" />';
 	}
@@ -164,12 +149,8 @@ class Settings {
 
 	/**
 	 * Show a text area
-	 *
-	 * @param string $name HTML name attribute.
-	 * @param string $value Value.
-	 * @return void
 	 */
-	private function show_textarea( $name, $value ) {
+	private function show_textarea( string $name, string $value ): void {
 		echo '
 						<textarea name="' . esc_attr( $name ) . '" id="' . esc_attr( $name ) . '" rows="25" class="large-text code">' . esc_html( $value ) . '</textarea>';
 	}

@@ -30,25 +30,19 @@ class Admin {
 
 	/**
 	 * Class constructor which initializes required variables
-	 *
-	 * @param Config $config The Config instance as a reference.
 	 */
 	public function __construct(
 		/**
 		 * Config class instance reference
-		 *
-		 * @var Config
 		 */
-		private $config
+		private readonly Config $config
 	) {}
 
 
 	/**
 	 * Initialize the admin page (register required admin actions)
-	 *
-	 * @return void
 	 */
-	public function init() {
+	public function init(): void {
 		add_action( 'admin_menu', $this->register_pages( ... ) );
 		add_action( 'plugins_loaded', $this->config->version_upgrade( ... ) );
 	}
@@ -56,10 +50,8 @@ class Admin {
 
 	/**
 	 * Add and register all pages in the admin menu
-	 *
-	 * @return void
 	 */
-	public function register_pages() {
+	public function register_pages(): void {
 		$page = add_submenu_page(
 			'link-manager.php',
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
@@ -83,10 +75,8 @@ class Admin {
 
 	/**
 	 * Show the plugins about page
-	 *
-	 * @return void
 	 */
-	public function show_about_page() {
+	public function show_about_page(): void {
 		require_once PLUGIN_PATH . 'admin/about.php';
 		$about = new About( $this->config );
 		$about->show_page();
@@ -95,10 +85,8 @@ class Admin {
 
 	/**
 	 * Show the plugins settings page
-	 *
-	 * @return void
 	 */
-	public function show_settings_page() {
+	public function show_settings_page(): void {
 		require_once PLUGIN_PATH . 'admin/settings.php';
 		$settings = new Settings( $this->config );
 		$settings->show_page();
@@ -108,10 +96,8 @@ class Admin {
 	/**
 	 * Embed the plugins about page styles
 	 * TODO: move to admin about class
-	 *
-	 * @return void
 	 */
-	public function embed_about_styles() {
+	public function embed_about_styles(): void {
 		wp_enqueue_style( 'lvw_admin_about', PLUGIN_URL . 'admin/css/about.css', [], '1.0' );
 	}
 
@@ -119,10 +105,8 @@ class Admin {
 	/**
 	 * Embed the plugins settings page styles
 	 * TODO: move to admin settings class
-	 *
-	 * @return void
 	 */
-	public function embed_settings_styles() {
+	public function embed_settings_styles(): void {
 		wp_enqueue_style( 'lvw_admin_settings', PLUGIN_URL . 'admin/css/settings.css', [], '1.0' );
 	}
 

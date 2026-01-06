@@ -53,24 +53,18 @@ class LinkView {
 
 	/**
 	 * Config instance used for the whole plugin
-	 *
-	 * @var Config
 	 */
-	private $config;
+	private readonly Config $config;
 
 	/**
 	 * ShortcodeFactory instance used for the whole plugin
-	 *
-	 * @var Shortcode\Factory
 	 */
-	private $shortcode_factory;
+	private ?Shortcode\Factory $shortcode_factory = null;
 
 
 	/**
 	 * Class Constructor
 	 * Initializes the plugin.
-	 *
-	 * @return void
 	 */
 	public function __construct() {
 		// Always!
@@ -98,10 +92,8 @@ class LinkView {
 
 	/**
 	 * Load link-view textdomain for translations
-	 *
-	 * @return void
 	 */
-	public function load_textdomain() {
+	public function load_textdomain(): void {
 		load_plugin_textdomain( 'link-view', false, basename( PLUGIN_PATH ) . '/languages' );
 	}
 
@@ -110,10 +102,8 @@ class LinkView {
 	 * Initialize link-view shortcode
 	 *
 	 * @param array<string,string> $atts Shortcode attributes.
-	 * @param string               $content Shortcode content.
-	 * @return string HTML to display
 	 */
-	public function shortcode_linkview( $atts, $content = '' ) {
+	public function shortcode_linkview( array $atts, string $content = '' ): string {
 		if ( ! $this->shortcode_factory instanceof Shortcode\Factory ) {
 			require_once PLUGIN_PATH . 'shortcode/factory.php';
 			$this->shortcode_factory = new Shortcode\Factory( $this->config );
@@ -124,10 +114,8 @@ class LinkView {
 
 	/**
 	 * Initialize link-view widget
-	 *
-	 * @return void
 	 */
-	public function widget_init() {
+	public function widget_init(): void {
 		require_once PLUGIN_PATH . 'widget/widget.php';
 		register_widget( __NAMESPACE__ . '\Widget\Widget' );
 	}
@@ -135,10 +123,8 @@ class LinkView {
 
 	/**
 	 * Function to register the javascript files
-	 *
-	 * @return void
 	 */
-	public function register_scripts() {
+	public function register_scripts(): void {
 		wp_register_script( 'lvw_easySlider', PLUGIN_URL . 'includes/js/easySlider.min.js', [ 'jquery' ], '1.7', true );
 		wp_register_script( 'lvw_masonry', PLUGIN_URL . 'includes/js/masonry.pkgd.min.js', [ 'jquery' ], '4.2.2', true );
 	}
@@ -148,7 +134,5 @@ class LinkView {
 
 /**
  * LinkView Class instance
- *
- * @var LinkView
  */
 $linkview = new LinkView();

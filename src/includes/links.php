@@ -26,12 +26,8 @@ class Links {
 
 	/**
 	 * Get Links
-	 *
-	 * @param Shortcode\Config $shortcode_config Shortcode Config object.
-	 * @param \WP_Term|null    $category Category object.
-	 * @return object[] Links object array.
 	 */
-	public static function get( $shortcode_config, $category = null ) {
+	public static function get( Shortcode\Config $shortcode_config, ?\WP_Term $category = null ): array {
 		$args = [
 			'orderby' => $shortcode_config->link_orderby,
 			'order'   => $shortcode_config->link_order,
@@ -47,10 +43,9 @@ class Links {
 	/**
 	 * Get link categories
 	 *
-	 * @param Shortcode\Config $shortcode_config Shortcode Config object.
 	 * @return \WP_Term[] Link category object array.
 	 */
-	public static function categories( $shortcode_config ) {
+	public static function categories( Shortcode\Config $shortcode_config ): array {
 		$cat_array = [];
 		// TODO: The cat_filter value "all" is deprecated and can be removed in 0.9.
 		if ( '' !== $shortcode_config->cat_filter && 'all' !== $shortcode_config->cat_filter ) {
@@ -63,8 +58,6 @@ class Links {
 				}
 			}
 		} else {
-			// There seems to be a problem to recognize the get_terms function correctly.
-			// @phan-suppress-next-line PhanAccessMethodInternal.
 			$terms = get_terms(
 				[
 					'taxonomy' => 'link_category',

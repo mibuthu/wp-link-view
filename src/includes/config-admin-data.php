@@ -33,7 +33,7 @@ final class ConfigAdminData {
 	 *
 	 * @var array<string,array<string,string|array>>
 	 */
-	private $config_data;
+	private array $config_data;
 
 
 	/**
@@ -115,10 +115,9 @@ final class ConfigAdminData {
 	/**
 	 * Get the data for a given option.
 	 *
-	 * @param string $option_name The name of the option.
 	 * @return array<string,string|array>
 	 */
-	public function __get( $option_name ) {
+	public function __get( string $option_name ): array {
 		if ( isset( $this->config_data[ $option_name ] ) ) {
 			return $this->config_data[ $option_name ];
 		}

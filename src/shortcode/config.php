@@ -58,13 +58,11 @@ class Config {
 	 *
 	 * @var array<string,Option>
 	 */
-	private $atts;
+	private array $atts;
 
 
 	/**
 	 * Class constructor which initializes required variables
-	 *
-	 * @return void
 	 */
 	public function __construct() {
 		$this->atts = [
@@ -100,9 +98,8 @@ class Config {
 	 * Set the values of multiple attributes
 	 *
 	 * @param array<string,string> $atts Attributes to set.
-	 * @return void
 	 */
-	public function set_values( $atts ) {
+	public function set_values( array $atts ): void {
 		if ( ! is_array( $atts ) ) {
 			return;
 		}
@@ -125,11 +122,8 @@ class Config {
 	 * Get the value of the given attribute
 	 *
 	 * If the option is a boolean value, a bool is returned.
-	 *
-	 * @param string $name Attribute name.
-	 * @return string|bool Attribute value.
 	 */
-	public function __get( $name ) {
+	public function __get( string $name ): string|bool {
 		if ( isset( $this->atts[ $name ] ) ) {
 			return $this->atts[ $name ]->bool_value();
 		}
@@ -141,12 +135,8 @@ class Config {
 
 	/**
 	 * Set the value of the given attribute
-	 *
-	 * @param string $name Attribute name.
-	 * @param string $value Attribute value.
-	 * @return void
 	 */
-	public function __set( $name, $value ) {
+	public function __set( string $name, string $value ): void {
 		if ( isset( $this->atts[ $name ] ) ) {
 			$this->atts[ $name ]->value = $value;
 		}
@@ -158,11 +148,8 @@ class Config {
 
 	/**
 	 * Get a complete attribute
-	 *
-	 * @param string $name Attribute name.
-	 * @return Option
 	 */
-	public function get( $name ) {
+	public function get( string $name ): Option {
 		if ( isset( $this->atts[ $name ] ) ) {
 			return $this->atts[ $name ];
 		}
@@ -175,10 +162,9 @@ class Config {
 	/**
 	 * Get all specified attributes
 	 *
-	 * @param string $section Optional, to only get the atts of the given section.
 	 * @return array<string,Option>
 	 */
-	public function get_all( $section = null ) {
+	public function get_all( ?string $section = null ): array {
 		if ( is_null( $section ) ) {
 			return $this->atts;
 		}
@@ -194,10 +180,8 @@ class Config {
 
 	/**
 	 * Load the additional shortcode attribute data
-	 *
-	 * @return void
 	 */
-	public function load_admin_data() {
+	public function load_admin_data(): void {
 		require_once PLUGIN_PATH . 'shortcode/config-admin-data.php';
 		$atts_admin_data = new ConfigAdminData();
 		foreach ( array_keys( $this->atts ) as $attr_name ) {

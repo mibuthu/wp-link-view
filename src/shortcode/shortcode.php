@@ -31,61 +31,46 @@ class Shortcode {
 
 	/**
 	 * Plugin config instance
-	 *
-	 * @var \WordPress\Plugins\mibuthu\LinkView\Config
 	 */
-	private $config;
+	private readonly \WordPress\Plugins\mibuthu\LinkView\Config $config;
 
 	/**
 	 * Shortcode attributes
-	 *
-	 * @var Config
 	 */
-	private $atts;
+	private readonly Config $atts;
 
 	/**
 	 * Shortcode id
-	 *
-	 * @var int
 	 */
-	private $sc_id;
+	private readonly int $sc_id;
 
 	/**
 	 * Number of link lists (required for link list id assignment)
-	 *
-	 * @var int
 	 */
-	private $num_lists = 0;
+	private int $num_lists = 0;
 
 	/**
 	 * Category multi-column settings
-	 *
-	 * @var array
 	 */
-	private $cat_multicol_settings = [];
+	private array $cat_multicol_settings = [];
 
 	/**
 	 * Link multi-column settings
-	 *
-	 * @var array
 	 */
-	private $link_multicol_settings = [];
+	private array $link_multicol_settings = [];
 
 	/**
 	 * Sliders used in the shortcode
 	 *
 	 * @var array<int,Slider>
 	 */
-	private $sliders = [];
+	private array $sliders = [];
 
 
 	/**
 	 * Class constructor which initializes required variables
-	 *
-	 * @param \WordPress\Plugins\mibuthu\LinkView\Config $config The plugin config instance.
-	 * @param int                                        $sc_id The id of the shortcode.
 	 */
-	public function __construct( &$config, $sc_id ) {
+	public function __construct( \WordPress\Plugins\mibuthu\LinkView\Config &$config, int $sc_id ) {
 		$this->config = $config;
 		$this->atts   = new Config();
 		$this->sc_id  = $sc_id;
@@ -96,10 +81,8 @@ class Shortcode {
 	 * Main function to show the rendered HTML output
 	 *
 	 * @param array<string,string> $atts Shortcode attributes.
-	 * @param string               $content Shortcode content.
-	 * @return string HTML to render.
 	 */
-	public function show_html( $atts, $content = '' ) {
+	public function show_html( array $atts, string $content = '' ): string {
 		$this->prepare_atts( $atts, $content );
 		if ( $this->atts->cat_grouping ) {
 			$categories = Links::categories( $this->atts );
@@ -133,10 +116,8 @@ class Shortcode {
 	 * Prepare the given attribute for the shortcode handling
 	 *
 	 * @param array<string,string> $atts Shortcode attributes.
-	 * @param string               $content Shortcode content.
-	 * @return void
 	 */
-	private function prepare_atts( $atts, $content ) {
+	private function prepare_atts( array $atts, string $content ): void {
 		// Add leading "-" for css-suffix.
 		if ( isset( $atts['class_suffix'] ) ) {
 			$atts['class_suffix'] = '-' . $atts['class_suffix'];
@@ -158,10 +139,8 @@ class Shortcode {
 
 	/**
 	 * Returns the custom class string including all custom classes set in the options and in shortcode attribute
-	 *
-	 * @return string
 	 */
-	private function custom_class_string() {
+	private function custom_class_string(): string {
 		$custom_class_string = $this->config->custom_class;
 		if ( '' !== $this->atts->custom_class ) {
 			if ( '' !== $custom_class_string ) {
@@ -178,12 +157,8 @@ class Shortcode {
 
 	/**
 	 * Get HTML for showing a single category
-	 *
-	 * @param \WP_Term $category Category object to show.
-	 * @param int      $cat_column The actual category column.
-	 * @return string HTML to render.
 	 */
-	private function html_category_list( $category, &$cat_column ) {
+	private function html_category_list( \WP_Term $category, int &$cat_column ): string {
 		$links = Links::get( $this->atts, $category );
 		$out   = $this->html_multicol_before( $this->cat_multicol_settings, $cat_column );
 		if ( ! empty( $links ) ) {
@@ -207,9 +182,8 @@ class Shortcode {
 	 * Get HTML for showing a link list
 	 *
 	 * @param object[] $links Links object array to show.
-	 * @return string HTML to render link list.
 	 */
-	private function html_link_list( $links ) {
+	private function html_link_list( array $links ): string {
 		if ( empty( $links ) ) {
 			return '';
 		}
@@ -263,10 +237,8 @@ class Shortcode {
 	 * Helper function for multi-column handling (opening)
 	 *
 	 * @param array<string, string|array> $multicol_settings Multi-column settings.
-	 * @param int                         $column Actual column.
-	 * @return string Required HTML which is required before the element for multi-columns.
 	 */
-	private function html_multicol_before( $multicol_settings, &$column ) {
+	private function html_multicol_before( array $multicol_settings, int &$column ): string {
 		$column = intval( $column );
 		if ( 'static' === $multicol_settings['type'] ) {
 			++$column;
@@ -283,10 +255,8 @@ class Shortcode {
 	 * Helper function for multi-column handling (closing)
 	 *
 	 * @param array<string, string|array> $multicol_settings Multi-column settings.
-	 * @param int                         $column Actual column.
-	 * @return string Required HTML which is required after the element for multi-columns.
 	 */
-	private function html_multicol_after( $multicol_settings, &$column ) {
+	private function html_multicol_after( array $multicol_settings, int &$column ): string {
 		if ( 'static' === $multicol_settings['type'] && intval( $column ) === intval( $multicol_settings['opt']['num_columns'] ) ) {   // Last column.
 			$column = 0;
 			return '
@@ -299,11 +269,9 @@ class Shortcode {
 	/**
 	 * Get all Settings for multi-column handling
 	 *
-	 * @param string      $column_option The value of the category or link column option.
-	 * @param null|string $list_symbol The list symbol type (if required).
 	 * @return array<string,string|array> Multi-column settings.
 	 */
-	private function multicol_settings( $column_option, $list_symbol = null ) {
+	private function multicol_settings( string $column_option, ?string $list_symbol = null ): array {
 		$ret = [];
 		// Check if multi-column is enabled.
 		if ( 1 === intval( $column_option ) ) {  // No multi-column.
@@ -355,10 +323,8 @@ class Shortcode {
 	 * Get required HTML classes for Multi-column handling
 	 *
 	 * @param array<string|array> $multicol_settings Multi-column settings.
-	 * @param string              $additional_classes Additional classes to include.
-	 * @return string HTML class string.
 	 */
-	private function multicol_classes( $multicol_settings, $additional_classes = '' ) {
+	private function multicol_classes( array $multicol_settings, string $additional_classes = '' ): string {
 		$classes = $additional_classes;
 		if ( '' !== $multicol_settings['type'] ) {
 			$classes .= ' lvw-multi-column lvw-' . $multicol_settings['type'] . '-column';
@@ -375,10 +341,8 @@ class Shortcode {
 	 * Get required wrapper styles for Multi-column handling
 	 *
 	 * @param array<string, string|array> $multicol_settings Multi-column settings.
-	 * @param null|string                 $list_symbol The list symbol type (if required).
-	 * @return string HTML style text.
 	 */
-	private function multicol_wrapper_styles( $multicol_settings, $list_symbol = null ) {
+	private function multicol_wrapper_styles( array $multicol_settings, ?string $list_symbol = null ): string {
 		$styles = ! empty( $list_symbol ) && 'std' !== $list_symbol ? 'list-style-type:' . $list_symbol . ';' : '';
 		// Prepare multi-column css options.
 		if ( 'css' === $multicol_settings['type'] ) {
@@ -404,10 +368,8 @@ class Shortcode {
 
 	/**
 	 * Get HTML for showing slider styles
-	 *
-	 * @return string HTML to render slider styles.
 	 */
-	public function slider_styles() {
+	public function slider_styles(): string {
 		$ret = '';
 		foreach ( $this->sliders as $slider ) {
 			$ret .= $slider->slider_style();
@@ -418,10 +380,8 @@ class Shortcode {
 
 	/**
 	 * Get the slider scripts text (if required)
-	 *
-	 * @return string The slider script text (if required) or an empty string.
 	 */
-	public function slider_scripts() {
+	public function slider_scripts(): string {
 		$ret = '';
 		foreach ( $this->sliders as $slider ) {
 			$ret .= $slider->slider_script();
@@ -432,10 +392,8 @@ class Shortcode {
 
 	/**
 	 * Get the Masonry scripts text (if required)
-	 *
-	 * @return string The Masonry script text (if required) or an empty string.
 	 */
-	public function masonry_scripts() {
+	public function masonry_scripts(): string {
 		$ret = '';
 		// Scripts for categories.
 		if ( 'masonry' === $this->cat_multicol_settings['type'] ) {

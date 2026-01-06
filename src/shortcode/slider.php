@@ -29,38 +29,30 @@ class Slider {
 
 	/**
 	 * Shortcode attributes
-	 *
-	 * @var Config
 	 */
-	private $shortcode_config;
+	private readonly Config $shortcode_config;
 
 	/**
 	 * The links of the slider
 	 *
 	 * @var \WP_Term[]
 	 */
-	private $links;
+	private readonly array $links;
 
 	/**
 	 * Id string
-	 *
-	 * @var string
 	 */
-	private $id_string;
+	private readonly string $id_string;
 
 	/**
 	 * Slider width
-	 *
-	 * @var int
 	 */
-	public $width;
+	public int $width;
 
 	/**
 	 * Slider height
-	 *
-	 * @var int
 	 */
-	public $height;
+	public int $height;
 
 
 	/**
@@ -70,7 +62,7 @@ class Slider {
 	 * @param Config     $shortcode_config The ShortcodeConfig object.
 	 * @param string     $id_string The id string of the slider.
 	 */
-	public function __construct( $links, $shortcode_config, $id_string ) {
+	public function __construct( array $links, Config $shortcode_config, string $id_string ) {
 		$this->links            = $links;
 		$this->shortcode_config = $shortcode_config;
 		$this->id_string        = $id_string;
@@ -81,7 +73,7 @@ class Slider {
 	/**
 	 * Get calculated slider size
 	 */
-	private function slider_size() {
+	private function slider_size(): void {
 		$config_width  = intval( $this->shortcode_config->slider_width );
 		$config_height = intval( $this->shortcode_config->slider_height );
 		// Use manual size given in the attributes.
@@ -123,10 +115,8 @@ class Slider {
 
 	/**
 	 * Get HTML for showing slider styles
-	 *
-	 * @return string HTML to render slider styles.
 	 */
-	public function slider_style() {
+	public function slider_style(): string {
 		$ret = '
 				#lvw-id-' . $this->id_string . ' li { ' .
 					'width:' . $this->width . 'px; ' .
@@ -145,10 +135,8 @@ class Slider {
 
 	/**
 	 * Get the slider scripts text (if required)
-	 *
-	 * @return string The slider script text (if required) or an empty string.
 	 */
-	public function slider_script() {
+	public function slider_script(): string {
 		$ret  = '
 			jQuery("#lvw-id-' . $this->id_string . '").easySlider({';
 		$ret .= 'auto: true, continuous: true, controlsShow: false';

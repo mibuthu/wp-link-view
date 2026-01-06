@@ -29,26 +29,21 @@ class Factory {
 
 	/**
 	 * Config class instance reference
-	 *
-	 * @var Config
 	 */
-	private $config;
+	private readonly Config $config;
 
 	/**
 	 * Shortcode instances
 	 *
 	 * @var array<int,Shortcode>
 	 */
-	private $shortcodes = [];
+	private array $shortcodes = [];
 
 
 	/**
 	 * Class constructor which initializes required variables
-	 *
-	 * @param Config $config_instance The Config instance as a reference.
-	 * @return void
 	 */
-	public function __construct( &$config_instance ) {
+	public function __construct( Config &$config_instance ) {
 		$this->config = $config_instance;
 		add_action( 'print_late_styles', $this->print_styles( ... ) );
 		add_action( 'wp_footer', $this->enqueue_scripts( ... ), 1 );
@@ -59,10 +54,8 @@ class Factory {
 	 * Add a new shortcode instance
 	 *
 	 * @param array<string,string> $atts Shortcode attributes.
-	 * @param string               $content Shortcode content.
-	 * @return string HTML to render.
 	 */
-	public function add( $atts, $content = '' ) {
+	public function add( array $atts, string $content = '' ): string {
 		$sc_id              = count( $this->shortcodes ) + 1;
 		$this->shortcodes[] = new Shortcode( $this->config, $sc_id );
 		return $this->shortcodes[ $sc_id - 1 ]->show_html( $atts, $content );
@@ -71,10 +64,8 @@ class Factory {
 
 	/**
 	 * Print general CSS styles and the slider styles (if required)
-	 *
-	 * @return void
 	 */
-	public function print_styles() {
+	public function print_styles(): void {
 		// Default styles for the shortcode and user specific styles from lvw_custom_css option.
 		echo '
 			<style type="text/css">
@@ -99,10 +90,8 @@ class Factory {
 
 	/**
 	 * Enqueue all slider and Masonry scripts
-	 *
-	 * @return void
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts(): void {
 		// Slider scripts.
 		$slider = '';
 		foreach ( $this->shortcodes as $shortcode ) {

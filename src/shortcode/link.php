@@ -29,13 +29,8 @@ class Link {
 
 	/**
 	 * Get HTML for showing a single link
-	 *
-	 * @param \WP_Term    $link Link object.
-	 * @param Config      $shortcode_config The ShortcodeConfig object.
-	 * @param Slider|null $shortcode_slider The ShortcodeSlider object.
-	 * @return string HTML to render link.
 	 */
-	public static function show_html( $link, $shortcode_config, $shortcode_slider = null ) {
+	public static function show_html( \WP_Term $link, Config $shortcode_config, ?Slider $shortcode_slider = null ): string {
 		$cat_classes = wp_get_object_terms( $link->link_id, 'link_category', [ 'fields' => 'slugs' ] );
 		if ( ! is_array( $cat_classes ) ) {
 			$cat_classes = '';
@@ -48,7 +43,7 @@ class Link {
 				 * @param string $cat_slug The category slug.
 				 * @return string
 				 */
-				fn( $cat_slug ) => 'category-' . $cat_slug
+				fn( $cat_slug ): string => 'category-' . $cat_slug
 			);
 			$cat_classes = ' ' . implode( ' ', $cat_classes );
 		}
@@ -85,11 +80,8 @@ class Link {
 	 *
 	 * @param object               $link Link object.
 	 * @param array<string,string> $items Link items array included in the section.
-	 * @param Config               $shortcode_config The ShortcodeConfig object.
-	 * @param Slider|null          $shortcode_slider The ShortcodeSlider object.
-	 * @return string HTML to render link section.
 	 */
-	private static function html_section( $link, $items, $shortcode_config, $shortcode_slider ) {
+	private static function html_section( object $link, array $items, Config $shortcode_config, ?Slider $shortcode_slider ): string {
 		$out = '';
 		foreach ( $items as $name => $item ) {
 			if ( is_array( $item ) ) {
@@ -106,15 +98,8 @@ class Link {
 
 	/**
 	 * Get HTML for showing a link item
-	 *
-	 * @param object      $link Link object.
-	 * @param string      $item Item type to display.
-	 * @param string      $caption Link item caption.
-	 * @param Config      $shortcode_config The ShortcodeConfig object.
-	 * @param Slider|null $shortcode_slider The ShortcodeSlider object.
-	 * @return string HTML to render link item.
 	 */
-	private static function html_item( $link, $item, $caption, $shortcode_config, $shortcode_slider ) {
+	private static function html_item( object $link, string $item, string $caption, Config $shortcode_config, ?Slider $shortcode_slider ): string {
 		// Check if a hyperlink shall be added.
 		$is_link = ( str_ends_with( $item, '_l' ) );
 		if ( $is_link ) {
@@ -154,9 +139,10 @@ class Link {
 				array_unique( explode( ' ', $combined_rel ) ),
 				(array) $shortcode_config->get( 'link_rel' )->permitted_values
 			);
-			$rel = ' rel="' . implode( ' ', $rels ) . '"';
+			$rel  = ' rel="' . implode( ' ', $rels ) . '"';
 			$out .= '<a class="lvw-anchor' . $shortcode_config->class_suffix . '" href="' . $link->link_url . '" target="' . $target . '" title="' . $link->link_name . $description . '"' . $rel . '>';
 		}
+		// TODO: Replace switch with match
 		switch ( $item ) {
 			case 'name':
 				$out .= $link->link_name;
@@ -189,13 +175,8 @@ class Link {
 
 	/**
 	 * Get HTML for showing the image
-	 *
-	 * @param object      $link Link object.
-	 * @param Config      $shortcode_config The ShortcodeConfig object.
-	 * @param Slider|null $shortcode_slider The ShortcodeSlider object.
-	 * @return string HTML to render the image.
 	 */
-	private static function html_img_tag( $link, $shortcode_config, $shortcode_slider ) {
+	private static function html_img_tag( object $link, Config $shortcode_config, ?Slider $shortcode_slider ): string {
 		// Handle links without an image.
 		if ( empty( $link->link_image ) ) {
 			switch ( $shortcode_config->link_item_img ) {
@@ -208,14 +189,11 @@ class Link {
 			}
 		}
 		// Handle image size.
-		if ( empty( $shortcode_slider ) ) {
-			$size_text = '';
-		} else {
+		$size_text = '';
+		if ( $shortcode_slider instanceof Slider ) {
 			$slider_width  = $shortcode_slider->width;
 			$slider_height = $shortcode_slider->height;
-			if ( empty( $slider_width ) || empty( $slider_height ) ) {
-				$size_text = '';
-			} else {
+			if ( ! empty( $slider_width ) && ! empty( $slider_height ) ) {
 				$slider_ratio             = $slider_width / $slider_height;
 				[$img_width, $img_height] = getimagesize( $link->link_image );
 				$img_ratio                = $img_width / $img_height;
