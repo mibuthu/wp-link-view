@@ -48,9 +48,7 @@ class Link {
 				 * @param string $cat_slug The category slug.
 				 * @return string
 				 */
-				function ( $cat_slug ) {
-					return 'category-' . $cat_slug;
-				}
+				fn( $cat_slug ) => 'category-' . $cat_slug
 			);
 			$cat_classes = ' ' . implode( ' ', $cat_classes );
 		}
