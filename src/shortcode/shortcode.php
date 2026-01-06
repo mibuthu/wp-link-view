@@ -410,7 +410,7 @@ class Shortcode {
 			foreach ( $this->link_multicol_settings['opt'] as $name => $value ) {
 				$options .= ',' . $name . ':' . $value;
 			}
-			for ( $id = 1; $id <= $this->num_lists; $id++ ) {
+			for ( $id = 1; $id <= $this->num_lists; ++$id ) {
 				$ret .= '
 						jQuery(".linkview#lvw-id-' . $this->sc_id . '-' . $id . '").masonry({' . $options . '});';
 			}
