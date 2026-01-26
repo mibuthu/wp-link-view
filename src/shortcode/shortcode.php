@@ -9,16 +9,14 @@ declare( strict_types=1 );
 
 namespace WordPress\Plugins\mibuthu\LinkView\Shortcode;
 
-use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
-
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
-require_once PLUGIN_PATH . 'shortcode/config.php';
-require_once PLUGIN_PATH . 'shortcode/link.php';
-require_once PLUGIN_PATH . 'shortcode/slider.php';
-require_once PLUGIN_PATH . 'includes/links.php';
+use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
 
-use WordPress\Plugins\mibuthu\LinkView\Links;
+require_once PLUGIN_PATH . 'shortcode/config.php';
+require_once PLUGIN_PATH . 'shortcode/slider.php';
+require_once PLUGIN_PATH . 'shortcode/links.php';
+require_once PLUGIN_PATH . 'shortcode/link.php';
 
 /**
  * LinkView Shortcode Class

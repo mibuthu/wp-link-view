@@ -7,9 +7,11 @@
 
 declare( strict_types=1 );
 
-namespace WordPress\Plugins\mibuthu\LinkView;
+namespace WordPress\Plugins\mibuthu\LinkView\Shortcode;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
+
+use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
 
 require_once PLUGIN_PATH . 'shortcode/config.php';
 
@@ -27,7 +29,7 @@ class Links {
 	 *
 	 * phpcs:disable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase -- wpTerm is in CamelCase due to rector rule RenameParamToMatchTypeRector
 	 */
-	public static function get( Shortcode\Config $config, ?\WP_Term $wpTerm = null ): array {
+	public static function get( Config $config, ?\WP_Term $wpTerm = null ): array {
 		$args = [
 			'orderby' => $config->link_orderby,
 			'order'   => $config->link_order,
@@ -46,7 +48,7 @@ class Links {
 	 *
 	 * @return \WP_Term[] Link category object array.
 	 */
-	public static function categories( Shortcode\Config $config ): array {
+	public static function categories( Config $config ): array {
 		$cat_array = [];
 		// TODO: The cat_filter value "all" is deprecated and can be removed in 0.9.
 		if ( '' !== $config->cat_filter && 'all' !== $config->cat_filter ) {
