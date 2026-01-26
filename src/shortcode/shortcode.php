@@ -185,7 +185,7 @@ class Shortcode {
 	 * @param object[] $links Links object array to show.
 	 */
 	private function html_link_list( array $links ): string {
-		if ( [] !== $links ) {
+		if ( [] === $links ) {
 			return '';
 		}
 		$list_id = ++$this->num_lists;
