@@ -33,7 +33,7 @@ class Links {
 		$args = [
 			'orderby' => $config->link_orderby,
 			'order'   => $config->link_order,
-			'limit'   => $config->num_links,
+			'limit'   => (int) $config->num_links,
 		];
 		if ( $wpTerm instanceof \WP_Term ) {
 			$args['category_name'] = $wpTerm->name;
