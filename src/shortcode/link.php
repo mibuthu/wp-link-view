@@ -27,11 +27,9 @@ class Link {
 
 	/**
 	 * Get HTML for showing a single link
-	 *
-	 * phpcs:disable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase -- wpTerm is in CamelCase due to rector rule RenameParamToMatchTypeRector
 	 */
-	public static function show_html( \WP_Term $wpTerm, Config $config, ?Slider $slider = null ): string {
-		$cat_classes = wp_get_object_terms( $wpTerm->link_id, 'link_category', [ 'fields' => 'slugs' ] );
+	public static function show_html( object $bookmark, Config $config, ?Slider $slider = null ): string {
+		$cat_classes = wp_get_object_terms( $bookmark->link_id, 'link_category', [ 'fields' => 'slugs' ] );
 		if ( ! is_array( $cat_classes ) ) {
 			$cat_classes = '';
 		} else {
@@ -55,24 +53,23 @@ class Link {
 		$out .= '>';
 		if ( '' === $config->link_items ) {
 			// Simple style (name or image).
-			if ( $config->show_img && ! is_null( $wpTerm->link_image ) ) {
+			if ( $config->show_img && ! is_null( $bookmark->link_image ) ) {
 				// Image.
-				$out .= self::html_item( $wpTerm, 'image_l', '', $config, $slider );
+				$out .= self::html_item( $bookmark, 'image_l', '', $config, $slider );
 			} else {
 				// Name.
-				$out .= self::html_item( $wpTerm, 'name_l', '', $config, $slider );
+				$out .= self::html_item( $bookmark, 'name_l', '', $config, $slider );
 			}
 		} else {
 			// Enhanced style (all items given in link_items attribute).
 			$items = json_decode( (string) $config->link_items, true );
 			if ( is_array( $items ) ) {
-				$out .= self::html_section( $wpTerm, $items, $config, $slider );
+				$out .= self::html_section( $bookmark, $items, $config, $slider );
 			} else {
 				$out .= 'ERROR while json decoding. There must be an error in your "link_items" json syntax.';
 			}
 		}
 		return $out . '</div>';
-		// phpcs:enable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 	}
 
 
