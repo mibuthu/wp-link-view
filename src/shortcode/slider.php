@@ -33,7 +33,7 @@ class Slider {
 	/**
 	 * The links of the slider
 	 *
-	 * @var \WP_Term[]
+	 * @var Link[]
 	 */
 	private readonly array $links;
 
@@ -56,7 +56,7 @@ class Slider {
 	/**
 	 * Class constructor which initializes required variables
 	 *
-	 * @param \WP_Term[] $links The links of the slider.
+	 * @param Link[] $links The links of the slider.
 	 */
 	public function __construct( array $links, Config $config, string $id_string ) {
 		$this->links            = $links;
@@ -82,28 +82,26 @@ class Slider {
 		$width  = 0;
 		$height = 0;
 		foreach ( $this->links as $link ) {
-			if ( $this->shortcode_config->show_img && ! empty( $link->link_image ) ) {
+			if ( $this->shortcode_config->show_img && '' !== $link->link_image ) {
 				[$w, $h] = getimagesize( $link->link_image );
 				$width   = max( $width, $w );
 				$height  = max( $height, $h );
 			}
 		}
-		// Get the maximum image size depending on the given size in the attributes.
 		$ratio = 1;
-		if ( 0 < $config_width ) {
+		if ( 0 >= $width || 0 >= $height ) {
+			// If no image was in all links, set a manual size
+			$width  = 300;
+			$height = 30;
+		} elseif ( 0 < $config_width ) {
+			// Use the width to calculate the ratio
 			$ratio = $config_width / $width;
 		} elseif ( 0 < $config_height ) {
+			// Use the height to calculate the ratio
 			$ratio = $config_height / $height;
 		}
-		$width  = intval( round( $width * $ratio ) );
-		$height = intval( round( $height * $ratio ) );
-		// If no image was in all links, set a manual size.
-		if ( 0 >= $width ) {
-			$width = 300;
-		}
-		if ( 0 >= $height ) {
-			$height = 30;
-		}
+		$width        = intval( round( $width * $ratio ) );
+		$height       = intval( round( $height * $ratio ) );
 		$this->width  = $width;
 		$this->height = $height;
 	}

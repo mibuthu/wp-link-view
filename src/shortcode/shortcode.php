@@ -180,7 +180,7 @@ class Shortcode {
 	/**
 	 * Get HTML for showing a link list
 	 *
-	 * @param object[] $links Links object array to show.
+	 * @param Link[] $links Links object array to show.
 	 */
 	private function html_link_list( array $links ): string {
 		if ( [] === $links ) {
@@ -210,11 +210,7 @@ class Shortcode {
 			// Actual link.
 			$out .= '
 						<li' . $this->multicol_classes( $this->link_multicol_settings, 'lvw-list-item' . $this->atts->class_suffix ) . '>';
-			$out .= Link::show_html(
-				$link,
-				$this->atts,
-				$this->sliders[ $list_id ] ?? null
-			);
+			$out .= $link->show_html( $this->atts, $this->sliders[ $list_id ] ?? null );
 			$out .= '</li>';
 			// Link multi-column-handling.
 			$out .= $this->html_multicol_after( $this->link_multicol_settings, $link_col );

@@ -27,6 +27,8 @@ class Links {
 	/**
 	 * Get Links
 	 *
+	 * @return Link[]
+	 *
 	 * phpcs:disable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase -- wpTerm is in CamelCase due to rector rule RenameParamToMatchTypeRector
 	 */
 	public static function get( Config $config, ?\WP_Term $wpTerm = null ): array {
@@ -38,7 +40,10 @@ class Links {
 		if ( $wpTerm instanceof \WP_Term ) {
 			$args['category_name'] = $wpTerm->name;
 		}
-		return get_bookmarks( $args );
+		return array_map(
+			fn ( $bookmark ): Link => new Link( $bookmark ),
+			get_bookmarks( $args )
+		);
 		// phpcs:enable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 	}
 
