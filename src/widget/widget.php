@@ -11,9 +11,9 @@ declare( strict_types=1 );
 
 namespace WordPress\Plugins\mibuthu\LinkView\Widget;
 
-use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
-
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
+
+use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
 
 require_once PLUGIN_PATH . 'includes/option.php';
 require_once PLUGIN_PATH . 'widget/config.php';
@@ -100,23 +100,26 @@ class Widget extends \WP_Widget {
 	 * TODO: Currently no type declarations are allowed for the function arguments, because the parent class WP_Widget does not define them
 	 */
 	public function form( $instance ): string {
-		$this->config->load_args_admin_data();
+		require_once PLUGIN_PATH . 'widget/config-admin-data.php';
+		require_once PLUGIN_PATH . 'admin/input-type.php';
+		$config_admin_data = new ConfigAdminData();
 		foreach ( $this->config->get_all() as $option_name => $option ) {
+			$option_admin_data = $config_admin_data->$option_name;
 			if ( ! isset( $instance[ $option_name ] ) ) {
 				$instance[ $option_name ] = $option->value;
 			}
-			if ( 'textarea' === $option->type ) {
+			if ( \WordPress\Plugins\mibuthu\LinkView\Admin\InputType::TextArea === $option_admin_data->input_type ) {
 				echo '
-					<p' . ' title="' . esc_attr( $option->tooltip ) . '">
-						<label for="' . esc_attr( $this->get_field_id( $option_name ) ) . '">' . esc_html( (string) $option->caption ) . ' </label>
+					<p' . ' title="' . esc_attr( $option_admin_data->tooltip ) . '">
+						<label for="' . esc_attr( $this->get_field_id( $option_name ) ) . '">' . esc_html( (string) $option_admin_data->caption ) . ' </label>
 						<textarea class="widefat" id="' . esc_attr( $this->get_field_id( $option_name ) )
 							. '" name="' . esc_attr( $this->get_field_name( $option_name ) )
 							. '" rows="5">' . esc_attr( $instance[ $option_name ] ) . '</textarea>
 					</p>';
-			} else { // 'text'
+			} else { // InputType::Text
 				echo '
-					<p' . ' title="' . esc_attr( $option->tooltip ) . '">
-						<label for="' . esc_attr( $this->get_field_id( $option_name ) ) . '">' . esc_html( (string) $option->caption ) . ' </label>
+					<p' . ' title="' . esc_attr( $option_admin_data->tooltip ) . '">
+						<label for="' . esc_attr( $this->get_field_id( $option_name ) ) . '">' . esc_html( (string) $option_admin_data->caption ) . ' </label>
 						<input class="widefat" id="' . esc_attr( $this->get_field_id( $option_name ) )
 							. '" name="' . esc_attr( $this->get_field_name( $option_name ) )
 							. '" type="text" value="' . esc_attr( $instance[ $option_name ] ) . '" />

@@ -3,54 +3,70 @@
  * Additional data for the widget arguments required for the widget admin page.
  *
  * @package link-view
+ *
+ * phpcs:disable Generic.Files.OneObjectStructurePerFile.MultipleFound -- value class is in the same file
  */
 
 declare( strict_types=1 );
 
 namespace WordPress\Plugins\mibuthu\LinkView\Widget;
 
-use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
-
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
+use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
+use WordPress\Plugins\mibuthu\LinkView\Admin\InputType;
+
 require_once PLUGIN_PATH . 'includes/option.php';
+
+
+/**
+ * ShortcodeAdminDataValue class
+ *
+ * This class represents the widget config admin data for one config value.
+ */
+final class ConfigAdminDataValue {
+
+
+	/**
+	 * Constructor: Initialize the readonly data
+	 */
+	public function __construct(
+		public readonly InputType $input_type,
+		public readonly string $caption,
+		public readonly string $tooltip,
+	) {}
+
+}
 
 
 /**
  * LinkView Widget args config admin data class
  *
  * This class provides all additional data for the arguments which is only required in the admin page.
- *
- * @property string $title
- * @property string $atts
  */
 class ConfigAdminData {
 
-	/**
-	 * Additional data for the arguments
-	 *
-	 * @var array<string,array<string,string|array>>
-	 */
-	private array $args_data;
+	// phpcs:disable Squiz.Commenting.VariableComment.Missing, Squiz.WhiteSpace.MemberVarSpacing.Incorrect -- not required here
+	public readonly ConfigAdminDataValue $title;
+	public readonly ConfigAdminDataValue $atts;
+	// phpcs:enable Squiz.Commenting.VariableComment.Missing, Squiz.WhiteSpace.MemberVarSpacing.Incorrect
 
 
 	/**
 	 * Constructor: Initialize the data
 	 */
 	public function __construct() {
-		$this->args_data = [
-			'title' => [
-				'type'    => 'text',
-				'caption' => __( 'Title', 'link-view' ) . ':',
-				'tooltip' => __( 'This option defines the displayed title for the widget.', 'link-view' ),
-			],
+		$this->title = new ConfigAdminDataValue(
+			input_type: InputType::Text,
+			caption: __( 'Title', 'link-view' ) . ':',
+			tooltip: __( 'This option defines the displayed title for the widget.', 'link-view' ),
+		);
 
-			'atts'  => [
-				'type'    => 'textarea',
-				'caption' => __( 'Shortcode attributes', 'link-view' ) . ':',
-				'tooltip' => sprintf( __( 'All attributes which are available for the %1$s shortcode can be used.', 'link-view' ), '[link-view]' ),
-			],
-		];
+		$this->atts = new ConfigAdminDataValue(
+			input_type: InputType::TextArea,
+			caption: __( 'Shortcode attributes', 'link-view' ) . ':',
+			tooltip: sprintf( __( 'All attributes which are available for the %1$s shortcode can be used.', 'link-view' ), '[link-view]' ),
+		);
 	}
 
 

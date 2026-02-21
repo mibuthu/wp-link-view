@@ -30,37 +30,6 @@ class Option {
 	public string|array $permitted_values = '';
 
 	/**
-	 * Section
-	 */
-	public string $section = '';
-
-	/**
-	 * Type
-	 */
-	public string $type = '';
-
-	/**
-	 * Label
-	 */
-	public string $label = '';
-
-	/**
-	 * Caption
-	 */
-	public string|array $caption = '';
-
-	/**
-	 * Description
-	 */
-	public string $description = '';
-
-	/**
-	 * Tooltip
-	 */
-	public string $tooltip = '';
-
-
-	/**
 	 * The boolean TRUE value option
 	 */
 	const string TRUE = 'true';
