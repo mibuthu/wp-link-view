@@ -158,35 +158,4 @@ class Config {
 		return null;
 	}
 
-
-	/**
-	 * Get all specified attributes
-	 *
-	 * @return array<string,Option>
-	 */
-	public function get_all( ?string $section = null ): array {
-		if ( is_null( $section ) ) {
-			return $this->atts;
-		}
-		$atts = [];
-		foreach ( $this->atts as $name => $attr ) {
-			if ( $attr->section === $section ) {
-				$atts[ $name ] = $attr;
-			}
-		}
-		return $atts;
-	}
-
-
-	/**
-	 * Load the additional shortcode attribute data
-	 */
-	public function load_admin_data(): void {
-		require_once PLUGIN_PATH . 'shortcode/config-admin-data.php';
-		$atts_admin_data = new ConfigAdminData();
-		foreach ( array_keys( $this->atts ) as $attr_name ) {
-			$this->atts[ $attr_name ]->modify( $atts_admin_data->$attr_name );
-		}
-	}
-
 }

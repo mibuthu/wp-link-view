@@ -13,10 +13,10 @@ namespace WordPress\Plugins\mibuthu\LinkView;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
+use WordPress\Plugins\mibuthu\LinkView\Admin\InputType;
+
 require_once PLUGIN_PATH . 'includes/option.php';
 require_once PLUGIN_PATH . 'admin/input-type.php';
-
-use WordPress\Plugins\mibuthu\LinkView\Admin\InputType;
 
 
 /**

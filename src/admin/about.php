@@ -10,13 +10,18 @@ declare( strict_types=1 );
 namespace WordPress\Plugins\mibuthu\LinkView\Admin;
 
 use WordPress\Plugins\mibuthu\LinkView\Config;
-use WordPress\Plugins\mibuthu\LinkView\Option;
+use WordPress\Plugins\mibuthu\LinkView\Shortcode\Config as ShortcodeConfig;
+use WordPress\Plugins\mibuthu\LinkView\Shortcode\ConfigAdminData;
+use WordPress\Plugins\mibuthu\LinkView\Shortcode\ConfigAdminDataValue;
+use WordPress\Plugins\mibuthu\LinkView\Shortcode\Section as ShortcodeSection;
 use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_URL;
 use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
 require_once PLUGIN_PATH . 'includes/config.php';
+require_once PLUGIN_PATH . 'shortcode/config.php';
+require_once PLUGIN_PATH . 'shortcode/config-admin-data.php';
 
 
 /**
@@ -26,16 +31,30 @@ require_once PLUGIN_PATH . 'includes/config.php';
  */
 class About {
 
+	/**
+	 * LinkView config class instance reference
+	 */
+	private readonly Config $config;
+
+	/**
+	 * Shortcode config class instance
+	 */
+	private readonly ShortcodeConfig $shortcode_config;
+
+	/**
+	 * Shortcode config admin data class instance
+	 */
+	private readonly ConfigAdminData $config_admin_data;
+
 
 	/**
 	 * Class constructor which initializes required variables
 	 */
-	public function __construct(
-		/**
-		 * Config class instance reference
-		 */
-		private readonly Config $config
-	) {}
+	public function __construct( Config $config ) {
+		$this->config            = $config;
+		$this->shortcode_config  = new ShortcodeConfig();
+		$this->config_admin_data = new ConfigAdminData();
+	}
 
 
 	/**
@@ -172,9 +191,6 @@ class About {
 	 * Show attributes HTML table
 	 */
 	private function show_atts(): void {
-		require_once PLUGIN_PATH . 'shortcode/config.php';
-		$shortcode_config = new \WordPress\Plugins\mibuthu\LinkView\Shortcode\Config();
-		$shortcode_config->load_admin_data();
 		echo wp_kses_post(
 			'
 			<h3>' . __( 'Shortcode Attributes', 'link-view' ) . '</h3>
@@ -182,11 +198,11 @@ class About {
 				' . sprintf( __( 'In the following tables you can find all available shortcode attributes for %1$s', 'link-view' ), '<code>[linkview]</code>' ) . ':'
 		);
 		echo wp_kses_post( '<h4 class="atts-section-title">' . __( 'General', 'link-view' ) . ':</h4>' );
-		$this->html_atts_table( $shortcode_config->get_all( 'general' ) );
+		$this->html_atts_table( $this->config_admin_data->get_all( ShortcodeSection::General ) );
 		echo wp_kses_post( '<h4 class="atts-section-title">' . __( 'Link List', 'link-view' ) . ':</h4>' );
-		$this->html_atts_table( $shortcode_config->get_all( 'list' ) );
+		$this->html_atts_table( $this->config_admin_data->get_all( ShortcodeSection::LinkList ) );
 		echo wp_kses_post( '<h4 class="atts-section-title">' . __( 'Link Slider', 'link-view' ) . ':</h4>' );
-		$this->html_atts_table( $shortcode_config->get_all( 'slider' ) );
+		$this->html_atts_table( $this->config_admin_data->get_all( ShortcodeSection::LinkSlider ) );
 		echo wp_kses_post(
 			'<br />
 			<h4 class="atts-section-title">' . __( 'Multi-column layout types and options', 'link-view' ) . ':</h4><a id="multicol"></a>
@@ -237,7 +253,7 @@ class About {
 	/**
 	 * Show a single attribute table for a given section
 	 *
-	 * @param array<string,Option> $atts Attributes to display.
+	 * @param array<string,ConfigAdminDataValue> $atts Attributes to display.
 	 */
 	private function html_atts_table( array $atts ): void {
 		echo wp_kses_post(
@@ -250,15 +266,19 @@ class About {
 					<th class="atts-table-desc">' . __( 'Description', 'link-view' ) . '</th>
 				</tr>'
 		);
-		foreach ( $atts as $name => $attribute ) {
-			$permitted_values = is_array( $attribute->permitted_values ) ? implode( '<br />', $attribute->permitted_values ) : $attribute->permitted_values;
+		foreach ( $atts as $name => $admin_data ) {
+			$attribute        = $this->shortcode_config->get( $name );
+			$permitted_values = is_null( $admin_data->permitted_values ) ? $attribute->permitted_values : $admin_data->permitted_values;
+			if ( is_array( $permitted_values ) ) {
+				$permitted_values = implode( '<br />', $permitted_values );
+			}
 			echo wp_kses_post(
 				'
 				<tr>
 					<td>' . $name . '</td>
 					<td>' . $permitted_values . '</td>
 					<td>' . $attribute->value . '</td>
-					<td>' . $attribute->description . '</td>
+					<td>' . $admin_data->description . '</td>
 				</tr>'
 			);
 		}
