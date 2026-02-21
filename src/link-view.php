@@ -124,7 +124,6 @@ class LinkView {
 	 */
 	public function register_scripts(): void {
 		wp_register_script( 'lvw_easySlider', PLUGIN_URL . 'includes/js/easySlider.min.js', [ 'jquery' ], '1.7', true );
-		wp_register_script( 'lvw_masonry', PLUGIN_URL . 'includes/js/masonry.pkgd.min.js', [ 'jquery' ], '4.2.2', true );
 	}
 
 }

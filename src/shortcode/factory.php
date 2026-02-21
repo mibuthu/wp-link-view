@@ -111,8 +111,8 @@ class Factory {
 			$masonry = '
 				jQuery(document).ready( function() {' . $masonry . '
 				});';
-			wp_enqueue_script( 'lvw_masonry' );
-			wp_add_inline_script( 'lvw_masonry', $masonry );
+			wp_enqueue_script( 'masonry' );
+			wp_add_inline_script( 'masonry', $masonry );
 		}
 	}
 
