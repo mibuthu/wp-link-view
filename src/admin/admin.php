@@ -52,7 +52,9 @@ class Admin {
 	public function register_pages(): void {
 		$page = add_submenu_page(
 			'link-manager.php',
+			// translators: Placeholder is the plugin name: 'LinkView'
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
+			// translators: Placeholder is the plugin name: 'LinkView'
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
 			$this->config->req_capabilities,
 			'lvw_admin_about',
@@ -61,6 +63,7 @@ class Admin {
 		add_action( 'admin_print_scripts-' . $page, $this->embed_about_styles( ... ) );
 		$page = add_submenu_page(
 			'options-general.php',
+			// translators: Placeholder is the plugin name: 'LinkView'
 			sprintf( __( '%1$s Settings', 'link-view' ), 'LinkView' ),
 			'LinkView',
 			'manage_options',

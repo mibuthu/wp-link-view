@@ -65,7 +65,8 @@ class ConfigAdminData {
 		$this->atts = new ConfigAdminDataValue(
 			input_type: InputType::TextArea,
 			caption: __( 'Shortcode attributes', 'link-view' ) . ':',
-			tooltip: sprintf( __( 'All attributes which are available for the %1$s shortcode can be used.', 'link-view' ), '[link-view]' ),
+			// translators: Placeholder is the shortcode name including brackets but without code tags, as the text is used in a tooltip: '[linkview]'
+			tooltip: sprintf( __( 'All attributes which are available for the %1$s shortcode can be used.', 'link-view' ), '[linkview]' ),
 		);
 	}
 

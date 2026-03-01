@@ -63,7 +63,10 @@ class Settings {
 		// Create content.
 		echo '
 			<div class="wrap nosubsub">
-			<div id="icon-link-manager" class="icon32"><br /></div><h2>' . sprintf( esc_html__( '%1$s Settings', 'link-view' ), 'LinkView' ) . '</h2></div>';
+			<div id="icon-link-manager" class="icon32"><br /></div><h2>' .
+			// translators: Placeholder is the plugin name: 'LinkView'
+			sprintf( esc_html__( '%1$s Settings', 'link-view' ), 'LinkView' ) .
+			'</h2></div>';
 		$this->html_settings();
 	}
 
@@ -104,7 +107,6 @@ class Settings {
 			}
 			echo '</th>
 					<td>';
-			print_r($value);
 			$admin_data->input_type->show_input_tag( $name, $value->value, $admin_data->captions );
 			echo '
 					</td>

@@ -38,6 +38,7 @@ class Widget extends \WP_Widget {
 			'linkview_widget', // Base ID.
 			'LinkView', // Name.
 			[
+				// translators: Placeholder is the plugin name: 'LinkView'
 				'description' => sprintf( __( 'With this widget a %1$s shortcode can be added to a sidebar or widget area.', 'link-view' ), 'LinkView' ),
 			]
 		);

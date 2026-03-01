@@ -61,10 +61,14 @@ final class ConfigAdminData {
 	public function __construct() {
 		$this->lvw_req_capabilities = new ConfigAdminDataValue(
 			input_type: InputType::Radio,
+			// translators: Placeholder is the plugin name: 'LinkView'
 			label: sprintf( __( 'Required capabilities to show the %1$s page', 'link-view' ), '"' . __( 'About', 'link-view' ) . ' LinkView"' ),
 			description:
+				// translators: Placeholder is the plugin name: 'LinkView'
 				sprintf( __( 'With this option you can specify the required capabilities to show the %1$s page.', 'link-view' ), '"' . __( 'About', 'link-view' ) . ' LinkView"' ) . '<br />
-				' . sprintf( __( 'More information can be found in the %1$s.', 'link-view' ), '<a href="https://codex.wordpress.org/Roles_and_Capabilities" target="_blank" rel="noopener">WordPress Codex</a>' ),
+				' .
+				// translators: Placeholder is the plugin name: 'LinkView'
+				sprintf( __( 'More information can be found in the %1$s.', 'link-view' ), '<a href="https://codex.wordpress.org/Roles_and_Capabilities" target="_blank" rel="noopener">WordPress Codex</a>' ),
 			captions: [
 				'manage_links' => 'manage_links (' . __( 'Default', 'link-view' ) . ')',
 				'edit_pages'   => 'edit_pages',
@@ -77,8 +81,12 @@ final class ConfigAdminData {
 			label: __( 'Required role to manage links', 'link-view' ),
 			description:
 				__( 'With this option minimum required role to manage links can be set', 'link-view' ) . ' (' . __( 'Capability', 'link-view' ) . ': "manage_links").<br />
-				' . sprintf( __( 'More information can be found in the %1$s.', 'link-view' ), '<a href="https://codex.wordpress.org/Roles_and_Capabilities" target="_blank" rel="noopener">WordPress Codex</a>' ) . '<br />
-				' . sprintf( __( 'Please note that this option also affects the access to the %1$s page if the required capabilities are set to %2$s.', 'link-view' ), '"' . __( 'About', 'link-view' ) . ' LinkView"', '"manage_links"' ),
+				' .
+				// translators: Placeholder is a link to the WordPress codex
+				sprintf( __( 'More information can be found in the %1$s.', 'link-view' ), '<a href="https://codex.wordpress.org/Roles_and_Capabilities" target="_blank" rel="noopener">WordPress Codex</a>' ) . '<br />
+				' .
+				// translators: Placeholder is the plugin name: 'LinkView'
+				sprintf( __( 'Please note that this option also affects the access to the %1$s page if the required capabilities are set to %2$s.', 'link-view' ), '"' . __( 'About', 'link-view' ) . ' LinkView"', '"manage_links"' ),
 			captions: [
 				'editor'      => __( 'Editor', 'default' ) . ' (WordPress-' . __( 'Default', 'link-view' ) . ')',
 				'author'      => __( 'Author', 'default' ),
@@ -89,21 +97,29 @@ final class ConfigAdminData {
 
 		$this->lvw_custom_class = new ConfigAdminDataValue(
 			input_type: InputType::Text,
+			// translators: Placeholder is the plugin name: 'LinkView'
 			label: sprintf( __( 'Custom CSS classes for %1$s', 'link-view' ), 'LinkView' ),
 			description:
-				sprintf( __( 'With this option you can specify custom CSS classes which will be added to the wrapper div of the %1$s shortcode.', 'link-view' ), '<code>[link-view]</code>' ) . '<br />
-				' . sprintf( __( 'Use the %1$s to separate multiple classes.', 'link-view' ), '<code>,</code>' ),
+				// translators: Placeholder is a code tag including the shortcode name: '<code>[linkview]</code>'
+				sprintf( __( 'With this option you can specify custom CSS classes which will be added to the wrapper div of the %1$s shortcode.', 'link-view' ), '<code>[linkview]</code>' ) . '<br />
+				' .
+				// translators: Placeholder is a code tag including the comma separator: '<code>,</code>'
+				sprintf( __( 'Use the %1$s to separate multiple classes.', 'link-view' ), '<code>,</code>' ),
 		);
 
 		$this->lvw_custom_css = new ConfigAdminDataValue(
 			input_type: InputType::TextArea,
+			// translators: Placeholder is the plugin name: 'LinkView'
 			label: sprintf( __( 'Custom CSS for %1$s', 'link-view' ), 'LinkView' ),
 			description:
-				sprintf( __( 'With this option you can specify custom CSS for the links displayed by the %1$s shortcode.', 'link-view' ), '[link-view]' ) . '<br />
-				' . sprintf( __( 'There are a lot of CSS classes available which are automatically added by the %1$s shortcode', 'link-view' ), '[link-view]' ) . ' (' . __( 'e.g.', 'link-view' ) . ' .lvw-item-image, .lvw-section-name, .lvw-cat-name, ...).<br />
+				// translators: Placeholder is a code tag including the shortcode: '<code>[linkview]</code>'
+				sprintf( __( 'With this option you can specify custom CSS for the links displayed by the %1$s shortcode.', 'link-view' ), '<code>[linkview]</code>' ) . '<br />
+				' . __( 'There are a lot of CSS classes available which are automatically added by the shortcode', 'link-view' ) . ' (' . __( 'e.g.', 'link-view' ) . ' .lvw-item-image, .lvw-section-name, .lvw-cat-name, ...).<br />
 				' . __( 'All available classes can be found in the sourcecode of a post or page where the shortcode is included.', 'link-view' ) . '<br />
-				' . sprintf( __( 'To differ between different shortcodes you can set the attribute %1$s and add CSS-code for these special classes', 'link-view' ), '"class_suffix"' ) . '
-				(' . __( 'e.g.', 'link-view' ) . ' .lvw-link-list-suffix, .lvw-item-name-suffix).<br /><br />
+				' .
+				// translators: Placeholder is a code tag including the value 'class_suffix'
+				sprintf( __( 'To differ between different shortcodes you can set the shortcode attribute %1$s and add CSS-code for these special classes', 'link-view' ), '<code>class_suffix</code>' ) . '
+				(' . __( 'e.g.', 'link-view' ) . ' <code>.lvw-link-list-suffix, .lvw-item-name-suffix</code>).<br /><br />
 				' . __( 'Examples', 'link-view' ) . ':<br />
 				<code>.lvw-link {<br />
 					&nbsp;&nbsp;&nbsp;margin-bottom: 15px;<br />
