@@ -132,4 +132,4 @@ class LinkView {
 /**
  * LinkView Class instance
  */
-$linkview = new LinkView();
+new LinkView();
