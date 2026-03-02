@@ -71,7 +71,9 @@ class About {
 		echo wp_kses_post(
 			'
 			<div class="wrap">
-				<div id="icon-link-manager" class="icon32"><br /></div><h2>' . sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ) . '</h2>'
+				<div id="icon-link-manager" class="icon32"><br /></div><h2>' .
+			// translators: Placeholder is the plugin name: 'LinkView'
+			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ) . '</h2>'
 		);
 		$this->show_tabs( $tab );
 		if ( 'atts' === $tab ) {
@@ -112,18 +114,24 @@ class About {
 			<h3>' . __( 'Help and Instructions', 'link-view' ) . '</h3>
 			<h4>' . __( 'Show links in posts or pages', 'link-view' ) . '</h4>
 			<div class="help-content">
-				<p>' . sprintf( __( 'To show links in a post or page the shortcode %1$s must be added in the post or page content text.', 'link-view' ), '<code>[linkview]</code>' ) . '</p>
+				<p>' .
+				// translators: Placeholder is a code tag including the shortcode: '<code>[linkview]</code>'
+				sprintf( __( 'To show links in a post or page the shortcode %1$s must be added in the post or page content text.', 'link-view' ), '<code>[linkview]</code>' ) . '</p>
 				<p>' . __( 'The listed links and their styles can be modified with the available attributes for the shortcode.', 'link-view' ) . '<br />
 				' . __( 'You can combine as many attributes as you want.', 'link-view' ) . '
-				' . sprintf( __( 'E.g. the shortcode including the attributes %1$s and %2$s would look like this', 'link-view' ), '"cat_filter"', '"show_img"' ) . ':<br />
+				' .
+				// translators: Placeholders are code tags including the shortcode attributes 'cat_filter' and 'show_img'
+				sprintf( __( 'E.g. the shortcode including the attributes %1$s and %2$s would look like this', 'link-view' ), '<code>cat_filter</code>', '<code>show_img</code>' ) . ':<br />
 				<code>[linkview cat_filter=Sponsors show_img=1]</code><br />
 				' . __( 'Below you can find tables with all supported attributes, their descriptions and available options.', 'link-view' ) . '</p>
 			</div>
 			<h4>' . __( 'Show links in sidebars and widget areas', 'link-view' ) . '</h4>
 			<div class="help-content">
-				' . sprintf( __( 'With the %1$s Widget you can add links in sidebars and widget areas.', 'link-view' ), 'LinkView' ) . '<br />
 				' .
-				sprintf(
+				// translators: Placeholder is the plugin name: 'LinkView'
+				sprintf( __( 'With the %1$s Widget you can add links in sidebars and widget areas.', 'link-view' ), 'LinkView' ) . '<br />
+				' . sprintf(
+					// translators: Placeholder is a link to the widgets admin page
 					__( 'Goto %1$s and drag the %2$s-Widget into one of the sidebar or widget areas.', 'link-view' ),
 					'<a href="' .
 					admin_url( 'widgets.php' ) . '">' .
@@ -131,24 +139,29 @@ class About {
 					__( 'Widgets', 'default' ) . '</a>',
 					'"LinkView"'
 				) . '<br />
-				' . sprintf( __( 'Enter a title for the widget and add the required shortcode attributes in the appropriate field. All available shortcode attributes for the %1$s-shortcode can be used in the widget too.', 'link-view' ), '"linkview"' ) . '<br />
+				' . __( 'Enter a title for the widget and add the required shortcode attributes in the appropriate field.', 'link-view' ) . '<br />
 				' .
-				sprintf(
+				// translators: Placeholder is a code tag including the shortcode: '<code>[linkview]</code>'
+				sprintf( __( 'All available attributes of the %1$s shortcode can be used in the widget too.', 'link-view' ), '<code>[linkview]</code>' ) . '<br />
+				' . sprintf(
+					// translators: Placeholder is the default WordPress text for 'Save' (translated with the default WordPress text domain)
 					__( 'Press %1$s to confirm the changes.', 'link-view' ),
 					'"' .
 					__( 'Save', 'default' ) .
 					'"'
 				) . '
 			</div>
-			<h4>' . sprintf( __( '%1$s Settings', 'link-view' ), 'LinkView' ) . '</h4>
+			<h4>' .
+			// translators: Placeholder is the plugin name: 'LinkView'
+			sprintf( __( '%1$s Settings', 'link-view' ), 'LinkView' ) . '</h4>
 			<div class="help-content">
-				' .
-				sprintf(
-					__( 'In the %1$s settings page, available under %2$s, you can find some options to modify the plugin.', 'link-view' ),
-					'LinkView',
-					'<a href="' . admin_url( 'options-general.php?page=lvw_admin_settings' ) . '">' .
-					__( 'Settings', 'default' ) . ' &rarr; LinkView</a>'
-				) . '
+				' . sprintf(
+				// translators: Placeholder is the plugin name: 'LinkView'
+				__( 'In the %1$s settings page, available under %2$s, you can find some options to modify the plugin.', 'link-view' ),
+				'LinkView',
+				'<a href="' . admin_url( 'options-general.php?page=lvw_admin_settings' ) . '">' .
+				__( 'Settings', 'default' ) . ' &rarr; LinkView</a>'
+			) . '
 			</div>'
 		);
 	}
@@ -162,11 +175,24 @@ class About {
 			'
 			<h3>' . __( 'About the plugin author', 'link-view' ) . '</h3>
 			<div class="help-content">
-				<p>' . sprintf( __( 'This plugin is developed by %1$s, you can find more information about the plugin on the %2$s.', 'link-view' ), 'mibuthu', '<a href="https://wordpress.org/plugins/link-view" target="_blank" rel="noopener">' . __( 'WordPress plugin site', 'link-view' ) . '</a>' ) . '</p>
-				<p>' . sprintf( __( 'If you like the plugin please rate it on the %1$s.', 'link-view' ), '<a href="https://wordpress.org/support/view/plugin-reviews/link-view" target="_blank" rel="noopener">' . __( 'WordPress plugin review site', 'link-view' ) . '</a>' ) . '<br />
+				<p>' . sprintf(
+				// translators: 1st placeholder: name of the plugin author, 2nd placeholder: a link to the plugin homepage
+				__( 'This plugin is developed by %1$s, you can find more information about the plugin on the %2$s.', 'link-view' ),
+				'mibuthu',
+				'<a href="https://wordpress.org/plugins/link-view" target="_blank" rel="noopener">' . __( 'WordPress plugin site', 'link-view' ) . '</a>'
+			) . '</p>
+				<p>' . sprintf(
+				// translators: Placeholder is a link to the plugin support page
+				__( 'If you like the plugin please rate it on the %1$s.', 'link-view' ),
+				'<a href="https://wordpress.org/support/view/plugin-reviews/link-view" target="_blank" rel="noopener">' . __( 'WordPress plugin review site', 'link-view' ) . '</a>'
+			) . '<br />
 				<p>' . __( 'If you want to support the plugin I would be happy to get a small donation', 'link-view' ) . ':<br />
-				<a class="donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY" target="_blank" rel="noopener"><img src="' . PLUGIN_URL . 'admin/images/paypal_btn_donate.gif" alt="PayPal Donation" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'PayPal' ) . '" border="0"></a>
-				<a class="donate" href="https://liberapay.com/mibuthu/donate" target="_blank" rel="noopener"><img src="' . PLUGIN_URL . 'admin/images/liberapay-donate.svg" alt="Liberapay Donation" title="' . sprintf( __( 'Donate with %1$s', 'link-view' ), 'Liberapay' ) . '" border="0"></a>
+				<a class="donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4ZHXUPHG9SANY" target="_blank" rel="noopener"><img src="' . PLUGIN_URL . 'admin/images/paypal_btn_donate.gif" alt="PayPal Donation" title="' .
+					// translators: Placeholder is 'PayPal'
+					sprintf( __( 'Donate with %1$s', 'link-view' ), 'PayPal' ) . '" border="0"></a>
+				<a class="donate" href="https://liberapay.com/mibuthu/donate" target="_blank" rel="noopener"><img src="' . PLUGIN_URL . 'admin/images/liberapay-donate.svg" alt="Liberapay Donation" title="' .
+					// translators: Placeholder is 'Liberapay'
+					sprintf( __( 'Donate with %1$s', 'link-view' ), 'Liberapay' ) . '" border="0"></a>
 			</div>'
 		);
 	}
@@ -181,7 +207,11 @@ class About {
 			<h3>' . __( 'Translations', 'link-view' ) . '</h3>
 			<div class="help-content">
 				<p>' . __( 'Please help translating this plugin into your language.', 'link-view' ) . '</p>
-				<p>' . sprintf( __( 'You can submit your translations at %1$s.', 'link-view' ), '<a href="https://www.transifex.com/projects/p/wp-link-view">Transifex</a>' ) . '<br />
+				<p>' . sprintf(
+					// translators: Placeholder is a link to transifex
+					__( 'You can submit your translations at %1$s.', 'link-view' ),
+					'<a href="https://www.transifex.com/projects/p/wp-link-view">Transifex</a>'
+				) . '<br />
 				' . __( 'There the source strings will be kept in sync with the actual development version. And in each plugin release the available translation files will be updated.', 'link-view' ) . '</p>'
 		);
 	}
@@ -195,7 +225,11 @@ class About {
 			'
 			<h3>' . __( 'Shortcode Attributes', 'link-view' ) . '</h3>
 			<div class="help-content">
-				' . sprintf( __( 'In the following tables you can find all available shortcode attributes for %1$s', 'link-view' ), '<code>[linkview]</code>' ) . ':'
+				' . sprintf(
+				// translators: Placeholder is a code tag including the shortcode: '[linkview]'
+				__( 'In the following tables you can find all available shortcode attributes for %1$s', 'link-view' ),
+				'<code>[linkview]</code>'
+			) . ':'
 		);
 		echo wp_kses_post( '<h4 class="atts-section-title">' . __( 'General', 'link-view' ) . ':</h4>' );
 		$this->html_atts_table( $this->config_admin_data->get_all( ShortcodeSection::General ) );
@@ -215,13 +249,25 @@ class About {
 			<tr><td>static</td><td>' . __( 'Set a static number of columns. The categories or links will be arranged in rows.', 'link-view' ) . '
 				<h5>' . __( 'available options', 'link-view' ) . ':</h5>
 				<em>num_columns</em>: ' . __( 'Provide a single number which specifies the number of columns. If no value is given 3 columns will be displayed by default.', 'link-view' ) . '</td></tr>
-			<tr><td>css</td><td>' . sprintf( __( 'This type uses the %1$s to arrange the columns.', 'link-view' ), '<a href="https://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">' . __( 'multi-column feature of CSS', 'link-view' ) . '</a>' ) . '
+			<tr><td>css</td><td>' . sprintf(
+					// translators: Placeholder is a link to the CSS multiple columns description at w3schools.com
+					__( 'This type uses the %1$s to arrange the columns.', 'link-view' ),
+					'<a href="https://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">' . __( 'multi-column feature of CSS', 'link-view' ) . '</a>'
+				) . '
 				<h5>' . __( 'available options', 'link-view' ) . ':</h5>
-				' . sprintf( __( 'You can use all available properties for CSS3 Multi-column Layout (see %1$s for detailed information).', 'link-view' ), '<a href="https://www.w3schools.com/css/css3_multiple_columns.asp" target="_blank" rel="noopener">' . __( 'this link', 'link-view' ) . '</a>' ) . '<br />
+				' . __( 'You can use all available properties for CSS Multi-column Layout.', 'link-view' ) . '<br />
 				' . __( 'The given attributes will be added to the wrapper div element. Also the prefixed browser specific attributes will be added.', 'link-view' ) . '</td></tr>
-			<tr><td>masonry</td><td>' . sprintf( __( 'This type uses the %1$s to arrange the columns.', 'link-view' ), '<a href="https://masonry.desandro.com/" target="_blank" rel="noopener">' . sprintf( __( '%1$s grid layout JavaScript library', 'link-view' ), 'Masonry' ) . '</a>' ) . '
+			<tr><td>masonry</td><td>' . sprintf(
+					// translators: Placeholder is a link to the masonry script homepage
+					__( 'This type uses the %1$s to arrange the columns.', 'link-view' ),
+					'<a href="https://masonry.desandro.com/" target="_blank" rel="noopener">' . sprintf(
+						// translators: Placeholder is: 'Masonry'
+						__( '%1$s grid layout JavaScript library', 'link-view' ),
+						'Masonry'
+					) . '</a>'
+				) . '
 				<h5>' . __( 'available options', 'link-view' ) . ':</h5>
-				' . sprintf( __( 'You can use all options which are available for the Masonry library (see %1$s for detailed information).', 'link-view' ), '<a href="https://masonry.desandro.com/options.html" target="_blank" rel="noopener">' . __( 'this link', 'link-view' ) . '</a>' ) . '<br />
+				' . __( 'You can use all options which are available for the Masonry library.', 'link-view' ) . '<br />
 				' . __( 'The given options will be forwarded to the JavaScript library.', 'link-view' ) . '</td></tr>
 			</table>
 			<div class="help-content">
@@ -230,14 +276,20 @@ class About {
 				' . __( 'Depending on the type and options there are probably more css modifications required for a correct multi-column layout.', 'link-view' ) . '<br />
 				' .
 				sprintf(
+					// translators: Placeholder is the plugin name: 'LinkView'
 					__( 'There are several ways to add the required css code. One method is the %1$s setting %2$s which can be found in %3$s.', 'link-view' ),
 					'LinkView',
 					'"' .
+					// translators: Placeholder is the plugin name: 'LinkView'
 					sprintf( __( 'CSS-code for %1$s', 'link-view' ), 'LinkView' ) . '"',
 					'<a href="' . admin_url( 'options-general.php?page=lvw_admin_settings' ) . '">' .
 					__( 'Settings', 'default' ) . ' &rarr; LinkView</a>'
 				) . '<br />
-				' . sprintf( __( 'The optional type options must be added in brackets in the format "option_name=value", multiple options can be added separated by a pipe %1$s.', 'link-view' ), '("<strong>|</strong>")' ) . '
+				' . sprintf(
+					// translators: Placeholder is a code tag including the pipe separator : '<strong>|</strong>'
+					__( 'The optional type options must be added in brackets in the format "option_name=value", multiple options can be added separated by a pipe (%1$s).', 'link-view' ),
+					'<code>|</code>'
+				) . '
 				<h5>' . __( 'Examples', 'link-view' ) . ':</h5>
 				<p><code>[linkview cat_columns=3]</code> &hellip; ' . __( 'show the categories in 3 static columns', 'link-view' ) . '</p>
 				<p><code>[linkview link_columns="static(num_columns=2)"]</code> &hellip; ' . __( 'show the link-lists in 2 static columns', 'link-view' ) . '</p>
