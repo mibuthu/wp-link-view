@@ -15,7 +15,6 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
 use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
 
-require_once PLUGIN_PATH . 'includes/option.php';
 require_once PLUGIN_PATH . 'widget/config.php';
 
 

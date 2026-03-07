@@ -13,9 +13,9 @@ use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
-require_once PLUGIN_PATH . 'includes/option.php';
+require_once PLUGIN_PATH . 'includes/option-value.php';
 
-use WordPress\Plugins\mibuthu\LinkView\Option;
+use WordPress\Plugins\mibuthu\LinkView\OptionValue;
 
 
 /**
@@ -29,7 +29,7 @@ class Config {
 	/**
 	 * Widget Items
 	 *
-	 * @var array<string,Option>
+	 * @var array<string,OptionValue>
 	 */
 	private array $args;
 
@@ -39,8 +39,8 @@ class Config {
 	 */
 	public function __construct() {
 		$this->args = [
-			'title' => new Option( __( 'Links', 'link-view' ) ),
-			'atts'  => new Option( '' ),
+			'title' => new OptionValue( __( 'Links', 'link-view' ) ),
+			'atts'  => new OptionValue( '' ),
 		];
 	}
 
@@ -62,7 +62,7 @@ class Config {
 	/**
 	 * Get all specified arguments
 	 *
-	 * @return array<string,Option>
+	 * @return array<string,OptionValue>
 	 */
 	public function get_all(): array {
 		return $this->args;

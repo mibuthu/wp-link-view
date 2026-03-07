@@ -11,7 +11,7 @@ namespace WordPress\Plugins\mibuthu\LinkView;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
-require_once PLUGIN_PATH . 'includes/option.php';
+require_once PLUGIN_PATH . 'includes/option-value.php';
 
 /**
  * Config class
@@ -28,7 +28,7 @@ final class Config {
 	/**
 	 * Options array
 	 *
-	 * @var array<string, Option>
+	 * @var array<string, OptionValue>
 	 */
 	private array $options;
 
@@ -38,10 +38,10 @@ final class Config {
 	 */
 	public function __construct() {
 		$this->options = [
-			'lvw_req_capabilities'      => new Option( 'manage_links' ),
-			'lvw_req_manage_links_role' => new Option( 'editor' ),
-			'lvw_custom_class'          => new Option( '' ),
-			'lvw_custom_css'            => new Option( '' ),
+			'lvw_req_capabilities'      => new OptionValue( 'manage_links' ),
+			'lvw_req_manage_links_role' => new OptionValue( 'editor' ),
+			'lvw_custom_class'          => new OptionValue( '' ),
+			'lvw_custom_css'            => new OptionValue( '' ),
 		];
 		add_action( 'admin_init', $this->register( ... ) );
 		add_filter( 'pre_update_option_lvw_req_manages_link_role', $this->update_manage_links_role( ... ) );
@@ -111,7 +111,7 @@ final class Config {
 	/**
 	 * Get all specified options
 	 *
-	 * @return array<string,Option>
+	 * @return array<string,OptionValue>
 	 */
 	public function get_all(): array {
 		return $this->options;

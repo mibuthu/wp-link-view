@@ -15,10 +15,6 @@ namespace WordPress\Plugins\mibuthu\LinkView\Shortcode;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
-use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
-
-require_once PLUGIN_PATH . 'includes/option.php';
-
 
 /**
  * Enum of available shortcode sections
