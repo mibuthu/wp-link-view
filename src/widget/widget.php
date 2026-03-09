@@ -103,10 +103,10 @@ class Widget extends \WP_Widget {
 		require_once PLUGIN_PATH . 'widget/config-admin-data.php';
 		require_once PLUGIN_PATH . 'admin/input-type.php';
 		$config_admin_data = new ConfigAdminData();
-		foreach ( $this->config->get_all() as $option_name => $option ) {
+		foreach ( $this->config->get_all() as $option_name => $option_value ) {
 			$option_admin_data = $config_admin_data->$option_name;
 			if ( ! isset( $instance[ $option_name ] ) ) {
-				$instance[ $option_name ] = $option->value;
+				$instance[ $option_name ] = $option_value->$option_name->get_str();
 			}
 			if ( \WordPress\Plugins\mibuthu\LinkView\Admin\InputType::TextArea === $option_admin_data->input_type ) {
 				echo '
