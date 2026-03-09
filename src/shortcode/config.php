@@ -13,10 +13,10 @@ use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
-require_once PLUGIN_PATH . 'includes/option-value.php';
+require_once PLUGIN_PATH . 'includes/option.php';
 
 
-use WordPress\Plugins\mibuthu\LinkView\OptionValue;
+use WordPress\Plugins\mibuthu\LinkView\Option;
 
 
 /**
@@ -54,7 +54,7 @@ class Config {
 	/**
 	 * Shortcode attributes
 	 *
-	 * @var array<string,OptionValue>
+	 * @var array<string,Option>
 	 */
 	private array $atts;
 
@@ -64,30 +64,30 @@ class Config {
 	 */
 	public function __construct() {
 		$this->atts = [
-			'view_type'      => new OptionValue( 'list', [ 'list', 'slider' ] ),
-			'cat_filter'     => new OptionValue( '' ),
-			'exclude_cat'    => new OptionValue( '' ),
-			'cat_grouping'   => new OptionValue( OptionValue::TRUE, OptionValue::BOOLEAN ),
-			'show_cat_name'  => new OptionValue( OptionValue::TRUE, OptionValue::BOOLEAN ),
-			'show_num_links' => new OptionValue( OptionValue::FALSE, OptionValue::BOOLEAN ),
-			'link_orderby'   => new OptionValue( 'name', [ 'link_id', 'url', 'name', 'owner', 'rating', 'visible', 'length', 'rand' ] ),
-			'link_order'     => new OptionValue( 'asc', [ 'asc', 'desc' ] ),
-			'num_links'      => new OptionValue( '-1' ),
-			'show_img'       => new OptionValue( OptionValue::FALSE, OptionValue::BOOLEAN ),
-			'link_items'     => new OptionValue( '' ),
-			'link_item_img'  => new OptionValue( 'show_img_tag', [ 'show_img_tag', 'show_link_name', 'show_link_description', 'show_nothing' ] ),
-			'link_target'    => new OptionValue( 'std', [ 'std', 'blank', 'top', 'self' ] ),
-			'link_rel'       => new OptionValue( 'noopener', [ '', 'alternate', 'author', 'bookmark', 'external', 'help', 'license', 'next', 'nofollow', 'noreferrer', 'noopener', 'prev', 'search', 'tag' ] ),
-			'custom_class'   => new OptionValue( '' ),
-			'class_suffix'   => new OptionValue( '' ),
-			'vertical_align' => new OptionValue( 'std', [ 'std', 'top', 'bottom', 'middle' ] ),
-			'list_symbol'    => new OptionValue( 'std', [ 'std', 'none', 'circle', 'square', 'disc' ] ),
-			'cat_columns'    => new OptionValue( '1' ),
-			'link_columns'   => new OptionValue( '1' ),
-			'slider_width'   => new OptionValue( '0' ),
-			'slider_height'  => new OptionValue( '0' ),
-			'slider_pause'   => new OptionValue( '6000' ),
-			'slider_speed'   => new OptionValue( '1000' ),
+			'view_type'      => new Option( 'list', [ 'list', 'slider' ] ),
+			'cat_filter'     => new Option( '' ),
+			'exclude_cat'    => new Option( '' ),
+			'cat_grouping'   => new Option( Option::TRUE, Option::BOOLEAN ),
+			'show_cat_name'  => new Option( Option::TRUE, Option::BOOLEAN ),
+			'show_num_links' => new Option( Option::FALSE, Option::BOOLEAN ),
+			'link_orderby'   => new Option( 'name', [ 'link_id', 'url', 'name', 'owner', 'rating', 'visible', 'length', 'rand' ] ),
+			'link_order'     => new Option( 'asc', [ 'asc', 'desc' ] ),
+			'num_links'      => new Option( '-1' ),
+			'show_img'       => new Option( Option::FALSE, Option::BOOLEAN ),
+			'link_items'     => new Option( '' ),
+			'link_item_img'  => new Option( 'show_img_tag', [ 'show_img_tag', 'show_link_name', 'show_link_description', 'show_nothing' ] ),
+			'link_target'    => new Option( 'std', [ 'std', 'blank', 'top', 'self' ] ),
+			'link_rel'       => new Option( 'noopener', [ '', 'alternate', 'author', 'bookmark', 'external', 'help', 'license', 'next', 'nofollow', 'noreferrer', 'noopener', 'prev', 'search', 'tag' ] ),
+			'custom_class'   => new Option( '' ),
+			'class_suffix'   => new Option( '' ),
+			'vertical_align' => new Option( 'std', [ 'std', 'top', 'bottom', 'middle' ] ),
+			'list_symbol'    => new Option( 'std', [ 'std', 'none', 'circle', 'square', 'disc' ] ),
+			'cat_columns'    => new Option( '1' ),
+			'link_columns'   => new Option( '1' ),
+			'slider_width'   => new Option( '0' ),
+			'slider_height'  => new Option( '0' ),
+			'slider_pause'   => new Option( '6000' ),
+			'slider_speed'   => new Option( '1000' ),
 		];
 	}
 
@@ -148,7 +148,7 @@ class Config {
 	/**
 	 * Get a complete attribute
 	 */
-	public function get( string $name ): ?OptionValue {
+	public function get( string $name ): ?Option {
 		if ( isset( $this->atts[ $name ] ) ) {
 			return $this->atts[ $name ];
 		}

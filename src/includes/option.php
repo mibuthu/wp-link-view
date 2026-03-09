@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly
  *
  * This class handles an option value which can be used for shortcode, widget and plugin config options.
  */
-class OptionValue {
+class Option {
 
 	/**
 	 * Actual or default value
