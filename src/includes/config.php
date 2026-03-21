@@ -3,6 +3,8 @@
  * LinkView Config class
  *
  * @package link-view
+ *
+ * phpcs:disable Generic.Files.OneObjectStructurePerFile.MultipleFound -- enums for the options are in the same file
  */
 
 declare( strict_types=1 );
@@ -11,24 +13,74 @@ namespace WordPress\Plugins\mibuthu\LinkView;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
-require_once PLUGIN_PATH . 'includes/option.php';
+require_once PLUGIN_PATH . 'includes/option-value.php';
+
+
+enum ReqCapabilities: string {
+	case ManageLinks = 'manage_links';
+	case EditPages   = 'edit_pages';
+	case EditPosts   = 'edit_posts';
+}
+
+
+enum ReqManageLinksRole: string {
+	case Editor      = 'editor';
+	case Author      = 'author';
+	case Contributor = 'contributor';
+	case Subscriber  = 'subscriber';
+}
+
+
+/**
+ * A wrapper for option value to handle WordPress options
+ *
+ * This class reads the value from the database when required and save it in the option value.
+ * There is an additional variable loaded to handle the loading status.
+ * The loading status must be handled in the config, because the option name is not available in this class.
+ */
+final class WpOptionValue {
+
+	/**
+	 * The option value instance
+	 */
+	public OptionValue $option_value;
+
+	/**
+	 * The loading status of the value
+	 */
+	public bool $loaded;
+
+
+	/**
+	 * Class constructor which sets the required variables
+	 *
+	 * For an option with OptionType::Enum a value is required.
+	 * For all other option types the value is optional.
+	 */
+	public function __construct( OptionValueType $value_type, mixed $value = null ) {
+		$this->option_value = new OptionValue( $value_type, $value );
+		$this->loaded       = false;
+	}
+
+}
+
 
 /**
  * Config class
  *
  * This class handles all available config options with their information
  *
- * @property-read string $req_capabilities
- * @property-read string $req_manage_links_role
- * @property-read string $custom_class
- * @property-read string $custom_css
+ * @property-read OptionValue $req_capabilities
+ * @property-read OptionValue $req_manage_links_role
+ * @property-read OptionValue $custom_class
+ * @property-read OptionValue $custom_css
  */
 final class Config {
 
 	/**
 	 * Options array
 	 *
-	 * @var array<string, Option>
+	 * @var array<string, WpOptionValue>
 	 */
 	private array $options;
 
@@ -38,10 +90,10 @@ final class Config {
 	 */
 	public function __construct() {
 		$this->options = [
-			'lvw_req_capabilities'      => new Option( 'manage_links' ),
-			'lvw_req_manage_links_role' => new Option( 'editor' ),
-			'lvw_custom_class'          => new Option( '' ),
-			'lvw_custom_css'            => new Option( '' ),
+			'lvw_req_capabilities'      => new WpOptionValue( OptionValueType::Enum, ReqCapabilities::ManageLinks ),
+			'lvw_req_manage_links_role' => new WpOptionValue( OptionValueType::Enum, ReqManageLinksRole::Author ), // TODO: Option is not working, there seems to be not place where the value is considered.
+			'lvw_custom_class'          => new WpOptionValue( OptionValueType::String ),
+			'lvw_custom_css'            => new WpOptionValue( OptionValueType::String ),
 		];
 		add_action( 'admin_init', $this->register( ... ) );
 		add_filter( 'pre_update_option_lvw_req_manages_link_role', $this->update_manage_links_role( ... ) );
@@ -94,39 +146,42 @@ final class Config {
 	 *
 	 * The "lvw_" prefix in the option name is optional.
 	 */
-	public function __get( string $name ): string {
+	public function __get( string $name ): OptionValue {
 		if ( ! str_starts_with( $name, 'lvw_' ) ) {
 			$name = 'lvw_' . $name;
 		}
 		if ( ! isset( $this->options[ $name ] ) ) {
-			// Trigger error is allowed in this case.
-			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error -- Trigger a warning is correct here
 			trigger_error( 'The requested option "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
-			return '';
 		}
-		return get_option( $name, $this->options[ $name ]->value );
+		if ( ! $this->options[ $name ]->loaded ) {
+			$this->load_wp_option( $name );
+		}
+		return $this->options[ $name ]->option_value;
+	}
+
+
+	/**
+	 * Load the WordPress option from the database
+	 */
+	private function load_wp_option( string $name ): void {
+		$value = get_option( $name, $this->options[ $name ]->option_value->get() );
+		$this->options[ $name ]->option_value->set_from_str( $value );
+		$this->options[ $name ]->loaded = true;
 	}
 
 
 	/**
 	 * Get all specified options
 	 *
-	 * @return array<string,Option>
+	 * @return array<string,OptionValue>
 	 */
 	public function get_all(): array {
-		return $this->options;
-	}
-
-
-	/**
-	 * Load the additional option data
-	 */
-	public function load_admin_data(): void {
-		require_once PLUGIN_PATH . 'includes/config-admin-data.php';
-		$config_admin_data = new ConfigAdminData();
-		foreach ( array_keys( $this->options ) as $option_name ) {
-			$this->options[ $option_name ]->modify( $config_admin_data->$option_name );
+		$ret = [];
+		foreach ( $this->options as $name => $value ) {
+			$ret[ $name ] = $this->$name;
 		}
+		return $ret;
 	}
 
 

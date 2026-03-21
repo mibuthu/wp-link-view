@@ -62,7 +62,7 @@ class About {
 	 */
 	public function show_page(): void {
 		// Check required privileges.
-		if ( ! current_user_can( $this->config->req_capabilities ) ) {
+		if ( ! current_user_can( $this->config->req_capabilities->get_str() ) ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'default' ) );
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended

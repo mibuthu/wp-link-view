@@ -56,7 +56,7 @@ class Admin {
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
 			// translators: Placeholder is the plugin name: 'LinkView'
 			sprintf( __( 'About %1$s', 'link-view' ), 'LinkView' ),
-			$this->config->req_capabilities,
+			$this->config->req_capabilities->get_str(),
 			'lvw_admin_about',
 			$this->show_about_page( ... )
 		);

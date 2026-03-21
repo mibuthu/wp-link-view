@@ -107,7 +107,7 @@ class Settings {
 			}
 			echo '</th>
 					<td>';
-			$admin_data->input_type->show_input_tag( $name, $value->value, $admin_data->captions );
+			$admin_data->input_type->show_input_tag( $name, $value->get_str(), $admin_data->captions );
 			echo '
 					</td>
 					<td class="description">' . wp_kses_post( $admin_data->description ) . '</td>

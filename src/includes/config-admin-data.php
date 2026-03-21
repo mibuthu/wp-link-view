@@ -87,8 +87,8 @@ final class ConfigAdminData {
 				// translators: Placeholder is the plugin name: 'LinkView'
 				sprintf( __( 'Please note that this option also affects the access to the %1$s page if the required capabilities are set to %2$s.', 'link-view' ), '"' . __( 'About', 'link-view' ) . ' LinkView"', '"manage_links"' ),
 			captions: [
-				'editor'      => __( 'Editor', 'default' ) . ' (WordPress-' . __( 'Default', 'link-view' ) . ')',
-				'author'      => __( 'Author', 'default' ),
+				'editor'      => __( 'Editor', 'default' ),
+				'author'      => __( 'Author', 'default' ) . ' (WordPress-' . __( 'Default', 'link-view' ) . ')',
 				'contributor' => __( 'Contributor', 'default' ),
 				'subscriber'  => __( 'Subscriber', 'default' ),
 			],

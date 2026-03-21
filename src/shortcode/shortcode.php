@@ -135,7 +135,7 @@ class Shortcode {
 	 * Returns the custom class string including all custom classes set in the options and in shortcode attribute
 	 */
 	private function custom_class_string(): string {
-		$custom_class_string = $this->config->custom_class;
+		$custom_class_string = $this->config->custom_class->get_str();
 		if ( '' !== $this->atts->custom_class->get_str() ) {
 			if ( '' !== $custom_class_string ) {
 				$custom_class_string .= ',';
