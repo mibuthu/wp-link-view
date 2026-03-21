@@ -264,7 +264,7 @@ class ConfigAdminData {
 					__( 'Add a %1$s at the end of the item name to include a link to the link target.', 'link-view' ),
 					'<code>_l</code>'
 				) . '</p>
-				<code>{ "name": "", "left": { image_l": "", "address_l": "URL :" }, "right": { "description": "Description :", "notes": "Notes: " } }</code><br />
+				<code>{ "name": "", "left": { "image_l": "", "address_l": "URL :" }, "right": { "description": "Description :", "notes": "Notes: " } }</code><br />
 				' . sprintf(
 					// translators: Placeholder is a code tag including an example CSS class
 					__( 'Multiple items can be grouped by using sub-object. The key of the sub-object defines the name of the group which also will be added as a CSS class (e.g. %1$s).', 'link-view' ),
