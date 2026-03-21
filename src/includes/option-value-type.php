@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
 
 /**
- * Option Type Enum
+ * Option value type Enum
  *
  * An Enum that defines all allowed types of an option.
  */

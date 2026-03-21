@@ -36,7 +36,7 @@ class OptionValue {
 	 * Class constructor which sets the required variables
 	 *
 	 * For an option with OptionType::Enum a value is required.
-	 * For all other Option types the value is optional.
+	 * For all other option types the value is optional.
 	 */
 	public function __construct( OptionValueType $value_type, mixed $value = null ) {
 		$this->value_type = $value_type;
