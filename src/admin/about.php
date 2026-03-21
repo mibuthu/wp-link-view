@@ -319,8 +319,8 @@ class About {
 				</tr>'
 		);
 		foreach ( $atts as $name => $admin_data ) {
-			$attribute        = $this->shortcode_config->get( $name );
-			$permitted_values = is_null( $admin_data->permitted_values ) ? $attribute->permitted_values : $admin_data->permitted_values;
+			$attribute        = $this->shortcode_config->$name;
+			$permitted_values = is_null( $admin_data->permitted_values ) ? $attribute->permitted_values() : $admin_data->permitted_values;
 			if ( is_array( $permitted_values ) ) {
 				$permitted_values = implode( '<br />', $permitted_values );
 			}
@@ -329,7 +329,7 @@ class About {
 				<tr>
 					<td>' . $name . '</td>
 					<td>' . $permitted_values . '</td>
-					<td>' . $attribute->value . '</td>
+					<td>' . $attribute->get_str() . '</td>
 					<td>' . $admin_data->description . '</td>
 				</tr>'
 			);

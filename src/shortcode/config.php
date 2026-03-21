@@ -3,6 +3,8 @@
  * LinkView Shortcode Attribute Class
  *
  * @package link-view
+ *
+ * phpcs:disable Generic.Files.OneObjectStructurePerFile.MultipleFound -- enums for the options are in the same file
  */
 
 declare( strict_types=1 );
@@ -13,10 +15,84 @@ use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
-require_once PLUGIN_PATH . 'includes/option.php';
+require_once PLUGIN_PATH . 'includes/option-value.php';
 
 
-use WordPress\Plugins\mibuthu\LinkView\Option;
+use WordPress\Plugins\mibuthu\LinkView\OptionValue;
+use WordPress\Plugins\mibuthu\LinkView\OptionValueType;
+
+enum ViewType: string {
+	case List   = 'list';
+	case Slider = 'slider';
+}
+
+enum LinkOrderBy: string {
+	case LinkId  = 'link_id';
+	case Url     = 'url';
+	case Name    = 'name';
+	case Owner   = 'owner';
+	case Rating  = 'rating';
+	case Visible = 'visible';
+	case Length  = 'length';
+	case Rand    = 'rand';
+}
+
+
+enum LinkOrder: string {
+	case Asc  = 'asc';
+	case Desc = 'desc';
+}
+
+
+enum LinkItemImg: string {
+	case ShowImgTag          = 'show_img_tag';
+	case ShowLinkName        = 'show_link_name';
+	case ShowLinkDescription = 'show_link_description';
+	case ShowNothing         = 'show_nothing';
+}
+
+
+enum LinkTarget: string {
+	case Std   = 'std';
+	case Blank = 'blank';
+	case Top   = 'top';
+	case Self  = 'self';
+}
+
+
+enum LinkRel: string {
+	case Empty      = '';
+	case Alternate  = 'alternate';
+	case Author     = 'author';
+	case Bookmark   = 'bookmark';
+	case External   = 'external';
+	case Help       = 'help';
+	case License    = 'license';
+	case Next       = 'next';
+	case NoFollow   = 'nofollow';
+	case NoReferrer = 'noreferrer';
+	case NoOpener   = 'noopener';
+	case Prev       = 'prev';
+	case Search     = 'search';
+	case Tag        = 'tag';
+}
+
+
+enum VerticalAlign: string {
+	case Std    = 'std';
+	case Top    = 'top';
+	case Bottom = 'bottom';
+	case Middle = 'middle';
+}
+
+
+enum ListSymbol: string {
+	case Std    = 'std';
+	case None   = 'none';
+	case Circle = 'circle';
+	case Square = 'square';
+	case Disc   = 'disc';
+}
 
 
 /**
@@ -24,37 +100,37 @@ use WordPress\Plugins\mibuthu\LinkView\Option;
  *
  * This class handles the attributes for the shortcode [linkview].
  *
- * @property string $view_type
- * @property string $cat_filter
- * @property string $exclude_cat
- * @property string $cat_grouping
- * @property string $show_cat_name
- * @property string $show_num_links
- * @property string $link_orderby
- * @property string $link_order
- * @property string $num_links
- * @property string $show_img
- * @property string $link_items
- * @property string $link_item_img
- * @property string $link_target
- * @property string $link_rel
- * @property string $custom_class
- * @property string $class_suffix
- * @property string $vertical_align
- * @property string $list_symbol
- * @property string $cat_columns
- * @property string $link_columns
- * @property string $slider_width
- * @property string $slider_height
- * @property string $slider_pause
- * @property string $slider_speed
+ * @property OptionValue $view_type
+ * @property OptionValue $cat_filter
+ * @property OptionValue $exclude_cat
+ * @property OptionValue $cat_grouping
+ * @property OptionValue $show_cat_name
+ * @property OptionValue $show_num_links
+ * @property OptionValue $link_orderby
+ * @property OptionValue $link_order
+ * @property OptionValue $num_links
+ * @property OptionValue $show_img
+ * @property OptionValue $link_items
+ * @property OptionValue $link_item_img
+ * @property OptionValue $link_target
+ * @property OptionValue $link_rel
+ * @property OptionValue $custom_class
+ * @property OptionValue $class_suffix
+ * @property OptionValue $vertical_align
+ * @property OptionValue $list_symbol
+ * @property OptionValue $cat_columns
+ * @property OptionValue $link_columns
+ * @property OptionValue $slider_width
+ * @property OptionValue $slider_height
+ * @property OptionValue $slider_pause
+ * @property OptionValue $slider_speed
  */
 class Config {
 
 	/**
 	 * Shortcode attributes
 	 *
-	 * @var array<string,Option>
+	 * @var array<string,OptionValue>
 	 */
 	private array $atts;
 
@@ -64,30 +140,37 @@ class Config {
 	 */
 	public function __construct() {
 		$this->atts = [
-			'view_type'      => new Option( 'list', [ 'list', 'slider' ] ),
-			'cat_filter'     => new Option( '' ),
-			'exclude_cat'    => new Option( '' ),
-			'cat_grouping'   => new Option( Option::TRUE, Option::BOOLEAN ),
-			'show_cat_name'  => new Option( Option::TRUE, Option::BOOLEAN ),
-			'show_num_links' => new Option( Option::FALSE, Option::BOOLEAN ),
-			'link_orderby'   => new Option( 'name', [ 'link_id', 'url', 'name', 'owner', 'rating', 'visible', 'length', 'rand' ] ),
-			'link_order'     => new Option( 'asc', [ 'asc', 'desc' ] ),
-			'num_links'      => new Option( '-1' ),
-			'show_img'       => new Option( Option::FALSE, Option::BOOLEAN ),
-			'link_items'     => new Option( '' ),
-			'link_item_img'  => new Option( 'show_img_tag', [ 'show_img_tag', 'show_link_name', 'show_link_description', 'show_nothing' ] ),
-			'link_target'    => new Option( 'std', [ 'std', 'blank', 'top', 'self' ] ),
-			'link_rel'       => new Option( 'noopener', [ '', 'alternate', 'author', 'bookmark', 'external', 'help', 'license', 'next', 'nofollow', 'noreferrer', 'noopener', 'prev', 'search', 'tag' ] ),
-			'custom_class'   => new Option( '' ),
-			'class_suffix'   => new Option( '' ),
-			'vertical_align' => new Option( 'std', [ 'std', 'top', 'bottom', 'middle' ] ),
-			'list_symbol'    => new Option( 'std', [ 'std', 'none', 'circle', 'square', 'disc' ] ),
-			'cat_columns'    => new Option( '1' ),
-			'link_columns'   => new Option( '1' ),
-			'slider_width'   => new Option( '0' ),
-			'slider_height'  => new Option( '0' ),
-			'slider_pause'   => new Option( '6000' ),
-			'slider_speed'   => new Option( '1000' ),
+			// General
+			'view_type'      => new OptionValue( OptionValueType::Enum, ViewType::List ),
+			'cat_filter'     => new OptionValue( OptionValueType::StringArray ),
+			'exclude_cat'    => new OptionValue( OptionValueType::StringArray ),
+			'cat_grouping'   => new OptionValue( OptionValueType::Bool, true ),
+			'show_cat_name'  => new OptionValue( OptionValueType::Bool, true ),
+			'show_num_links' => new OptionValue( OptionValueType::Bool, false ),
+			'link_orderby'   => new OptionValue( OptionValueType::Enum, LinkOrderBy::Name ),
+			'link_order'     => new OptionValue( OptionValueType::Enum, LinkOrder::Asc ),
+			// TODO: num_links should be renamed to link_limit
+			'num_links'      => new OptionValue( OptionValueType::Int, -1 ),
+			'show_img'       => new OptionValue( OptionValueType::Bool, false ),
+			'link_items'     => new OptionValue( OptionValueType::String ),
+			'link_item_img'  => new OptionValue( OptionValueType::Enum, LinkItemImg::ShowImgTag ), // TODO: Problems with some value options
+			'link_target'    => new OptionValue( OptionValueType::Enum, LinkTarget::Std ),
+			// TODO: Check how to handle the link_rel option
+			'link_rel'       => new OptionValue( OptionValueType::Enum, LinkRel::NoOpener ), // TODO: Code adoption required
+			'custom_class'   => new OptionValue( OptionValueType::String ),
+			'class_suffix'   => new OptionValue( OptionValueType::String ),
+			'vertical_align' => new OptionValue( OptionValueType::Enum, VerticalAlign::Std ),
+
+			// Link List
+			'list_symbol'    => new OptionValue( OptionValueType::Enum, ListSymbol::Std ),
+			'cat_columns'    => new OptionValue( OptionValueType::String, '1' ),
+			'link_columns'   => new OptionValue( OptionValueType::String, '1' ),
+
+			// Link Slider
+			'slider_width'   => new OptionValue( OptionValueType::Int ),
+			'slider_height'  => new OptionValue( OptionValueType::Int ),
+			'slider_pause'   => new OptionValue( OptionValueType::Int, 6000 ),
+			'slider_speed'   => new OptionValue( OptionValueType::Int, 1000 ),
 		];
 	}
 
@@ -95,67 +178,53 @@ class Config {
 	/**
 	 * Set the values of multiple attributes
 	 *
-	 * @param array<string,string> $atts Attributes to set.
+	 * @param array<string,mixed> $atts Attributes to set.
 	 */
-	public function set_values( array $atts ): void {
+	public function set_values( ?array $atts ): void {
 		if ( ! is_array( $atts ) ) {
 			return;
 		}
 		foreach ( $atts as $name => $value ) {
-			if ( isset( $this->atts[ $name ] ) ) {
-				// @phan-suppress-next-line PhanPartialTypeMismatchArgumentInternal
-				if ( ! is_array( $this->atts [ $name ]->permitted_values ) || in_array( $value, $this->atts [ $name ]->permitted_values, true ) || $this->atts[ $name ]->is_bool() ) {
-					$this->atts[ $name ]->value = $value;
-				}
-			} else {
-				// Trigger error is allowed in this case.
-				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
-				trigger_error( 'Shortcode attribute "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
+			if ( ! $this->attr_exists( $name ) ) {
+				return;
 			}
+			$this->atts[ $name ]->set_from_str( $value );
 		}
 	}
 
 
 	/**
-	 * Get the value of the given attribute
-	 *
-	 * If the option is a boolean value, a bool is returned.
+	 * Get the option value class instance of the given attribute
 	 */
-	public function __get( string $name ): string|bool {
-		if ( isset( $this->atts[ $name ] ) ) {
-			return $this->atts[ $name ]->bool_value();
+	public function __get( string $name ): ?OptionValue {
+		if ( ! $this->attr_exists( $name ) ) {
+			return null;
 		}
-		// Trigger error is allowed in this case.
-		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
-		trigger_error( 'Shortcode attribute "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
-		return '';
+		return $this->atts[ $name ];
 	}
 
 
 	/**
 	 * Set the value of the given attribute
 	 */
-	public function __set( string $name, string $value ): void {
-		if ( isset( $this->atts[ $name ] ) ) {
-			$this->atts[ $name ]->value = $value;
+	public function __set( string $name, mixed $value ): void {
+		if ( ! $this->attr_exists( $name ) ) {
+			return;
 		}
-		// Trigger error is allowed in this case.
-		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
-		trigger_error( 'Shortcode attribute "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
+		$this->atts[ $name ]->set( $value );
 	}
 
 
 	/**
-	 * Get a complete attribute
+	 * Check if the attribute exists
 	 */
-	public function get( string $name ): ?Option {
+	private function attr_exists( mixed $name ): bool {
 		if ( isset( $this->atts[ $name ] ) ) {
-			return $this->atts[ $name ];
+			return true;
 		}
-		// Trigger error is allowed in this case.
-		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error -- Trigger a warning is correct here
 		trigger_error( 'Shortcode attribute "' . esc_attr( $name ) . '" does not exist!', E_USER_WARNING );
-		return null;
+		return false;
 	}
 
 }

@@ -78,9 +78,9 @@ class Shortcode {
 	 *
 	 * @param array<string,string> $atts Shortcode attributes.
 	 */
-	public function show_html( array $atts, string $content = '' ): string {
+	public function show_html( array $atts, ?string $content ): string {
 		$this->prepare_atts( $atts, $content );
-		if ( $this->atts->cat_grouping ) {
+		if ( $this->atts->cat_grouping->get_bool() ) {
 			$categories = Links::categories( $this->atts );
 			$cat_column = 0;
 			// Wrapper div.
@@ -113,23 +113,21 @@ class Shortcode {
 	 *
 	 * @param array<string,string> $atts Shortcode attributes.
 	 */
-	private function prepare_atts( array $atts, string $content ): void {
+	private function prepare_atts( array $atts, ?string $content ): void {
 		// Add leading "-" for css-suffix.
 		if ( isset( $atts['class_suffix'] ) ) {
 			$atts['class_suffix'] = '-' . $atts['class_suffix'];
 		}
 		// Set attribute link_items to $content if an enclosing shortcode was used.
-		if ( '' !== $content ) {
-			// Replace quotes html code with real quotes.
-			$content = str_replace( [ '&#8220;', '&#8221;', '&#8222;' ], '"', $content );
-			// Set attribute.
-			$atts['link_items'] = $content;
+		if ( ! is_null( $content ) && '' !== $content ) {
+			// Set attribute after replacing quotes html code with real quotes.
+			$atts['link_items'] = str_replace( [ '&#8220;', '&#8221;', '&#8222;' ], '"', $content );
 		}
 		// Set given attributes.
 		$this->atts->set_values( $atts );
 		// Preparations for multi-column category and link-list.
-		$this->cat_multicol_settings  = $this->multicol_settings( $this->atts->cat_columns );
-		$this->link_multicol_settings = $this->multicol_settings( $this->atts->link_columns, $this->atts->list_symbol );
+		$this->cat_multicol_settings  = $this->multicol_settings( $this->atts->cat_columns->get_str() );
+		$this->link_multicol_settings = $this->multicol_settings( $this->atts->link_columns->get_str(), $this->atts->list_symbol->get() );
 	}
 
 
@@ -138,11 +136,11 @@ class Shortcode {
 	 */
 	private function custom_class_string(): string {
 		$custom_class_string = $this->config->custom_class;
-		if ( '' !== $this->atts->custom_class ) {
+		if ( '' !== $this->atts->custom_class->get_str() ) {
 			if ( '' !== $custom_class_string ) {
 				$custom_class_string .= ',';
 			}
-			$custom_class_string .= $this->atts->custom_class;
+			$custom_class_string .= $this->atts->custom_class->get_str();
 		}
 		if ( '' === $custom_class_string ) {
 			return '';
@@ -161,11 +159,11 @@ class Shortcode {
 		$out   = $this->html_multicol_before( $this->cat_multicol_settings, $cat_column );
 		if ( [] !== $links ) {
 			$out .= '
-					<div' . $this->multicol_classes( $this->cat_multicol_settings, 'lvw-category' . $this->atts->class_suffix ) . '>';
-			if ( $this->atts->show_cat_name ) {
-				$num_links_text = $this->atts->show_num_links ? ' <small>(' . count( $links ) . ')</small>' : '';
+					<div' . $this->multicol_classes( $this->cat_multicol_settings, 'lvw-category' . $this->atts->class_suffix->get_str() ) . '>';
+			if ( $this->atts->show_cat_name->get_bool() ) {
+				$num_links_text = $this->atts->show_num_links->get_bool() ? ' <small>(' . count( $links ) . ')</small>' : '';
 				$out           .= '
-						<h2 class="lvw-cat-name' . $this->atts->class_suffix . '">' . $wpTerm->name . $num_links_text . '</h2>';
+						<h2 class="lvw-cat-name' . $this->atts->class_suffix->get_str() . '">' . $wpTerm->name . $num_links_text . '</h2>';
 			}
 			// Show links.
 			$out .= $this->html_link_list( $links );
@@ -187,7 +185,7 @@ class Shortcode {
 			return '';
 		}
 		$list_id = ++$this->num_lists;
-		if ( 'slider' === $this->atts->view_type ) {
+		if ( ViewType::Slider === $this->atts->view_type->get() ) {
 			$this->sliders[ $list_id ] = new Slider(
 				$links,
 				$this->atts,
@@ -198,18 +196,18 @@ class Shortcode {
 		// Wrapper div and list tag.
 		$out = '
 					<div id="lvw-id-' . $this->sc_id . '-' . $list_id . '"';
-		if ( 'slider' === $this->atts->view_type ) {
+		if ( ViewType::Slider === $this->atts->view_type->get() ) {
 			$out .= ' class="lvw-slider"';
 		}
 		$out .= '>
-					<ul class="lvw-link-list' . $this->atts->class_suffix . '"' . $this->link_multicol_settings['wrapper_styles'] . '>';
+					<ul class="lvw-link-list' . $this->atts->class_suffix->get_str() . '"' . $this->link_multicol_settings['wrapper_styles'] . '>';
 		// Iterate over the links.
 		foreach ( $links as $link ) {
 			// Link multi-column handling.
 			$out .= $this->html_multicol_before( $this->link_multicol_settings, $link_col );
 			// Actual link.
 			$out .= '
-						<li' . $this->multicol_classes( $this->link_multicol_settings, 'lvw-list-item' . $this->atts->class_suffix ) . '>';
+						<li' . $this->multicol_classes( $this->link_multicol_settings, 'lvw-list-item' . $this->atts->class_suffix->get_str() ) . '>';
 			$out .= $link->show_html( $this->atts, $this->sliders[ $list_id ] ?? null );
 			$out .= '</li>';
 			// Link multi-column-handling.
@@ -266,7 +264,7 @@ class Shortcode {
 	 *
 	 * @return array<string,string|array> Multi-column settings.
 	 */
-	private function multicol_settings( string $column_option, ?string $list_symbol = null ): array {
+	private function multicol_settings( string $column_option, ?ListSymbol $list_symbol = null ): array {
 		$ret = [];
 		// Check if multi-column is enabled.
 		if ( 1 === intval( $column_option ) ) {  // No multi-column.
@@ -336,14 +334,18 @@ class Shortcode {
 	 *
 	 * @param array<string, string|array> $multicol_settings Multi-column settings.
 	 */
-	private function multicol_wrapper_styles( array $multicol_settings, ?string $list_symbol = null ): string {
-		$styles = ! empty( $list_symbol ) && 'std' !== $list_symbol ? 'list-style-type:' . $list_symbol . ';' : '';
+	private function multicol_wrapper_styles( array $multicol_settings, ?ListSymbol $list_symbol = null ): string {
+		$styles = '';
+		if ( ! is_null( $list_symbol ) && ListSymbol::Std !== $list_symbol ) {
+			$styles = 'list-style-type:' . $list_symbol->value . ';';
+		}
 		// Prepare multi-column css options.
 		if ( 'css' === $multicol_settings['type'] ) {
 			foreach ( $multicol_settings['opt'] as $name => $value ) {
 				// Do not add internal options.
 				if ( 'num_columns' === $name ) {
-					continue; }
+					continue;
+				}
 				// Add attribute.
 				$styles .= $name . ':' . $value . ';';
 				// Add prefixed browser specific attributes.

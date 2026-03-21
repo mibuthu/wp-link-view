@@ -33,9 +33,9 @@ class Links {
 	 */
 	public static function get( Config $config, ?\WP_Term $wpTerm = null ): array {
 		$args = [
-			'orderby' => $config->link_orderby,
-			'order'   => $config->link_order,
-			'limit'   => (int) $config->num_links,
+			'orderby' => $config->link_orderby->get_str(),
+			'order'   => $config->link_order->get_str(),
+			'limit'   => $config->num_links->get_int(),
 		];
 		if ( $wpTerm instanceof \WP_Term ) {
 			$args['category_name'] = $wpTerm->name;
@@ -54,40 +54,40 @@ class Links {
 	 * @return \WP_Term[] Link category object array.
 	 */
 	public static function categories( Config $config ): array {
-		$cat_array = [];
-		// TODO: The cat_filter value "all" is deprecated and can be removed in 0.9.
-		if ( '' !== $config->cat_filter && 'all' !== $config->cat_filter ) {
-			str_replace( ',', '|', $config->cat_filter );
-			$cat_slugs = array_map( trim( ... ), array_map( strval( ... ), explode( '|', (string) $config->cat_filter ) ) );
-			foreach ( $cat_slugs as $cat_slug ) {
-				$term = get_term_by( 'slug', $cat_slug, 'link_category' );
+		if ( 0 < count( $config->cat_filter->get_array() ) ) {
+			// use the categories from cat_filter attribute
+			$cat_array = [];
+			foreach ( $config->cat_filter->get_array() as $cat ) {
+				$term = get_term_by( 'slug', $cat, 'link_category' );
 				if ( $term instanceof \WP_Term ) {
 					$cat_array[] = $term;
 				}
 			}
-		} else {
-			$terms = get_terms(
-				[
-					'taxonomy' => 'link_category',
-					'orderby'  => 'name',
-				]
-			);
-			if ( is_array( $terms ) ) {
-				$cat_array = $terms;
-			}
-			if ( '' !== $config->exclude_cat ) {
-				$exclude_cat = array_map( trim( ... ), array_map( strval( ... ), explode( ',', (string) $config->exclude_cat ) ) );
-				$diff        = [];
-				foreach ( $cat_array as $cat ) {
-					if ( ! in_array( $cat->name, $exclude_cat, true ) ) {
-						$diff[] = $cat;
-					}
-				}
-				$cat_array = $diff;
-				unset( $diff );
-			}
+			return $cat_array;
 		}
-		return $cat_array;
+		// get all categories (terms)
+		$terms = get_terms(
+			[
+				'taxonomy' => 'link_category',
+				'orderby'  => 'name',
+			]
+		);
+		if ( ! is_array( $terms ) ) {
+			// no categories available
+			return [];
+		}
+		if ( 0 < count( $config->exclude_cat->get_array() ) ) {
+			// use all categories, except the categories defined in exclude_cat
+			$cat_array = [];
+			foreach ( $terms as $cat ) {
+				if ( ! in_array( $cat->name, $config->exclude_cat->get_array(), true ) ) {
+					$cat_array[] = $cat;
+				}
+			}
+			return $cat_array;
+		}
+		// use all categories
+		return $terms;
 	}
 
 }

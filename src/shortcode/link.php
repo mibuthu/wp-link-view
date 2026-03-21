@@ -66,14 +66,14 @@ class Link {
 			$cat_classes = ' ' . implode( ' ', $cat_classes );
 		}
 		$out = '
-			<div class="lvw-link' . $config->class_suffix . $cat_classes . '"';
-		if ( 'slider' !== $config->view_type && 'std' !== $config->vertical_align ) {
-			$out .= ' style="display:inline-block; vertical-align:' . $config->vertical_align . ';"';
+			<div class="lvw-link' . $config->class_suffix->get_str() . $cat_classes . '"';
+		if ( ViewType::Slider !== $config->view_type->get() && VerticalAlign::Std !== $config->vertical_align->get() ) {
+			$out .= ' style="display:inline-block; vertical-align:' . $config->vertical_align->get_str() . ';"';
 		}
 		$out .= '>';
-		if ( '' === $config->link_items ) {
+		if ( '' === $config->link_items->get_str() ) {
 			// Simple style (name or image).
-			if ( $config->show_img && ! is_null( $this->link_image ) ) {
+			if ( $config->show_img->get_bool() && ! is_null( $this->link_image ) ) {
 				// Image.
 				$out .= self::html_item( 'image_l', '', $config, $slider );
 			} else {
@@ -82,7 +82,7 @@ class Link {
 			}
 		} else {
 			// Enhanced style (all items given in link_items attribute).
-			$items = json_decode( (string) $config->link_items, true );
+			$items = json_decode( $config->link_items->get_str(), true );
 			if ( is_array( $items ) ) {
 				$out .= self::html_section( $items, $config, $slider );
 			} else {
@@ -102,7 +102,7 @@ class Link {
 		$out = '';
 		foreach ( $items as $name => $item ) {
 			if ( is_array( $item ) ) {
-				$out .= '<div class="lvw-section-' . $name . $config->class_suffix . '">';
+				$out .= '<div class="lvw-section-' . $name . $config->class_suffix->get_str() . '">';
 				$out .= self::html_section( $item, $config, $slider );
 				$out .= '</div>';
 			} else {
@@ -123,25 +123,20 @@ class Link {
 			$item = substr( $item, 0, -2 );
 		}
 		// Handle link_item_img="nothing".
-		if ( 'image' === $item && '' === $this->link_image && 'show_nothing' === $config->link_item_img ) {
+		if ( 'image' === $item && '' === $this->link_image && LinkItemImg::ShowNothing === $config->link_item_img->get() ) {
 			return '';
 		}
 		// Prepare output.
-		$out = '<div class="lvw-item-' . $item . $config->class_suffix . '">';
+		$out = '<div class="lvw-item-' . $item . $config->class_suffix->get_str() . '">';
 		if ( '' !== $caption ) {
-			$out .= '<span class="lvw-item-caption' . $config->class_suffix . '">' . $caption . '</span>';
+			$out .= '<span class="lvw-item-caption' . $config->class_suffix->get_str() . '">' . $caption . '</span>';
 		}
 		// Prepare link if required.
 		if ( $is_link ) {
 			// Check target.
-			if ( 'std' !== $config->link_target ) {
-				$target = '_' . $config->link_target;
-			} else {
-				$target = $this->link_target;
-				// Set target to _self if an empty string or _none was returned.
-				if ( in_array( $target, [ '', '_none' ], true ) ) {
-					$target = '_self';
-				}
+			$target = '';
+			if ( LinkTarget::Std !== $config->link_target->get() ) {
+				$target = ' target="_' . $config->link_target->get_str() . '"';
 			}
 			// Check description.
 			$description = '';
@@ -149,15 +144,16 @@ class Link {
 				$description = ' (' . $this->link_description . ')';
 			}
 			// Check rel attribute.
+			// TODO: Check and fix rel implementation, rel attribute is disabled for now
 			$rel          = '';
-			$combined_rel = $config->link_rel . ' ' . $this->link_rel;
-			// Check value according to allowed values for HTML5 (see https://www.w3schools.com/tags/att_a_rel.asp).
-			$rels = array_intersect(
-				array_unique( explode( ' ', $combined_rel ) ),
-				(array) $config->get( 'link_rel' )->permitted_values
-			);
-			$rel  = ' rel="' . implode( ' ', $rels ) . '"';
-			$out .= '<a class="lvw-anchor' . $config->class_suffix . '" href="' . $this->link_url . '" target="' . $target . '" title="' . $this->link_name . $description . '"' . $rel . '>';
+			// $combined_rel = $config->link_rel . ' ' . $this->link_rel;
+			// // Check value according to allowed values for HTML5 (see https://www.w3schools.com/tags/att_a_rel.asp).
+			// $rels = array_intersect(
+			// 	array_unique( explode( ' ', $combined_rel ) ),
+			// 	(array) $config->get( 'link_rel' )->permitted_values
+			// );
+			// $rel  = ' rel="' . implode( ' ', $rels ) . '"';
+			$out .= '<a class="lvw-anchor' . $config->class_suffix->get_str() . '" href="' . $this->link_url . $target . ' title="' . $this->link_name . $description . '"' . $rel . '>';
 		}
 		$out .= match ( $item ) {
 			'name' => $this->link_name,
@@ -182,12 +178,12 @@ class Link {
 		// Handle links without an image.
 		if ( empty( $this->link_image ) ) {
 			switch ( $config->link_item_img ) {
-				case 'show_link_name':
+				case LinkItemImg::ShowLinkName:
 					return $this->link_name;
-				case 'show_link_description':
+				case LinkItemImg::ShowLinkDescription:
 					return $this->link_description;
-				// 'show_nothing': is already handled in html_link_item.
-				// 'show_img_tag': proceed as normal with the image tag.
+				// LinkItemImg::ShowNothing: is already handled in html_link_item.
+				// LinkItemImg::ShowImgTag: proceed as normal with the image tag.
 			}
 		}
 		// Handle image size.

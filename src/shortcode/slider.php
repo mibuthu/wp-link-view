@@ -70,8 +70,8 @@ class Slider {
 	 * Get calculated slider size
 	 */
 	private function slider_size(): void {
-		$config_width  = intval( $this->shortcode_config->slider_width );
-		$config_height = intval( $this->shortcode_config->slider_height );
+		$config_width  = $this->shortcode_config->slider_width->get_int();
+		$config_height = $this->shortcode_config->slider_height->get_int();
 		// Use manual size given in the attributes.
 		if ( 0 < $config_width && 0 < $config_height ) {
 			$this->width  = $config_width;
@@ -82,7 +82,7 @@ class Slider {
 		$width  = 0;
 		$height = 0;
 		foreach ( $this->links as $link ) {
-			if ( $this->shortcode_config->show_img && '' !== $link->link_image ) {
+			if ( $this->shortcode_config->show_img->get_bool() && '' !== $link->link_image ) {
 				[$w, $h] = getimagesize( $link->link_image );
 				$width   = max( $width, $w );
 				$height  = max( $height, $h );
@@ -115,11 +115,11 @@ class Slider {
 				#lvw-id-' . $this->id_string . ' li { ' .
 					'width:' . $this->width . 'px; ' .
 					'height:' . $this->height . 'px; }';
-		if ( 'std' !== $this->shortcode_config->vertical_align ) {
+		if ( VerticalAlign::Std !== $this->shortcode_config->vertical_align->get() ) {
 			$ret .= '
-					#lvw-id-' . $this->id_string . ' .lvw-link' . $this->shortcode_config->class_suffix . ' { ' .
+					#lvw-id-' . $this->id_string . ' .lvw-link' . $this->shortcode_config->class_suffix->get_str() . ' { ' .
 					'display:table-cell; ' .
-					'vertical-align:' . $this->shortcode_config->vertical_align . '; ' .
+					'vertical-align:' . $this->shortcode_config->vertical_align->get_str() . '; ' .
 					'width:' . $this->width . 'px; ' .
 					'height:' . $this->height . 'px; }';
 		}
@@ -134,8 +134,8 @@ class Slider {
 		$ret  = '
 			jQuery("#lvw-id-' . $this->id_string . '").easySlider({';
 		$ret .= 'auto: true, continuous: true, controlsShow: false';
-		$ret .= ', pause: ' . $this->shortcode_config->slider_pause;
-		$ret .= ', speed: ' . $this->shortcode_config->slider_speed;
+		$ret .= ', pause: ' . $this->shortcode_config->slider_pause->get_str();
+		$ret .= ', speed: ' . $this->shortcode_config->slider_speed->get_str();
 		return $ret . '});';
 	}
 

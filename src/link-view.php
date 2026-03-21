@@ -101,7 +101,7 @@ class LinkView {
 	 *
 	 * @param array<string,string> $atts Shortcode attributes.
 	 */
-	public function shortcode_linkview( array $atts, string $content = '' ): string {
+	public function shortcode_linkview( array $atts, ?string $content ): string {
 		if ( ! $this->shortcode_factory instanceof Shortcode\Factory ) {
 			require_once PLUGIN_PATH . 'shortcode/factory.php';
 			$this->shortcode_factory = new Shortcode\Factory( $this->config );

@@ -66,7 +66,7 @@ enum OptionValueType {
 			self::Int => is_int( $value ),
 			self::Bool => is_bool( $value ),
 			self::StringArray => is_array( $value ) && array_reduce( $value, fn( bool $carry, $item ) => $carry && is_string( $item ), true ),
-			self::Enum => false,
+			self::Enum => $value instanceof \BackedEnum,
 		};
 	}
 
@@ -84,6 +84,85 @@ enum OptionValueType {
 			self::Bool => $value ? 'true' : 'false',
 			self::StringArray => implode( ', ', $value ),
 			self::Enum => $value->value,
+		};
+	}
+
+
+	/**
+	 * Convert the provided value to an integer
+	 */
+	public function as_int( mixed $value ): int {
+		if ( is_null( $value ) ) {
+			return 0;
+		}
+		return (int) match ( $this ) {
+			self::String => $value,
+			self::Int => $value,
+			self::Bool => $value ? 1 : 0,
+			self::StringArray => count( $value ),
+			self::Enum => $value->value,
+		};
+	}
+
+
+	/**
+	 * Convert the provided value to a boolean
+	 */
+	public function as_bool( mixed $value ): bool {
+		if ( is_null( $value ) ) {
+			return false;
+		}
+		return match ( $this ) {
+			self::String => ! in_array( $value, [ '', '0' ], true ),
+			self::Int => 0 !== $value,
+			self::Bool => (bool) $value,
+			self::StringArray => count( $value ) > 0,
+			self::Enum => true,
+		};
+	}
+
+
+	/**
+	 * Convert the provided value to an array
+	 */
+	public function as_array( mixed $value ): array {
+		if ( is_null( $value ) ) {
+			return [];
+		}
+		return match ( $this ) {
+			self::String => $this->str_to_array( $value ),
+			self::Int => [ $value ],
+			self::Bool => [],
+			self::StringArray => $value,
+			self::Enum => [ $value->value ],
+		};
+	}
+
+
+	/**
+	 * Transform a string to an array
+	 *
+	 * Allowed separators are '|' and ','
+	 */
+	public static function str_to_array( string $str_value ): array {
+		$str_value = str_replace( ',', '|', $str_value );
+		return array_map( trim( ... ), array_map( strval( ... ), explode( '|', $str_value ) ) );
+	}
+
+
+	/**
+	 * Get the permitted values of the option as a string or an array of strings
+	 *
+	 * If the option type is an enum, the value is required and all enum variants are returned.
+	 * For all other types a static string with the type name will be returned.
+	 */
+	public function permitted_values( mixed $value = null ): string|array {
+		return match ( $this ) {
+			OptionValueType::String => 'String',
+			OptionValueType::Int => 'Integer',
+			OptionValueType::Bool => [ 'true', 'false' ],
+			OptionValueType::StringArray => 'List of strings',
+			OptionValueType::Enum => array_map( fn ( $c ) => $c->value, $value::cases() ),
 		};
 	}
 
