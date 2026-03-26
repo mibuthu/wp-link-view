@@ -91,12 +91,14 @@ final class Config {
 	public function __construct() {
 		$this->options = [
 			'lvw_req_capabilities'      => new WpOptionValue( OptionValueType::Enum, ReqCapabilities::ManageLinks ),
-			'lvw_req_manage_links_role' => new WpOptionValue( OptionValueType::Enum, ReqManageLinksRole::Author ), // TODO: Option is not working, there seems to be not place where the value is considered.
+			'lvw_req_manage_links_role' => new WpOptionValue( OptionValueType::Enum, ReqManageLinksRole::Author ),
 			'lvw_custom_class'          => new WpOptionValue( OptionValueType::String ),
 			'lvw_custom_css'            => new WpOptionValue( OptionValueType::String ),
 		];
+		// Register the settings
 		add_action( 'admin_init', $this->register( ... ) );
-		add_filter( 'pre_update_option_lvw_req_manages_link_role', $this->update_manage_links_role( ... ) );
+		// Update the roles, when the option value for `req_manage_links_role` is changed
+		add_filter( 'pre_update_option_lvw_req_manage_links_role', $this->update_manage_links_role( ... ) );
 	}
 
 
