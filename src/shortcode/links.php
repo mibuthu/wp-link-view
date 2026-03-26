@@ -40,10 +40,7 @@ class Links {
 		if ( $wpTerm instanceof \WP_Term ) {
 			$args['category_name'] = $wpTerm->name;
 		}
-		return array_map(
-			fn ( $bookmark ): Link => new Link( $bookmark ),
-			get_bookmarks( $args )
-		);
+		return array_map( fn ( object $bookmark ): Link => new Link( $bookmark ), get_bookmarks( $args ) );
 		// phpcs:enable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 	}
 

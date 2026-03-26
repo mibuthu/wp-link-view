@@ -53,16 +53,8 @@ class Link {
 		if ( ! is_array( $cat_classes ) ) {
 			$cat_classes = '';
 		} else {
-			array_walk(
-				$cat_classes,
-				/**
-				 * Prepare the category slug to the form "category-[slug]"
-				 *
-				 * @param string $cat_slug The category slug.
-				 * @return string
-				 */
-				fn( $cat_slug ): string => 'category-' . $cat_slug
-			);
+			// Prepare cat classes string
+			$cat_classes = array_map( fn( string $cat_slug ): string => 'category-' . $cat_slug, $cat_classes );
 			$cat_classes = ' ' . implode( ' ', $cat_classes );
 		}
 		$out = '

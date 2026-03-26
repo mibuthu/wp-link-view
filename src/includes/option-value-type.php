@@ -65,7 +65,7 @@ enum OptionValueType {
 			self::String => is_string( $value ),
 			self::Int => is_int( $value ),
 			self::Bool => is_bool( $value ),
-			self::StringArray => is_array( $value ) && array_reduce( $value, fn( bool $carry, $item ) => $carry && is_string( $item ), true ),
+			self::StringArray => is_array( $value ) && array_reduce( $value, fn( bool $carry, mixed $item ): bool => $carry && is_string( $item ), true ),
 			self::Enum => $value instanceof \BackedEnum,
 		};
 	}
@@ -145,8 +145,9 @@ enum OptionValueType {
 	 * Allowed separators are '|' and ','
 	 */
 	public static function str_to_array( string $str_value ): array {
-		$str_value = str_replace( ',', '|', $str_value );
-		return array_map( trim( ... ), array_map( strval( ... ), explode( '|', $str_value ) ) );
+		$ret = explode( '|', str_replace( ',', '|', $str_value ) );
+		$ret = array_map( strval( ... ), $ret );
+		return array_map( trim( ... ), $ret );
 	}
 
 
@@ -162,7 +163,7 @@ enum OptionValueType {
 			OptionValueType::Int => 'Integer',
 			OptionValueType::Bool => [ 'true', 'false' ],
 			OptionValueType::StringArray => 'List of strings',
-			OptionValueType::Enum => array_map( fn ( $c ) => $c->value, $value::cases() ),
+			OptionValueType::Enum => array_map( fn ( mixed $t ): string => $t->value, $value::cases() ),
 		};
 	}
 
