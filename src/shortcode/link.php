@@ -12,6 +12,9 @@ namespace WordPress\Plugins\mibuthu\LinkView\Shortcode;
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
 use const WordPress\Plugins\mibuthu\LinkView\PLUGIN_PATH;
+use WordPress\Plugins\mibuthu\LinkView\Shortcode\Config as ShortcodeConfig;
+use WordPress\Plugins\mibuthu\LinkView\OptionValue;
+use WordPress\Plugins\mibuthu\LinkView\OptionValueType;
 
 require_once PLUGIN_PATH . 'shortcode/config.php';
 require_once PLUGIN_PATH . 'shortcode/links.php';
@@ -48,7 +51,7 @@ class Link {
 	/**
 	 * Get HTML for showing a single link
 	 */
-	public function show_html( Config $config, ?Slider $slider = null ): string {
+	public function show_html( ShortcodeConfig $config, ?Slider $slider = null ): string {
 		$cat_classes = wp_get_object_terms( $this->link_id, 'link_category', [ 'fields' => 'slugs' ] );
 		if ( ! is_array( $cat_classes ) ) {
 			$cat_classes = '';
@@ -90,7 +93,7 @@ class Link {
 	 *
 	 * @param array<string,string> $items Link items array included in the section.
 	 */
-	private function html_section( array $items, Config $config, ?Slider $slider ): string {
+	private function html_section( array $items, ShortcodeConfig $config, ?Slider $slider ): string {
 		$out = '';
 		foreach ( $items as $name => $item ) {
 			if ( is_array( $item ) ) {
@@ -108,7 +111,7 @@ class Link {
 	/**
 	 * Get HTML for showing a link item
 	 */
-	private function html_item( string $item, string $caption, Config $config, ?Slider $slider ): string {
+	private function html_item( string $item, string $caption, ShortcodeConfig $config, ?Slider $slider ): string {
 		// Check if a hyperlink shall be added.
 		$is_link = ( str_ends_with( $item, '_l' ) );
 		if ( $is_link ) {
@@ -125,27 +128,18 @@ class Link {
 		}
 		// Prepare link if required.
 		if ( $is_link ) {
-			// Check target.
-			$target = '';
-			if ( LinkTarget::Std !== $config->link_target->get() ) {
-				$target = ' target="_' . $config->link_target->get_str() . '"';
-			}
-			// Check description.
+			// Prepare the description
 			$description = '';
 			if ( '' !== $this->link_description ) {
 				$description = ' (' . $this->link_description . ')';
 			}
-			// Check rel attribute.
-			// TODO: Check and fix rel implementation, rel attribute is disabled for now
-			$rel          = '';
-			// $combined_rel = $config->link_rel . ' ' . $this->link_rel;
-			// // Check value according to allowed values for HTML5 (see https://www.w3schools.com/tags/att_a_rel.asp).
-			// $rels = array_intersect(
-			// 	array_unique( explode( ' ', $combined_rel ) ),
-			// 	(array) $config->get( 'link_rel' )->permitted_values
-			// );
-			// $rel  = ' rel="' . implode( ' ', $rels ) . '"';
-			$out .= '<a class="lvw-anchor' . $config->class_suffix->get_str() . '" href="' . $this->link_url . $target . ' title="' . $this->link_name . $description . '"' . $rel . '>';
+			// Prepare the target attribute
+			$target = '';
+			if ( LinkTarget::Std !== $config->link_target->get() ) {
+				$target = ' target="_' . $config->link_target->get_str() . '"';
+			}
+			$out .= '<a class="lvw-anchor' . $config->class_suffix->get_str() . '" href="' . $this->link_url . '"'
+				. $target . ' title="' . $this->link_name . $description . '"' . $this->link_rel_attr( $config ) . '>';
 		}
 		$out .= match ( $item ) {
 			'name' => $this->link_name,
@@ -166,7 +160,7 @@ class Link {
 	/**
 	 * Get HTML for showing the image
 	 */
-	private function html_img_tag( Config $config, ?Slider $slider ): string {
+	private function html_img_tag( ShortcodeConfig $config, ?Slider $slider ): string {
 		// Handle links without an image.
 		if ( empty( $this->link_image ) ) {
 			switch ( $config->link_item_img ) {
@@ -192,6 +186,25 @@ class Link {
 			}
 		}
 		return '<img src="' . $this->link_image . '"' . $size_text . ' alt="' . $this->link_name . '" />';
+	}
+
+
+	/**
+	 * Prepare the link rel attribute
+	 */
+	private function link_rel_attr( ShortcodeConfig $config ): string {
+		// Create an array of the rel attributes of the link
+		$link_rel        = array_intersect( explode( ' ', $this->link_rel ), $config->link_rel->permitted_values() );
+		$link_rel_option = new OptionValue( OptionValueType::EnumArray, [], LinkRel::class );
+		$link_rel_option->set_from_str( implode( '|', $link_rel ) );
+		// Merge and sort the rel attributes of the link with the rel attributes of the shortcode config
+		$link_rel = array_merge( $link_rel_option->get_array(), $config->link_rel->get_array() );
+		$link_rel = array_unique( $link_rel, SORT_REGULAR );
+		sort( $link_rel );
+		// Prepare the rel HTML string
+		$link_rel = array_map( fn( LinkRel $item ): string => $item->value, $link_rel );
+		$link_rel = empty( $link_rel ) ? '' : ' rel="' . implode( ' ', $link_rel ) . '"';
+		return $link_rel;
 	}
 
 }

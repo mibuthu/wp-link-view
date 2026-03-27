@@ -61,7 +61,6 @@ enum LinkTarget: string {
 
 
 enum LinkRel: string {
-	case Empty      = '';
 	case Alternate  = 'alternate';
 	case Author     = 'author';
 	case Bookmark   = 'bookmark';
@@ -155,8 +154,7 @@ class Config {
 			'link_items'     => new OptionValue( OptionValueType::String ),
 			'link_item_img'  => new OptionValue( OptionValueType::Enum, LinkItemImg::ShowImgTag ), // TODO: Problems with some value options
 			'link_target'    => new OptionValue( OptionValueType::Enum, LinkTarget::Std ),
-			// TODO: Check how to handle the link_rel option
-			'link_rel'       => new OptionValue( OptionValueType::Enum, LinkRel::NoOpener ), // TODO: Code adoption required
+			'link_rel'       => new OptionValue( OptionValueType::EnumArray, [], LinkRel::class ),
 			'custom_class'   => new OptionValue( OptionValueType::String ),
 			'class_suffix'   => new OptionValue( OptionValueType::String ),
 			'vertical_align' => new OptionValue( OptionValueType::Enum, VerticalAlign::Std ),

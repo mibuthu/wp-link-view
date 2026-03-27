@@ -316,14 +316,20 @@ class ConfigAdminData {
 			description:
 				sprintf(
 					// translators: Placeholder is a code tag including the 'rel' HTML attribute
-					__( 'With this attribute the %1$s attribute for the HTML-links can be set.', 'link-view' ),
+					__( 'With this attribute the %1$s attribute for the HTML-links can be set', 'link-view' ),
 					'<code>rel</code>'
 				) .
 				' (' . sprintf(
 					// translators: Placeholder is a link to the rel page on w3schools.com
 					__( 'see %1$s for details', 'link-view' ),
 					'<a href="https://www.w3schools.com/tags/att_a_rel.asp" target="_blank" rel="noopener">' . __( 'this link', 'link-view' ) . '</a>'
-				) . ').',
+				) . ').<br />
+				' . sprintf(
+					// translators: Placeholder is a code tag including the separator
+					__( 'Use a comma (%1$s) to separate multiple rel attributes.', 'link-view' ),
+					'<code>,</code>'
+				) . '<br />
+				' . __( 'These rel attributes will be combined with the rel attributes set for each link.', 'link-view' ),
 		);
 
 		$this->custom_class = new ConfigAdminDataValue(
@@ -332,7 +338,7 @@ class ConfigAdminData {
 				__( 'With this attribute additional CSS classes can be specified. The classes are added to the link-view wrapper div.', 'link-view' ) . '<br />
 				' . sprintf(
 					// translators: Placeholder is a code tag including the separator
-					__( 'Use the %1$s to separate multiple classes.', 'link-view' ),
+					__( 'Use a comma (%1$s) to separate multiple classes.', 'link-view' ),
 					'<code>,</code>'
 				),
 			permitted_values: __( 'String', 'link-view' )

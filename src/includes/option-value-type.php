@@ -23,6 +23,7 @@ enum OptionValueType {
 	case Bool;
 	case StringArray;
 	case Enum;
+	case EnumArray;
 
 
 	/**
@@ -30,12 +31,12 @@ enum OptionValueType {
 	 *
 	 * If the value is $null, the default value will be returned.
 	 */
-	public function value_from( mixed $value ): mixed {
+	public function value_from( mixed $value, ?string $enum_type ): mixed {
 		if ( is_null( $value ) ) {
 			// return the default value
 			return $this->default_value();
 		}
-		if ( $this->is_correct_type( $value ) ) {
+		if ( $this->is_correct_type( $value, $enum_type ) ) {
 			return $value;
 		}
 		assert( true, 'Invalid type provided for an option with the type ' . esc_attr( $this->name ) );
@@ -53,6 +54,7 @@ enum OptionValueType {
 			self::Bool => (bool) false,
 			self::StringArray => [],
 			self::Enum => assert( true, 'No default value for option type = Enum available', E_USER_WARNING ),
+			self::EnumArray => [],
 		};
 	}
 
@@ -60,13 +62,19 @@ enum OptionValueType {
 	/**
 	 * Checks if the provided value has the correct type
 	 */
-	private function is_correct_type( mixed $value ): bool {
+	private function is_correct_type( mixed $value, ?string $enum_type ): bool {
 		return match ( $this ) {
 			self::String => is_string( $value ),
 			self::Int => is_int( $value ),
 			self::Bool => is_bool( $value ),
-			self::StringArray => is_array( $value ) && array_reduce( $value, fn( bool $carry, mixed $item ): bool => $carry && is_string( $item ), true ),
+			self::StringArray =>
+				is_array( $value )
+				&& array_reduce( $value, fn( bool $carry, mixed $item ): bool => $carry && is_string( $item ), true ),
 			self::Enum => $value instanceof \BackedEnum,
+			self::EnumArray =>
+				is_array( $value )
+				&& is_subclass_of( $enum_type, \BackedEnum::class )
+				&& array_reduce( $value, fn( bool $carry, mixed $item ): bool => $carry && $item::class === $enum_type, true ),
 		};
 	}
 
@@ -84,6 +92,7 @@ enum OptionValueType {
 			self::Bool => $value ? 'true' : 'false',
 			self::StringArray => implode( ', ', $value ),
 			self::Enum => $value->value,
+			self::EnumArray => implode( ', ', array_map( fn( mixed $item ): string => $item->value, $value ) ),
 		};
 	}
 
@@ -101,6 +110,7 @@ enum OptionValueType {
 			self::Bool => $value ? 1 : 0,
 			self::StringArray => count( $value ),
 			self::Enum => $value->value,
+			self::EnumArray => count( $value ),
 		};
 	}
 
@@ -118,6 +128,7 @@ enum OptionValueType {
 			self::Bool => (bool) $value,
 			self::StringArray => count( $value ) > 0,
 			self::Enum => true,
+			self::EnumArray => count( $value ) > 0,
 		};
 	}
 
@@ -135,6 +146,7 @@ enum OptionValueType {
 			self::Bool => [],
 			self::StringArray => $value,
 			self::Enum => [ $value->value ],
+			self::EnumArray => $value,
 		};
 	}
 
@@ -154,16 +166,17 @@ enum OptionValueType {
 	/**
 	 * Get the permitted values of the option as a string or an array of strings
 	 *
-	 * If the option type is an enum, the value is required and all enum variants are returned.
+	 * If the option type is an enum or enum array, the value is required and all enum variants are returned.
 	 * For all other types a static string with the type name will be returned.
 	 */
-	public function permitted_values( mixed $value = null ): string|array {
+	public function permitted_values( ?string $enum_type = null ): array {
 		return match ( $this ) {
-			OptionValueType::String => 'String',
-			OptionValueType::Int => 'Integer',
-			OptionValueType::Bool => [ 'true', 'false' ],
-			OptionValueType::StringArray => 'List of strings',
-			OptionValueType::Enum => array_map( fn ( mixed $t ): string => $t->value, $value::cases() ),
+			self::String => [ 'String' ],
+			self::Int => [ 'Integer' ],
+			self::Bool => [ 'true', 'false' ],
+			self::StringArray => [ 'List of strings' ],
+			self::Enum => array_map( fn ( mixed $t ): string => $t->value, $enum_type::cases() ),
+			self::EnumArray => array_map( fn ( mixed $t ): string => $t->value, $enum_type::cases() ),
 		};
 	}
 
